@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 施設長によるスタッフ登録機能の実装**
+- [~] **Track: 施設長によるスタッフ登録機能の実装**
   *Link: [./tracks/staff_registration_20260202/](./tracks/staff_registration_20260202/)*

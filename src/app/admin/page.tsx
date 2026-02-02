@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, BookCheck, TrendingUp, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
+import { RegisterStaffForm } from "@/components/register-staff-form";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -104,42 +105,50 @@ export default async function AdminDashboardPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 pt-8 space-y-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-zinc-100 shadow-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-500">所属スタッフ</CardTitle>
-              <Users className="w-4 h-4 text-blue-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{totalStaff} 名</div>
-            </CardContent>
-          </Card>
-          <Card className="border-zinc-100 shadow-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-500">全研修完了者</CardTitle>
-              <BookCheck className="w-4 h-4 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{fullyCompletedStaff} 名</div>
-              <p className="text-xs text-zinc-400 mt-1">全 {totalCoursesCount} 項目を修了</p>
-            </CardContent>
-          </Card>
-          <Card className="border-zinc-100 shadow-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-500">施設全体進捗率</CardTitle>
-              <TrendingUp className="w-4 h-4 text-orange-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{progressRate}%</div>
-              <div className="mt-2 w-full bg-zinc-100 rounded-full h-2 overflow-hidden">
-                <div 
-                  className="bg-orange-500 h-full transition-all duration-500" 
-                  style={{ width: `${progressRate}%` }}
-                ></div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Registration Form & Stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <div className="lg:col-span-1">
+            <RegisterStaffForm />
+          </div>
+          
+          <div className="lg:col-span-2 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="border-zinc-100 shadow-sm rounded-2xl">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-zinc-500">所属スタッフ</CardTitle>
+                  <Users className="w-4 h-4 text-blue-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{totalStaff} 名</div>
+                </CardContent>
+              </Card>
+              <Card className="border-zinc-100 shadow-sm rounded-2xl">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-zinc-500">全研修完了者</CardTitle>
+                  <BookCheck className="w-4 h-4 text-green-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{fullyCompletedStaff} 名</div>
+                  <p className="text-xs text-zinc-400 mt-1">全 {totalCoursesCount} 項目を修了</p>
+                </CardContent>
+              </Card>
+              <Card className="border-zinc-100 shadow-sm rounded-2xl">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-zinc-500">施設全体進捗率</CardTitle>
+                  <TrendingUp className="w-4 h-4 text-orange-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{progressRate}%</div>
+                  <div className="mt-2 w-full bg-zinc-100 rounded-full h-2 overflow-hidden">
+                    <div 
+                      className="bg-orange-500 h-full transition-all duration-500" 
+                      style={{ width: `${progressRate}%` }}
+                    ></div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
 
         {/* Staff Table */}

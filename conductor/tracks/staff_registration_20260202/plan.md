@@ -1,7 +1,7 @@
 # Implementation Plan: 施設長によるスタッフ登録機能の実装
 
 ## Phase 1: 登録ロジックとフォームの構築
-- [ ] Task: スタッフ登録用の Server Actions 実装
+- [~] Task: スタッフ登録用の Server Actions 実装
     - [ ] `registerStaff` アクションの作成（User作成 + Enrollment一括作成）
     - [ ] メールアドレス重複チェック等のバリデーション
 - [ ] Task: 登録用ダイアログ/フォームの作成
