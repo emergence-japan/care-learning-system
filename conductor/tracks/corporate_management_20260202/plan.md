@@ -9,12 +9,12 @@
     - [ ] 法人 -> 複数施設 -> 管理者・スタッフ という階層構造のデータ作成
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 組織階層の再構築' (7727bd6)
 
-## Phase 2: 法人本部ダッシュボード
-- [~] Task: 法人本部用ページ `/hq` の作成
+## Phase 2: 法人本部ダッシュボード [checkpoint: 23213b1]
+- [x] Task: 法人本部用ページ `/hq` の作成 (43cf0fb)
     - [ ] `src/app/hq/page.tsx` の実装
     - [ ] 法人内の施設別進捗一覧（カードリスト）の表示
-- [ ] Task: 本部から各施設へのドリルダウン機能
+- [x] Task: 本部から各施設へのドリルダウン機能 (23213b1)
     - [ ] 施設を選択して詳細を表示する機能
-- [ ] Task: ロール別の初期遷移先（リダイレクト）調整
+- [x] Task: ロール別の初期遷移先（リダイレクト）調整 (23213b1)
     - [ ] HQ ロールはログイン後に `/hq` へ自動遷移
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: 法人本部ダッシュボード'
+- [x] Task: Conductor - User Manual Verification 'Phase 2: 法人本部ダッシュボード' (23213b1)
