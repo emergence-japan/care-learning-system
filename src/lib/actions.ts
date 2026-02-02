@@ -204,6 +204,72 @@ export async function createCourse(formData: FormData) {
   revalidatePath("/");
 }
 
+export async function createCorporation(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const name = formData.get("name") as string;
+  await prisma.corporation.create({
+    data: { name },
+  });
+
+  revalidatePath("/super-admin/organizations");
+}
+
+export async function createFacility(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const name = formData.get("name") as string;
+  const corporationId = formData.get("corporationId") as string;
+
+  await prisma.facility.create({
+    data: {
+      name,
+      corporationId,
+    },
+  });
+
+  revalidatePath("/super-admin/organizations");
+}
+
+export async function createOrgUser(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const role = formData.get("role") as "HQ" | "ADMIN";
+  const corporationId = formData.get("corporationId") as string;
+  const facilityId = formData.get("facilityId") as string || null;
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password,
+      role,
+      corporationId,
+      facilityId,
+    },
+  });
+
+  revalidatePath("/super-admin/organizations");
+}
+
 export async function updateCourse(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();

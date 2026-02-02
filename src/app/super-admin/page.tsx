@@ -63,16 +63,18 @@ export default async function SuperAdminDashboardPage() {
             </Card>
           </Link>
 
-          <Card className="hover:border-red-300 transition-all cursor-pointer group shadow-sm">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-bold text-zinc-500 uppercase">組織管理</CardTitle>
-              <Building className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-black">法人・施設</div>
-              <p className="text-xs text-zinc-400 mt-1">契約組織の登録と管理</p>
-            </CardContent>
-          </Card>
+          <Link href="/super-admin/organizations" className="block h-full">
+            <Card className="h-full hover:border-red-300 transition-all cursor-pointer group shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-bold text-zinc-500 uppercase">組織管理</CardTitle>
+                <Building className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-black">法人・施設</div>
+                <p className="text-xs text-zinc-400 mt-1">契約組織の登録と管理</p>
+              </CardContent>
+            </Card>
+          </Link>
 
           <Card className="hover:border-red-300 transition-all cursor-pointer group shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

@@ -10,7 +10,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 基盤整備とコンテンツ管理' (97a08ad)
 
 ## Phase 2: 組織管理機能
-- [ ] Task: 法人・施設管理画面の作成
+- [~] Task: 法人・施設管理画面の作成
     - [ ] 法人の登録・編集機能
     - [ ] 施設の登録・編集機能（法人選択を含む）
 - [ ] Task: 初期管理者アカウント発行機能
