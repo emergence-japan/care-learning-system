@@ -1,13 +1,13 @@
 # Implementation Plan: 法人管理と法人本部ダッシュボードの実装
 
-## Phase 1: 組織階層の再構築
-- [ ] Task: Corporation モデルの追加と関連付け
+## Phase 1: 組織階層の再構築 [checkpoint: 7727bd6]
+- [x] Task: Corporation モデルの追加と関連付け (1405bc2)
     - [ ] `schema.prisma` の更新（Corporation モデル、Role に HQ 追加）
     - [ ] Facility および User と Corporation の紐付け（User に corporationId 追加）
     - [ ] マイグレーションの実行
-- [ ] Task: シードデータの再整備
+- [x] Task: シードデータの再整備 (1405bc2)
     - [ ] 法人 -> 複数施設 -> 管理者・スタッフ という階層構造のデータ作成
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: 組織階層の再構築'
+- [x] Task: Conductor - User Manual Verification 'Phase 1: 組織階層の再構築' (7727bd6)
 
 ## Phase 2: 法人本部ダッシュボード
 - [ ] Task: 法人本部用ページ `/hq` の作成
