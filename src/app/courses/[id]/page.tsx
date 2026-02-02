@@ -35,6 +35,19 @@ export default async function CourseDetailPage({
     notFound();
   }
 
+  const getYouTubeEmbedUrl = (url: string) => {
+    if (!url) return "";
+    let videoId = "";
+    if (url.includes("v=")) {
+      videoId = url.split("v=")[1].split("&")[0];
+    } else if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1].split("?")[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+  };
+
+  const embedUrl = enrollment.course.videoUrl ? getYouTubeEmbedUrl(enrollment.course.videoUrl) : "";
+
   return (
     <div className="min-h-screen bg-white pb-12">
       <header className="bg-white border-b sticky top-0 z-10 h-16 flex items-center px-4">
@@ -51,8 +64,22 @@ export default async function CourseDetailPage({
           {enrollment.course.title}
         </h2>
         
-        <div className="mt-6 aspect-video bg-zinc-100 rounded-2xl flex items-center justify-center border border-zinc-200">
-          <p className="text-zinc-500 font-medium">動画プレイヤーがここに表示されます</p>
+        <div className="mt-6 aspect-video bg-zinc-100 rounded-2xl overflow-hidden border border-zinc-200">
+          {embedUrl ? (
+            <iframe
+              width="100%"
+              height="100%"
+              src={embedUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <p className="text-zinc-500 font-medium">動画の準備ができていません</p>
+            </div>
+          )}
         </div>
 
         <div className="mt-8 space-y-4">

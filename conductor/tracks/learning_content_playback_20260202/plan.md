@@ -4,7 +4,7 @@
 - [x] Task: 研修詳細ページの動的ルーティング実装 (565fa92)
     - [ ] `src/app/courses/[id]/page.tsx` の作成
     - [ ] ダッシュボードからの遷移リンク設定
-- [ ] Task: 動画プレイヤーコンポーネントの構築
+- [~] Task: 動画プレイヤーコンポーネントの構築
     - [ ] YouTube埋め込み等の基本プレイヤー実装
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: 研修詳細画面の基盤'
 

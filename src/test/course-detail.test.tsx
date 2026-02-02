@@ -43,4 +43,22 @@ describe('Course Detail Page', () => {
     expect(screen.getByText('虐待防止研修（令和6年度）')).toBeInTheDocument()
     expect(screen.getByText(/高齢者虐待防止の基本/i)).toBeInTheDocument()
   })
+
+  it('YouTube動画プレイヤーが表示されていること', async () => {
+    const { auth } = await import('@/auth')
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'user1', name: 'Test User', email: 'test@example.com' }
+    })
+
+    const props = {
+      params: Promise.resolve({ id: 'c1' })
+    }
+
+    const Result = await CourseDetailPage(props)
+    render(Result)
+    
+    const iframe = screen.getByTitle(/YouTube video player/i)
+    expect(iframe).toBeInTheDocument()
+    expect(iframe).toHaveAttribute('src', expect.stringContaining('youtube.com/embed/dQw4w9WgXcQ'))
+  })
 })
