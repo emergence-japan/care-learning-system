@@ -10,7 +10,7 @@
 - [~] Task: Conductor - User Manual Verification 'Phase 1: 環境構築と基盤整備' (Protocol in workflow.md)
 
 ## Phase 2: 認証機能の実装
-- [~] Task: ログイン画面の構築 (UIのみ)
+- [x] Task: ログイン画面の構築 (UIのみ) (5ac15ca)
     - [ ] デザインガイドラインに基づいたモバイルフレンドリーな入力画面
 - [ ] Task: 認証ロジックの実装 (Auth.js)
     - [ ] ログイン・ログアウト機能の作成
