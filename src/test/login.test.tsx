@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import LoginPage from '@/app/login/page'
+
+// Mock actions to avoid next-auth related issues in JSDOM
+vi.mock('@/lib/actions', () => ({
+  authenticate: vi.fn(),
+}))
 
 describe('Login Page UI', () => {
   it('メールアドレスとパスワードの入力欄が表示されていること', () => {
