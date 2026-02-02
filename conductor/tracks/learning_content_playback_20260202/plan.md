@@ -8,9 +8,10 @@
     - [ ] YouTube埋め込み等の基本プレイヤー実装
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 研修詳細画面の基盤' (ac57b67)
 
-## Phase 2: 受講ステータス管理
+## Phase 2: 受講ステータス管理 [checkpoint: d71b07c]
 - [x] Task: 受講開始・完了の Server Actions 実装 (854a037)
     - [ ] ステータスを `IN_PROGRESS` や `COMPLETED` に更新するロジック
 - [x] Task: 完了ボタンのUIと連携 (854a037)
     - [ ] 視聴後の完了報告機能
+- [x] Task: Conductor - User Manual Verification 'Phase 2: 受講ステータス管理' (d71b07c)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: 受講ステータス管理'
