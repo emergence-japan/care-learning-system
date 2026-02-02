@@ -10,7 +10,7 @@
 ## バックエンド / データベース
 - **Next.js Server Actions:** APIレイヤーを簡素化し、フロントエンドとシームレスに連携。
 - **Prisma (ORM):** TypeScriptと親和性の高いデータベース操作。
-- **PostgreSQL:** 堅牢でリレーショナルなデータ管理（Supabase等のマネージドサービスの利用を想定）。
+- **SQLite / PostgreSQL:** 開発初期は SQLite を使用し、本番環境では PostgreSQL への移行を想定（Supabase 等）。
 
 ## 認証・セキュリティ
 - **NextAuth.js (Auth.js):** 簡単かつ柔軟なユーザー認証（施設ごとのログイン管理等に対応可能）。
