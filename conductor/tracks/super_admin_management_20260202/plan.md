@@ -1,7 +1,7 @@
 # Implementation Plan: システム管理者（SUPER ADMIN）機能の実装
 
 ## Phase 1: 基盤整備とコンテンツ管理
-- [ ] Task: ロール `SUPER_ADMIN` の追加と権限設定
+- [~] Task: ロール `SUPER_ADMIN` の追加と権限設定
     - [ ] `schema.prisma` の更新（Role に SUPER_ADMIN 追加）
     - [ ] セッション連携と `/super-admin` へのリダイレクト実装
 - [ ] Task: 研修コース管理画面の作成

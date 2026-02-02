@@ -55,7 +55,6 @@ export async function submitTestResults(courseId: string, answers: Record<string
     throw new Error("Unauthorized");
   }
 
-  // サーバー側で正解を検証
   const course = await prisma.course.findUnique({
     where: { id: courseId },
     include: {
@@ -127,7 +126,6 @@ export async function registerStaff(
     return "全ての項目を入力してください。";
   }
 
-  // メールアドレスの重複チェック
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
@@ -136,23 +134,20 @@ export async function registerStaff(
     return "このメールアドレスは既に登録されています。";
   }
 
-  // ユーザーの作成
   const newUser = await prisma.user.create({
     data: {
       name,
       email,
-      password, // 本来はハッシュ化すべきだが、プロトタイプなので簡易的に。authorize側も平文対応済み。
+      password,
       role: "STAFF",
       facilityId,
     },
   });
 
-  // 全研修の取得
   const courses = await prisma.course.findMany({
     select: { id: true },
   });
 
-  // 全研修への割り当て（受講実績の作成）
   if (courses.length > 0) {
     await prisma.enrollment.createMany({
       data: courses.map((course) => ({
@@ -164,4 +159,90 @@ export async function registerStaff(
   }
 
   revalidatePath("/admin");
+}
+
+// --- SUPER ADMIN ACTIONS ---
+
+export async function createCourse(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const videoUrl = formData.get("videoUrl") as string;
+
+  const newCourse = await prisma.course.create({
+    data: {
+      title,
+      description,
+      videoUrl,
+    },
+  });
+
+  // 全ユーザー（スタッフのみ）の取得
+  const users = await prisma.user.findMany({
+    where: { role: "STAFF" },
+    select: { id: true },
+  });
+
+  // 既存の全スタッフに新しい研修を割り当てる (確実に一人ずつ)
+  for (const user of users) {
+    await prisma.enrollment.create({
+      data: {
+        userId: user.id,
+        courseId: newCourse.id,
+        status: "NOT_STARTED",
+      }
+    });
+  }
+
+  revalidatePath("/super-admin/courses");
+  revalidatePath("/");
+}
+
+export async function updateCourse(id: string, formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const videoUrl = formData.get("videoUrl") as string;
+
+  await prisma.course.update({
+    where: { id },
+    data: {
+      title,
+      description,
+      videoUrl,
+    },
+  });
+
+  revalidatePath("/super-admin/courses");
+  revalidatePath(`/courses/${id}`);
+  revalidatePath("/");
+}
+
+export async function deleteCourse(id: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.choice.deleteMany({ where: { question: { courseId: id } } });
+  await prisma.question.deleteMany({ where: { courseId: id } });
+  await prisma.enrollment.deleteMany({ where: { courseId: id } });
+  await prisma.course.delete({ where: { id } });
+
+  revalidatePath("/super-admin/courses");
+  revalidatePath("/");
 }

@@ -16,6 +16,16 @@ async function main() {
     data: { name: 'ケア・グループ法人' }
   })
 
+  // システム管理者（SUPER_ADMIN）
+  await prisma.user.create({
+    data: {
+      email: 'owner@example.com',
+      name: 'システム運営者',
+      password: 'owner_password',
+      role: Role.SUPER_ADMIN,
+    },
+  })
+
   // 本部ユーザー
   await prisma.user.create({
     data: {

@@ -42,6 +42,7 @@ model Corporation {
 }
 
 enum Role {
+  SUPER_ADMIN
   HQ
   ADMIN
   STAFF

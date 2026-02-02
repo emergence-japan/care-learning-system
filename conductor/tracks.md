@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: システム管理者（SUPER ADMIN）機能の実装**
+- [~] **Track: システム管理者（SUPER ADMIN）機能の実装**
   *Link: [./tracks/super_admin_management_20260202/](./tracks/super_admin_management_20260202/)*
