@@ -1,64 +1,108 @@
-import Image from "next/image";
+import { auth, signOut } from "@/auth";
+import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { LogOut, BookOpen, CheckCircle, Clock } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default async function DashboardPage() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  const enrollments = await prisma.enrollment.findMany({
+    where: {
+      userId: session.user.id,
+    },
+    include: {
+      course: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'COMPLETED':
+        return { label: '受講済', color: 'bg-green-100 text-green-800', icon: <CheckCircle className="w-4 h-4 mr-1" /> };
+      case 'IN_PROGRESS':
+        return { label: '受講中', color: 'bg-blue-100 text-blue-800', icon: <Clock className="w-4 h-4 mr-1" /> };
+      default:
+        return { label: '未受講', color: 'bg-zinc-100 text-zinc-800', icon: <BookOpen className="w-4 h-4 mr-1" /> };
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-zinc-50 pb-12">
+      {/* Header */}
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+          <h1 className="font-bold text-xl text-zinc-900">ケア・ラーニング</h1>
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/login" });
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <Button variant="ghost" size="icon" type="submit">
+              <LogOut className="w-5 h-5 text-zinc-500" />
+            </Button>
+          </form>
         </div>
+      </header>
+
+      <main className="max-w-md mx-auto px-4 pt-6 space-y-6">
+        <section>
+          <h2 className="text-zinc-500 text-sm font-medium mb-2 px-1">こんにちは、{session.user.name}さん</h2>
+          <div className="bg-white rounded-2xl p-4 shadow-sm border border-zinc-100">
+            <p className="text-zinc-900 font-semibold text-lg">今日も一日、お疲れ様です！</p>
+            <p className="text-zinc-500 text-sm mt-1">あなたの受講状況を確認しましょう。</p>
+          </div>
+        </section>
+
+        <section>
+          <div className="flex items-center justify-between mb-4 px-1">
+            <h3 className="font-bold text-lg text-zinc-900">研修一覧</h3>
+            <span className="text-sm text-zinc-500">{enrollments.length} 件</span>
+          </div>
+
+          <div className="space-y-4">
+            {enrollments.length > 0 ? (
+              enrollments.map((enrollment) => {
+                const statusInfo = getStatusLabel(enrollment.status);
+                return (
+                  <Card key={enrollment.id} className="overflow-hidden border-zinc-100 shadow-sm hover:shadow-md transition-shadow rounded-2xl">
+                    <CardHeader className="p-4 pb-2">
+                      <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold w-fit ${statusInfo.color}`}>
+                        {statusInfo.icon}
+                        {statusInfo.label}
+                      </div>
+                      <CardTitle className="text-lg mt-2 leading-tight">
+                        {enrollment.course.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-4 pt-0">
+                      <p className="text-sm text-zinc-500 line-clamp-2 mb-4">
+                        {enrollment.course.description || "この研修の説明はありません。"}
+                      </p>
+                      <Button className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-12 font-bold text-base">
+                        {enrollment.status === 'COMPLETED' ? 'もう一度見る' : '受講を開始する'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })
+            ) : (
+              <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-zinc-300">
+                <p className="text-zinc-500">割り当てられた研修はありません。</p>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
     </div>
   );
