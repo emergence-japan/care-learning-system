@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
+import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldAlert, LogOut, LayoutDashboard, Building, BookOpen } from "lucide-react";
+import { ShieldAlert, LogOut, LayoutDashboard, Building, BookOpen, Users, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
 import Link from "next/link";
@@ -13,6 +14,23 @@ export default async function SuperAdminDashboardPage() {
   if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     redirect("/");
   }
+
+  // システム全体統計の取得
+  const totalCorporations = await prisma.corporation.count();
+  const totalFacilities = await prisma.facility.count();
+  const totalStaff = await prisma.user.count({ where: { role: "STAFF" } });
+  const totalCourses = await prisma.course.count();
+
+  // 全受講実績の集計
+  const allEnrollments = await prisma.enrollment.findMany({
+    select: { status: true }
+  });
+  
+  const completedCount = allEnrollments.filter(e => e.status === 'COMPLETED').length;
+  const totalPossible = totalStaff * totalCourses;
+  const overallProgressRate = totalPossible > 0 
+    ? Math.round((completedCount / totalPossible) * 100) 
+    : 0;
 
   return (
     <div className="min-h-screen bg-zinc-50 pb-12 font-sans text-zinc-900">
@@ -53,12 +71,12 @@ export default async function SuperAdminDashboardPage() {
           <Link href="/super-admin/courses" className="block h-full">
             <Card className="h-full hover:border-red-300 transition-all cursor-pointer group shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-bold text-zinc-500 uppercase">コンテンツ管理</CardTitle>
+                <CardTitle className="text-sm font-bold text-zinc-500 uppercase tracking-wider">コンテンツ管理</CardTitle>
                 <BookOpen className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-black">研修コース</div>
-                <p className="text-xs text-zinc-400 mt-1">動画・クイズの新規作成と編集</p>
+                <p className="text-xs text-zinc-400 mt-1 font-medium">全 {totalCourses} 項目の管理</p>
               </CardContent>
             </Card>
           </Link>
@@ -66,38 +84,73 @@ export default async function SuperAdminDashboardPage() {
           <Link href="/super-admin/organizations" className="block h-full">
             <Card className="h-full hover:border-red-300 transition-all cursor-pointer group shadow-sm">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-bold text-zinc-500 uppercase">組織管理</CardTitle>
+                <CardTitle className="text-sm font-bold text-zinc-500 uppercase tracking-wider">組織管理</CardTitle>
                 <Building className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-black">法人・施設</div>
-                <p className="text-xs text-zinc-400 mt-1">契約組織の登録と管理</p>
+                <p className="text-xs text-zinc-400 mt-1 font-medium">{totalCorporations} 法人 / {totalFacilities} 施設の管理</p>
               </CardContent>
             </Card>
           </Link>
 
-          <Card className="hover:border-red-300 transition-all cursor-pointer group shadow-sm">
+          <Card className="hover:border-red-300 transition-all group shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-bold text-zinc-500 uppercase">全体統計</CardTitle>
-              <LayoutDashboard className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
+              <CardTitle className="text-sm font-bold text-zinc-500 uppercase tracking-wider">全体進捗</CardTitle>
+              <Activity className="w-4 h-4 text-zinc-400 group-hover:text-red-600 transition-colors" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-black">システム状況</div>
-              <p className="text-xs text-zinc-400 mt-1">全法人の受講実績サマリー</p>
+              <div className="text-2xl font-black">{overallProgressRate}%</div>
+              <p className="text-xs text-zinc-400 mt-1 font-medium">全スタッフ {totalStaff} 名の平均</p>
             </CardContent>
           </Card>
         </section>
 
-        {/* Welcome Message */}
-        <div className="bg-white border border-zinc-200 rounded-3xl p-12 text-center space-y-4 shadow-sm">
-          <div className="bg-red-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <ShieldAlert className="w-10 h-10 text-red-600" />
+        {/* System Overview Details */}
+        <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
+          <div className="p-8 border-b border-zinc-100 flex items-center justify-between">
+            <h2 className="text-2xl font-black text-zinc-900">システム概況</h2>
+            <div className="bg-zinc-100 px-4 py-1 rounded-full text-xs font-bold text-zinc-500 uppercase">Snapshot</div>
           </div>
-          <h2 className="text-3xl font-black text-zinc-900">管理者コンソールへようこそ</h2>
-          <p className="text-zinc-500 max-w-lg mx-auto leading-relaxed">
-            ここからシステム全体の管理を行います。上のメニューから操作を選択してください。
-            現在はプロトタイプ段階のため、主要な機能を順次実装中です。
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-zinc-100">
+            <div className="p-8 text-center space-y-1">
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Corporations</p>
+              <p className="text-4xl font-black text-zinc-900">{totalCorporations}</p>
+            </div>
+            <div className="p-8 text-center space-y-1">
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Facilities</p>
+              <p className="text-4xl font-black text-zinc-900">{totalFacilities}</p>
+            </div>
+            <div className="p-8 text-center space-y-1">
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Total Users</p>
+              <p className="text-4xl font-black text-zinc-900">{totalStaff}</p>
+            </div>
+            <div className="p-8 text-center space-y-1">
+              <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Enrollments</p>
+              <p className="text-4xl font-black text-zinc-900">{allEnrollments.length}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Help */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-red-50/50 border border-red-100 rounded-2xl p-6 space-y-2">
+            <h4 className="font-bold text-red-900 text-sm flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4" /> 運用メモ
+            </h4>
+            <p className="text-xs text-red-700 leading-relaxed">
+              新しい法人と契約した際は、「組織管理」から法人を登録し、続けて施設を登録してください。
+              各施設の管理画面からスタッフ登録を行うよう、各施設長に案内してください。
+            </p>
+          </div>
+          <div className="bg-zinc-900 text-white rounded-2xl p-6 space-y-2 shadow-inner">
+            <h4 className="font-bold text-zinc-100 text-sm">システム状況</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              データベース: SQLite (Vercel移行時にPostgreSQLへ変更予定)<br />
+              認証基盤: Auth.js (NextAuth v5)<br />
+              最終デプロイ: 2026-02-02
+            </p>
+          </div>
         </div>
       </main>
     </div>

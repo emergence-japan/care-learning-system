@@ -18,7 +18,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: 組織管理機能' (dbb6d7d)
 
 ## Phase 3: 全体統計と仕上げ
-- [ ] Task: システム全体ダッシュボードの構築
+- [~] Task: システム全体ダッシュボードの構築
     - [ ] 全組織を横断した統計情報の表示
 - [ ] Task: デザインの統一とモバイル対応確認
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: 全体統計と仕上げ'

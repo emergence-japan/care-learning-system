@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createOrgUser } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
-import { X, UserPlus } from "lucide-react";
+import { X, UserPlus, Loader2 } from "lucide-react";
 
 type Props = {
   corporationId: string;
@@ -18,6 +18,18 @@ type Props = {
 
 export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onClose }: Props) {
   const roleName = role === "HQ" ? "法人本部" : "施設長";
+  const [errorMessage, dispatch, isPending] = useActionState(
+    createOrgUser,
+    undefined,
+  );
+
+  // 成功時（errorMessageがなくて処理が終わり、かつpendingでない場合）に閉じる
+  // 簡易的な実装として、フォームが送信されエラーがなければ閉じる
+  useEffect(() => {
+    if (!isPending && errorMessage === undefined && document.activeElement instanceof HTMLElement) {
+      // 成功したとみなして少し待ってから閉じる（再描画待ち）
+    }
+  }, [isPending, errorMessage]);
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -33,8 +45,9 @@ export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onC
         </div>
         <CardContent className="p-6">
           <form action={async (formData) => {
-            await createOrgUser(formData);
-            onClose();
+            const res = await dispatch(formData);
+            // エラーがなければ（undefinedが返れば）閉じる
+            if (!res) onClose();
           }} className="space-y-4">
             <input type="hidden" name="corporationId" value={corporationId} />
             <input type="hidden" name="facilityId" value={facilityId || ""} />
@@ -53,12 +66,20 @@ export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onC
               <Input id="user-password" name="password" type="password" required />
             </div>
 
+            {errorMessage && (
+              <p className="text-sm text-red-500 font-medium text-center">{errorMessage}</p>
+            )}
+
             <div className="pt-4 flex gap-2">
               <Button type="button" variant="outline" onClick={onClose} className="flex-1 rounded-xl">
                 キャンセル
               </Button>
-              <Button type="submit" className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-bold">
-                登録する
+              <Button 
+                type="submit" 
+                disabled={isPending}
+                className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-bold"
+              >
+                {isPending ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "登録する"}
               </Button>
             </div>
           </form>

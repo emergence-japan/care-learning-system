@@ -256,6 +256,19 @@ export async function createOrgUser(formData: FormData) {
   const corporationId = formData.get("corporationId") as string;
   const facilityId = formData.get("facilityId") as string || null;
 
+  if (!name || !email || !password) {
+    return "全ての項目を入力してください。";
+  }
+
+  // メールアドレスの重複チェック
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingUser) {
+    return "このメールアドレスは既に登録されています。";
+  }
+
   await prisma.user.create({
     data: {
       name,

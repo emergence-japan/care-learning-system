@@ -45,6 +45,22 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
               </div>
             </div>
 
+            <div className="px-6 py-4 border-b border-zinc-100 bg-zinc-50/50">
+              <div className="text-[10px] font-bold uppercase text-zinc-400 mb-2 tracking-widest">法人本部（代表者）</div>
+              <div className="flex flex-wrap gap-2">
+                {corp.users.map(user => (
+                  <div key={user.id} className="bg-white border border-zinc-200 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span className="text-xs font-bold text-zinc-700">{user.name}</span>
+                    <span className="text-[10px] text-zinc-400">{user.email}</span>
+                  </div>
+                ))}
+                {corp.users.length === 0 && (
+                  <p className="text-xs text-zinc-400 italic py-1">本部ユーザーが未登録です</p>
+                )}
+              </div>
+            </div>
+
             <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
               {corp.facilities.map((facility) => (
                 <Card key={facility.id} className="border-zinc-100 bg-zinc-50/30 rounded-2xl overflow-hidden">
@@ -62,11 +78,12 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                       >
                         <Plus className="w-4 h-4 mr-1" /> 施設長追加
                       </Button>
-                    </div>
+                                            </div>
+                                            
+                                            <div className="space-y-2">
+                                              <p className="text-[10px] font-bold uppercase text-zinc-400">施設管理者（施設長）</p>
+                                              <div className="space-y-1">
                     
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-bold uppercase text-zinc-400">Administrators</p>
-                      <div className="space-y-1">
                         {facility.users.map(user => (
                           <div key={user.id} className="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-zinc-100 shadow-sm">
                             <div className="text-sm font-medium">{user.name}</div>
