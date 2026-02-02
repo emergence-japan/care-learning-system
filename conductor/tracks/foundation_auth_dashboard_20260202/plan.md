@@ -7,7 +7,7 @@
 - [x] Task: データベーススキーマの定義 (Prisma) (829cfad)
     - [ ] User, Course, Enrollment モデルの作成
     - [ ] 初期データの流し込み (Seed)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: 環境構築と基盤整備' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 1: 環境構築と基盤整備' (Protocol in workflow.md)
 
 ## Phase 2: 認証機能の実装
 - [ ] Task: ログイン画面の構築 (UIのみ)
