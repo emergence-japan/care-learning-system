@@ -10,7 +10,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 組織階層の再構築' (7727bd6)
 
 ## Phase 2: 法人本部ダッシュボード
-- [ ] Task: 法人本部用ページ `/hq` の作成
+- [~] Task: 法人本部用ページ `/hq` の作成
     - [ ] `src/app/hq/page.tsx` の実装
     - [ ] 法人内の施設別進捗一覧（カードリスト）の表示
 - [ ] Task: 本部から各施設へのドリルダウン機能

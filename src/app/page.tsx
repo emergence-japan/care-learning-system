@@ -18,6 +18,10 @@ export default async function DashboardPage() {
     redirect("/admin");
   }
 
+  if (session.user.role === "HQ") {
+    redirect("/hq");
+  }
+
   const enrollments = await prisma.enrollment.findMany({
     where: {
       userId: session.user.id,

@@ -9,14 +9,31 @@ async function main() {
   await prisma.course.deleteMany({})
   await prisma.user.deleteMany({})
   await prisma.facility.deleteMany({})
+  await prisma.corporation.deleteMany({})
 
-  // 施設の作成
+  // 法人の作成
+  const corp = await prisma.corporation.create({
+    data: { name: 'ケア・グループ法人' }
+  })
+
+  // 本部ユーザー
+  await prisma.user.create({
+    data: {
+      email: 'hq@example.com',
+      name: '法人本部 太郎',
+      password: 'hq_password',
+      role: Role.HQ,
+      corporationId: corp.id,
+    },
+  })
+
+  // 施設の作成（法人に紐付け）
   const facilityA = await prisma.facility.create({
-    data: { name: 'ひまわりの里' }
+    data: { name: 'ひまわりの里', corporationId: corp.id }
   })
 
   const facilityB = await prisma.facility.create({
-    data: { name: 'さくら苑' }
+    data: { name: 'さくら苑', corporationId: corp.id }
   })
 
   // 施設Aのユーザー
@@ -27,6 +44,7 @@ async function main() {
       password: 'admin_password',
       role: Role.ADMIN,
       facilityId: facilityA.id,
+      corporationId: corp.id,
     },
   })
 
@@ -37,6 +55,7 @@ async function main() {
       password: 'staff_password',
       role: Role.STAFF,
       facilityId: facilityA.id,
+      corporationId: corp.id,
     },
   })
 
@@ -48,6 +67,7 @@ async function main() {
       password: 'admin_password',
       role: Role.ADMIN,
       facilityId: facilityB.id,
+      corporationId: corp.id,
     },
   })
 
@@ -58,10 +78,11 @@ async function main() {
       password: 'staff_password',
       role: Role.STAFF,
       facilityId: facilityB.id,
+      corporationId: corp.id,
     },
   })
 
-  // 共通の研修
+  // 研修の作成
   const course1 = await prisma.course.create({
     data: {
       title: '虐待防止研修（令和6年度）',
@@ -81,32 +102,30 @@ async function main() {
               ],
             },
           },
-          {
-            text: '身体拘束が例外的に認められる「3つの要件」に含まれないものはどれですか？',
-            order: 2,
-            choices: {
-              create: [
-                { text: '切迫性', isCorrect: false },
-                { text: '非代替性', isCorrect: false },
-                { text: '一時性', isCorrect: false },
-                { text: '利便性', isCorrect: true },
-              ],
-            },
-          },
         ],
       },
+    },
+  })
+
+  const course2 = await prisma.course.create({
+    data: {
+      title: '感染症対策研修',
+      description: '標準的な予防策と感染経路別対策を学びます。',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     },
   })
 
   // 受講実績の作成
   await prisma.enrollment.createMany({
     data: [
-      { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
-      { userId: staffB.id, courseId: course1.id, status: Status.COMPLETED, completedAt: new Date() },
+      { userId: staffA.id, courseId: course1.id, status: Status.COMPLETED, completedAt: new Date() },
+      { userId: staffA.id, courseId: course2.id, status: Status.NOT_STARTED },
+      { userId: staffB.id, courseId: course1.id, status: Status.NOT_STARTED },
+      { userId: staffB.id, courseId: course2.id, status: Status.NOT_STARTED },
     ]
   })
 
-  console.log('Seed data created successfully with multiple facilities')
+  console.log('Seed data updated with Corporation and HQ user')
 }
 
 main()
