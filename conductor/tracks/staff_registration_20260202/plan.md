@@ -8,9 +8,9 @@
     - [ ] Shadcn/ui の Dialog コンポーネント等を使用した入力画面
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: 登録ロジックとフォームの構築'
 
-## Phase 2: 統合と最終確認
-- [ ] Task: 管理者ダッシュボードへの統合
+## Phase 2: 統合と最終確認 [checkpoint: 805bed2]
+- [x] Task: 管理者ダッシュボードへの統合 (805bed2)
     - [ ] 「スタッフを追加する」ボタンの設置と連携
-- [ ] Task: ログイン動作の確認
+- [x] Task: ログイン動作の確認 (805bed2)
     - [ ] 実際に作成したスタッフアカウントでのログイン・受講確認
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: 統合と最終確認'
+- [x] Task: Conductor - User Manual Verification 'Phase 2: 統合と最終確認' (805bed2)
