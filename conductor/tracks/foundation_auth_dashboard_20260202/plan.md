@@ -17,7 +17,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: 認証機能の実装' (Protocol in workflow.md) (d84280d)
 
 ## Phase 3: スタッフ用ダッシュボード
-- [~] Task: ダッシュボード画面の実装
+- [x] Task: ダッシュボード画面の実装 (ee2cc20)
     - [ ] 研修一覧表示（カード形式、大きなボタン）
     - [ ] ステータス（未受講・完了）の視覚的表示
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: スタッフ用ダッシュボード' (Protocol in workflow.md)
