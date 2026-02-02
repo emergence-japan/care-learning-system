@@ -9,7 +9,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 研修詳細画面の基盤' (ac57b67)
 
 ## Phase 2: 受講ステータス管理
-- [ ] Task: 受講開始・完了の Server Actions 実装
+- [~] Task: 受講開始・完了の Server Actions 実装
     - [ ] ステータスを `IN_PROGRESS` や `COMPLETED` に更新するロジック
 - [ ] Task: 完了ボタンのUIと連携
     - [ ] 視聴後の完了報告機能

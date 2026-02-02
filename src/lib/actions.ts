@@ -1,30 +1,48 @@
-
-"use strict";
 "use server";
 
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
+import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
 ) {
+  const { signIn } = await import("@/auth");
   try {
     await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirectTo: "/",
     });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return "メールアドレスまたはパスワードが正しくありません。";
-        default:
-          return "エラーが発生しました。もう一度お試しください。";
-      }
+  } catch (error: any) {
+    if (error.type === "CredentialsSignin") {
+      return "メールアドレスまたはパスワードが正しくありません。";
     }
-    // 重要: リダイレクトエラー（成功時）を再スローして Next.js に処理させる
     throw error;
   }
+}
+
+export async function completeEnrollment(courseId: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.enrollment.update({
+    where: {
+      userId_courseId: {
+        userId: session.user.id,
+        courseId,
+      },
+    },
+    data: {
+      status: "COMPLETED",
+      completedAt: new Date(),
+    },
+  });
+
+  revalidatePath("/");
+  revalidatePath(`/courses/${courseId}`);
 }

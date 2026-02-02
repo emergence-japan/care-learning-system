@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { completeEnrollment } from "@/lib/actions";
 
 export default async function CourseDetailPage({
   params,
@@ -17,8 +18,6 @@ export default async function CourseDetailPage({
 
   const { id } = await params;
 
-  // 本来は enrollment を通じて取得すべきだが、まずは course を直接取得してテストを通す
-  // 後で Prisma の include 等を調整する
   const enrollment = await prisma.enrollment.findUnique({
     where: {
       userId_courseId: {
@@ -47,6 +46,8 @@ export default async function CourseDetailPage({
   };
 
   const embedUrl = enrollment.course.videoUrl ? getYouTubeEmbedUrl(enrollment.course.videoUrl) : "";
+
+  const isCompleted = enrollment.status === "COMPLETED";
 
   return (
     <div className="min-h-screen bg-white pb-12">
@@ -90,9 +91,20 @@ export default async function CourseDetailPage({
         </div>
 
         <div className="mt-12">
-          <Button className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl">
-            受講を完了する
-          </Button>
+          {isCompleted ? (
+            <div className="bg-green-50 border border-green-100 rounded-2xl p-4 flex items-center justify-center text-green-800 font-bold">
+              受講完了済みです
+            </div>
+          ) : (
+            <form action={async () => {
+              "use server";
+              await completeEnrollment(id);
+            }}>
+              <Button type="submit" className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl">
+                受講を完了する
+              </Button>
+            </form>
+          )}
         </div>
       </main>
     </div>

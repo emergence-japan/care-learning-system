@@ -61,4 +61,32 @@ describe('Course Detail Page', () => {
     expect(iframe).toBeInTheDocument()
     expect(iframe).toHaveAttribute('src', expect.stringContaining('youtube.com/embed/dQw4w9WgXcQ'))
   })
+
+  it('受講完了済みの場合は「受講完了済みです」と表示されること', async () => {
+    const { auth } = await import('@/auth')
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'user1', name: 'Test User', email: 'test@example.com' }
+    })
+
+    const { default: prisma } = await import('@/lib/prisma')
+    ;(prisma.enrollment.findUnique as any).mockResolvedValue({
+      id: 'e1',
+      status: 'COMPLETED',
+      course: {
+        id: 'c1',
+        title: '虐待防止研修（令和6年度）',
+        videoUrl: 'https://youtube.com/v=123',
+      },
+    })
+
+    const props = {
+      params: Promise.resolve({ id: 'c1' })
+    }
+
+    const Result = await CourseDetailPage(props)
+    render(Result)
+    
+    expect(screen.getByText(/受講完了済みです/i)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /受講を完了する/i })).not.toBeInTheDocument()
+  })
 })
