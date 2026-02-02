@@ -14,7 +14,7 @@
     - [ ] デザインガイドラインに基づいたモバイルフレンドリーな入力画面
 - [x] Task: 認証ロジックの実装 (Auth.js) (6c459e3)
     - [ ] ログイン・ログアウト機能の作成
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: 認証機能の実装' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 2: 認証機能の実装' (Protocol in workflow.md)
 
 ## Phase 3: スタッフ用ダッシュボード
 - [ ] Task: ダッシュボード画面の実装
