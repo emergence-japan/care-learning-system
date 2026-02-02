@@ -3,6 +3,8 @@ import { PrismaClient, Role, Status } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
+  await prisma.choice.deleteMany({})
+  await prisma.question.deleteMany({})
   await prisma.enrollment.deleteMany({})
   await prisma.course.deleteMany({})
   await prisma.user.deleteMany({})
