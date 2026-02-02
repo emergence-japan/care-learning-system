@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: 理解度確認テスト機能の実装**
+- [x] **Track: 理解度確認テスト機能の実装**
   *Link: [./tracks/comprehension_test_20260202/](./tracks/comprehension_test_20260202/)*
