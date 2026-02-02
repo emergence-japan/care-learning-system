@@ -17,8 +17,9 @@ vi.mock('@/lib/prisma', () => ({
         course: {
           id: 'c1',
           title: '虐待防止研修（令和6年度）',
-          description: '高齢者虐待防止の基本と対応について学習します。',
+          description: '高齢者高齢者虐待防止の基本と対応について学習します。',
           videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          questions: [],
         },
       }),
     },
@@ -62,7 +63,45 @@ describe('Course Detail Page', () => {
     expect(iframe).toHaveAttribute('src', expect.stringContaining('youtube.com/embed/dQw4w9WgXcQ'))
   })
 
-  it('受講完了済みの場合は「受講完了済みです」と表示されること', async () => {
+  it('テストが設定されている場合、理解度テストが表示されること', async () => {
+    const { auth } = await import('@/auth')
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'user1', name: 'Test User', email: 'test@example.com' }
+    })
+
+    const { default: prisma } = await import('@/lib/prisma')
+    ;(prisma.enrollment.findUnique as any).mockResolvedValue({
+      id: 'e1',
+      status: 'NOT_STARTED',
+      course: {
+        id: 'c1',
+        title: '虐待防止研修',
+        questions: [
+          {
+            id: 'q1',
+            text: 'テスト設問1',
+            choices: [
+              { id: 'ch1', text: '選択肢1', isCorrect: true },
+              { id: 'ch2', text: '選択肢2', isCorrect: false },
+            ],
+          },
+        ],
+      },
+    })
+
+    const props = {
+      params: Promise.resolve({ id: 'c1' })
+    }
+
+    const Result = await CourseDetailPage(props)
+    render(Result)
+    
+    expect(screen.getByText(/理解度テスト/i)).toBeInTheDocument()
+    expect(screen.getByText('テスト設問1')).toBeInTheDocument()
+    expect(screen.getByText('選択肢1')).toBeInTheDocument()
+  })
+
+  it('受講完了済みの場合は「受講を完了しています」と表示されること', async () => {
     const { auth } = await import('@/auth')
     ;(auth as any).mockResolvedValue({
       user: { id: 'user1', name: 'Test User', email: 'test@example.com' }
@@ -76,6 +115,7 @@ describe('Course Detail Page', () => {
         id: 'c1',
         title: '虐待防止研修（令和6年度）',
         videoUrl: 'https://youtube.com/v=123',
+        questions: [],
       },
     })
 
@@ -86,7 +126,7 @@ describe('Course Detail Page', () => {
     const Result = await CourseDetailPage(props)
     render(Result)
     
-    expect(screen.getByText(/受講完了済みです/i)).toBeInTheDocument()
+    expect(screen.getByText(/受講を完了しています/i)).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /受講を完了する/i })).not.toBeInTheDocument()
   })
 })

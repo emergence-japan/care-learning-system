@@ -1,7 +1,7 @@
 # Implementation Plan: 理解度確認テスト機能の実装
 
 ## Phase 1: データモデルと基本UI
-- [ ] Task: Prisma スキーマへの Question/Choice モデル追加
+- [~] Task: Prisma スキーマへの Question/Choice モデル追加
     - [ ] `schema.prisma` の更新とマイグレーション
     - [ ] シードデータへのテスト設問追加
 - [ ] Task: テスト回答画面のUI構築

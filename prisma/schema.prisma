@@ -31,6 +31,28 @@ model Course {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   enrollments Enrollment[]
+  questions   Question[]
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  courseId  String
+  text      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id])
+  choices   Choice[]
+}
+
+model Choice {
+  id         String   @id @default(cuid())
+  questionId String
+  text       String
+  isCorrect  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  question   Question @relation(fields: [questionId], references: [id])
 }
 
 model Enrollment {
