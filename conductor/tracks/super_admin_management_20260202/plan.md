@@ -17,8 +17,8 @@
     - [ ] 法人本部・施設管理者のアカウント作成フォーム
 - [x] Task: Conductor - User Manual Verification 'Phase 2: 組織管理機能' (dbb6d7d)
 
-## Phase 3: 全体統計と仕上げ
-- [~] Task: システム全体ダッシュボードの構築
+## Phase 3: 全体統計と仕上げ [checkpoint: 7148d4f]
+- [x] Task: システム全体ダッシュボードの構築 (7148d4f)
     - [ ] 全組織を横断した統計情報の表示
-- [ ] Task: デザインの統一とモバイル対応確認
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: 全体統計と仕上げ'
+- [x] Task: デザインの統一とモバイル対応確認 (7148d4f)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: 全体統計と仕上げ' (7148d4f)
