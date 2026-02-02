@@ -8,29 +8,60 @@ async function main() {
   await prisma.enrollment.deleteMany({})
   await prisma.course.deleteMany({})
   await prisma.user.deleteMany({})
+  await prisma.facility.deleteMany({})
 
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
-    update: {},
-    create: {
-      email: 'admin@example.com',
-      name: '管理者 太郎',
+  // 施設の作成
+  const facilityA = await prisma.facility.create({
+    data: { name: 'ひまわりの里' }
+  })
+
+  const facilityB = await prisma.facility.create({
+    data: { name: 'さくら苑' }
+  })
+
+  // 施設Aのユーザー
+  const adminA = await prisma.user.create({
+    data: {
+      email: 'admin_a@example.com',
+      name: 'ひまわり管理者',
       password: 'admin_password',
       role: Role.ADMIN,
+      facilityId: facilityA.id,
     },
   })
 
-  const staff = await prisma.user.upsert({
-    where: { email: 'staff@example.com' },
-    update: {},
-    create: {
-      email: 'staff@example.com',
-      name: '介護 華子',
+  const staffA = await prisma.user.create({
+    data: {
+      email: 'staff_a@example.com',
+      name: 'ひまわりスタッフ',
       password: 'staff_password',
       role: Role.STAFF,
+      facilityId: facilityA.id,
     },
   })
 
+  // 施設Bのユーザー
+  const adminB = await prisma.user.create({
+    data: {
+      email: 'admin_b@example.com',
+      name: 'さくら管理者',
+      password: 'admin_password',
+      role: Role.ADMIN,
+      facilityId: facilityB.id,
+    },
+  })
+
+  const staffB = await prisma.user.create({
+    data: {
+      email: 'staff_b@example.com',
+      name: 'さくらスタッフ',
+      password: 'staff_password',
+      role: Role.STAFF,
+      facilityId: facilityB.id,
+    },
+  })
+
+  // 共通の研修
   const course1 = await prisma.course.create({
     data: {
       title: '虐待防止研修（令和6年度）',
@@ -67,15 +98,15 @@ async function main() {
     },
   })
 
-  await prisma.enrollment.create({
-    data: {
-      userId: staff.id,
-      courseId: course1.id,
-      status: Status.NOT_STARTED,
-    },
+  // 受講実績の作成
+  await prisma.enrollment.createMany({
+    data: [
+      { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
+      { userId: staffB.id, courseId: course1.id, status: Status.COMPLETED, completedAt: new Date() },
+    ]
   })
 
-  console.log('Seed data created successfully')
+  console.log('Seed data created successfully with multiple facilities')
 }
 
 main()

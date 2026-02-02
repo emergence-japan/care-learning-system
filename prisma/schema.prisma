@@ -8,14 +8,24 @@ datasource db {
 }
 
 model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       Role     @default(STAFF)
+  facilityId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  facility   Facility? @relation(fields: [facilityId], references: [id])
+  enrollments Enrollment[]
+}
+
+model Facility {
   id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(STAFF)
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  enrollments Enrollment[]
+  users     User[]
 }
 
 enum Role {

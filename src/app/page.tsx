@@ -13,6 +13,11 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
+  // 管理者の場合は管理者ダッシュボードへ
+  if (session.user.role === "ADMIN") {
+    redirect("/admin");
+  }
+
   const enrollments = await prisma.enrollment.findMany({
     where: {
       userId: session.user.id,
