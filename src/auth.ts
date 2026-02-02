@@ -34,6 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           email: user.email,
           role: user.role,
+          facilityId: user.facilityId,
         }
       },
     }),
@@ -47,12 +48,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // @ts-ignore
         session.user.role = token.role
       }
+      if (token.facilityId && session.user) {
+        // @ts-ignore
+        session.user.facilityId = token.facilityId
+      }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
         // @ts-ignore
         token.role = user.role
+        // @ts-ignore
+        token.facilityId = (user as any).facilityId
       }
       return token
     },

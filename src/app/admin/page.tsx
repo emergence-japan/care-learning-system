@@ -44,13 +44,41 @@ export default async function AdminDashboardPage() {
   
   // 統計の算出
   const totalStaff = staffMembers.length;
-  const completedEnrollments = staffMembers.reduce((acc, user) => {
+  const fullyCompletedStaff = staffMembers.filter(user => 
+    user.enrollments.length === totalCoursesCount && 
+    user.enrollments.every(e => e.status === 'COMPLETED')
+  ).length;
+
+  const totalCompletedEnrollments = staffMembers.reduce((acc, user) => {
     return acc + user.enrollments.filter(e => e.status === 'COMPLETED').length;
   }, 0);
   const totalAssignments = totalStaff * totalCoursesCount;
   const progressRate = totalAssignments > 0 
-    ? Math.round((completedEnrollments / totalAssignments) * 100) 
+    ? Math.round((totalCompletedEnrollments / totalAssignments) * 100) 
     : 0;
+
+  // 研修ごとの集計データ作成
+  const courses = await prisma.course.findMany({
+    include: {
+      enrollments: {
+        where: {
+          user: {
+            facilityId: facilityId,
+          },
+        },
+      },
+    },
+  });
+
+  const courseStats = courses.map(course => {
+    const completedCount = course.enrollments.filter(e => e.status === 'COMPLETED').length;
+    return {
+      id: course.id,
+      title: course.title,
+      completedCount,
+      rate: totalStaff > 0 ? Math.round((completedCount / totalStaff) * 100) : 0,
+    };
+  });
 
   return (
     <div className="min-h-screen bg-zinc-50 pb-12 font-sans">
@@ -89,11 +117,12 @@ export default async function AdminDashboardPage() {
           </Card>
           <Card className="border-zinc-100 shadow-sm rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-500">完了済み研修数</CardTitle>
+              <CardTitle className="text-sm font-medium text-zinc-500">全研修完了者</CardTitle>
               <BookCheck className="w-4 h-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{completedEnrollments} 件</div>
+              <div className="text-2xl font-bold">{fullyCompletedStaff} 名</div>
+              <p className="text-xs text-zinc-400 mt-1">全 {totalCoursesCount} 項目を修了</p>
             </CardContent>
           </Card>
           <Card className="border-zinc-100 shadow-sm rounded-2xl">
@@ -156,6 +185,33 @@ export default async function AdminDashboardPage() {
                 )}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Course-wise Progress Section */}
+        <section className="bg-white rounded-2xl shadow-sm border border-zinc-100 overflow-hidden">
+          <div className="p-6 border-b border-zinc-100">
+            <h3 className="font-bold text-lg text-zinc-900">研修別受講状況</h3>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 gap-6">
+              {courseStats.map((course) => (
+                <div key={course.id} className="space-y-2">
+                  <div className="flex justify-between items-end">
+                    <div className="font-bold text-zinc-800">{course.title}</div>
+                    <div className="text-sm text-zinc-500">
+                      <span className="font-bold text-zinc-900">{course.completedCount}</span> / {totalStaff} 名完了 ({course.rate}%)
+                    </div>
+                  </div>
+                  <div className="w-full bg-zinc-100 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className="bg-blue-500 h-full transition-all duration-700" 
+                      style={{ width: `${course.rate}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>
