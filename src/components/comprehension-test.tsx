@@ -20,15 +20,16 @@ type Question = {
 type Props = {
   courseId: string;
   questions: Question[];
-  onComplete: () => Promise<void>;
+  onSubmit: (answers: Record<string, string>) => Promise<{ isPassed: boolean; score: number; total: number }>;
 };
 
-export function ComprehensionTest({ courseId, questions, onComplete }: Props) {
+export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState<Record<string, string>>({});
   const [showResult, setShowResult] = useState(false);
   const [isPassed, setIsPassed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [score, setScore] = useState({ current: 0, total: 0 });
 
   const currentQuestion = questions[currentStep];
   const totalQuestions = questions.length;
@@ -37,32 +38,23 @@ export function ComprehensionTest({ courseId, questions, onComplete }: Props) {
     setSelectedChoices((prev) => ({ ...prev, [questionId]: choiceId }));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < totalQuestions - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // 採点
-      let correctCount = 0;
-      questions.forEach((q) => {
-        const selectedId = selectedChoices[q.id];
-        const choice = q.choices.find((c) => c.id === selectedId);
-        if (choice?.isCorrect) correctCount++;
-      });
-
-      const passed = correctCount === totalQuestions;
-      setIsPassed(passed);
-      setShowResult(true);
-    }
-  };
-
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    try {
-      await onComplete();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
+      // サーバーへ送信して検証
+      setIsSubmitting(true);
+      try {
+        const result = await onSubmit(selectedChoices);
+        setIsPassed(result.isPassed);
+        setScore({ current: result.score, total: result.total });
+        setShowResult(true);
+      } catch (error) {
+        console.error(error);
+        alert("送信中にエラーが発生しました。");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -77,14 +69,13 @@ export function ComprehensionTest({ courseId, questions, onComplete }: Props) {
               </div>
               <h3 className="text-2xl font-bold text-zinc-900">合格です！</h3>
               <p className="text-zinc-600">
-                素晴らしい！すべての問題に正解しました。研修受講を完了として記録します。
+                おめでとうございます！ {score.total}問中{score.current}問正解しました。研修受講を完了として記録しました。
               </p>
               <Button 
-                onClick={handleSubmit} 
-                disabled={isSubmitting}
+                onClick={() => window.location.href = "/"}
                 className="w-full h-14 text-xl font-bold bg-green-600 hover:bg-green-700 text-white rounded-2xl"
               >
-                {isSubmitting ? "記録中..." : "完了報告を送信する"}
+                ダッシュボードに戻る
               </Button>
             </>
           ) : (
@@ -94,7 +85,7 @@ export function ComprehensionTest({ courseId, questions, onComplete }: Props) {
               </div>
               <h3 className="text-2xl font-bold text-zinc-900">もう一度復習しましょう</h3>
               <p className="text-zinc-600">
-                残念ながら、いくつか間違えがあったようです。動画をもう一度確認して再挑戦しましょう。
+                残念ながら、{score.total}問中{score.current}問の正解でした。全問正解で合格となります。動画をもう一度確認して再挑戦しましょう。
               </p>
               <Button 
                 onClick={() => {

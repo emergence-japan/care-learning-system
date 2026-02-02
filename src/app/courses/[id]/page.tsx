@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { completeEnrollment } from "@/lib/actions";
+import { completeEnrollment, submitTestResults } from "@/lib/actions";
 import { ComprehensionTest } from "@/components/comprehension-test";
 
 export default async function CourseDetailPage({
@@ -67,6 +67,11 @@ export default async function CourseDetailPage({
     await completeEnrollment(id);
   };
 
+  const handleSubmitTest = async (answers: Record<string, string>) => {
+    "use server";
+    return await submitTestResults(id, answers);
+  };
+
   return (
     <div className="min-h-screen bg-white pb-12">
       <header className="bg-white border-b sticky top-0 z-10 h-16 flex items-center px-4">
@@ -123,7 +128,7 @@ export default async function CourseDetailPage({
             <ComprehensionTest 
               courseId={id} 
               questions={enrollment.course.questions} 
-              onComplete={handleComplete}
+              onSubmit={handleSubmitTest}
             />
           ) : (
             <form action={handleComplete}>

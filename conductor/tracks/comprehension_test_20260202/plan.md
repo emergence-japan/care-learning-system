@@ -9,7 +9,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: データモデルと基本UI' (59a3dfc)
 
 ## Phase 2: 採点ロジックとステータス連携
-- [ ] Task: テスト採点用の Server Actions 実装
+- [~] Task: テスト採点用の Server Actions 実装
     - [ ] 回答の検証とスコア算出
 - [ ] Task: 合格時の受講ステータス更新処理
     - [ ] テスト合格後に `Enrollment` を `COMPLETED` に更新

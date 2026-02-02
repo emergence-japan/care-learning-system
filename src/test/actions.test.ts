@@ -7,7 +7,7 @@ vi.mock('@/auth', () => ({
   signOut: vi.fn(),
 }))
 
-import { completeEnrollment } from '@/lib/actions'
+import { completeEnrollment, submitTestResults } from '@/lib/actions'
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth'
 
@@ -16,12 +16,51 @@ vi.mock('@/lib/prisma', () => ({
     enrollment: {
       update: vi.fn(),
     },
+    course: {
+      findUnique: vi.fn(),
+    },
   },
 }))
 
 describe('Enrollment Actions', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+  })
+
+  it('テストに全問正解した場合、合格（isPassed: true）を返し、ステータスを更新すること', async () => {
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'user1' }
+    })
+    
+    ;(prisma.course.findUnique as any).mockResolvedValue({
+      id: 'course1',
+      questions: [
+        { id: 'q1', choices: [{ id: 'c1', isCorrect: true }] }
+      ]
+    })
+    
+    const result = await submitTestResults('course1', { 'q1': 'c1' })
+    
+    expect(result.isPassed).toBe(true)
+    expect(prisma.enrollment.update).toHaveBeenCalled()
+  })
+
+  it('テストに不正解がある場合、不合格（isPassed: false）を返し、ステータスを更新しないこと', async () => {
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'user1' }
+    })
+    
+    ;(prisma.course.findUnique as any).mockResolvedValue({
+      id: 'course1',
+      questions: [
+        { id: 'q1', choices: [{ id: 'c1', isCorrect: true }] }
+      ]
+    })
+    
+    const result = await submitTestResults('course1', { 'q1': 'wrong' })
+    
+    expect(result.isPassed).toBe(false)
+    expect(prisma.enrollment.update).not.toHaveBeenCalled()
   })
 
   it('受講を完了状態に更新できること', async () => {
