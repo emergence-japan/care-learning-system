@@ -8,7 +8,7 @@
     - [ ] 複数の施設と、それぞれの施設に属する管理者・スタッフのデータ作成
 - [x] Task: Conductor - User Manual Verification 'Phase 1: データベース拡張とマルチテナント化' (21ea395)
 
-## Phase 2: 管理者ダッシュボードの構築
+## Phase 2: 管理者ダッシュボードの構築 [checkpoint: 75b929c]
 - [x] Task: 管理者用ページ `/admin` の作成 (43cf0fb)
     - [ ] `src/app/admin/page.tsx` の実装
     - [ ] ログイン後のロールに基づいたリダイレクト処理
@@ -16,4 +16,4 @@
     - [ ] スタッフ名、研修タイトル、ステータスを並べたテーブル表示
 - [x] Task: 進捗率（パーセンテージ）の算出と表示 (43cf0fb)
     - [ ] 施設全体の「完了数 / 全割り当て数」の集計
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: 管理者ダッシュボードの構築'
+- [x] Task: Conductor - User Manual Verification 'Phase 2: 管理者ダッシュボードの構築' (75b929c)
