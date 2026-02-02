@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 研修詳細画面と動画視聴機能の実装**
+- [~] **Track: 研修詳細画面と動画視聴機能の実装**
   *Link: [./tracks/learning_content_playback_20260202/](./tracks/learning_content_playback_20260202/)*

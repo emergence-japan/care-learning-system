@@ -89,9 +89,11 @@ export default async function DashboardPage() {
                       <p className="text-sm text-zinc-500 line-clamp-2 mb-4">
                         {enrollment.course.description || "この研修の説明はありません。"}
                       </p>
-                      <Button className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-12 font-bold text-base">
-                        {enrollment.status === 'COMPLETED' ? 'もう一度見る' : '受講を開始する'}
-                      </Button>
+                      <Link href={`/courses/${enrollment.courseId}`}>
+                        <Button className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-12 font-bold text-base">
+                          {enrollment.status === 'COMPLETED' ? 'もう一度見る' : '受講を開始する'}
+                        </Button>
+                      </Link>
                     </CardContent>
                   </Card>
                 );
