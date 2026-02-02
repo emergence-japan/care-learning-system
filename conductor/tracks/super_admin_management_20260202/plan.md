@@ -1,13 +1,13 @@
 # Implementation Plan: システム管理者（SUPER ADMIN）機能の実装
 
-## Phase 1: 基盤整備とコンテンツ管理
-- [~] Task: ロール `SUPER_ADMIN` の追加と権限設定
+## Phase 1: 基盤整備とコンテンツ管理 [checkpoint: 97a08ad]
+- [x] Task: ロール `SUPER_ADMIN` の追加と権限設定 (5f43781)
     - [ ] `schema.prisma` の更新（Role に SUPER_ADMIN 追加）
-    - [ ] セッション連携と `/super-admin` へのリダイレクト実装
-- [ ] Task: 研修コース管理画面の作成
+    - [ ] セッション連携と `/super-admin` へとリダイレクト実装
+- [x] Task: 研修コース管理画面の作成 (97a08ad)
     - [ ] コース一覧・新規登録・編集フォームの実装
     - [ ] クイズ設問の管理UIの実装
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: 基盤整備とコンテンツ管理'
+- [x] Task: Conductor - User Manual Verification 'Phase 1: 基盤整備とコンテンツ管理' (97a08ad)
 
 ## Phase 2: 組織管理機能
 - [ ] Task: 法人・施設管理画面の作成
