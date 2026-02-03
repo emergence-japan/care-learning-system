@@ -7,7 +7,16 @@ import { AddOrgUserDialog } from "@/components/add-org-user-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { deleteCorporation, deleteFacility, deleteUser } from "@/lib/actions";
 
-// ... (Corp型の定義)
+type Corp = {
+  id: string;
+  name: string;
+  facilities: {
+    id: string;
+    name: string;
+    users: { id: string; name: string; email: string }[];
+  }[];
+  users: { id: string; name: string; email: string }[];
+};
 
 export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
   const [dialogConfig, setDialogConfig] = useState<{
