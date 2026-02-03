@@ -1,10 +1,11 @@
 import { auth, signOut } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LogOut, BookOpen, CheckCircle, Clock } from "lucide-react";
+import { LogOut, BookOpen, CheckCircle2, Clock, Sparkles, ArrowRight, UserCircle } from "lucide-react";
 import Link from "next/link";
+import * as motion from "framer-motion/client";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -13,18 +14,11 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // 管理者の場合は管理者ダッシュボードへ
-  if ((session.user as any).role === "ADMIN") {
-    redirect("/admin");
-  }
-
-  if ((session.user as any).role === "HQ") {
-    redirect("/hq");
-  }
-
-  if ((session.user as any).role === "SUPER_ADMIN") {
-    redirect("/super-admin");
-  }
+  // 管理者の場合はそれぞれのダッシュボードへ
+  const role = (session.user as any).role;
+  if (role === "ADMIN") redirect("/admin");
+  if (role === "HQ") redirect("/hq");
+  if (role === "SUPER_ADMIN") redirect("/super-admin");
 
   const enrollments = await prisma.enrollment.findMany({
     where: {
@@ -38,82 +32,138 @@ export default async function DashboardPage() {
     },
   });
 
-  const getStatusLabel = (status: string) => {
+  const getStatusInfo = (status: string) => {
     switch (status) {
       case 'COMPLETED':
-        return { label: '受講済', color: 'bg-green-100 text-green-800', icon: <CheckCircle className="w-4 h-4 mr-1" /> };
+        return { label: '受講済', color: 'text-emerald-600 bg-emerald-50', icon: <CheckCircle2 className="w-3.5 h-3.5" /> };
       case 'IN_PROGRESS':
-        return { label: '受講中', color: 'bg-blue-100 text-blue-800', icon: <Clock className="w-4 h-4 mr-1" /> };
+        return { label: '受講中', color: 'text-blue-600 bg-blue-50', icon: <Clock className="w-3.5 h-3.5" /> };
       default:
-        return { label: '未受講', color: 'bg-zinc-100 text-zinc-800', icon: <BookOpen className="w-4 h-4 mr-1" /> };
+        return { label: '未受講', color: 'text-slate-400 bg-slate-50', icon: <BookOpen className="w-3.5 h-3.5" /> };
     }
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 pb-12">
-      {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-          <h1 className="font-bold text-xl text-zinc-900">ケア・ラーニング</h1>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}
-          >
-            <Button variant="ghost" size="icon" type="submit">
-              <LogOut className="w-5 h-5 text-zinc-500" />
-            </Button>
-          </form>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
+      {/* Premium Navigation Header */}
+      <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 h-20 flex items-center px-6">
+        <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-slate-200">
+              <span className="text-white font-black text-xs">CL</span>
+            </div>
+            <div>
+              <h1 className="font-bold text-base text-slate-900 leading-none">ケア・ラーニング</h1>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Professional LMS</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+              <UserCircle className="w-4 h-4 text-slate-400" />
+              <span className="text-xs font-bold text-slate-600">{session.user.name}さん</span>
+            </div>
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/login" });
+              }}
+            >
+              <Button variant="ghost" size="icon" type="submit" className="rounded-full hover:bg-red-50 hover:text-red-600 transition-colors">
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </form>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 pt-6 space-y-6">
-        <section>
-          <h2 className="text-zinc-500 text-sm font-medium mb-2 px-1">こんにちは、{session.user.name}さん</h2>
-          <div className="bg-white rounded-2xl p-4 shadow-sm border border-zinc-100">
-            <p className="text-zinc-900 font-semibold text-lg">今日も一日、お疲れ様です！</p>
-            <p className="text-zinc-500 text-sm mt-1">あなたの受講状況を確認しましょう。</p>
+      <main className="max-w-5xl mx-auto px-6 pt-10 space-y-12">
+        {/* Welcome Section with Visual Depth */}
+        <section className="relative">
+          <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="bg-slate-900 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
+              <Sparkles className="w-48 h-48 text-white" />
+            </div>
+            <div className="relative z-10 space-y-4 max-w-lg">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full border border-white/10 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Current Status</span>
+              </div>
+              <h2 className="text-3xl font-black text-white leading-tight">
+                こんにちは、{session.user.name}さん。<br />
+                今日も学びを深めましょう。
+              </h2>
+              <p className="text-slate-400 font-medium leading-relaxed">
+                あなたの成長が、利用者様の最高の笑顔に繋がります。
+              </p>
+            </div>
           </div>
         </section>
 
-        <section>
-          <div className="flex items-center justify-between mb-4 px-1">
-            <h3 className="font-bold text-lg text-zinc-900">研修一覧</h3>
-            <span className="text-sm text-zinc-500">{enrollments.length} 件</span>
+        {/* Course Grid */}
+        <section className="space-y-8">
+          <div className="flex items-end justify-between px-2">
+            <div className="space-y-1">
+              <h3 className="font-black text-2xl text-slate-900 tracking-tight">研修カリキュラム</h3>
+              <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">Available Courses ({enrollments.length})</p>
+            </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {enrollments.length > 0 ? (
               enrollments.map((enrollment) => {
-                const statusInfo = getStatusLabel(enrollment.status);
+                const statusInfo = getStatusInfo(enrollment.status);
+                const isCompleted = enrollment.status === 'COMPLETED';
+                
                 return (
-                  <Card key={enrollment.id} className="overflow-hidden border-zinc-100 shadow-sm hover:shadow-md transition-shadow rounded-2xl">
-                    <CardHeader className="p-4 pb-2">
-                      <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold w-fit ${statusInfo.color}`}>
-                        {statusInfo.icon}
-                        {statusInfo.label}
+                  <Card key={enrollment.id} className="group relative bg-white border-slate-200/60 rounded-[2rem] overflow-hidden shadow-[0_15px_40px_-12px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-2">
+                    <CardContent className="p-0">
+                      {/* Card Header Color Strip */}
+                      <div className={cn("h-2 w-full", isCompleted ? "bg-emerald-500" : "bg-blue-600")} />
+                      
+                      <div className="p-8 space-y-6">
+                        <div className="flex justify-between items-start">
+                          <div className={cn("px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase flex items-center gap-1.5 shadow-sm", statusInfo.color)}>
+                            {statusInfo.icon}
+                            {statusInfo.label}
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <h4 className="text-xl font-black text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+                            {enrollment.course.title}
+                          </h4>
+                          <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-2">
+                            {enrollment.course.description || "プロフェッショナルな介護技術と知識を身につけるための特別研修です。"}
+                          </p>
+                        </div>
+
+                        <Link href={`/courses/${enrollment.courseId}`} className="block">
+                          <Button className={cn(
+                            "w-full h-14 rounded-2xl font-black text-sm shadow-lg transition-all active:scale-[0.98] group/btn",
+                            isCompleted 
+                              ? "bg-slate-50 text-slate-600 hover:bg-slate-100 shadow-none border border-slate-200" 
+                              : "bg-slate-900 text-white hover:bg-slate-800 shadow-slate-200"
+                          )}>
+                            {isCompleted ? 'もう一度復習する' : '研修を開始する'}
+                            <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+                          </Button>
+                        </Link>
                       </div>
-                      <CardTitle className="text-lg mt-2 leading-tight">
-                        {enrollment.course.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <p className="text-sm text-zinc-500 line-clamp-2 mb-4">
-                        {enrollment.course.description || "この研修の説明はありません。"}
-                      </p>
-                      <Link href={`/courses/${enrollment.courseId}`}>
-                        <Button className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-12 font-bold text-base">
-                          {enrollment.status === 'COMPLETED' ? 'もう一度見る' : '受講を開始する'}
-                        </Button>
-                      </Link>
                     </CardContent>
                   </Card>
                 );
               })
             ) : (
-              <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-zinc-300">
-                <p className="text-zinc-500">割り当てられた研修はありません。</p>
+              <div className="col-span-full py-20 bg-white border-2 border-dashed border-slate-200 rounded-[3rem] flex flex-col items-center justify-center text-center space-y-4">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center">
+                  <BookOpen className="w-8 h-8 text-slate-300" />
+                </div>
+                <div>
+                  <p className="text-slate-900 font-bold">現在、割り当てられた研修はありません</p>
+                  <p className="text-slate-400 text-sm">新しい研修が追加されるまでお待ちください。</p>
+                </div>
               </div>
             )}
           </div>
@@ -121,4 +171,8 @@ export default async function DashboardPage() {
       </main>
     </div>
   );
+}
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
 }

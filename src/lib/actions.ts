@@ -350,3 +350,86 @@ export async function deleteCourse(id: string) {
   revalidatePath("/super-admin/courses");
   revalidatePath("/");
 }
+
+// --- DELETION ACTIONS ---
+
+export async function deleteCorporation(id: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  // 関連データの削除（カスケード設定がない場合を考慮）
+  await prisma.enrollment.deleteMany({ where: { user: { corporationId: id } } });
+  await prisma.user.deleteMany({ where: { corporationId: id } });
+  await prisma.facility.deleteMany({ where: { corporationId: id } });
+  await prisma.corporation.delete({ where: { id } });
+
+  revalidatePath("/super-admin/organizations");
+}
+
+export async function deleteFacility(id: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  const role = (session?.user as any)?.role;
+
+  if (!session?.user || (role !== "SUPER_ADMIN" && role !== "HQ")) {
+    throw new Error("Unauthorized");
+  }
+
+  // 施設管理者の場合、自分の法人に属しているかチェックが必要（HQの場合）
+  if (role === "HQ") {
+    const facility = await prisma.facility.findUnique({
+      where: { id },
+      select: { corporationId: true }
+    });
+    if (facility?.corporationId !== (session.user as any).corporationId) {
+      throw new Error("Forbidden");
+    }
+  }
+
+  await prisma.enrollment.deleteMany({ where: { user: { facilityId: id } } });
+  await prisma.user.deleteMany({ where: { facilityId: id } });
+  await prisma.facility.delete({ where: { id } });
+
+  revalidatePath("/super-admin/organizations");
+  revalidatePath("/hq");
+}
+
+export async function deleteUser(id: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  const currentUserRole = (session?.user as any)?.role;
+
+  if (!session?.user || currentUserRole === "STAFF") {
+    throw new Error("Unauthorized");
+  }
+
+  const targetUser = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  if (!targetUser) throw new Error("User not found");
+
+  // 権限チェック
+  if (currentUserRole === "ADMIN") {
+    // 施設管理者は、自施設のスタッフのみ削除可能
+    if (targetUser.role !== "STAFF" || targetUser.facilityId !== (session.user as any).facilityId) {
+      throw new Error("Forbidden");
+    }
+  } else if (currentUserRole === "HQ") {
+    // 法人管理者は、自法人の管理者とスタッフを削除可能
+    if (targetUser.role === "SUPER_ADMIN" || targetUser.corporationId !== (session.user as any).corporationId) {
+      throw new Error("Forbidden");
+    }
+  }
+
+  await prisma.enrollment.deleteMany({ where: { userId: id } });
+  await prisma.user.delete({ where: { id } });
+
+  revalidatePath("/super-admin/organizations");
+  revalidatePath("/hq");
+  revalidatePath("/admin");
+}

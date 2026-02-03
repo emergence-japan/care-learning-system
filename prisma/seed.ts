@@ -17,7 +17,39 @@ async function main() {
     data: { name: 'ケア・グループ法人' }
   })
 
-  // ユーザー作成
+  // 1. システム管理者（SUPER_ADMIN）
+  const owner = await prisma.user.create({
+    data: {
+      email: 'owner@example.com',
+      name: 'システム運営者',
+      password: 'owner_password',
+      role: Role.SUPER_ADMIN,
+    },
+  })
+
+  // 2. 本部ユーザー（HQ）
+  const hqUser = await prisma.user.create({
+    data: {
+      email: 'hq@example.com',
+      name: '法人本部 太郎',
+      password: 'hq_password',
+      role: Role.HQ,
+      corporationId: corp.id,
+    },
+  })
+
+  // 3. 施設管理者（ADMIN）
+  const adminA = await prisma.user.create({
+    data: {
+      email: 'admin_a@example.com',
+      name: 'ひまわり管理者',
+      password: 'admin_password',
+      role: Role.ADMIN,
+      corporationId: corp.id,
+    },
+  })
+
+  // 4. 一般スタッフ（STAFF）
   const staffA = await prisma.user.create({
     data: {
       email: 'staff_a@example.com',
@@ -456,14 +488,14 @@ async function main() {
     },
   })
 
-  // 受講実績
+  // 既存のスタッフに研修を割り当てる
   await prisma.enrollment.createMany({
     data: [
       { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
     ]
   })
 
-  console.log('Seed data fully updated with PREMIUM slides and enhanced design')
+  console.log('Seed data fully updated with ALL users and PREMIUM content')
 }
 
 main()
