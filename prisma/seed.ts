@@ -12,12 +12,17 @@ async function main() {
   await prisma.facility.deleteMany({})
   await prisma.corporation.deleteMany({})
 
-  // 法人の作成
+  // 1. 法人の作成
   const corp = await prisma.corporation.create({
     data: { name: 'ケア・グループ法人' }
   })
 
-  // 1. システム管理者（SUPER_ADMIN）
+  // 2. 施設の作成（法人に紐付け）
+  const facilityA = await prisma.facility.create({
+    data: { name: 'ひまわりの里', corporationId: corp.id }
+  })
+
+  // 3. システム管理者（SUPER_ADMIN）- 組織に縛られない全体管理者
   const owner = await prisma.user.create({
     data: {
       email: 'owner@example.com',
@@ -27,7 +32,7 @@ async function main() {
     },
   })
 
-  // 2. 本部ユーザー（HQ）
+  // 4. 本部ユーザー（HQ）- 法人にアサイン
   const hqUser = await prisma.user.create({
     data: {
       email: 'hq@example.com',
@@ -38,7 +43,7 @@ async function main() {
     },
   })
 
-  // 3. 施設管理者（ADMIN）
+  // 5. 施設管理者（ADMIN）- 施設と法人にアサイン
   const adminA = await prisma.user.create({
     data: {
       email: 'admin_a@example.com',
@@ -46,10 +51,11 @@ async function main() {
       password: 'admin_password',
       role: Role.ADMIN,
       corporationId: corp.id,
+      facilityId: facilityA.id, // ここで施設に紐付け
     },
   })
 
-  // 4. 一般スタッフ（STAFF）
+  // 6. 一般スタッフ（STAFF）- 施設と法人にアサイン
   const staffA = await prisma.user.create({
     data: {
       email: 'staff_a@example.com',
@@ -57,6 +63,7 @@ async function main() {
       password: 'staff_password',
       role: Role.STAFF,
       corporationId: corp.id,
+      facilityId: facilityA.id, // 施設に紐付け
     },
   })
 
@@ -488,14 +495,14 @@ async function main() {
     },
   })
 
-  // 既存のスタッフに研修を割り当てる
+  // 研修の割り当て
   await prisma.enrollment.createMany({
     data: [
       { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
     ]
   })
 
-  console.log('Seed data fully updated with ALL users and PREMIUM content')
+  console.log('Seed data updated with proper organization assignments')
 }
 
 main()
