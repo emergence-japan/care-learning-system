@@ -1,12 +1,10 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShieldAlert, Plus, Edit, Trash2, ChevronLeft, BookOpen, Video, HelpCircle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Trash2, ChevronLeft, BookOpen, Video, HelpCircle, Activity, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createCourse, deleteCourse } from "@/lib/actions";
+import { deleteCourse } from "@/lib/actions";
 import Link from "next/link";
 
 export default async function CourseManagementPage() {
@@ -19,117 +17,112 @@ export default async function CourseManagementPage() {
   const courses = await prisma.course.findMany({
     include: {
       _count: {
-        select: { questions: true }
+        select: { 
+          questions: true,
+          slides: true
+        }
       }
     },
     orderBy: { createdAt: 'desc' }
   });
 
   return (
-    <div className="min-h-screen bg-zinc-50 pb-12 font-sans text-zinc-900">
-      {/* Header */}
-      <header className="bg-red-950 text-white sticky top-0 z-10 shadow-md">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
+      {/* Premium Header */}
+      <header className="bg-slate-900 text-white sticky top-0 z-50 h-20 shadow-2xl overflow-hidden">
+        <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay opacity-50" />
+        <div className="max-w-5xl mx-auto px-6 h-full flex items-center justify-between relative z-10">
+          <div className="flex items-center gap-4">
             <Link href="/super-admin">
-              <Button variant="ghost" size="icon" className="text-red-200">
-                <ChevronLeft className="w-5 h-5" />
+              <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-white/10 text-white/60">
+                <ChevronLeft className="w-6 h-6" />
               </Button>
             </Link>
-            <h1 className="font-bold text-lg">研修コース管理</h1>
+            <div>
+              <h1 className="font-black text-xl tracking-tight leading-none">Content Management</h1>
+              <p className="text-[10px] text-blue-400 font-black uppercase tracking-[0.3em] mt-1.5">研修コンテンツの統括管理</p>
+            </div>
+          </div>
+          <div className="w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center">
+            <BookOpen className="w-5 h-5 text-blue-400" />
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 pt-8 space-y-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* New Course Form */}
-          <div className="lg:col-span-1">
-            <Card className="border-zinc-200 shadow-sm rounded-2xl sticky top-24">
-              <CardHeader className="bg-zinc-50/50">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Plus className="w-5 h-5 text-red-600" />
-                  新規コース作成
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <form action={createCourse} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">研修タイトル</Label>
-                    <Input id="title" name="title" placeholder="例: 感染症対策研修" required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="description">説明文</Label>
-                    <textarea 
-                      id="description" 
-                      name="description" 
-                      rows={3}
-                      className="flex min-h-[80px] w-full rounded-md border border-zinc-200 bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950"
-                      placeholder="研修の概要を入力してください"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="videoUrl">YouTube URL</Label>
-                    <Input id="videoUrl" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." />
-                  </div>
-                  <Button type="submit" className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-12 font-bold">
-                    作成する
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+      <main className="max-w-4xl mx-auto px-6 pt-12 space-y-10">
+        {/* Intro Section */}
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100 mb-2">
+            <Activity className="w-3.5 h-3.5" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Active Curriculum</span>
           </div>
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">配信中の研修コース</h2>
+          <p className="text-slate-500 font-medium text-sm">
+            現在システムで公開されている全ての研修です。コンテンツの追加・編集はプロフェッショナル・エディターを通じて行われます。
+          </p>
+        </div>
 
-          {/* Courses List */}
-          <div className="lg:col-span-2 space-y-4">
-            <h3 className="font-bold text-xl text-zinc-900 px-1">登録済みコース ({courses.length})</h3>
-            <div className="grid grid-cols-1 gap-4">
-              {courses.map((course) => (
-                <Card key={course.id} className="border-zinc-200 shadow-sm rounded-2xl overflow-hidden hover:border-zinc-300 transition-colors">
-                  <CardContent className="p-0">
-                    <div className="flex flex-col sm:flex-row">
-                      <div className="flex-1 p-6 space-y-4">
-                        <div>
-                          <h4 className="font-bold text-xl text-zinc-900">{course.title}</h4>
-                          <p className="text-sm text-zinc-500 mt-1 line-clamp-2">{course.description}</p>
-                        </div>
-                        <div className="flex items-center gap-4 text-xs font-bold text-zinc-400">
-                          <div className="flex items-center gap-1">
-                            <Video className="w-3 h-3" />
-                            {course.videoUrl ? "動画あり" : "動画なし"}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <HelpCircle className="w-3 h-3" />
-                            クイズ {course._count.questions} 問
-                          </div>
-                        </div>
+        {/* Courses List - Premium Cards */}
+        <div className="grid grid-cols-1 gap-6">
+          {courses.map((course) => (
+            <Card key={course.id} className="group bg-white border-slate-200/60 rounded-[2.5rem] overflow-hidden shadow-[0_15px_40px_-12px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_70px_-12px_rgba(0,0,0,0.12)] transition-all duration-500">
+              <CardContent className="p-0">
+                <div className="flex flex-col sm:flex-row items-stretch">
+                  <div className="flex-1 p-10 space-y-6">
+                    <div className="space-y-2">
+                      <h4 className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                        {course.title}
+                      </h4>
+                      <p className="text-slate-500 text-sm font-medium leading-relaxed line-clamp-2">
+                        {course.description || "研修内容の詳細が設定されています。"}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-4">
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        <LayoutGrid className="w-3.5 h-3.5 text-blue-500" />
+                        {course._count.slides} Slides
                       </div>
-                      <div className="bg-zinc-50 p-4 sm:w-32 flex sm:flex-col gap-2 justify-center border-t sm:border-t-0 sm:border-l border-zinc-100">
-                        <Button variant="outline" size="sm" className="flex-1 rounded-lg">
-                          <Edit className="w-4 h-4 mr-1" />
-                          編集
-                        </Button>
-                        <form action={async () => {
-                          "use server";
-                          await deleteCourse(course.id);
-                        }} className="flex-1">
-                          <Button variant="ghost" size="sm" className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg">
-                            <Trash2 className="w-4 h-4 mr-1" />
-                            削除
-                          </Button>
-                        </form>
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        <HelpCircle className="w-3.5 h-3.5 text-emerald-500" />
+                        {course._count.questions} Questions
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        <Video className="w-3.5 h-3.5 text-red-500" />
+                        {course.videoUrl ? "Full Video" : "No Video"}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {courses.length === 0 && (
-                <div className="text-center py-20 bg-white border border-dashed border-zinc-300 rounded-2xl text-zinc-400">
-                  まだコースが登録されていません。
+                  </div>
+
+                  <div className="bg-slate-50/50 p-6 sm:w-40 flex sm:flex-col gap-3 justify-center items-center border-t sm:border-t-0 sm:border-l border-slate-100">
+                    <Button variant="outline" className="w-full rounded-2xl border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all font-bold text-xs">
+                      管理
+                    </Button>
+                    <form action={async () => {
+                      "use server";
+                      await deleteCourse(course.id);
+                    }} className="w-full">
+                      <Button variant="ghost" className="w-full text-slate-300 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all">
+                        <Trash2 className="w-5 h-5" />
+                      </Button>
+                    </form>
+                  </div>
                 </div>
-              )}
+              </CardContent>
+            </Card>
+          ))}
+
+          {courses.length === 0 && (
+            <div className="text-center py-24 bg-white/50 border-2 border-dashed border-slate-200 rounded-[3rem] space-y-4">
+              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto">
+                <BookOpen className="w-8 h-8 text-slate-200" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-slate-900 font-bold">研修コースがありません</p>
+                <p className="text-slate-400 text-sm">システム・エディターからコンテンツを追加してください。</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
     </div>

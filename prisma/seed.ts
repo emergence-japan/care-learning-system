@@ -7,6 +7,7 @@ async function main() {
   await prisma.question.deleteMany({})
   await prisma.slide.deleteMany({})
   await prisma.enrollment.deleteMany({})
+  await prisma.courseAssignment.deleteMany({}) // 追加
   await prisma.course.deleteMany({})
   await prisma.user.deleteMany({})
   await prisma.facility.deleteMany({})
@@ -501,6 +502,32 @@ async function main() {
       { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
     ]
   })
+
+  // ダミー研修（箱）の作成
+  const placeholderCourses = [
+    "認知症、認知症ケアに関する研修",
+    "プライバシー保護に関する研修",
+    "接遇に関する研修",
+    "倫理・法令遵守に関する研修",
+    "事故の発生、予防、再発防止に関する研修",
+    "緊急時の対応に関する研修",
+    "感染症及び食中毒の発生の予防及び蔓延の防止に関する研修",
+    "身体拘束の排除の取り組みに関する研修",
+    "非常災害時の対応に関する研修",
+    "介護予防及び要介護の進行予防に関する研修",
+    "医療に関する研修",
+    "ターミナルケア(終末医療)に関する研修",
+    "精神的ケアに関する研修",
+  ];
+
+  for (const title of placeholderCourses) {
+    await prisma.course.create({
+      data: {
+        title: `${title}（準備中）`,
+        description: "コンテンツは後日追加予定",
+      }
+    });
+  }
 
   console.log('Seed data updated with proper organization assignments')
 }

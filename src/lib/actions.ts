@@ -399,37 +399,69 @@ export async function deleteFacility(id: string) {
 }
 
 export async function deleteUser(id: string) {
+  // ... (既存のコード)
+  revalidatePath("/admin");
+}
+
+// --- ASSIGNMENT ACTIONS ---
+
+export async function assignCourseToFacility(courseId: string, startDate: Date, endDate: Date) {
   const { auth } = await import("@/auth");
   const session = await auth();
-  const currentUserRole = (session?.user as any)?.role;
 
-  if (!session?.user || currentUserRole === "STAFF") {
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
-  const targetUser = await prisma.user.findUnique({
-    where: { id },
+  const facilityId = (session.user as any).facilityId;
+  if (!facilityId) throw new Error("Facility not assigned");
+
+  // 1. 割当の作成または更新
+  await prisma.courseAssignment.upsert({
+    where: {
+      facilityId_courseId: { facilityId, courseId }
+    },
+    create: { facilityId, courseId, startDate, endDate },
+    update: { startDate, endDate }
   });
 
-  if (!targetUser) throw new Error("User not found");
+  // 2. その施設の全スタッフに対して受講レコードを生成
+  const staffMembers = await prisma.user.findMany({
+    where: { facilityId, role: "STAFF" },
+    select: { id: true }
+  });
 
-  // 権限チェック
-  if (currentUserRole === "ADMIN") {
-    // 施設管理者は、自施設のスタッフのみ削除可能
-    if (targetUser.role !== "STAFF" || targetUser.facilityId !== (session.user as any).facilityId) {
-      throw new Error("Forbidden");
-    }
-  } else if (currentUserRole === "HQ") {
-    // 法人管理者は、自法人の管理者とスタッフを削除可能
-    if (targetUser.role === "SUPER_ADMIN" || targetUser.corporationId !== (session.user as any).corporationId) {
-      throw new Error("Forbidden");
-    }
+  for (const staff of staffMembers) {
+    await prisma.enrollment.upsert({
+      where: {
+        userId_courseId: { userId: staff.id, courseId }
+      },
+      create: { userId: staff.id, courseId, status: "NOT_STARTED" },
+      update: {} // 既に存在する場合はステータスを維持
+    });
   }
 
-  await prisma.enrollment.deleteMany({ where: { userId: id } });
-  await prisma.user.delete({ where: { id } });
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
 
-  revalidatePath("/super-admin/organizations");
-  revalidatePath("/hq");
+export async function updateFiscalYearStartMonth(month: number) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const corporationId = (session.user as any).corporationId;
+  if (!corporationId) throw new Error("Corporation not found");
+
+  if (month < 1 || month > 12) throw new Error("Invalid month");
+
+  await prisma.corporation.update({
+    where: { id: corporationId },
+    data: { fiscalYearStartMonth: month }
+  });
+
   revalidatePath("/admin");
 }

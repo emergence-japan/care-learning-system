@@ -31,11 +31,13 @@ model Facility {
   updatedAt     DateTime @updatedAt
   corporation   Corporation? @relation(fields: [corporationId], references: [id])
   users         User[]
+  assignments   CourseAssignment[]
 }
 
 model Corporation {
   id         String   @id @default(cuid())
   name       String   @unique
+  fiscalYearStartMonth Int @default(4) // 年度開始月 (1-12)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   facilities Facility[]
@@ -61,6 +63,20 @@ model Course {
   enrollments Enrollment[]
   questions   Question[]
   slides      Slide[]
+  assignments CourseAssignment[]
+}
+
+model CourseAssignment {
+  id          String   @id @default(cuid())
+  facilityId  String
+  courseId    String
+  startDate   DateTime @default(now())
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  facility    Facility @relation(fields: [facilityId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id])
+  @@unique([facilityId, courseId])
 }
 
 model Slide {
