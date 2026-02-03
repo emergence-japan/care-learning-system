@@ -10,7 +10,9 @@ import { UserPlus, Loader2, CheckCircle2 } from "lucide-react";
 
 export function RegisterStaffForm() {
   const [errorMessage, dispatch, isPending] = useActionState(
-    registerStaff,
+    async (state: string | undefined, formData: FormData) => {
+      return await registerStaff(formData);
+    },
     undefined,
   );
   

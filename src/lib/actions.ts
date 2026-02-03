@@ -102,14 +102,39 @@ export async function submitTestResults(courseId: string, answers: Record<string
   return { isPassed, score: correctCount, total: course.questions.length };
 }
 
+export async function saveActionPlan(courseId: string, actionPlan: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.enrollment.update({
+    where: {
+      userId_courseId: {
+        userId: session.user.id,
+        courseId,
+      },
+    },
+    data: {
+      actionPlan,
+      status: "COMPLETED",
+      completedAt: new Date(),
+    },
+  });
+
+  revalidatePath("/");
+  revalidatePath(`/courses/${courseId}`);
+}
+
 export async function registerStaff(
-  prevState: string | undefined,
   formData: FormData,
 ) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -167,7 +192,7 @@ export async function createCourse(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -208,7 +233,7 @@ export async function createCorporation(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -224,7 +249,7 @@ export async function createFacility(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -245,7 +270,7 @@ export async function createOrgUser(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -287,7 +312,7 @@ export async function updateCourse(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -313,7 +338,7 @@ export async function deleteCourse(id: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 

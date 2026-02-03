@@ -11,7 +11,7 @@ export default async function SuperAdminDashboardPage() {
   const session = await auth();
 
   // 権限チェック
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     redirect("/");
   }
 

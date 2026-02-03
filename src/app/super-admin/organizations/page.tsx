@@ -13,7 +13,7 @@ import { OrganizationClient } from "./organization-client";
 export default async function OrganizationManagementPage() {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
     redirect("/");
   }
 

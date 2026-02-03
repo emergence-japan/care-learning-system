@@ -14,15 +14,15 @@ export default async function DashboardPage() {
   }
 
   // 管理者の場合は管理者ダッシュボードへ
-  if (session.user.role === "ADMIN") {
+  if ((session.user as any).role === "ADMIN") {
     redirect("/admin");
   }
 
-  if (session.user.role === "HQ") {
+  if ((session.user as any).role === "HQ") {
     redirect("/hq");
   }
 
-  if (session.user.role === "SUPER_ADMIN") {
+  if ((session.user as any).role === "SUPER_ADMIN") {
     redirect("/super-admin");
   }
 

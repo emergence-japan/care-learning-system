@@ -11,7 +11,7 @@ export default async function AdminDashboardPage() {
   const session = await auth();
 
   // 権限チェック
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
     redirect("/");
   }
 

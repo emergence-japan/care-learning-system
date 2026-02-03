@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 
+// 型拡張による競合を避けるため、必要な箇所でキャストを使用します
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -22,8 +23,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (!user) return null
 
-        // 開発初期なので簡易比較。本来は bcrypt.compare を使用
-        // シードデータに合わせて、平文比較かハッシュ比較かを合わせます
         const isPasswordCorrect = credentials.password === user.password || 
                                   await bcrypt.compare(credentials.password as string, user.password)
 
@@ -36,7 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
           facilityId: user.facilityId,
           corporationId: user.corporationId,
-        }
+        } as any
       },
     }),
   ],
@@ -46,26 +45,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.sub
       }
       if (token.role && session.user) {
-        // @ts-ignore
-        session.user.role = token.role
+        (session.user as any).role = token.role
       }
       if (token.facilityId && session.user) {
-        // @ts-ignore
-        session.user.facilityId = token.facilityId
+        (session.user as any).facilityId = token.facilityId
       }
       if (token.corporationId && session.user) {
-        // @ts-ignore
-        session.user.corporationId = token.corporationId
+        (session.user as any).corporationId = token.corporationId
       }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
-        // @ts-ignore
-        token.role = user.role
-        // @ts-ignore
+        token.role = (user as any).role
         token.facilityId = (user as any).facilityId
-        // @ts-ignore
         token.corporationId = (user as any).corporationId
       }
       return token

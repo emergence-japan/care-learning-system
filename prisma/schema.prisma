@@ -52,17 +52,33 @@ model Course {
   id          String   @id @default(cuid())
   title       String
   description String?
+  introduction String?   // 注意喚起（導入）
+  learningObjectives String? // 学習目標
   videoUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   enrollments Enrollment[]
   questions   Question[]
+  slides      Slide[]
+}
+
+model Slide {
+  id        String   @id @default(cuid())
+  courseId  String
+  title     String
+  content   String   // HTMLコンテンツ
+  videoUrl  String?  // 補助動画URL
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id])
 }
 
 model Question {
   id        String   @id @default(cuid())
   courseId  String
   text      String
+  explanation String?  // 解説文
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,6 +101,7 @@ model Enrollment {
   userId    String
   courseId  String
   status    Status    @default(NOT_STARTED)
+  actionPlan String?   // 行動宣言
   completedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

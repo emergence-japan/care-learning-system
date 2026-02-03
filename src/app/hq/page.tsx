@@ -11,7 +11,7 @@ export default async function HQDashboardPage() {
   const session = await auth();
 
   // 権限チェック
-  if (!session?.user || session.user.role !== "HQ") {
+  if (!session?.user || (session.user as any).role !== "HQ") {
     redirect("/");
   }
 

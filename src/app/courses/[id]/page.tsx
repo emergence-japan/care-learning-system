@@ -2,10 +2,10 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, CheckCircle2 } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { completeEnrollment, submitTestResults } from "@/lib/actions";
-import { ComprehensionTest } from "@/components/comprehension-test";
+import { completeEnrollment, submitTestResults, saveActionPlan } from "@/lib/actions";
+import { CourseClient } from "./course-client";
 
 export default async function CourseDetailPage({
   params,
@@ -22,13 +22,18 @@ export default async function CourseDetailPage({
   const enrollment = await prisma.enrollment.findUnique({
     where: {
       userId_courseId: {
-        userId: session.user.id,
+        userId: session.user.id!,
         courseId: id,
       },
     },
     include: {
       course: {
         include: {
+          slides: {
+            orderBy: {
+              order: 'asc',
+            },
+          },
           questions: {
             orderBy: {
               order: 'asc',
@@ -46,22 +51,6 @@ export default async function CourseDetailPage({
     notFound();
   }
 
-  const getYouTubeEmbedUrl = (url: string) => {
-    if (!url) return "";
-    let videoId = "";
-    if (url.includes("v=")) {
-      videoId = url.split("v=")[1].split("&")[0];
-    } else if (url.includes("youtu.be/")) {
-      videoId = url.split("youtu.be/")[1].split("?")[0];
-    }
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
-  };
-
-  const embedUrl = enrollment.course.videoUrl ? getYouTubeEmbedUrl(enrollment.course.videoUrl) : "";
-
-  const isCompleted = enrollment.status === "COMPLETED";
-  const hasTest = enrollment.course.questions.length > 0;
-
   const handleComplete = async () => {
     "use server";
     await completeEnrollment(id);
@@ -72,72 +61,55 @@ export default async function CourseDetailPage({
     return await submitTestResults(id, answers);
   };
 
+  const handleSaveActionPlan = async (actionPlan: string) => {
+    "use server";
+    await saveActionPlan(id, actionPlan);
+  };
+
   return (
-    <div className="min-h-screen bg-white pb-12">
-      <header className="bg-white border-b sticky top-0 z-10 h-16 flex items-center px-4">
-        <Link href="/">
-          <Button variant="ghost" size="icon">
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
-        </Link>
-        <h1 className="font-bold text-lg ml-2 truncate">研修詳細</h1>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
+      <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 h-20 flex items-center px-6">
+        <div className="max-w-xl mx-auto w-full flex items-center justify-between">
+          <Link href="/">
+            <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-slate-100 transition-all">
+              <ChevronLeft className="w-6 h-6 text-slate-900" />
+            </Button>
+          </Link>
+          <div className="flex flex-col items-center">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Curriculum</span>
+            <h1 className="font-bold text-sm text-slate-900 truncate max-w-[200px]">研修受講</h1>
+          </div>
+          <div className="w-10" /> {/* Spacer for centering */}
+        </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 pt-6 space-y-8">
-        <section>
-          <h2 className="text-2xl font-bold text-zinc-900 leading-tight">
+      <main className="max-w-xl mx-auto px-6 pt-10 space-y-10">
+        <section className="text-center space-y-4">
+          <div className="inline-block bg-slate-900 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
+            Professional Course
+          </div>
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight leading-tight">
             {enrollment.course.title}
           </h2>
-          
-          <div className="mt-6 aspect-video bg-zinc-100 rounded-2xl overflow-hidden border border-zinc-200">
-            {embedUrl ? (
-              <iframe
-                width="100%"
-                height="100%"
-                src={embedUrl}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-zinc-500 font-medium">動画の準備ができていません</p>
-              </div>
-            )}
-          </div>
-
-          <div className="mt-6 space-y-2">
-            <h3 className="font-bold text-lg text-zinc-900">研修の内容</h3>
-            <p className="text-zinc-600 leading-relaxed text-sm">
-              {enrollment.course.description || "説明はありません。"}
-            </p>
-          </div>
+          <p className="text-slate-500 font-medium text-sm max-w-sm mx-auto">
+            {enrollment.course.description}
+          </p>
         </section>
 
-        <section className="pt-4 border-t border-zinc-100">
-          {isCompleted ? (
-            <div className="bg-green-50 border border-green-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center space-y-2">
-              <div className="bg-green-100 p-2 rounded-full">
-                <CheckCircle2 className="w-8 h-8 text-green-600" />
-              </div>
-              <p className="text-green-800 font-bold text-lg">受講を完了しています</p>
-              <p className="text-green-700 text-sm">お疲れ様でした！</p>
-            </div>
-          ) : hasTest ? (
-            <ComprehensionTest 
-              courseId={id} 
-              questions={enrollment.course.questions} 
-              onSubmit={handleSubmitTest}
-            />
-          ) : (
-            <form action={handleComplete}>
-              <Button type="submit" className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl shadow-lg">
-                受講を完了する
-              </Button>
-            </form>
-          )}
-        </section>
+        <CourseClient
+          courseId={id}
+          title={enrollment.course.title}
+          introduction={enrollment.course.introduction}
+          learningObjectives={enrollment.course.learningObjectives}
+          slides={enrollment.course.slides}
+          questions={enrollment.course.questions}
+          courseVideoUrl={enrollment.course.videoUrl}
+          isInitialCompleted={enrollment.status === "COMPLETED"}
+          initialActionPlan={enrollment.actionPlan}
+          onComplete={handleComplete}
+          onSubmitTest={handleSubmitTest}
+          onSaveActionPlan={handleSaveActionPlan}
+        />
       </main>
     </div>
   );
