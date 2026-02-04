@@ -89,12 +89,12 @@ export default function LoginPage() {
 
               <form action={dispatch} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</Label>
+                  <Label htmlFor="loginId" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Login ID</Label>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="admin@example.com"
+                    id="loginId"
+                    name="loginId"
+                    type="text"
+                    placeholder="例: tanaka_taro"
                     required
                     className="h-14 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-lg font-medium bg-white shadow-sm"
                   />

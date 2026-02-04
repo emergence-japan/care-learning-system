@@ -10,13 +10,13 @@ export async function authenticate(
   const { signIn } = await import("@/auth");
   try {
     await signIn("credentials", {
-      email: formData.get("email"),
+      loginId: formData.get("loginId"),
       password: formData.get("password"),
       redirectTo: "/",
     });
   } catch (error: any) {
     if (error.type === "CredentialsSignin") {
-      return "メールアドレスまたはパスワードが正しくありません。";
+      return "ログインIDまたはパスワードが正しくありません。";
     }
     throw error;
   }

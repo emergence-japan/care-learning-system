@@ -63,7 +63,6 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
           const facilityCount = corp.facilities.length;
           const totalStaffCount = corp.facilities.reduce((acc, f) => acc + f._count.users, 0);
           const facilityRate = Math.round((facilityCount / corp.maxFacilities) * 100);
-          const staffRate = Math.round((totalStaffCount / corp.maxStaff) * 100);
 
           return (
             <div key={corp.id} className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
@@ -81,9 +80,9 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                       </div>
                     </div>
                     <div>
-                      <div className="text-[9px] uppercase text-zinc-500 font-bold">Staff</div>
-                      <div className={`text-sm font-bold ${staffRate >= 100 ? 'text-red-400' : 'text-zinc-300'}`}>
-                        {totalStaffCount} / {corp.maxStaff}
+                      <div className="text-[9px] uppercase text-zinc-500 font-bold">Total Staff</div>
+                      <div className="text-sm font-bold text-zinc-300">
+                        {totalStaffCount} <span className="text-[10px] text-zinc-500 font-normal ml-0.5">名</span>
                       </div>
                     </div>
                   </div>
@@ -110,10 +109,10 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                 </div>
               </div>
 
-              {(facilityRate >= 100 || staffRate >= 100) && (
+              {facilityRate >= 100 && (
                 <div className="px-6 py-2 bg-red-50 border-b border-red-100 flex items-center gap-2 text-red-600 text-xs font-bold">
                   <AlertCircle className="w-4 h-4" />
-                  利用制限数に達しています。新規登録には設定の変更が必要です。
+                  施設の登録制限数に達しています。新規登録には設定の変更が必要です。
                 </div>
               )}
 

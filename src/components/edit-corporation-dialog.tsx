@@ -52,15 +52,9 @@ export function EditCorporationDialog({ corporation, onClose }: Props) {
               <Input id="edit-corp-name" name="name" defaultValue={corporation.name} required />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="edit-max-facilities">最大施設数</Label>
-                <Input id="edit-max-facilities" name="maxFacilities" type="number" defaultValue={corporation.maxFacilities} min={1} required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="edit-max-staff">最大スタッフ数</Label>
-                <Input id="edit-max-staff" name="maxStaff" type="number" defaultValue={corporation.maxStaff} min={1} required />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-max-facilities">最大施設数</Label>
+              <Input id="edit-max-facilities" name="maxFacilities" type="number" defaultValue={corporation.maxFacilities} min={1} required />
             </div>
 
             <div className="pt-4 flex gap-2">
