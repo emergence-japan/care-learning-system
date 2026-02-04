@@ -27,6 +27,7 @@ async function main() {
   const owner = await prisma.user.create({
     data: {
       email: 'owner@example.com',
+      loginId: 'owner',
       name: 'システム運営者',
       password: 'owner_password',
       role: Role.SUPER_ADMIN,
@@ -37,6 +38,7 @@ async function main() {
   const hqUser = await prisma.user.create({
     data: {
       email: 'hq@example.com',
+      loginId: 'hq',
       name: '法人本部 太郎',
       password: 'hq_password',
       role: Role.HQ,
@@ -48,6 +50,7 @@ async function main() {
   const adminA = await prisma.user.create({
     data: {
       email: 'admin_a@example.com',
+      loginId: 'admin_a',
       name: 'ひまわり管理者',
       password: 'admin_password',
       role: Role.ADMIN,
@@ -60,6 +63,7 @@ async function main() {
   const staffA = await prisma.user.create({
     data: {
       email: 'staff_a@example.com',
+      loginId: 'staff_a',
       name: 'ひまわりスタッフ',
       password: 'staff_password',
       role: Role.STAFF,
