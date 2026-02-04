@@ -230,7 +230,25 @@ export async function createCourse(formData: FormData) {
 }
 
 export async function createCorporation(formData: FormData) {
-  // ... (既存のコード)
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const name = formData.get("name") as string;
+  const maxFacilities = parseInt(formData.get("maxFacilities") as string) || 10;
+  const maxStaff = parseInt(formData.get("maxStaff") as string) || 100;
+
+  await prisma.corporation.create({
+    data: { 
+      name,
+      maxFacilities,
+      maxStaff
+    },
+  });
+
   revalidatePath("/super-admin/organizations");
 }
 
