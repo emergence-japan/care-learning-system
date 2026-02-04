@@ -143,26 +143,22 @@ export async function registerStaff(
     throw new Error("Facility not assigned to admin");
   }
 
-  // 制限チェック（法人全体）
+  // 制限チェック（施設単位）
   const facility = await prisma.facility.findUnique({
     where: { id: facilityId },
     include: { 
-      corporation: {
-        include: {
-          _count: {
-            select: { users: { where: { role: "STAFF" } } }
-          }
-        }
+      _count: {
+        select: { users: { where: { role: "STAFF" } } }
       }
     }
   });
 
-  if (!facility || !facility.corporation) {
-    throw new Error("Corporation not found");
+  if (!facility) {
+    throw new Error("Facility not found");
   }
 
-  if (facility.corporation._count.users >= facility.corporation.maxStaff) {
-    return `法人全体のスタッフ登録枠の上限（${facility.corporation.maxStaff}名）に達しています。`;
+  if (facility._count.users >= facility.maxStaff) {
+    return `施設のスタッフ登録枠の上限（${facility.maxStaff}名）に達しています。`;
   }
 
   const name = formData.get("name") as string;
@@ -188,7 +184,7 @@ export async function registerStaff(
       password,
       role: "STAFF",
       facilityId,
-      corporationId: facility.corporation.id,
+      corporationId: facility.corporationId,
     },
   });
 

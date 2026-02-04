@@ -96,11 +96,9 @@ describe('Corporation Limits Actions', () => {
     ;(auth as any).mockResolvedValue({ user: { role: 'ADMIN', facilityId: 'fac-1' } })
     ;(prisma.facility.findUnique as any).mockResolvedValue({
       id: 'fac-1',
-      corporation: {
-        id: 'corp-1',
-        maxStaff: 5,
-        _count: { users: 5 }
-      }
+      maxStaff: 5,
+      _count: { users: 5 },
+      corporationId: 'corp-1'
     })
 
     const formData = new FormData()

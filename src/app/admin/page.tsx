@@ -71,9 +71,9 @@ export default async function AdminDashboardPage() {
   const totalAssignments = totalStaff * currentAssignments.length;
   const progressRate = totalAssignments > 0 ? Math.round((totalCompletedEnrollments / totalAssignments) * 100) : 0;
 
-  const currentCorpStaffCount = facility.corporation._count.users;
-  const maxCorpStaff = facility.corporation.maxStaff;
-  const isStaffLimitReached = currentCorpStaffCount >= maxCorpStaff;
+  const currentFacilityStaffCount = totalStaff;
+  const maxFacilityStaff = facility.maxStaff;
+  const isStaffLimitReached = currentFacilityStaffCount >= maxFacilityStaff;
 
   const fullyCompletedStaff = staffMembers.filter(user => 
     user.enrollments.length >= currentAssignments.length && 
@@ -109,9 +109,9 @@ export default async function AdminDashboardPage() {
         <div className="max-w-md mx-auto">
           <OrgLimitStatus 
             type="staff" 
-            label="法人全体 スタッフ登録枠" 
-            current={currentCorpStaffCount} 
-            max={maxCorpStaff} 
+            label="施設スタッフ登録枠" 
+            current={currentFacilityStaffCount} 
+            max={maxFacilityStaff} 
           />
         </div>
 
