@@ -9,22 +9,22 @@
 - [x] Task: データベースマイグレーションの実行 [db-push]
 - [x] Task: Conductor - User Manual Verification 'Phase 1: データベーススキーマの拡張' (Protocol in workflow.md)
 
-## Phase 2: システム管理者（SUPER_ADMIN）向け管理機能の更新
+## Phase 2: システム管理者（SUPER_ADMIN）向け管理機能の更新 [checkpoint: 61928a7]
 制限値を設定・確認するためのUIとロジックを実装します。
 
-- [~] Task: 法人作成・編集フォームの更新
-    - [ ] `maxFacilities`, `maxStaff` の入力項目を追加
-    - [ ] バリデーションの追加（正の整数のみ）
-- [ ] Task: 法人一覧画面の更新
-    - [ ] 現在の利用数（施設数・合計スタッフ数）の取得ロジック実装
-    - [ ] 利用率（％）の表示と超過アラート（赤字表示など）の実装
-- [ ] Task: 動作確認用テストの作成と実施（TDD）
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: システム管理者向け管理機能の更新' (Protocol in workflow.md)
+- [x] Task: 法人作成・編集フォームの更新 [43e5f91, 6c66318]
+    - [x] `maxFacilities`, `maxStaff` の入力項目を追加
+    - [x] バリデーションの追加（正の整数のみ）
+- [x] Task: 法人一覧画面の更新 [6c66318]
+    - [x] 現在の利用数（施設数・合計スタッフ数）の取得ロジック実装
+    - [x] 利用率（％）の表示と超過アラート（赤字表示など）の実装
+- [x] Task: 動作確認用テストの作成と実施（TDD） [61928a7]
+- [x] Task: Conductor - User Manual Verification 'Phase 2: システム管理者向け管理機能の更新' (Protocol in workflow.md)
 
 ## Phase 3: 法人本部・施設管理者向け表示とUI制限の実装
 上限を意識させる表示と、ボタンの制御を行います。
 
-- [ ] Task: 利用状況表示コンポーネント（Progress Card）の作成
+- [~] Task: 利用状況表示コンポーネント（Progress Card）の作成
 - [ ] Task: 各ダッシュボード（HQ/ADMIN）へのコンポーネント配置
 - [ ] Task: 登録ボタン（施設追加・スタッフ追加）の非活性化ロジック実装
     - [ ] 現在数 >= 上限数 の場合に `disabled` に設定
