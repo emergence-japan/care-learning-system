@@ -69,15 +69,16 @@ export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">初期パスワード</Label>
+            <Label htmlFor="password">パスワード</Label>
             <Input 
               id="password" 
               name="password" 
-              type="password" 
-              placeholder="6文字以上のパスワード" 
+              type="text" 
+              placeholder="例: 123456" 
               required 
-              className="h-11 rounded-xl"
+              className="h-11 rounded-xl font-mono"
             />
+            <p className="text-[10px] text-slate-400">※管理者が決定し、スタッフに伝えてください。一覧で後から確認できます。</p>
           </div>
 
           {errorMessage && (

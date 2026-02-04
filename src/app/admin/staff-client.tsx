@@ -32,6 +32,7 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
             <thead>
               <tr className="bg-slate-50/50">
                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400">Staff Member / ID</th>
+                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400">Password</th>
                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 text-center">Progress Status</th>
                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
               </tr>
@@ -43,6 +44,11 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
                     <td className="px-8 py-6">
                       <div className="font-bold text-slate-900">{staff.name}</div>
                       <div className="text-xs text-slate-400 font-black">ID: {staff.loginId}</div>
+                    </td>
+                    <td className="px-8 py-6">
+                      <code className="bg-slate-100 px-2 py-1 rounded text-xs font-bold text-slate-700">
+                        {(staff as any).password}
+                      </code>
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex flex-col items-center gap-2">

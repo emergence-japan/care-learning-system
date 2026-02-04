@@ -48,7 +48,13 @@ export default async function AdminDashboardPage() {
 
   const staffMembers = await prisma.user.findMany({
     where: { facilityId: facilityId, role: "STAFF" },
-    include: { enrollments: { include: { course: true } } },
+    select: {
+      id: true,
+      name: true,
+      loginId: true,
+      password: true,
+      enrollments: { include: { course: true } }
+    },
   });
 
   const totalStaff = staffMembers.length;
