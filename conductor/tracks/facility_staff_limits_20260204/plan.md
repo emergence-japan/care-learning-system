@@ -19,13 +19,13 @@
     - [x] 施設ごとの「利用数 / 定員」を表示するように修正
 - [x] Task: Conductor - User Manual Verification 'Phase 2: システム管理者向け施設管理機能の更新' (Protocol in workflow.md)
 
-## Phase 3: 施設管理者（ADMIN）向け表示と登録制限の修正
+## Phase 3: 施設管理者（ADMIN）向け表示と登録制限の修正 [checkpoint: 5f55171]
 法人全体の制限から「施設ごとの定員」による制限にロジックを切り替えます。
 
-- [~] Task: 施設管理者ダッシュボードの更新
-    - [ ] `src/app/admin/page.tsx` で取得する上限値を「法人の最大数」から「施設の最大数」に変更
-    - [ ] 利用状況表示カードのラベルとロジックの修正
-- [ ] Task: サーバーサイドバリデーションの更新
-    - [ ] `registerStaff` アクション内の制限チェックを、施設の `maxStaff` を参照するように修正
-- [ ] Task: 動作確認用テストの作成と実施（TDD）
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: 施設管理者向け表示と登録制限の修正' (Protocol in workflow.md)
+- [x] Task: 施設管理者ダッシュボードの更新 [5f55171]
+    - [x] `src/app/admin/page.tsx` で取得する上限値を「法人の最大数」から「施設の最大数」に変更
+    - [x] 利用状況表示カードのラベルとロジックの修正
+- [x] Task: サーバーサイドバリデーションの更新 [5f55171]
+    - [x] `registerStaff` アクション内の制限チェックを、施設の `maxStaff` を参照するように修正
+- [x] Task: 動作確認用テストの作成と実施（TDD） [5f55171]
+- [x] Task: Conductor - User Manual Verification 'Phase 3: 施設管理者向け表示と登録制限の修正' (Protocol in workflow.md)
