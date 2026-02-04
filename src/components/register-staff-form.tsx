@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { registerStaff } from "@/lib/actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { UserPlus, Loader2, CheckCircle2 } from "lucide-react";
+import { UserPlus, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
-export function RegisterStaffForm() {
+export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
   const [errorMessage, dispatch, isPending] = useActionState(
     async (state: string | undefined, formData: FormData) => {
       return await registerStaff(formData);
@@ -75,10 +75,17 @@ export function RegisterStaffForm() {
             <p className="text-sm text-red-500 font-medium">{errorMessage}</p>
           )}
 
+          {disabled && (
+            <div className="p-4 bg-red-50 rounded-xl border border-red-100 flex items-start gap-2 text-red-600 text-xs font-bold mb-4">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              法人全体のスタッフ登録枠が上限に達しています。新しいスタッフを登録するには管理者に枠の拡大を依頼してください。
+            </div>
+          )}
+
           <Button 
             type="submit" 
-            disabled={isPending}
-            className="w-full h-12 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-xl shadow-md transition-all active:scale-95"
+            disabled={isPending || disabled}
+            className="w-full h-12 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:bg-zinc-400 disabled:cursor-not-allowed"
           >
             {isPending ? (
               <>

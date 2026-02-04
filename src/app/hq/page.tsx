@@ -4,18 +4,14 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   Building2, Users, TrendingUp, LogOut, 
-  ArrowRight, ShieldCheck, PieChart, Map 
+  ArrowRight, ShieldCheck, PieChart, Map, Plus 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/delete-button";
+import { OrgLimitStatus } from "@/components/org-limit-status";
 
 export default async function HQDashboardPage() {
-  const session = await auth();
-
-  if (!session?.user || (session.user as any).role !== "HQ") {
-    redirect("/");
-  }
-
+// ... (既存のコード)
   const corporationId = (session.user as any).corporationId;
   if (!corporationId) {
     return <div className="p-20 text-center font-bold text-slate-400">所属法人が設定されていません。</div>;
@@ -24,8 +20,14 @@ export default async function HQDashboardPage() {
   const corporation = await prisma.corporation.findUnique({
     where: { id: corporationId },
     include: {
+      _count: {
+        select: { facilities: true }
+      },
       facilities: {
         include: {
+          _count: {
+            select: { users: { where: { role: "STAFF" } } }
+          },
           users: {
             where: { role: "STAFF" },
             include: { enrollments: true },
@@ -35,9 +37,14 @@ export default async function HQDashboardPage() {
     },
   });
 
-  const totalCoursesCount = await prisma.course.count();
+  if (!corporation) return null;
 
-  const facilityStats = corporation?.facilities.map(facility => {
+  const totalCoursesCount = await prisma.course.count();
+  const currentFacilitiesCount = corporation._count.facilities;
+  const currentStaffCount = corporation.facilities.reduce((acc, f) => acc + f._count.users, 0);
+
+  const facilityStats = corporation.facilities.map(facility => {
+// ... (既存のコード)
     const totalStaff = facility.users.length;
     const completedEnrollments = facility.users.reduce((acc, user) => {
       return acc + user.enrollments.filter(e => e.status === 'COMPLETED').length;
@@ -79,6 +86,22 @@ export default async function HQDashboardPage() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pt-12 space-y-12">
+        {/* Organization Limits Status */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <OrgLimitStatus 
+            type="facility" 
+            label="運営施設枠" 
+            current={currentFacilitiesCount} 
+            max={corporation.maxFacilities} 
+          />
+          <OrgLimitStatus 
+            type="staff" 
+            label="登録スタッフ枠" 
+            current={currentStaffCount} 
+            max={corporation.maxStaff} 
+          />
+        </div>
+
         {/* HQ Insights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <HQStatCard title="運営施設数" value={totalFacilities} label="施設" icon={<Map className="w-6 h-6" />} color="bg-blue-600" />

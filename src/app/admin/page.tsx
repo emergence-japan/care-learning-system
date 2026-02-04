@@ -11,6 +11,7 @@ import { RegisterStaffForm } from "@/components/register-staff-form";
 import { DeleteButton } from "@/components/delete-button";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
+import { OrgLimitStatus } from "@/components/org-limit-status";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -29,8 +30,20 @@ export default async function AdminDashboardPage() {
   // 施設情報と法人情報を取得
   const facility = await prisma.facility.findUnique({ 
     where: { id: facilityId },
-    include: { corporation: true }
+    include: { 
+      corporation: {
+        include: {
+          _count: {
+            select: { users: { where: { role: "STAFF" } } }
+          }
+        }
+      }
+    }
   });
+
+  if (!facility || !facility.corporation) {
+    return <div className="p-20 text-center font-bold text-slate-400">所属情報が見つかりません。</div>;
+  }
 
   const staffMembers = await prisma.user.findMany({
     where: { facilityId: facilityId, role: "STAFF" },
@@ -57,6 +70,10 @@ export default async function AdminDashboardPage() {
   }, 0);
   const totalAssignments = totalStaff * currentAssignments.length;
   const progressRate = totalAssignments > 0 ? Math.round((totalCompletedEnrollments / totalAssignments) * 100) : 0;
+
+  const currentCorpStaffCount = facility.corporation._count.users;
+  const maxCorpStaff = facility.corporation.maxStaff;
+  const isStaffLimitReached = currentCorpStaffCount >= maxCorpStaff;
 
   const fullyCompletedStaff = staffMembers.filter(user => 
     user.enrollments.length >= currentAssignments.length && 
@@ -88,10 +105,20 @@ export default async function AdminDashboardPage() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pt-12 space-y-12">
+        {/* Organization Limits Status */}
+        <div className="max-w-md mx-auto">
+          <OrgLimitStatus 
+            type="staff" 
+            label="法人全体 スタッフ登録枠" 
+            current={currentCorpStaffCount} 
+            max={maxCorpStaff} 
+          />
+        </div>
+
         {/* Actions Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
           <div className="lg:col-span-1 space-y-8">
-            <RegisterStaffForm />
+            <RegisterStaffForm disabled={isStaffLimitReached} />
             <CourseAssignmentDialog 
               courses={allAvailableCourses} 
               currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
