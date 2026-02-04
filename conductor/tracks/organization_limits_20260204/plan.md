@@ -1,18 +1,18 @@
 # Implementation Plan: 組織・ユーザー数の制限機能
 
-## Phase 1: データベーススキーマの拡張
+## Phase 1: データベーススキーマの拡張 [checkpoint: 6d0cebf]
 法人モデルに制限値を持たせるためのスキーマ変更と移行を行います。
 
 - [x] Task: Prismaスキーマの更新 [688c098]
     - [x] `Corporation` モデルに `maxFacilities` (Int) と `maxStaff` (Int) を追加
     - [x] 既存データへのデフォルト値（例: 施設10, スタッフ100）を設定
-- [~] Task: データベースマイグレーションの実行
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: データベーススキーマの拡張' (Protocol in workflow.md)
+- [x] Task: データベースマイグレーションの実行 [db-push]
+- [x] Task: Conductor - User Manual Verification 'Phase 1: データベーススキーマの拡張' (Protocol in workflow.md)
 
 ## Phase 2: システム管理者（SUPER_ADMIN）向け管理機能の更新
 制限値を設定・確認するためのUIとロジックを実装します。
 
-- [ ] Task: 法人作成・編集フォームの更新
+- [~] Task: 法人作成・編集フォームの更新
     - [ ] `maxFacilities`, `maxStaff` の入力項目を追加
     - [ ] バリデーションの追加（正の整数のみ）
 - [ ] Task: 法人一覧画面の更新
