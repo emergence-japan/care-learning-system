@@ -1,17 +1,17 @@
 # Implementation Plan: 施設ごとのスタッフ数制限機能
 
-## Phase 1: データベーススキーマの更新
+## Phase 1: データベーススキーマの更新 [checkpoint: 913b947]
 施設（Facility）モデルに定員フィールドを追加し、データを移行します。
 
-- [x] Task: Prismaスキーマ of 更新 [f0a9487]
+- [x] Task: Prismaスキーマの更新 [f0a9487]
     - [x] `Facility` モデルに `maxStaff` (Int) を追加（デフォルト値: 20名）
-- [~] Task: データベースマイグレーションの実行
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: データベーススキーマの更新' (Protocol in workflow.md)
+- [x] Task: データベースマイグレーションの実行 [db-push]
+- [x] Task: Conductor - User Manual Verification 'Phase 1: データベーススキーマの更新' (Protocol in workflow.md)
 
 ## Phase 2: システム管理者（SUPER_ADMIN）向け施設管理機能の更新
 各施設の定員を設定・管理できるようにします。
 
-- [ ] Task: 施設登録・編集フォームの更新
+- [~] Task: 施設登録・編集フォームの更新
     - [ ] `src/app/super-admin/organizations/page.tsx` の施設登録フォームに `maxStaff` 項目を追加
 - [ ] Task: 施設編集アクションの実装
     - [ ] 施設の定員を後から変更できるアクションの作成
