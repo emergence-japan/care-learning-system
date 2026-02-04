@@ -49,13 +49,22 @@ export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">メールアドレス</Label>
+            <Label htmlFor="loginId">ログインID</Label>
+            <Input 
+              id="loginId" 
+              name="loginId" 
+              placeholder="例: tanaka_taro" 
+              required 
+              className="h-11 rounded-xl"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">メールアドレス（任意）</Label>
             <Input 
               id="email" 
               name="email" 
               type="email" 
               placeholder="staff@example.com" 
-              required 
               className="h-11 rounded-xl"
             />
           </div>

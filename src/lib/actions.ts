@@ -162,24 +162,26 @@ export async function registerStaff(
   }
 
   const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
+  const loginId = formData.get("loginId") as string;
+  const email = formData.get("email") as string || null;
   const password = formData.get("password") as string;
 
-  if (!name || !email || !password) {
-    return "全ての項目を入力してください。";
+  if (!name || !loginId || !password) {
+    return "全ての項目（氏名、ログインID、パスワード）を入力してください。";
   }
 
   const existingUser = await prisma.user.findUnique({
-    where: { email },
+    where: { loginId },
   });
 
   if (existingUser) {
-    return "このメールアドレスは既に登録されています。";
+    return "このログインIDは既に登録されています。別のIDを指定してください。";
   }
 
   const newUser = await prisma.user.create({
     data: {
       name,
+      loginId,
       email,
       password,
       role: "STAFF",
@@ -201,6 +203,37 @@ export async function registerStaff(
       })),
     });
   }
+
+  revalidatePath("/admin");
+}
+
+export async function updateStaffPassword(staffId: string, formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const newPassword = formData.get("password") as string;
+  if (!newPassword || newPassword.length < 4) {
+    return "パスワードは4文字以上で入力してください。";
+  }
+
+  // 自分の施設のスタッフかどうかのチェック
+  const staff = await prisma.user.findUnique({
+    where: { id: staffId },
+    select: { facilityId: true }
+  });
+
+  if (!staff || staff.facilityId !== (session.user as any).facilityId) {
+    throw new Error("Forbidden");
+  }
+
+  await prisma.user.update({
+    where: { id: staffId },
+    data: { password: newPassword }
+  });
 
   revalidatePath("/admin");
 }
@@ -258,13 +291,12 @@ export async function createCorporation(formData: FormData) {
 
   const name = formData.get("name") as string;
   const maxFacilities = parseInt(formData.get("maxFacilities") as string) || 10;
-  const maxStaff = parseInt(formData.get("maxStaff") as string) || 100;
 
   await prisma.corporation.create({
     data: { 
       name,
       maxFacilities,
-      maxStaff
+      maxStaff: 0 // 法人単位の制限は使用しないため0またはデフォルト値を設定
     },
   });
 
@@ -281,14 +313,12 @@ export async function updateCorporation(id: string, formData: FormData) {
 
   const name = formData.get("name") as string;
   const maxFacilities = parseInt(formData.get("maxFacilities") as string);
-  const maxStaff = parseInt(formData.get("maxStaff") as string);
 
   await prisma.corporation.update({
     where: { id },
     data: { 
       name,
-      maxFacilities,
-      maxStaff
+      maxFacilities
     },
   });
 
