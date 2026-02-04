@@ -66,6 +66,16 @@ export default async function OrganizationManagementPage() {
                   <Label htmlFor="corp-name">法人名</Label>
                   <Input id="corp-name" name="name" placeholder="例: 社会福祉法人 ケア・ライフ" required />
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="corp-max-facilities">最大施設数</Label>
+                    <Input id="corp-max-facilities" name="maxFacilities" type="number" defaultValue={10} min={1} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="corp-max-staff">最大スタッフ数</Label>
+                    <Input id="corp-max-staff" name="maxStaff" type="number" defaultValue={100} min={1} required />
+                  </div>
+                </div>
                 <Button type="submit" className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-11 font-bold">
                   法人を登録
                 </Button>
