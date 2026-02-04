@@ -38,6 +38,8 @@ model Corporation {
   id         String   @id @default(cuid())
   name       String   @unique
   fiscalYearStartMonth Int @default(4) // 年度開始月 (1-12)
+  maxFacilities Int     @default(10)  // 最大施設数
+  maxStaff      Int     @default(100) // 最大スタッフ数
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   facilities Facility[]
