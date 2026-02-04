@@ -21,19 +21,19 @@
 - [x] Task: 動作確認用テストの作成と実施（TDD） [61928a7]
 - [x] Task: Conductor - User Manual Verification 'Phase 2: システム管理者向け管理機能の更新' (Protocol in workflow.md)
 
-## Phase 3: 法人本部・施設管理者向け表示とUI制限の実装
+## Phase 3: 法人本部・施設管理者向け表示とUI制限の実装 [checkpoint: 456155a]
 上限を意識させる表示と、ボタンの制御を行います。
 
-- [~] Task: 利用状況表示コンポーネント（Progress Card）の作成
-- [ ] Task: 各ダッシュボード（HQ/ADMIN）へのコンポーネント配置
-- [ ] Task: 登録ボタン（施設追加・スタッフ追加）の非活性化ロジック実装
-    - [ ] 現在数 >= 上限数 の場合に `disabled` に設定
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: 法人本部・施設管理者向け表示とUI制限の実装' (Protocol in workflow.md)
+- [x] Task: 利用状況表示コンポーネント（Progress Card）の作成 [456155a]
+- [x] Task: 各ダッシュボード（HQ/ADMIN）へのコンポーネント配置 [456155a]
+- [x] Task: 登録ボタン（施設追加・スタッフ追加）の非活性化ロジック実装 [456155a]
+    - [x] 現在数 >= 上限数 の場合に `disabled` に設定
+- [x] Task: Conductor - User Manual Verification 'Phase 3: 法人本部・施設管理者向け表示とUI制限の実装' (Protocol in workflow.md)
 
 ## Phase 4: サーバーサイドバリデーションの強化
 UIの制限を回避した不正なリクエストをバックエンドで遮断します。
 
-- [ ] Task: Server Actions の更新
+- [~] Task: Server Actions の更新
     - [ ] `createFacility`, `registerStaff` 実行時に現在の数と上限を比較するチェック処理を追加
 - [ ] Task: エラーハンドリングとユーザー通知の実装
 - [ ] Task: ユニットテストによる制限ロジックの検証（TDD）
