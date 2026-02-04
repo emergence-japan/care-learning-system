@@ -24,12 +24,12 @@
     - [x] パスワード再設定用ダイアログとボタンの追加
 - [x] Task: Conductor - User Manual Verification 'Phase 2: 管理者向け操作とUIの実装' (Protocol in workflow.md)
 
-## Phase 3: ログイン画面と既存データのクリーンアップ
+## Phase 3: ログイン画面と既存データのクリーンアップ [checkpoint: 7d939e8]
 全ユーザーが新しいID制で利用できるように整えます。
 
-- [~] Task: ログイン画面の更新
-    - [ ] `LoginPage` のラベルと入力を `loginId` に変更
-- [ ] Task: 各ダッシュボード・コンポーネントの表記修正
-    - [ ] 「メールアドレス」と表示されている箇所を「ログインID」に統一
-- [ ] Task: 動作確認用テストの作成と実施（TDD）
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: ログイン画面と既存データのクリーンアップ' (Protocol in workflow.md)
+- [x] Task: ログイン画面の更新 [7d939e8]
+    - [x] `LoginPage` のラベルと入力を `loginId` に変更
+- [x] Task: 各ダッシュボード・コンポーネントの表記修正 [7d939e8]
+    - [x] 「メールアドレス」と表示されている箇所を「ログインID」に統一
+- [x] Task: 動作確認用テストの作成と実施（TDD） [pass]
+- [x] Task: Conductor - User Manual Verification 'Phase 3: ログイン画面と既存データのクリーンアップ' (Protocol in workflow.md)
