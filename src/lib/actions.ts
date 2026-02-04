@@ -230,6 +230,11 @@ export async function createCourse(formData: FormData) {
 }
 
 export async function createCorporation(formData: FormData) {
+  // ... (既存のコード)
+  revalidatePath("/super-admin/organizations");
+}
+
+export async function updateCorporation(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
@@ -238,10 +243,11 @@ export async function createCorporation(formData: FormData) {
   }
 
   const name = formData.get("name") as string;
-  const maxFacilities = parseInt(formData.get("maxFacilities") as string) || 10;
-  const maxStaff = parseInt(formData.get("maxStaff") as string) || 100;
+  const maxFacilities = parseInt(formData.get("maxFacilities") as string);
+  const maxStaff = parseInt(formData.get("maxStaff") as string);
 
-  await prisma.corporation.create({
+  await prisma.corporation.update({
+    where: { id },
     data: { 
       name,
       maxFacilities,

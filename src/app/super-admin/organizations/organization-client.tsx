@@ -2,18 +2,22 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Building, Home, Trash2 } from "lucide-react";
+import { Plus, Building, Home, Trash2, Edit, AlertCircle, Users } from "lucide-react";
 import { AddOrgUserDialog } from "@/components/add-org-user-dialog";
+import { EditCorporationDialog } from "@/components/edit-corporation-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { deleteCorporation, deleteFacility, deleteUser } from "@/lib/actions";
 
 type Corp = {
   id: string;
   name: string;
+  maxFacilities: number;
+  maxStaff: number;
   facilities: {
     id: string;
     name: string;
     users: { id: string; name: string; email: string }[];
+    _count: { users: number };
   }[];
   users: { id: string; name: string; email: string }[];
 };
@@ -26,19 +30,24 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
     role: "HQ" | "ADMIN";
   } | null>(null);
 
+  const [editCorp, setEditCorp] = useState<Corp | null>(null);
+
   const handleDeleteCorp = async (id: string, name: string) => {
+// ... (既存のコード)
     if (confirm(`【警告】法人「${name}」を削除しますか？\n所属する全ての施設、ユーザー、受講記録が完全に削除されます。`)) {
       await deleteCorporation(id);
     }
   };
 
   const handleDeleteFacility = async (id: string, name: string) => {
+// ... (既存のコード)
     if (confirm(`施設「${name}」を削除しますか？\n所属するユーザーと受講記録が削除されます。`)) {
       await deleteFacility(id);
     }
   };
 
   const handleDeleteUser = async (id: string, name: string) => {
+// ... (既存のコード)
     if (confirm(`ユーザー「${name}」を削除しますか？`)) {
       await deleteUser(id);
     }
@@ -47,117 +56,166 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
   return (
     <>
       <div className="space-y-8">
-        {corporations.map((corp) => (
-          <div key={corp.id} className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
-            <div className="bg-zinc-900 text-white p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Corporation</div>
-                <h4 className="text-xl font-black">{corp.name}</h4>
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: null, orgName: corp.name, role: "HQ" })}
-                  variant="outline" size="sm" className="bg-transparent border-zinc-700 text-zinc-300 hover:bg-zinc-800 rounded-lg"
-                >
-                  本部ユーザー追加
-                </Button>
-                <Button 
-                  onClick={() => handleDeleteCorp(corp.id, corp.name)}
-                  variant="ghost" size="icon" className="text-zinc-500 hover:text-red-500 hover:bg-red-500/10"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+        {corporations.map((corp) => {
+          const facilityCount = corp.facilities.length;
+          const totalStaffCount = corp.facilities.reduce((acc, f) => acc + f._count.users, 0);
+          const facilityRate = Math.round((facilityCount / corp.maxFacilities) * 100);
+          const staffRate = Math.round((totalStaffCount / corp.maxStaff) * 100);
 
-            <div className="px-6 py-4 border-b border-zinc-100 bg-zinc-50/50">
-              <div className="text-[10px] font-bold uppercase text-zinc-400 mb-2 tracking-widest">法人本部（代表者）</div>
-              <div className="flex flex-wrap gap-2">
-                {corp.users.map(user => (
-                  <div key={user.id} className="bg-white border border-zinc-200 pl-3 pr-1 py-1 rounded-full flex items-center gap-2 shadow-sm">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="text-xs font-bold text-zinc-700">{user.name}</span>
-                    <span className="text-[10px] text-zinc-400">{user.email}</span>
-                    <Button 
-                      onClick={() => handleDeleteUser(user.id, user.name)}
-                      variant="ghost" size="icon" className="w-6 h-6 rounded-full text-zinc-300 hover:text-red-600"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </Button>
+          return (
+            <div key={corp.id} className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
+              <div className="bg-zinc-900 text-white p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Corporation</div>
+                    <h4 className="text-xl font-black">{corp.name}</h4>
                   </div>
+                  <div className="flex gap-4 border-l border-zinc-700 pl-4 py-1">
+                    <div>
+                      <div className="text-[9px] uppercase text-zinc-500 font-bold">Facilities</div>
+                      <div className={`text-sm font-bold ${facilityRate >= 100 ? 'text-red-400' : 'text-zinc-300'}`}>
+                        {facilityCount} / {corp.maxFacilities}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[9px] uppercase text-zinc-500 font-bold">Staff</div>
+                      <div className={`text-sm font-bold ${staffRate >= 100 ? 'text-red-400' : 'text-zinc-300'}`}>
+                        {totalStaffCount} / {corp.maxStaff}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setEditCorp(corp)}
+                    variant="outline" size="sm" className="bg-transparent border-zinc-700 text-zinc-300 hover:bg-zinc-800 rounded-lg"
+                  >
+                    <Edit className="w-3.5 h-3.5 mr-1.5" /> 設定変更
+                  </Button>
+                  <Button 
+                    onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: null, orgName: corp.name, role: "HQ" })}
+                    variant="outline" size="sm" className="bg-transparent border-zinc-700 text-zinc-300 hover:bg-zinc-800 rounded-lg"
+                  >
+                    本部ユーザー追加
+                  </Button>
+                  <Button 
+                    onClick={() => handleDeleteCorp(corp.id, corp.name)}
+                    variant="ghost" size="icon" className="text-zinc-500 hover:text-red-500 hover:bg-red-500/10"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {(facilityRate >= 100 || staffRate >= 100) && (
+                <div className="px-6 py-2 bg-red-50 border-b border-red-100 flex items-center gap-2 text-red-600 text-xs font-bold">
+                  <AlertCircle className="w-4 h-4" />
+                  利用制限数に達しています。新規登録には設定の変更が必要です。
+                </div>
+              )}
+
+              <div className="px-6 py-4 border-b border-zinc-100 bg-zinc-50/50">
+                <div className="text-[10px] font-bold uppercase text-zinc-400 mb-2 tracking-widest">法人本部（代表者）</div>
+                <div className="flex flex-wrap gap-2">
+                  {corp.users.map(user => (
+                    <div key={user.id} className="bg-white border border-zinc-200 pl-3 pr-1 py-1 rounded-full flex items-center gap-2 shadow-sm">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="text-xs font-bold text-zinc-700">{user.name}</span>
+                      <span className="text-[10px] text-zinc-400">{user.email}</span>
+                      <Button 
+                        onClick={() => handleDeleteUser(user.id, user.name)}
+                        variant="ghost" size="icon" className="w-6 h-6 rounded-full text-zinc-300 hover:text-red-600"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  ))}
+                  {corp.users.length === 0 && (
+                    <p className="text-xs text-zinc-400 italic py-1">本部ユーザーが未登録です</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {corp.facilities.map((facility) => (
+                  <Card key={facility.id} className="border-zinc-100 bg-zinc-50/30 rounded-2xl overflow-hidden">
+                    <CardContent className="p-5 space-y-4">
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-white p-2 rounded-xl shadow-sm border border-zinc-100">
+                            <Home className="w-5 h-5 text-zinc-600" />
+                          </div>
+                          <div>
+                            <h5 className="font-bold text-lg text-zinc-900">{facility.name}</h5>
+                            <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 font-medium">
+                              <Users className="w-3 h-3" />
+                              スタッフ {facility._count.users} 名
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          <Button 
+                            onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: facility.id, orgName: facility.name, role: "ADMIN" })}
+                            variant="ghost" size="sm" className="text-zinc-400 hover:text-red-600 rounded-lg"
+                          >
+                            <Plus className="w-4 h-4 mr-1" /> 施設長
+                          </Button>
+                          <Button 
+                            onClick={() => handleDeleteFacility(facility.id, facility.name)}
+                            variant="ghost" size="icon" className="w-8 h-8 text-zinc-300 hover:text-red-600"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <p className="text-[10px] font-bold uppercase text-zinc-400">施設管理者（施設長）</p>
+                        <div className="space-y-1">
+                          {facility.users.map(user => (
+                            <div key={user.id} className="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-zinc-100 shadow-sm group">
+                              <div>
+                                <span className="text-sm font-medium mr-2">{user.name}</span>
+                                <span className="text-[10px] text-zinc-400">{user.email}</span>
+                              </div>
+                              <Button 
+                                onClick={() => handleDeleteUser(user.id, user.name)}
+                                variant="ghost" size="icon" className="w-6 h-6 text-zinc-200 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          ))}
+                          {facility.users.length === 0 && (
+                            <p className="text-xs text-zinc-400 italic">施設管理者が未登録です</p>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
-                {corp.users.length === 0 && (
-                  <p className="text-xs text-zinc-400 italic py-1">本部ユーザーが未登録です</p>
+                {corp.facilities.length === 0 && (
+                  <div className="col-span-2 text-center py-10 text-zinc-400 text-sm">
+                    この法人には施設が登録されていません。
+                  </div>
                 )}
               </div>
             </div>
-
-            <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {corp.facilities.map((facility) => (
-                <Card key={facility.id} className="border-zinc-100 bg-zinc-50/30 rounded-2xl overflow-hidden">
-                  <CardContent className="p-5 space-y-4">
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-3">
-                        <div className="bg-white p-2 rounded-xl shadow-sm border border-zinc-100">
-                          <Home className="w-5 h-5 text-zinc-600" />
-                        </div>
-                        <h5 className="font-bold text-lg text-zinc-900">{facility.name}</h5>
-                      </div>
-                      <div className="flex gap-1">
-                        <Button 
-                          onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: facility.id, orgName: facility.name, role: "ADMIN" })}
-                          variant="ghost" size="sm" className="text-zinc-400 hover:text-red-600 rounded-lg"
-                        >
-                          <Plus className="w-4 h-4 mr-1" /> 施設長
-                        </Button>
-                        <Button 
-                          onClick={() => handleDeleteFacility(facility.id, facility.name)}
-                          variant="ghost" size="icon" className="w-8 h-8 text-zinc-300 hover:text-red-600"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-bold uppercase text-zinc-400">施設管理者（施設長）</p>
-                      <div className="space-y-1">
-                        {facility.users.map(user => (
-                          <div key={user.id} className="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-zinc-100 shadow-sm group">
-                            <div>
-                              <span className="text-sm font-medium mr-2">{user.name}</span>
-                              <span className="text-[10px] text-zinc-400">{user.email}</span>
-                            </div>
-                            <Button 
-                              onClick={() => handleDeleteUser(user.id, user.name)}
-                              variant="ghost" size="icon" className="w-6 h-6 text-zinc-200 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </Button>
-                          </div>
-                        ))}
-                        {facility.users.length === 0 && (
-                          <p className="text-xs text-zinc-400 italic">施設管理者が未登録です</p>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {corp.facilities.length === 0 && (
-                <div className="col-span-2 text-center py-10 text-zinc-400 text-sm">
-                  この法人には施設が登録されていません。
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {dialogConfig && (
         <AddOrgUserDialog 
           {...dialogConfig} 
           onClose={() => setDialogConfig(null)} 
+        />
+      )}
+
+      {editCorp && (
+        <EditCorporationDialog
+          corporation={editCorp}
+          onClose={() => setEditCorp(null)}
         />
       )}
     </>

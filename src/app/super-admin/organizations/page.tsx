@@ -23,6 +23,9 @@ export default async function OrganizationManagementPage() {
         include: {
           users: {
             where: { role: "ADMIN" }
+          },
+          _count: {
+            select: { users: true }
           }
         }
       },
