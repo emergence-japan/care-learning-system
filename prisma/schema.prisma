@@ -27,6 +27,7 @@ model Facility {
   id            String   @id @default(cuid())
   name          String   @unique
   corporationId String?
+  maxStaff      Int      @default(20)   // 施設ごとのスタッフ上限
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   corporation   Corporation? @relation(fields: [corporationId], references: [id])
