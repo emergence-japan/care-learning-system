@@ -30,11 +30,11 @@
     - [x] 現在数 >= 上限数 の場合に `disabled` に設定
 - [x] Task: Conductor - User Manual Verification 'Phase 3: 法人本部・施設管理者向け表示とUI制限の実装' (Protocol in workflow.md)
 
-## Phase 4: サーバーサイドバリデーションの強化
+## Phase 4: サーバーサイドバリデーションの強化 [checkpoint: 773bc01]
 UIの制限を回避した不正なリクエストをバックエンドで遮断します。
 
-- [~] Task: Server Actions の更新
-    - [ ] `createFacility`, `registerStaff` 実行時に現在の数と上限を比較するチェック処理を追加
-- [ ] Task: エラーハンドリングとユーザー通知の実装
-- [ ] Task: ユニットテストによる制限ロジックの検証（TDD）
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: サーバーサイドバリデーションの強化' (Protocol in workflow.md)
+- [x] Task: Server Actions の更新 [773bc01]
+    - [x] `createFacility`, `registerStaff` 実行時に現在の数と上限を比較するチェック処理を追加
+- [x] Task: エラーハンドリングとユーザー通知の実装 [773bc01]
+- [x] Task: ユニットテストによる制限ロジックの検証（TDD） [773bc01]
+- [x] Task: Conductor - User Manual Verification 'Phase 4: サーバーサイドバリデーションの強化' (Protocol in workflow.md)
