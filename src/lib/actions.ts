@@ -309,8 +309,9 @@ export async function createFacility(formData: FormData) {
 
   const name = formData.get("name") as string;
   const corporationId = formData.get("corporationId") as string;
+  const maxStaff = parseInt(formData.get("maxStaff") as string) || 20;
 
-  // 制限チェック
+  // 制限チェック (法人単位の施設数制限は維持)
   const corporation = await prisma.corporation.findUnique({
     where: { id: corporationId },
     include: { _count: { select: { facilities: true } } }
@@ -325,6 +326,29 @@ export async function createFacility(formData: FormData) {
     data: {
       name,
       corporationId,
+      maxStaff
+    },
+  });
+
+  revalidatePath("/super-admin/organizations");
+}
+
+export async function updateFacility(id: string, formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const name = formData.get("name") as string;
+  const maxStaff = parseInt(formData.get("maxStaff") as string);
+
+  await prisma.facility.update({
+    where: { id },
+    data: { 
+      name,
+      maxStaff
     },
   });
 

@@ -20,17 +20,22 @@ export default async function OrganizationManagementPage() {
   const corporations = await prisma.corporation.findMany({
     include: {
       facilities: {
-        include: {
+        select: {
+          id: true,
+          name: true,
+          maxStaff: true,
           users: {
-            where: { role: "ADMIN" }
+            where: { role: "ADMIN" },
+            select: { id: true, name: true, email: true }
           },
           _count: {
-            select: { users: true }
+            select: { users: { where: { role: "STAFF" } } }
           }
         }
       },
       users: {
-        where: { role: "HQ" }
+        where: { role: "HQ" },
+        select: { id: true, name: true, email: true }
       }
     },
     orderBy: { createdAt: 'desc' }
@@ -113,6 +118,10 @@ export default async function OrganizationManagementPage() {
                 <div className="space-y-2">
                   <Label htmlFor="fac-name">施設名</Label>
                   <Input id="fac-name" name="name" placeholder="例: ケア・ライフ あさがお" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="fac-max-staff">最大スタッフ数</Label>
+                  <Input id="fac-max-staff" name="maxStaff" type="number" defaultValue={20} min={1} required />
                 </div>
                 <Button type="submit" className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-11 font-bold">
                   施設を登録

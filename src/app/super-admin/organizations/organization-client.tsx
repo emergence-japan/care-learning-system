@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Building, Home, Trash2, Edit, AlertCircle, Users } from "lucide-react";
 import { AddOrgUserDialog } from "@/components/add-org-user-dialog";
 import { EditCorporationDialog } from "@/components/edit-corporation-dialog";
+import { EditFacilityDialog } from "@/components/edit-facility-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { deleteCorporation, deleteFacility, deleteUser } from "@/lib/actions";
 
@@ -16,6 +17,7 @@ type Corp = {
   facilities: {
     id: string;
     name: string;
+    maxStaff: number;
     users: { id: string; name: string; email: string }[];
     _count: { users: number };
   }[];
@@ -31,6 +33,7 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
   } | null>(null);
 
   const [editCorp, setEditCorp] = useState<Corp | null>(null);
+  const [editFacilityData, setEditFacilityData] = useState<Corp["facilities"][0] | null>(null);
 
   const handleDeleteCorp = async (id: string, name: string) => {
 // ... (既存のコード)
@@ -147,13 +150,24 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                           </div>
                           <div>
                             <h5 className="font-bold text-lg text-zinc-900">{facility.name}</h5>
-                            <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 font-medium">
-                              <Users className="w-3 h-3" />
-                              スタッフ {facility._count.users} 名
+                            <div className="flex items-center gap-3 text-[10px] font-medium">
+                              <div className="flex items-center gap-1.5 text-zinc-400">
+                                <Users className="w-3 h-3" />
+                                <span>スタッフ {facility._count.users} / {facility.maxStaff} 名</span>
+                              </div>
+                              {facility._count.users >= facility.maxStaff && (
+                                <span className="text-red-500 font-bold uppercase tracking-tighter bg-red-50 px-1.5 py-0.5 rounded border border-red-100">Full</span>
+                              )}
                             </div>
                           </div>
                         </div>
                         <div className="flex gap-1">
+                          <Button 
+                            onClick={() => setEditFacilityData(facility)}
+                            variant="ghost" size="icon" className="w-8 h-8 text-zinc-300 hover:text-blue-600"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </Button>
                           <Button 
                             onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: facility.id, orgName: facility.name, role: "ADMIN" })}
                             variant="ghost" size="sm" className="text-zinc-400 hover:text-red-600 rounded-lg"
@@ -216,6 +230,13 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
         <EditCorporationDialog
           corporation={editCorp}
           onClose={() => setEditCorp(null)}
+        />
+      )}
+
+      {editFacilityData && (
+        <EditFacilityDialog
+          facility={editFacilityData}
+          onClose={() => setEditFacilityData(null)}
         />
       )}
     </>
