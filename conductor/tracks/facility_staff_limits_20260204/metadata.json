@@ -1,0 +1,8 @@
+{
+  "track_id": "facility_staff_limits_20260204",
+  "type": "feature",
+  "status": "completed",
+  "created_at": "2026-02-04T16:31:00Z",
+  "updated_at": "2026-02-04T16:43:00Z",
+  "description": "施設ごとにスタッフ登録数の上限（定員）を設定・制限できるようにする"
+}

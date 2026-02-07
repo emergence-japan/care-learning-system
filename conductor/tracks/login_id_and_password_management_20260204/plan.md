@@ -19,10 +19,15 @@
     - [x] `RegisterStaffForm` の入力項目を `email` から `loginId` に変更
 - [x] Task: パスワード上書きアクションの実装 [52391da]
     - [x] 管理者がスタッフのパスワードを強制変更できる `resetStaffPassword` アクションを作成
-- [x] Task: 施設管理者ダッシュボードの更新 [52391da]
+- [x] Task: 施設管理者ダッシュボードの更新 [52391da, f900b08]
     - [x] スタッフ一覧に `loginId` を表示
+    - [x] スタッフ一覧に現在のパスワードを表示するように修正 [f900b08]
     - [x] パスワード再設定用ダイアログとボタンの追加
-- [x] Task: Conductor - User Manual Verification 'Phase 2: 管理者向け操作とUIの実装' (Protocol in workflow.md)
+- [x] Task: スタッフ登録機能の更新 [52391da, f900b08]
+    - [x] `registerStaff` アクションを `loginId` 対応に修正
+    - [x] `RegisterStaffForm` の入力項目を `email` から `loginId` に変更
+    - [x] `RegisterStaffForm` のパスワード入力を可視化（type="text"）に変更 [f900b08]
+- [x] Task: Conductor - User Manual Verification 'Phase 2: 管理者向け操作とUIの実装' (Protocol in workflow.md) [f900b08]
 
 ## Phase 3: ログイン画面と既存データのクリーンアップ [checkpoint: 7d939e8]
 全ユーザーが新しいID制で利用できるように整えます。
