@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   Users, BookCheck, TrendingUp, LogOut, 
-  Briefcase
+  Briefcase, ClipboardList
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RegisterStaffForm } from "@/components/register-staff-form";
@@ -23,20 +23,21 @@ export default async function AdminDashboardPage() {
   const facilityId = session.user.facilityId;
   
   if (!facilityId) {
-    return <div className="p-20 text-center font-bold text-slate-400">所属施設が設定されていません。</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center space-y-4">
+          <Briefcase className="w-12 h-12 text-slate-300 mx-auto" />
+          <p className="text-xl font-bold text-slate-400">所属施設が設定されていません</p>
+        </div>
+      </div>
+    );
   }
 
   // 施設情報と法人情報を取得
   const facility = await prisma.facility.findUnique({ 
     where: { id: facilityId },
     include: { 
-      corporation: {
-        include: {
-          _count: {
-            select: { users: { where: { role: "STAFF" } } }
-          }
-        }
-      }
+      corporation: true
     }
   });
 
@@ -56,20 +57,13 @@ export default async function AdminDashboardPage() {
   });
 
   const totalStaff = staffMembers.length;
-  
-  // 全研修コースの取得（割当用）
-  const allAvailableCourses = await prisma.course.findMany({
-    orderBy: { title: 'asc' }
-  });
-
-  // 現在の施設の割当状況を取得
+  const allAvailableCourses = await prisma.course.findMany({ orderBy: { title: 'asc' } });
   const currentAssignments = await prisma.courseAssignment.findMany({
     where: { facilityId },
     include: { course: true },
     orderBy: { endDate: 'asc' }
   });
 
-  // 統計の算出
   const totalCompletedEnrollments = staffMembers.reduce((acc, user) => {
     return acc + user.enrollments.filter(e => e.status === 'COMPLETED').length;
   }, 0);
@@ -88,89 +82,121 @@ export default async function AdminDashboardPage() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
-      {/* Admin Header */}
-      <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 h-20 flex items-center px-6">
-        <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-100 rotate-3">
-              <Briefcase className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-slate-50/50">
+      {/* Refined Header */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-slate-900 rounded-lg flex items-center justify-center shadow-sm">
+              <Briefcase className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="font-black text-xl text-slate-900 tracking-tight leading-none">Admin Control</h1>
-              <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mt-1.5">{facility?.name}</p>
+              <h1 className="font-bold text-slate-900 leading-none">施設管理パネル</h1>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">{facility.name}</p>
             </div>
           </div>
-          <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
-            <Button variant="ghost" size="icon" className="rounded-full text-slate-400 hover:text-red-600 hover:bg-red-50">
-              <LogOut className="w-5 h-5" />
-            </Button>
-          </form>
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-xs font-bold text-slate-900">{session.user.name}</p>
+              <p className="text-[10px] text-slate-500 font-medium">管理者権限</p>
+            </div>
+            <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
+              <Button variant="ghost" size="icon" className="text-slate-400 hover:text-slate-900 transition-colors">
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </form>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 pt-12 space-y-12">
-        {/* Organization Limits Status */}
-        <div className="max-w-md mx-auto">
-          <OrgLimitStatus 
-            type="staff" 
-            label="施設スタッフ登録枠" 
-            current={currentFacilityStaffCount} 
-            max={maxFacilityStaff} 
-          />
-        </div>
-
-        {/* Actions Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-          <div className="lg:col-span-1 space-y-8">
-            <RegisterStaffForm disabled={isStaffLimitReached} />
-            <CourseAssignmentDialog 
-              courses={allAvailableCourses} 
-              currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
-            />
-          </div>
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        {/* Top Overview Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <AdminStatCard title="所属スタッフ" value={totalStaff} unit="名" icon={<Users className="w-5 h-5" />} color="text-blue-600" />
-            <AdminStatCard title="全研修完了者" value={fullyCompletedStaff} unit="名" icon={<BookCheck className="w-5 h-5" />} color="text-emerald-600" subValue={`全 ${currentAssignments.length} 項目完了`} />
-            <AdminStatCard title="計画進捗率" value={progressRate} unit="%" icon={<TrendingUp className="w-5 h-5" />} color="text-orange-600" isProgress />
+          {/* Main Statistics */}
+          <div className="lg:col-span-8 space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <AdminStatCard title="所属スタッフ" value={totalStaff} unit="名" icon={<Users className="w-4 h-4" />} />
+              <AdminStatCard title="全研修完了者" value={fullyCompletedStaff} unit="名" icon={<BookCheck className="w-4 h-4" />} />
+              <AdminStatCard title="計画進捗率" value={progressRate} unit="%" icon={<TrendingUp className="w-4 h-4" />} isProgress />
+            </div>
+
+            {/* Visual Timeline Card */}
+            <Card className="border-slate-200 shadow-sm overflow-hidden rounded-xl bg-white">
+              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                <h3 className="text-sm font-bold text-slate-900">年間研修実施計画</h3>
+                <CourseAssignmentDialog 
+                  courses={allAvailableCourses} 
+                  currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
+                />
+              </div>
+              <div className="p-6">
+                <TrainingTimeline 
+                  startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
+                  assignments={currentAssignments} 
+                />
+              </div>
+            </Card>
+          </div>
+
+          {/* Side Actions & Limits */}
+          <div className="lg:col-span-4 space-y-6">
+            <Card className="border-slate-200 shadow-sm rounded-xl overflow-hidden bg-white">
+              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+                <h3 className="text-sm font-bold text-slate-900">リソース状況</h3>
+              </div>
+              <div className="p-6 space-y-6">
+                <OrgLimitStatus 
+                  type="staff" 
+                  label="スタッフ登録数" 
+                  current={currentFacilityStaffCount} 
+                  max={maxFacilityStaff} 
+                />
+                <div className="pt-4 border-t border-slate-100">
+                  <RegisterStaffForm disabled={isStaffLimitReached} />
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
 
-        {/* Visual Timeline Section */}
-        <section className="space-y-8">
-          <TrainingTimeline 
-            startMonth={facility?.corporation?.fiscalYearStartMonth || 4} 
-            assignments={currentAssignments} 
-          />
+        {/* Detailed Staff Data */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <ClipboardList className="w-4 h-4 text-slate-400" />
+            <h3 className="text-lg font-bold text-slate-900">スタッフ受講モニタリング</h3>
+          </div>
+          <Card className="border-slate-200 shadow-sm rounded-xl overflow-hidden bg-white">
+            <StaffClient staffMembers={staffMembers as any} currentAssignments={currentAssignments} />
+          </Card>
         </section>
-
-        {/* Staff Table */}
-        <StaffClient staffMembers={staffMembers as any} currentAssignments={currentAssignments} />
       </main>
     </div>
   );
 }
 
-function AdminStatCard({ title, value, unit, icon, color, subValue, isProgress }: { title: string, value: number, unit: string, icon: React.ReactNode, color: string, subValue?: string, isProgress?: boolean }) {
+function AdminStatCard({ title, value, unit, icon, isProgress }: { title: string, value: number, unit: string, icon: React.ReactNode, isProgress?: boolean }) {
   return (
-    <Card className="bg-white border-slate-200/60 rounded-[2rem] shadow-sm overflow-hidden">
-      <CardContent className="p-8">
-        <div className="flex justify-between items-start mb-4">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</p>
-          <div className={`${color} opacity-80`}>{icon}</div>
-        </div>
-        <div className="flex items-baseline gap-1 mb-2">
-          <span className="text-3xl font-black text-slate-900 tabular-nums">{value}</span>
-          <span className="text-xs font-bold text-slate-400">{unit}</span>
-        </div>
-        {isProgress ? (
-          <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-            <div className="bg-orange-500 h-full" style={{ width: `${value}%` }}></div>
+    <Card className="bg-white border-slate-200 shadow-sm rounded-xl overflow-hidden hover:border-slate-300 transition-colors">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{title}</p>
+          <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-600">
+            {icon}
           </div>
-        ) : subValue ? (
-          <p className="text-[10px] font-bold text-slate-400 uppercase">{subValue}</p>
-        ) : null}
+        </div>
+        <div className="flex items-baseline gap-1">
+          <span className="text-3xl font-bold text-slate-900 tabular-nums">{value}</span>
+          <span className="text-xs font-medium text-slate-400">{unit}</span>
+        </div>
+        {isProgress && (
+          <div className="mt-4 w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+            <div 
+              className="bg-slate-900 h-full transition-all duration-1000" 
+              style={{ width: `${value}%` }}
+            ></div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

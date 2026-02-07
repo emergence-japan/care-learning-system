@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { KeyRound, ClipboardList } from "lucide-react";
+import { KeyRound, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/delete-button";
 import { ResetPasswordDialog } from "@/components/reset-password-dialog";
@@ -22,64 +22,81 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
 
   return (
     <>
-      <section className="bg-white rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] border border-slate-200/60 overflow-hidden">
-        <div className="p-8 border-b border-slate-50 flex items-center gap-3">
-          <ClipboardList className="w-5 h-5 text-slate-400" />
-          <h3 className="font-black text-xl text-slate-900 tracking-tight">スタッフ別受講モニタリング</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="bg-slate-50/50">
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400">Staff Member / ID</th>
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400">Password</th>
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 text-center">Progress Status</th>
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {staffMembers.length > 0 ? (
-                staffMembers.map((staff) => (
+      <div className="overflow-x-auto">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="bg-slate-50 border-b border-slate-100">
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">氏名 / ログインID</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">初期パスワード</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">受講進捗</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-right">管理</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {staffMembers.length > 0 ? (
+              staffMembers.map((staff) => {
+                const completedCount = staff.enrollments.filter(e => 
+                  e.status === 'COMPLETED' && currentAssignments.some(a => a.courseId === e.courseId)
+                ).length;
+                const totalCount = currentAssignments.length;
+                const progress = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+                return (
                   <tr key={staff.id} className="hover:bg-slate-50/50 transition-colors group">
-                    <td className="px-8 py-6">
-                      <div className="font-bold text-slate-900">{staff.name}</div>
-                      <div className="text-xs text-slate-400 font-black">ID: {staff.loginId}</div>
-                    </td>
-                    <td className="px-8 py-6">
-                      <code className="bg-slate-100 px-2 py-1 rounded text-xs font-bold text-slate-700">
-                        {(staff as any).password}
-                      </code>
-                    </td>
-                    <td className="px-8 py-6">
-                      <div className="flex flex-col items-center gap-2">
-                        <span className="text-sm font-black text-slate-700">
-                          {staff.enrollments.filter(e => e.status === 'COMPLETED' && currentAssignments.some(a => a.courseId === e.courseId)).length} / {currentAssignments.length} 完了
-                        </span>
-                        <div className="w-32 bg-slate-100 h-1 rounded-full overflow-hidden">
-                          <div className="bg-slate-900 h-full" style={{ width: `${(staff.enrollments.filter(e => e.status === 'COMPLETED' && currentAssignments.some(a => a.courseId === e.courseId)).length / (currentAssignments.length || 1)) * 100}%` }}></div>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                          <Users className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-slate-900">{staff.name}</div>
+                          <div className="text-[10px] text-slate-500 font-medium">ID: {staff.loginId}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-6 text-right">
-                      <div className="flex justify-end gap-2">
+                    <td className="px-6 py-4">
+                      <span className="text-xs font-mono text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">
+                        {(staff as any).password}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-col items-center gap-1.5 min-w-[120px]">
+                        <div className="flex justify-between w-full text-[10px] font-bold text-slate-600">
+                          <span>{completedCount} / {totalCount}</span>
+                          <span>{progress}%</span>
+                        </div>
+                        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full transition-all duration-700 ${progress === 100 ? 'bg-emerald-500' : 'bg-slate-900'}`} 
+                            style={{ width: `${progress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex justify-end gap-1">
                         <Button 
                           onClick={() => setResetStaff(staff)}
-                          variant="ghost" size="icon" className="w-9 h-9 text-slate-300 hover:text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                          variant="ghost" size="icon" className="w-8 h-8 text-slate-400 hover:text-slate-900 hover:bg-white shadow-none transition-all"
                         >
-                          <KeyRound className="w-4 h-4" />
+                          <KeyRound className="w-3.5 h-3.5" />
                         </Button>
-                        <DeleteButton id={staff.id} name={staff.name} type="user" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <DeleteButton id={staff.id} name={staff.name} type="user" size="icon" className="w-8 h-8 text-slate-400 hover:text-red-600 hover:bg-white shadow-none transition-all" />
                       </div>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr><td colSpan={3} className="px-8 py-20 text-center text-slate-400 font-medium">スタッフが登録されていません。</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={4} className="px-6 py-12 text-center text-slate-400 text-sm font-medium">
+                  登録されているスタッフはいません
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {resetStaff && (
         <ResetPasswordDialog 
