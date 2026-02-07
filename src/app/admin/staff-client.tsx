@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { KeyRound, Users } from "lucide-react";
+import { KeyRound, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/delete-button";
 import { ResetPasswordDialog } from "@/components/reset-password-dialog";
+import { StaffIncompleteCoursesDialog } from "@/components/staff-incomplete-courses-dialog";
 
 type Staff = {
   id: string;
   name: string;
   loginId: string;
-  enrollments: { status: string; courseId: string }[];
+  enrollments: { status: string; courseId: string; course: { title: string } }[];
 };
 
 type Assignment = {
   courseId: string;
+  course: { title: string };
 };
 
 export function StaffClient({ staffMembers, currentAssignments }: { staffMembers: Staff[], currentAssignments: Assignment[] }) {
@@ -75,8 +77,15 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-1">
+                        <StaffIncompleteCoursesDialog 
+                          staffName={staff.name}
+                          incompleteCourses={currentAssignments
+                            .filter(a => !staff.enrollments.some(e => e.courseId === a.courseId && e.status === 'COMPLETED'))
+                            .map(a => ({ id: a.courseId, title: a.course.title }))
+                          }
+                        />
                         <Button 
-                          onClick={() => setResetStaff(staff)}
+                          onClick={() => setResetStaff(staff as any)}
                           variant="ghost" size="icon" className="w-8 h-8 text-slate-400 hover:text-slate-900 hover:bg-white shadow-none transition-all"
                         >
                           <KeyRound className="w-3.5 h-3.5" />

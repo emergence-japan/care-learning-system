@@ -25,14 +25,16 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
   const handleAssign = async () => {
-    if (!selectedCourseId || !endDate) return;
+    if (!selectedCourseId || !startDate || !endDate) return;
     setIsSubmitting(true);
     try {
-      await assignCourseToFacility(selectedCourseId, new Date(), new Date(endDate));
+      await assignCourseToFacility(selectedCourseId, new Date(startDate), new Date(endDate));
       setSelectedCourseId("");
+      setStartDate("");
       setEndDate("");
       setIsOpen(false);
     } catch (error) {
@@ -47,20 +49,13 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
 
   return (
     <>
-      <Card className="border-slate-200/60 shadow-sm rounded-[2rem] overflow-hidden bg-white group hover:border-blue-200 transition-all cursor-pointer" onClick={() => setIsOpen(true)}>
-        <CardContent className="p-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-              <CalendarDays className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900">研修計画を立てる</h4>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Annual Training Plan</p>
-            </div>
-          </div>
-          <Plus className="w-5 h-5 text-slate-300 group-hover:text-blue-600 transition-all" />
-        </CardContent>
-      </Card>
+      <Button 
+        onClick={() => setIsOpen(true)}
+        className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white rounded-full px-5 h-9 font-bold text-xs flex items-center gap-2 shadow-sm"
+      >
+        <Plus className="w-4 h-4" />
+        <span>計画を立てる</span>
+      </Button>
 
       {isOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
@@ -96,15 +91,26 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
                   </select>
                 </div>
 
-                {/* Date Selection */}
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Set Deadline</label>
-                  <input 
-                    type="date" 
-                    className="w-full h-14 px-4 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-sm font-bold bg-slate-50/50"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
+                {/* Date Range Selection */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Start Date</label>
+                    <input 
+                      type="date" 
+                      className="w-full h-14 px-4 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-sm font-bold bg-slate-50/50"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">End Date (Deadline)</label>
+                    <input 
+                      type="date" 
+                      className="w-full h-14 px-4 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-sm font-bold bg-slate-50/50"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -119,10 +125,10 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
                 <Button 
                   className="flex-[2] h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-xl shadow-blue-100 disabled:opacity-50"
                   onClick={handleAssign}
-                  disabled={!selectedCourseId || !endDate || isSubmitting}
+                  disabled={!selectedCourseId || !startDate || !endDate || isSubmitting}
                 >
                   {isSubmitting ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-5 h-5 animate-spin mx-auto" />
                   ) : (
                     <>計画に追加する <Check className="ml-2 w-4 h-4" /></>
                   )}

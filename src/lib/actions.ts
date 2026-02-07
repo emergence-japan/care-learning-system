@@ -564,6 +564,37 @@ export async function assignCourseToFacility(courseId: string, startDate: Date, 
   revalidatePath("/");
 }
 
+export async function updateCourseAssignment(id: string, startDate: Date, endDate: Date) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.courseAssignment.update({
+    where: { id },
+    data: { startDate, endDate }
+  });
+
+  revalidatePath("/admin");
+}
+
+export async function deleteCourseAssignment(id: string) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.courseAssignment.delete({
+    where: { id }
+  });
+
+  revalidatePath("/admin");
+}
+
 export async function updateFiscalYearStartMonth(month: number) {
   const { auth } = await import("@/auth");
   const session = await auth();
