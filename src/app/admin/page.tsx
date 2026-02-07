@@ -18,6 +18,7 @@ import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
 import { FiscalYearSelector } from "@/components/fiscal-year-selector";
 import { MobileNav } from "@/components/mobile-nav";
 import { NotificationBell } from "@/components/notification-bell";
+import { PrintButton } from "@/components/print-button";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -153,7 +154,22 @@ export default async function AdminDashboardPage() {
         </aside>
 
         {/* Main Content Area - The White Container with Large Rounded Corner */}
-        <main className="flex-1 bg-white rounded-tl-[4rem] overflow-y-auto p-6 lg:p-12 shadow-2xl">
+        <main className="flex-1 bg-white rounded-tl-[4rem] overflow-y-auto p-6 lg:p-12 shadow-2xl relative">
+          
+          {/* Print Only Header */}
+          <div className="print-only mb-10 border-b-2 border-slate-900 pb-6">
+            <h1 className="text-3xl font-bold text-slate-900 font-sans">研修実施状況報告書</h1>
+            <div className="mt-4 grid grid-cols-2 text-sm font-sans">
+              <div>
+                <p><span className="font-bold">施設名：</span> {facility.name}</p>
+                <p><span className="font-bold">法人名：</span> {facility.corporation?.name}</p>
+              </div>
+              <div className="text-right">
+                <p><span className="font-bold">出力日：</span> {new Date().toLocaleDateString()}</p>
+              </div>
+            </div>
+          </div>
+
           <div className="max-w-6xl mx-auto space-y-12">
             
             {/* Top Section: Timeline (annual-plan) */}
@@ -168,6 +184,7 @@ export default async function AdminDashboardPage() {
                 </div>
                 
                 <div className="flex items-center gap-2">
+                  <PrintButton />
                   <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
 
                   <CourseAssignmentDialog 

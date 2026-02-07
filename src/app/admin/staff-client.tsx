@@ -87,10 +87,18 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
                         <Button 
                           onClick={() => setResetStaff(staff as any)}
                           variant="ghost" size="icon" className="w-8 h-8 text-slate-400 hover:text-slate-900 hover:bg-white shadow-none transition-all"
+                          title="パスワードを再設定する"
                         >
                           <KeyRound className="w-3.5 h-3.5" />
                         </Button>
-                        <DeleteButton id={staff.id} name={staff.name} type="user" size="icon" className="w-8 h-8 text-slate-400 hover:text-red-600 hover:bg-white shadow-none transition-all" />
+                        <DeleteButton 
+                          id={staff.id} 
+                          name={staff.name} 
+                          type="user" 
+                          size="icon" 
+                          className="w-8 h-8 text-slate-400 hover:text-red-600 hover:bg-white shadow-none transition-all" 
+                          title="スタッフを削除する"
+                        />
                       </div>
                     </td>
                   </tr>

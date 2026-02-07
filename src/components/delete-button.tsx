@@ -18,9 +18,10 @@ interface Props {
   className?: string;
   variant?: "ghost" | "outline" | "destructive";
   size?: "sm" | "icon" | "default";
+  title?: string;
 }
 
-export function DeleteButton({ id, name, type, className, variant = "ghost", size = "icon" }: Props) {
+export function DeleteButton({ id, name, type, className, variant = "ghost", size = "icon", title }: Props) {
   const handleDelete = async () => {
     let message = `「${name}」を削除しますか？`;
     if (type === "corporation") {
@@ -50,6 +51,7 @@ export function DeleteButton({ id, name, type, className, variant = "ghost", siz
       variant={variant}
       size={size}
       onClick={handleDelete}
+      title={title}
       className={cn(
         variant === "ghost" && "text-zinc-300 hover:text-red-600 hover:bg-red-50",
         className

@@ -123,3 +123,45 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 印刷用スタイル */
+@media print {
+  aside, header, button, .no-print {
+    display: none !important;
+  }
+  
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .card, .bg-white {
+    border: 1px solid #eee !important;
+    box-shadow: none !important;
+  }
+
+  /* 1ページに収めるための調整 */
+  .max-w-6xl {
+    max-width: 100% !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
