@@ -5,14 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
   Users, Building2, BookOpen, LogOut, 
-  Plus, Settings, LayoutDashboard, ChevronRight, Activity 
+  Settings, LayoutDashboard, ChevronRight, Activity 
 } from "lucide-react";
 import Link from "next/link";
-
 export default async function SuperAdminDashboard() {
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     redirect("/");
   }
 

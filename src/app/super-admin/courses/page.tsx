@@ -10,7 +10,7 @@ import Link from "next/link";
 export default async function CourseManagementPage() {
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     redirect("/");
   }
 

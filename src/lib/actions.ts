@@ -134,11 +134,11 @@ export async function registerStaff(
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
-  const facilityId = (session.user as any).facilityId;
+  const facilityId = session.user.facilityId;
   if (!facilityId) {
     throw new Error("Facility not assigned to admin");
   }
@@ -211,7 +211,7 @@ export async function updateStaffPassword(staffId: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -226,7 +226,7 @@ export async function updateStaffPassword(staffId: string, formData: FormData) {
     select: { facilityId: true }
   });
 
-  if (!staff || staff.facilityId !== (session.user as any).facilityId) {
+  if (!staff || staff.facilityId !== session.user.facilityId) {
     throw new Error("Forbidden");
   }
 
@@ -244,7 +244,7 @@ export async function createCourse(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -285,18 +285,19 @@ export async function createCorporation(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
   const name = formData.get("name") as string;
   const maxFacilities = parseInt(formData.get("maxFacilities") as string) || 10;
+  const maxStaff = parseInt(formData.get("maxStaff") as string) || 100;
 
   await prisma.corporation.create({
     data: { 
       name,
       maxFacilities,
-      maxStaff: 0 // 法人単位の制限は使用しないため0またはデフォルト値を設定
+      maxStaff
     },
   });
 
@@ -307,18 +308,20 @@ export async function updateCorporation(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
   const name = formData.get("name") as string;
   const maxFacilities = parseInt(formData.get("maxFacilities") as string);
+  const maxStaff = parseInt(formData.get("maxStaff") as string);
 
   await prisma.corporation.update({
     where: { id },
     data: { 
       name,
-      maxFacilities
+      maxFacilities,
+      maxStaff
     },
   });
 
@@ -329,7 +332,7 @@ export async function createFacility(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -363,7 +366,7 @@ export async function updateFacility(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -385,7 +388,7 @@ export async function createOrgUser(formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -413,6 +416,7 @@ export async function createOrgUser(formData: FormData) {
     data: {
       name,
       email,
+      loginId: email, // loginId を必須項目として追加
       password,
       role,
       corporationId,
@@ -427,7 +431,7 @@ export async function updateCourse(id: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -453,7 +457,7 @@ export async function deleteCourse(id: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -472,7 +476,7 @@ export async function deleteCorporation(id: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     throw new Error("Unauthorized");
   }
 
@@ -500,7 +504,7 @@ export async function deleteFacility(id: string) {
       where: { id },
       select: { corporationId: true }
     });
-    if (facility?.corporationId !== (session.user as any).corporationId) {
+    if (facility?.corporationId !== session.user.corporationId) {
       throw new Error("Forbidden");
     }
   }
@@ -524,11 +528,11 @@ export async function assignCourseToFacility(courseId: string, startDate: Date, 
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
-  const facilityId = (session.user as any).facilityId;
+  const facilityId = session.user.facilityId;
   if (!facilityId) throw new Error("Facility not assigned");
 
   // 1. 割当の作成または更新
@@ -564,11 +568,11 @@ export async function updateFiscalYearStartMonth(month: number) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "ADMIN") {
     throw new Error("Unauthorized");
   }
 
-  const corporationId = (session.user as any).corporationId;
+  const corporationId = session.user.corporationId;
   if (!corporationId) throw new Error("Corporation not found");
 
   if (month < 1 || month > 12) throw new Error("Invalid month");

@@ -11,8 +11,12 @@ import { DeleteButton } from "@/components/delete-button";
 import { OrgLimitStatus } from "@/components/org-limit-status";
 
 export default async function HQDashboardPage() {
-// ... (既存のコード)
-  const corporationId = (session.user as any).corporationId;
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
+
+  const corporationId = session.user.corporationId;
   if (!corporationId) {
     return <div className="p-20 text-center font-bold text-slate-400">所属法人が設定されていません。</div>;
   }

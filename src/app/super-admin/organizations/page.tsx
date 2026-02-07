@@ -1,19 +1,19 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Building, Home, UserPlus, ChevronLeft, Plus, Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Building, Home, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createCorporation, createFacility, createOrgUser } from "@/lib/actions";
+import { createCorporation, createFacility } from "@/lib/actions";
 import Link from "next/link";
 import { OrganizationClient } from "./organization-client";
 
 export default async function OrganizationManagementPage() {
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "SUPER_ADMIN") {
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
     redirect("/");
   }
 

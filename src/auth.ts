@@ -1,12 +1,35 @@
-import NextAuth from "next-auth"
+import NextAuth, { type DefaultSession } from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 
-// 型拡張による競合を避けるため、必要な箇所でキャストを使用します
+// NextAuth の型拡張
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      role: string
+      facilityId?: string | null
+      corporationId?: string | null
+    } & DefaultSession["user"]
+  }
+
+  interface User {
+    role: string
+    facilityId?: string | null
+    corporationId?: string | null
+  }
+
+  interface JWT {
+    role?: string
+    facilityId?: string | null
+    corporationId?: string | null
+  }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as any,
   providers: [
     Credentials({
       name: "Credentials",
@@ -35,7 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
           facilityId: user.facilityId,
           corporationId: user.corporationId,
-        } as any
+        }
       },
     }),
   ],
@@ -45,21 +68,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.sub
       }
       if (token.role && session.user) {
-        (session.user as any).role = token.role
+        session.user.role = token.role as string
       }
-      if (token.facilityId && session.user) {
-        (session.user as any).facilityId = token.facilityId
+      if (token.facilityId !== undefined && session.user) {
+        session.user.facilityId = token.facilityId as any
       }
-      if (token.corporationId && session.user) {
-        (session.user as any).corporationId = token.corporationId
+      if (token.corporationId !== undefined && session.user) {
+        session.user.corporationId = token.corporationId as any
       }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role
-        token.facilityId = (user as any).facilityId
-        token.corporationId = (user as any).corporationId
+        token.role = user.role
+        token.facilityId = user.facilityId
+        token.corporationId = user.corporationId
       }
       return token
     },

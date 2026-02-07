@@ -18,10 +18,10 @@ type Corp = {
     id: string;
     name: string;
     maxStaff: number;
-    users: { id: string; name: string; email: string }[];
+    users: { id: string; name: string; email: string | null }[];
     _count: { users: number };
   }[];
-  users: { id: string; name: string; email: string }[];
+  users: { id: string; name: string; email: string | null }[];
 };
 
 export function OrganizationClient({ corporations }: { corporations: Corp[] }) {

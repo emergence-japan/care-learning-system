@@ -4,11 +4,10 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   Users, BookCheck, TrendingUp, LogOut, 
-  ArrowRight, UserPlus, ClipboardList, Briefcase, CalendarDays
+  Briefcase
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RegisterStaffForm } from "@/components/register-staff-form";
-import { DeleteButton } from "@/components/delete-button";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
 import { OrgLimitStatus } from "@/components/org-limit-status";
@@ -17,12 +16,11 @@ import { StaffClient } from "./staff-client";
 export default async function AdminDashboardPage() {
   const session = await auth();
 
-  if (!session?.user || (session.user as any).role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }
 
-  const facilityId = (session.user as any).facilityId;
-  const corporationId = (session.user as any).corporationId;
+  const facilityId = session.user.facilityId;
   
   if (!facilityId) {
     return <div className="p-20 text-center font-bold text-slate-400">所属施設が設定されていません。</div>;
