@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateStaffPassword, deleteUser } from "@/lib/actions";
+import { updateUser, deleteUser } from "@/lib/actions";
 import {
   Dialog,
   DialogContent,
@@ -42,18 +42,22 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
 
   const selectedStaff = staffMembers.find(s => s.id === selectedStaffId);
 
-  const handlePasswordUpdate = async (formData: FormData) => {
+  const handleUpdate = async (formData: FormData) => {
     if (!selectedStaff) return;
     setIsPending(true);
     setError(null);
     setSuccessMessage(null);
     
     try {
-      const result = await updateStaffPassword(selectedStaff.id, formData);
-      if (result) {
+      const result = await updateUser(selectedStaff.id, formData);
+      if (typeof result === "string") {
         setError(result);
       } else {
-        setSuccessMessage("パスワードを更新しました");
+        setSuccessMessage("情報を更新しました");
+        // 名前やログインIDが変わるため、少し待ってからリロード
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (err) {
       setError("エラーが発生しました。");
@@ -139,9 +143,31 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
                 </div>
               </div>
 
-              <form action={handlePasswordUpdate} className="space-y-4">
+              <form action={handleUpdate} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="new-password" className="text-xs font-bold text-slate-500">新しいパスワードを設定</Label>
+                  <Label htmlFor="edit-name" className="text-xs font-bold text-slate-500">氏名</Label>
+                  <Input 
+                    id="edit-name" 
+                    name="name" 
+                    defaultValue={selectedStaff.name}
+                    className="h-11 rounded-xl bg-white border-slate-200 font-bold"
+                    required 
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-login-id" className="text-xs font-bold text-slate-500">ログインID</Label>
+                  <Input 
+                    id="edit-login-id" 
+                    name="loginId" 
+                    defaultValue={selectedStaff.loginId}
+                    className="h-11 rounded-xl bg-white border-slate-200 font-mono font-bold"
+                    required 
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="new-password" className="text-xs font-bold text-slate-500">新しいパスワード (変更する場合のみ)</Label>
                   <div className="flex gap-2">
                     <Input 
                       id="new-password" 
@@ -149,13 +175,13 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
                       type="text" 
                       placeholder="New Password" 
                       className="h-11 rounded-xl bg-white border-slate-200 font-mono font-bold"
-                      required 
                     />
-                    <Button type="submit" disabled={isPending} className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-11 px-6 font-bold shrink-0">
-                      {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "更新"}
-                    </Button>
                   </div>
                 </div>
+
+                <Button type="submit" disabled={isPending} className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-12 font-bold mt-4 shadow-lg shadow-slate-200">
+                  {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "情報を更新する"}
+                </Button>
               </form>
 
               {successMessage && (

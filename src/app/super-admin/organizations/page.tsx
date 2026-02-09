@@ -18,24 +18,34 @@ export default async function OrganizationManagementPage() {
   }
 
   const corporations = await prisma.corporation.findMany({
-    include: {
+    select: {
+      id: true,
+      name: true,
+      isActive: true,
+      maxFacilities: true,
+      maxStaff: true,
       facilities: {
         select: {
           id: true,
           name: true,
+          type: true,
           maxStaff: true,
+          isActive: true,
           users: {
             where: { role: "ADMIN" },
-            select: { id: true, name: true, email: true }
+            select: { id: true, name: true, email: true, loginId: true }
           },
           _count: {
-            select: { users: { where: { role: "STAFF" } } }
+            select: { 
+              users: { where: { role: "STAFF" } },
+              assignments: true
+            }
           }
         }
       },
       users: {
         where: { role: "HQ" },
-        select: { id: true, name: true, email: true }
+        select: { id: true, name: true, email: true, loginId: true }
       }
     },
     orderBy: { createdAt: 'desc' }

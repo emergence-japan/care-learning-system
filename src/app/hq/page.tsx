@@ -14,12 +14,15 @@ import { PrintButton } from "@/components/print-button";
 import { FacilityMonitoringClient } from "./facility-monitoring-client";
 import { AddFacilityDialog } from "@/components/add-facility-dialog";
 import { AddAdminGlobalDialog } from "@/components/add-admin-global-dialog";
+import { AlertCircle } from "lucide-react";
 
 export default async function HQDashboardPage() {
   const session = await auth();
   if (!session?.user || session.user.role !== "HQ") {
     redirect("/");
   }
+
+  const isSuspended = session.user.isSuspended;
 
   const corporationId = session.user.corporationId;
   if (!corporationId) {
@@ -79,6 +82,7 @@ export default async function HQDashboardPage() {
       id: facility.id, 
       name: facility.name, 
       type: facility.type,
+      isActive: facility.isActive,
       staffCount: totalStaff, 
       maxStaff: facility.maxStaff,
       progressRate,
@@ -160,6 +164,16 @@ export default async function HQDashboardPage() {
         {/* Main Content Area */}
         <main className="flex-1 bg-white rounded-tl-[4rem] overflow-y-auto p-6 lg:p-12 shadow-2xl relative">
           
+          {isSuspended && (
+            <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse">
+              <AlertCircle className="w-6 h-6 shrink-0" />
+              <div>
+                <p className="font-black text-sm">【利用停止中】契約満了または停止設定により、現在このアカウントは「閲覧・出力のみ」の制限モードになっています。</p>
+                <p className="text-xs font-bold mt-0.5">新規登録や情報の変更、研修の実施などは行えません。監査用書類の出力は引き続き可能です。</p>
+              </div>
+            </div>
+          )}
+
           {/* Print Only Header */}
           <div className="print-only mb-10 border-b-2 border-slate-900 pb-6">
             <h1 className="text-3xl font-bold text-slate-900 font-sans">法人研修実施状況報告書</h1>
@@ -220,12 +234,16 @@ export default async function HQDashboardPage() {
                   </div>
                 </div>
                 <div className="no-print flex items-center gap-3">
-                  <AddFacilityDialog disabled={currentFacilitiesCount >= corporation.maxFacilities} />
-                  <AddAdminGlobalDialog facilities={facilityStats.map(f => ({ id: f.id, name: f.name }))} />
+                  {!isSuspended && (
+                    <>
+                      <AddFacilityDialog disabled={currentFacilitiesCount >= corporation.maxFacilities} />
+                      <AddAdminGlobalDialog facilities={facilityStats.map(f => ({ id: f.id, name: f.name }))} />
+                    </>
+                  )}
                 </div>
               </div>
 
-              <FacilityMonitoringClient facilities={facilityStats as any} />
+              <FacilityMonitoringClient facilities={facilityStats as any} isCorporationSuspended={isSuspended} />
             </div>
 
           </div>

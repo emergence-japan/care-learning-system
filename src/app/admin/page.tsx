@@ -19,6 +19,7 @@ import { MobileNav } from "@/components/mobile-nav";
 import { NotificationBell } from "@/components/notification-bell";
 import { PrintButton } from "@/components/print-button";
 import { AdminClient } from "./admin-client";
+import { AlertCircle } from "lucide-react";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -27,6 +28,7 @@ export default async function AdminDashboardPage() {
     redirect("/");
   }
 
+  const isSuspended = session.user.isSuspended;
   const facilityId = session.user.facilityId;
   
   if (!facilityId) {
@@ -145,6 +147,16 @@ export default async function AdminDashboardPage() {
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-12 relative">
           
+          {isSuspended && (
+            <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse no-print">
+              <AlertCircle className="w-6 h-6 shrink-0" />
+              <div>
+                <p className="font-black text-sm">【利用停止中】契約満了または停止設定により、現在このアカウントは「閲覧・出力のみ」の制限モードになっています。</p>
+                <p className="text-xs font-bold mt-0.5">新規スタッフの登録や研修の割当は行えません。監査用書類の出力は可能です。</p>
+              </div>
+            </div>
+          )}
+
           <div className="max-w-6xl mx-auto space-y-12">
             
             {/* Top Section: Timeline (annual-plan) */}
@@ -160,11 +172,15 @@ export default async function AdminDashboardPage() {
                 <div className="flex items-center gap-2">
                   <PrintButton />
                   <div className="no-print flex items-center gap-2">
-                    <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
-                    <CourseAssignmentDialog 
-                      courses={allAvailableCourses} 
-                      currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
-                    />
+                    {!isSuspended && (
+                      <>
+                        <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
+                        <CourseAssignmentDialog 
+                          courses={allAvailableCourses} 
+                          currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -239,6 +255,7 @@ export default async function AdminDashboardPage() {
               staffMembers={staffMembers}
               currentAssignments={currentAssignments}
               maxStaff={facility.maxStaff}
+              isSuspended={isSuspended}
             />
 
           </div>

@@ -10,9 +10,10 @@ interface AdminClientProps {
   staffMembers: any[];
   currentAssignments: any[];
   maxStaff: number;
+  isSuspended?: boolean;
 }
 
-export function AdminClient({ staffMembers, currentAssignments, maxStaff }: AdminClientProps) {
+export function AdminClient({ staffMembers, currentAssignments, maxStaff, isSuspended }: AdminClientProps) {
   const totalStaff = staffMembers.length;
 
   return (
@@ -43,8 +44,8 @@ export function AdminClient({ staffMembers, currentAssignments, maxStaff }: Admi
             }
           />
 
-          {/* スタッフを追加ボタン */}
-          <RegisterStaffForm disabled={totalStaff >= maxStaff} />
+          {/* スタッフを追加ボタン - 停止中は非表示 */}
+          {!isSuspended && <RegisterStaffForm disabled={totalStaff >= maxStaff} />}
         </div>
       </div>
 

@@ -30,6 +30,7 @@ model Facility {
   type          String?  // 業態
   corporationId String?
   maxStaff      Int      @default(20)   // 施設ごとのスタッフ上限
+  isActive      Boolean  @default(true)  // ステータス管理
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   corporation   Corporation? @relation(fields: [corporationId], references: [id])
@@ -43,6 +44,7 @@ model Corporation {
   fiscalYearStartMonth Int @default(4) // 年度開始月 (1-12)
   maxFacilities Int     @default(10)  // 最大施設数
   maxStaff      Int     @default(100) // 最大スタッフ数
+  isActive      Boolean  @default(true)  // ステータス管理
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   facilities Facility[]
