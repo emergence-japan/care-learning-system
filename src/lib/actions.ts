@@ -516,30 +516,31 @@ export async function createOrgUser(formData: FormData) {
   }
 
   const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
+  const loginId = formData.get("loginId") as string;
+  const email = (formData.get("email") as string) || null;
   const password = formData.get("password") as string;
   const role = formData.get("role") as "HQ" | "ADMIN";
   const corporationId = formData.get("corporationId") as string;
-  const facilityId = formData.get("facilityId") as string || null;
+  const facilityId = (formData.get("facilityId") as string) || null;
 
-  if (!name || !email || !password) {
-    return "全ての項目を入力してください。";
+  if (!name || !loginId || !password) {
+    return "全ての必須項目（氏名、ログインID、パスワード）を入力してください。";
   }
 
-  // メールアドレスの重複チェック
+  // ログインIDの重複チェック
   const existingUser = await prisma.user.findUnique({
-    where: { email },
+    where: { loginId },
   });
 
   if (existingUser) {
-    return "このメールアドレスは既に登録されています。";
+    return "このログインIDは既に登録されています。";
   }
 
   await prisma.user.create({
     data: {
       name,
+      loginId,
       email,
-      loginId: email, // loginId を必須項目として追加
       password,
       role,
       corporationId,
