@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,19 +18,20 @@ type Props = {
 
 export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onClose }: Props) {
   const roleName = role === "HQ" ? "法人本部" : "施設長";
-  const [errorMessage, dispatch, isPending] = useActionState(
-    async (state: string | undefined, formData: FormData) => {
-      return await createOrgUser(formData);
-    },
-    undefined,
-  );
+  const [isPending, startTransition] = useTransition();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // 成功時に閉じる簡易的な処理
-  useEffect(() => {
-    if (!isPending && errorMessage === undefined && document.activeElement instanceof HTMLElement) {
-      // 成功したとみなして少し待ってから閉じる（再描画待ち）
-    }
-  }, [isPending, errorMessage]);
+  const handleSubmit = async (formData: FormData) => {
+    setErrorMessage(null);
+    startTransition(async () => {
+      const error = await createOrgUser(formData);
+      if (error) {
+        setErrorMessage(error);
+      } else {
+        onClose();
+      }
+    });
+  };
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -53,12 +54,7 @@ export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onC
         </div>
 
         <CardContent className="p-8">
-          <form action={async (formData) => {
-            const result = await dispatch(formData);
-            if (!result) {
-              onClose();
-            }
-          }} className="space-y-6">
+          <form action={handleSubmit} className="space-y-6">
             <input type="hidden" name="corporationId" value={corporationId} />
             <input type="hidden" name="facilityId" value={facilityId || ""} />
             <input type="hidden" name="role" value={role} />
