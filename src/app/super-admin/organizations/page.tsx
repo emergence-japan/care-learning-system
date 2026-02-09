@@ -32,8 +32,23 @@ export default async function OrganizationManagementPage() {
           maxStaff: true,
           isActive: true,
           users: {
-            where: { role: "ADMIN" },
-            select: { id: true, name: true, email: true, loginId: true }
+            where: { role: { in: ["ADMIN", "STAFF"] } },
+            select: { 
+              id: true, 
+              name: true, 
+              email: true, 
+              loginId: true, 
+              role: true,
+              enrollments: {
+                select: { status: true }
+              }
+            }
+          },
+          assignments: {
+            select: {
+              id: true,
+              course: { select: { title: true } }
+            }
           },
           _count: {
             select: { 

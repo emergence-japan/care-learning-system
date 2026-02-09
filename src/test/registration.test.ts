@@ -54,15 +54,17 @@ describe('Staff Registration Action', () => {
     
     const formData = new FormData()
     formData.append('name', '新スタッフ')
+    formData.append('loginId', 'new_staff')
     formData.append('email', 'new@example.com')
     formData.append('password', 'password123')
     
-    const result = await registerStaff(undefined, formData)
+    const result = await registerStaff(formData)
     
     expect(result).toBeUndefined() // 成功時はエラーメッセージなし
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
         name: '新スタッフ',
+        loginId: 'new_staff',
         email: 'new@example.com',
         facilityId: 'f1',
         role: 'STAFF',
@@ -76,7 +78,7 @@ describe('Staff Registration Action', () => {
     })
   })
 
-  it('メールアドレスが重複している場合はエラーを返すこと', async () => {
+  it('ログインIDが重複している場合はエラーを返すこと', async () => {
     ;(auth as any).mockResolvedValue({
       user: { id: 'admin1', role: 'ADMIN', facilityId: 'f1' }
     })
@@ -86,12 +88,12 @@ describe('Staff Registration Action', () => {
     
     const formData = new FormData()
     formData.append('name', 'テスト')
-    formData.append('email', 'existing@example.com')
+    formData.append('loginId', 'existing_id')
     formData.append('password', 'password')
     
-    const result = await registerStaff(undefined, formData)
+    const result = await registerStaff(formData)
     
-    expect(result).toBe('このメールアドレスは既に登録されています。')
+    expect(result).toBe('このログインIDは既に登録されています。別のIDを指定してください。')
     expect(prisma.user.create).not.toHaveBeenCalled()
   })
 })
