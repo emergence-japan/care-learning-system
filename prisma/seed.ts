@@ -20,7 +20,11 @@ async function main() {
 
   // 2. 施設の作成（法人に紐付け）
   const facilityA = await prisma.facility.create({
-    data: { name: 'ひまわりの里', corporationId: corp.id }
+    data: { name: 'コスモス苑', type: '特別養護老人ホーム', corporationId: corp.id }
+  })
+
+  const facilityB = await prisma.facility.create({
+    data: { name: 'ひまわりの里', type: 'デイサービス', corporationId: corp.id }
   })
 
   // 3. システム管理者（SUPER_ADMIN）- 組織に縛られない全体管理者
@@ -501,11 +505,93 @@ async function main() {
   })
 
   // 研修の割り当て
-  await prisma.enrollment.createMany({
-    data: [
-      { userId: staffA.id, courseId: course1.id, status: Status.NOT_STARTED },
-    ]
-  })
+  const assignments = await Promise.all([
+    prisma.courseAssignment.create({
+      data: {
+        facilityId: facilityA.id,
+        courseId: course1.id,
+        startDate: new Date('2024-04-01'),
+        endDate: new Date('2024-06-30'),
+      }
+    }),
+    prisma.courseAssignment.create({
+      data: {
+        facilityId: facilityA.id,
+        courseId: (await prisma.course.create({
+          data: {
+            title: '認知症ケア基礎研修',
+            description: '認知症の方への適切な声掛けと対応を学びます。',
+          }
+        })).id,
+        startDate: new Date('2024-05-01'),
+        endDate: new Date('2025-03-31'),
+      }
+    }),
+    prisma.courseAssignment.create({
+      data: {
+        facilityId: facilityA.id,
+        courseId: (await prisma.course.create({
+          data: {
+            title: '接遇・マナー研修',
+            description: 'プロとしての立ち居振る舞いと、利用者様・ご家族への対応。',
+          }
+        })).id,
+        startDate: new Date('2024-04-01'),
+        endDate: new Date('2024-05-31'), // 期限切れを再現するため過去の日付
+      }
+    })
+  ]);
+
+  // 6. 複数の一般スタッフ（STAFF）
+  const staffData = [
+    { name: '佐藤 美咲', loginId: 'sato', status: Status.COMPLETED, plan: '利用者様の目線に合わせて、ゆっくりと丁寧な言葉掛けを徹底します。' },
+    { name: '鈴木 健一', loginId: 'suzuki', status: Status.COMPLETED, plan: '「ちょっと待って」と言いそうになったら一呼吸おき、代わりの提案をするようにします。' },
+    { name: '高橋 瑠衣', loginId: 'takahashi', status: Status.NOT_STARTED, plan: null },
+    { name: '田中 裕子', loginId: 'tanaka', status: Status.NOT_STARTED, plan: null },
+    { name: '伊藤 翼', loginId: 'ito', status: Status.NOT_STARTED, plan: null },
+    { name: '渡辺 亮', loginId: 'watanabe', status: Status.COMPLETED, plan: '介助の前に必ず「〜しますね」と声をかけ、驚かせないように配慮します。' },
+  ];
+
+  for (const data of staffData) {
+    const user = await prisma.user.create({
+      data: {
+        email: `${data.loginId}@example.com`,
+        loginId: data.loginId,
+        name: data.name,
+        password: 'password123',
+        role: Role.STAFF,
+        corporationId: corp.id,
+        facilityId: facilityA.id,
+      },
+    });
+
+    // 各スタッフに研修を紐付け（状況をバラつかせる）
+    for (const assign of assignments) {
+      // 一部のスタッフは完了、一部は未完了にする
+      const isCompleted = Math.random() > 0.4; 
+      await prisma.enrollment.create({
+        data: {
+          userId: user.id,
+          courseId: assign.courseId,
+          status: isCompleted ? Status.COMPLETED : Status.NOT_STARTED,
+          actionPlan: isCompleted ? (data.plan || '明日から実践します。') : null,
+          completedAt: isCompleted ? new Date() : null,
+        }
+      });
+    }
+  }
+
+  // もともといた staffA も更新
+  await prisma.enrollment.deleteMany({ where: { userId: staffA.id } });
+  for (const assign of assignments) {
+    await prisma.enrollment.create({
+      data: {
+        userId: staffA.id,
+        courseId: assign.courseId,
+        status: Status.NOT_STARTED,
+      }
+    });
+  }
 
   // ダミー研修（箱）の作成
   const placeholderCourses = [

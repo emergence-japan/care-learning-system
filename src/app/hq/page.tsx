@@ -3,17 +3,22 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Building2, Users, TrendingUp, LogOut, 
-  ArrowRight, ShieldCheck, PieChart, Map, Plus 
+  Building2, TrendingUp, LogOut, 
+  ShieldCheck, PieChart, Map, 
+  LayoutDashboard, Users as UsersIcon
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DeleteButton } from "@/components/delete-button";
 import { OrgLimitStatus } from "@/components/org-limit-status";
+import { MobileNav } from "@/components/mobile-nav";
+import { NotificationBell } from "@/components/notification-bell";
+import { PrintButton } from "@/components/print-button";
+import { FacilityMonitoringClient } from "./facility-monitoring-client";
+import { AddFacilityDialog } from "@/components/add-facility-dialog";
+import { AddAdminGlobalDialog } from "@/components/add-admin-global-dialog";
 
 export default async function HQDashboardPage() {
   const session = await auth();
-  if (!session) {
-    redirect("/login");
+  if (!session?.user || session.user.role !== "HQ") {
+    redirect("/");
   }
 
   const corporationId = session.user.corporationId;
@@ -33,9 +38,12 @@ export default async function HQDashboardPage() {
             select: { users: { where: { role: "STAFF" } } }
           },
           users: {
-            where: { role: "STAFF" },
+            where: { role: { in: ["STAFF", "ADMIN"] } },
             include: { enrollments: true },
           },
+          assignments: {
+            include: { course: true }
+          }
         },
       },
     },
@@ -43,22 +51,52 @@ export default async function HQDashboardPage() {
 
   if (!corporation) return null;
 
-  const totalCoursesCount = await prisma.course.count();
   const currentFacilitiesCount = corporation._count.facilities;
-  const currentStaffCount = corporation.facilities.reduce((acc, f) => acc + f._count.users, 0);
+  const currentStaffCount = corporation.facilities.reduce((acc, f) => 
+    acc + f.users.filter(u => u.role === "STAFF").length, 0
+  );
 
   const facilityStats = corporation.facilities.map(facility => {
-// ... (既存のコード)
-    const totalStaff = facility.users.length;
-    const completedEnrollments = facility.users.reduce((acc, user) => {
-      return acc + user.enrollments.filter(e => e.status === 'COMPLETED').length;
+    const staffMembers = facility.users.filter(u => u.role === "STAFF");
+    const adminMembers = facility.users.filter(u => u.role === "ADMIN");
+    const totalStaff = staffMembers.length;
+    
+    // この施設に割り当てられている研修のみを対象に進捗を計算
+    const assignedCourseIds = facility.assignments.map(a => a.courseId);
+    
+    const completedEnrollments = staffMembers.reduce((acc, user) => {
+      return acc + user.enrollments.filter(e => 
+        e.status === 'COMPLETED' && assignedCourseIds.includes(e.courseId)
+      ).length;
     }, 0);
-    const totalAssignments = totalStaff * totalCoursesCount;
+    
+    const totalAssignments = totalStaff * assignedCourseIds.length;
     const progressRate = totalAssignments > 0 
       ? Math.round((completedEnrollments / totalAssignments) * 100) 
       : 0;
 
-    return { id: facility.id, name: facility.name, staffCount: totalStaff, progressRate };
+    return { 
+      id: facility.id, 
+      name: facility.name, 
+      type: facility.type,
+      staffCount: totalStaff, 
+      maxStaff: facility.maxStaff,
+      progressRate,
+      admins: adminMembers.map(a => ({
+        id: a.id,
+        name: a.name,
+        loginId: a.loginId,
+        email: a.email
+      })),
+      assignments: facility.assignments.map(a => ({
+        id: a.id,
+        courseTitle: a.course.title,
+        endDate: a.endDate,
+        completedCount: staffMembers.filter(u => 
+          u.enrollments.some(e => e.courseId === a.courseId && e.status === 'COMPLETED')
+        ).length
+      }))
+    };
   }) || [];
 
   const totalFacilities = facilityStats.length;
@@ -67,131 +105,173 @@ export default async function HQDashboardPage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
-      {/* HQ Header */}
-      <header className="bg-slate-900 text-white sticky top-0 z-50 h-20 shadow-2xl overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 h-full flex items-center justify-between relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg -rotate-2">
-              <Building2 className="w-6 h-6 text-slate-900" />
+    <div className="h-screen bg-[#120a0a] flex flex-col font-sans overflow-hidden">
+      
+      {/* TuneCore Style Top Header */}
+      <header className="h-20 lg:h-24 bg-[#120a0a] px-4 lg:px-8 flex items-center justify-between shrink-0 z-50">
+        <div className="flex items-center gap-4 lg:gap-12">
+          <MobileNav />
+          
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded flex items-center justify-center">
+              <Building2 className="w-5 h-5 lg:w-6 lg:h-6 text-[#120a0a]" />
             </div>
-            <div>
-              <h1 className="font-black text-xl tracking-tight leading-none">HQ Dashboard</h1>
-              <p className="text-[10px] text-blue-400 font-black uppercase tracking-[0.3em] mt-1.5">{corporation?.name}</p>
+            <span className="font-black text-xl lg:text-2xl tracking-tighter text-white">careCORE HQ</span>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
+                <UsersIcon className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-white font-bold text-sm leading-none">{session.user.name} さんのダッシュボード</h2>
+                <p className="text-[10px] text-blue-400 font-bold mt-1 uppercase tracking-wider">{corporation.name}</p>
+              </div>
             </div>
           </div>
-          
-          <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
-            <Button variant="ghost" size="sm" className="rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-all">
-              <LogOut className="w-4 h-4 mr-2" /> ログアウト
-            </Button>
-          </form>
+        </div>
+
+        <div className="flex items-center gap-2 lg:gap-4">
+          <NotificationBell alerts={[]} />
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 pt-12 space-y-12">
-        {/* Organization Limits Status */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <OrgLimitStatus 
-            type="facility" 
-            label="運営施設枠" 
-            current={currentFacilitiesCount} 
-            max={corporation.maxFacilities} 
-          />
-          <OrgLimitStatus 
-            type="staff" 
-            label="登録スタッフ枠" 
-            current={currentStaffCount} 
-            max={corporation.maxStaff} 
-          />
-        </div>
-
-        {/* HQ Insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <HQStatCard title="運営施設数" value={totalFacilities} label="施設" icon={<Map className="w-6 h-6" />} color="bg-blue-600" />
-          <HQStatCard title="法人全体進捗" value={avgProgressRate} label="%" icon={<TrendingUp className="w-6 h-6" />} color="bg-orange-600" isProgress />
-          <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 flex flex-col justify-center shadow-sm">
-            <div className="flex items-center gap-3 text-emerald-600 mb-2">
-              <ShieldCheck className="w-5 h-5" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Compliance Status</span>
-            </div>
-            <p className="text-xl font-black text-slate-900 leading-tight">全サービスの義務化項目<br/>100% 準拠中</p>
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <aside className="w-64 bg-[#120a0a] hidden lg:flex flex-col p-6 space-y-2 overflow-y-auto custom-scrollbar shrink-0">
+          <a href="#overview">
+            <TuneSidebarItem icon={<LayoutDashboard className="w-5 h-5" />} label="オーバービュー" active />
+          </a>
+          <a href="#facility-monitoring">
+            <TuneSidebarItem icon={<PieChart className="w-5 h-5" />} label="施設別モニタリング" />
+          </a>
+          
+          <div className="mt-auto pt-6 border-t border-slate-800">
+             <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
+              <button className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-white transition-colors w-full text-left">
+                <LogOut className="w-5 h-5" />
+                <span className="text-sm font-bold">ログアウト</span>
+              </button>
+            </form>
           </div>
-        </div>
+        </aside>
 
-        {/* Facility Management Section */}
-        <section className="space-y-8">
-          <div className="flex items-center justify-between px-2">
-            <div className="flex items-center gap-3">
-              <PieChart className="w-5 h-5 text-slate-400" />
-              <h3 className="font-black text-2xl text-slate-900 tracking-tight">施設別モニタリング</h3>
+        {/* Main Content Area */}
+        <main className="flex-1 bg-white rounded-tl-[4rem] overflow-y-auto p-6 lg:p-12 shadow-2xl relative">
+          
+          {/* Print Only Header */}
+          <div className="print-only mb-10 border-b-2 border-slate-900 pb-6">
+            <h1 className="text-3xl font-bold text-slate-900 font-sans">法人研修実施状況報告書</h1>
+            <div className="mt-4 grid grid-cols-2 text-sm font-sans">
+              <div>
+                <p><span className="font-bold">法人名：</span> {corporation.name}</p>
+              </div>
+              <div className="text-right">
+                <p><span className="font-bold">出力日：</span> {new Date().toLocaleDateString()}</p>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {facilityStats.map((facility) => (
-              <Card key={facility.id} className="group relative bg-white border-slate-200/60 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_70px_-12px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-1">
-                <CardContent className="p-10">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                        <h4 className="font-black text-2xl text-slate-900 group-hover:text-blue-600 transition-colors tracking-tight">{facility.name}</h4>
-                        <DeleteButton id={facility.id} name={facility.name} type="facility" className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-400 font-bold text-xs">
-                        <Users className="w-3.5 h-3.5" />
-                        所属スタッフ {facility.staffCount} 名
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-black text-slate-900 tabular-nums">{facility.progressRate}%</div>
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Completion</p>
-                    </div>
+          <div className="max-w-6xl mx-auto space-y-12">
+            
+            {/* Top Section: Overview */}
+            <div id="overview" className="space-y-8 scroll-mt-10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                      <LayoutDashboard className="w-4 h-4 text-slate-900" />
                   </div>
-                  
-                  <div className="space-y-6">
-                    <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                      <div 
-                        className="bg-slate-900 h-full transition-all duration-1000 group-hover:bg-blue-600" 
-                        style={{ width: `${facility.progressRate}%` }}
-                      ></div>
-                    </div>
-                    
-                    <Button variant="outline" className="w-full h-14 rounded-2xl justify-between px-6 border-slate-200 group-hover:border-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-all font-black text-xs uppercase tracking-widest">
-                      詳細データを開く
-                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                    </Button>
+                  <h3 className="font-bold text-xl text-slate-900">オーバービュー</h3>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <PrintButton />
+                </div>
+              </div>
+
+              {/* HQ Insights - Grid containing Progress and Limits */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <HQStatCard title="法人全体進捗" value={avgProgressRate} label="%" icon={<TrendingUp className="w-6 h-6" />} color="bg-orange-600" isProgress />
+                
+                <div className="no-print">
+                  <OrgLimitStatus 
+                    type="staff" 
+                    label="登録スタッフ枠" 
+                    current={currentStaffCount} 
+                    max={corporation.maxStaff} 
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Middle Section: Facility Monitoring */}
+            <div id="facility-monitoring" className="space-y-6 scroll-mt-10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                      <PieChart className="w-4 h-4 text-slate-900" />
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <div className="flex items-baseline gap-3">
+                    <h3 className="font-bold text-xl text-slate-900">施設別モニタリング</h3>
+                    <span className="text-sm font-bold text-slate-400">
+                      {currentFacilitiesCount} <span className="text-[10px] text-slate-300 mx-0.5">/</span> {corporation.maxFacilities} <span className="text-[10px] font-bold ml-1">施設</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="no-print flex items-center gap-3">
+                  <AddFacilityDialog disabled={currentFacilitiesCount >= corporation.maxFacilities} />
+                  <AddAdminGlobalDialog facilities={facilityStats.map(f => ({ id: f.id, name: f.name }))} />
+                </div>
+              </div>
+
+              <FacilityMonitoringClient facilities={facilityStats as any} />
+            </div>
+
           </div>
-        </section>
-      </main>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+function TuneSidebarItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
+  return (
+    <div className={`flex items-center gap-4 px-4 py-3.5 rounded-lg cursor-pointer transition-all ${active ? 'bg-[#2a1a1a] text-white shadow-inner' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}>
+      <div className={`${active ? 'text-blue-500' : ''}`}>{icon}</div>
+      <span className="text-[13px] font-bold">{label}</span>
     </div>
   );
 }
 
 function HQStatCard({ title, value, label, icon, color, isProgress }: { title: string, value: number, label: string, icon: React.ReactNode, color: string, isProgress?: boolean }) {
   return (
-    <Card className="bg-white border-slate-200/60 rounded-[2rem] shadow-[0_10px_30px_-5px_rgba(0,0,0,0.04)] overflow-hidden">
-      <CardContent className="p-8 flex items-center justify-between">
-        <div className="space-y-3">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">{title}</p>
-          <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-black text-slate-900 tabular-nums">{value}</span>
-            <span className="text-sm font-bold text-slate-400">{label}</span>
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex items-center gap-3">
+          <div className={`${color} p-2 rounded-xl text-white`}>
+            {icon}
           </div>
-          {isProgress && (
-            <div className="w-24 bg-slate-100 rounded-full h-1 overflow-hidden">
-              <div className={`${color} h-full`} style={{ width: `${value}%` }}></div>
+          <div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{title}</p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-black text-slate-900 tabular-nums">{value}</span>
+              <span className="text-xs font-bold text-slate-400">{label}</span>
             </div>
-          )}
+          </div>
         </div>
-        <div className={`${color} p-4 rounded-2xl text-white shadow-lg shadow-slate-100`}>
-          {icon}
+      </div>
+      {isProgress && (
+        <div className="space-y-2">
+          <div className="flex justify-between text-[10px] font-bold uppercase">
+            <span className="text-slate-400">Progress</span>
+            <span className="text-slate-900">{value}%</span>
+          </div>
+          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+            <div className={`${color} h-full transition-all duration-1000`} style={{ width: `${value}%` }}></div>
+          </div>
         </div>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 }

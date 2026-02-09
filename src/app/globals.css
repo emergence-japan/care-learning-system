@@ -126,18 +126,26 @@
 
 /* 印刷用スタイル */
 @media print {
-  aside, header, button, .no-print {
+  aside, header, .no-print {
     display: none !important;
   }
   
+  /* レイアウトのリセット */
+  .h-screen, .flex, .overflow-hidden, .overflow-y-auto {
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
   main {
-    padding: 0 !important;
+    padding: 15mm !important;
     margin: 0 !important;
     background: white !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     height: auto !important;
     overflow: visible !important;
+    width: 100% !important;
   }
 
   .print-only {
@@ -149,16 +157,45 @@
     color: black !important;
     height: auto !important;
     overflow: visible !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  .card, .bg-white {
-    border: 1px solid #eee !important;
+  /* カードやセクションの調整 */
+  .card, .bg-white, .bg-slate-50\/50 {
+    border: 1px solid #e2e8f0 !important;
     box-shadow: none !important;
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    background: white !important;
+  }
+
+  /* タイムラインのボタン（バー）は表示する */
+  .timeline-bar {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: none !important;
   }
 
   /* 1ページに収めるための調整 */
   .max-w-6xl {
     max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* スクロールマージンの解除 */
+  .scroll-mt-10 {
+    scroll-margin-top: 0 !important;
+  }
+
+  /* シャドウや角丸の解除 */
+  .rounded-2xl, .rounded-xl, .rounded-tl-\[4rem\], .rounded-3xl, .rounded-lg {
+    border-radius: 4px !important;
+  }
+
+  /* テーブルの管理列などを非表示にする */
+  .hide-print-column {
+    display: none !important;
   }
 }
 

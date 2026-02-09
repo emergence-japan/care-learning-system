@@ -69,7 +69,7 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
                       {/* The Training Bar - Clickable */}
                       <button 
                         onClick={() => setSelectedAssignment(assignment)}
-                        className="absolute top-1/2 -translate-y-1/2 h-7 bg-[#1d4ed8] hover:bg-[#1e40af] rounded-md shadow-md flex items-center px-4 overflow-hidden transition-all z-10 text-left active:scale-[0.98]"
+                        className="absolute top-1/2 -translate-y-1/2 h-7 bg-[#1d4ed8] hover:bg-[#1e40af] rounded-md shadow-md flex items-center px-4 overflow-hidden transition-all z-10 text-left active:scale-[0.98] timeline-bar"
                         style={{ left: `${left}%`, width: `${width}%` }}
                       >
                         <span className="text-[10px] font-bold text-white truncate whitespace-nowrap">

@@ -25,7 +25,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 法人管理者（HQ）ダッシュボードの刷新**
+- [x] **Track: 法人管理者（HQ）ダッシュボードの刷新**
 *内容: TuneCore風のプロフェッショナルなデザインへのアップデート*
 *Link: [./tracks/hq_dashboard_refinement/](./tracks/hq_dashboard_refinement/)*
 

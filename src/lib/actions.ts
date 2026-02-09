@@ -207,6 +207,37 @@ export async function registerStaff(
   revalidatePath("/admin");
 }
 
+export async function hqUpdateUserPassword(userId: string, formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "HQ") {
+    throw new Error("Unauthorized");
+  }
+
+  const newPassword = formData.get("password") as string;
+  if (!newPassword || newPassword.length < 4) {
+    return "パスワードは4文字以上で入力してください。";
+  }
+
+  // 対象ユーザーが自分の法人に属しているかチェック
+  const targetUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { corporationId: true }
+  });
+
+  if (!targetUser || targetUser.corporationId !== session.user.corporationId) {
+    throw new Error("Forbidden: You can only update users within your corporation.");
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { password: newPassword }
+  });
+
+  revalidatePath("/hq/facilities/[id]", "page");
+}
+
 export async function updateStaffPassword(staffId: string, formData: FormData) {
   const { auth } = await import("@/auth");
   const session = await auth();
@@ -337,6 +368,7 @@ export async function createFacility(formData: FormData) {
   }
 
   const name = formData.get("name") as string;
+  const type = formData.get("type") as string;
   const corporationId = formData.get("corporationId") as string;
   const maxStaff = parseInt(formData.get("maxStaff") as string) || 20;
 
@@ -354,12 +386,103 @@ export async function createFacility(formData: FormData) {
   await prisma.facility.create({
     data: {
       name,
+      type,
       corporationId,
       maxStaff
     },
   });
 
   revalidatePath("/super-admin/organizations");
+}
+
+export async function hqCreateFacility(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "HQ") {
+    throw new Error("Unauthorized");
+  }
+
+  const corporationId = session.user.corporationId;
+  if (!corporationId) throw new Error("Corporation not assigned");
+
+  const name = formData.get("name") as string;
+  const type = formData.get("type") as string;
+  const maxStaff = parseInt(formData.get("maxStaff") as string) || 20;
+
+  if (!name) return "施設名を入力してください。";
+
+  // 制限チェック
+  const corporation = await prisma.corporation.findUnique({
+    where: { id: corporationId },
+    include: { _count: { select: { facilities: true } } }
+  });
+
+  if (!corporation) throw new Error("Corporation not found");
+  if (corporation._count.facilities >= corporation.maxFacilities) {
+    return `法人全体の施設登録枠の上限（${corporation.maxFacilities}施設）に達しています。これ以上追加できません。`;
+  }
+
+  // 施設名の重複チェック
+  const existingFacility = await prisma.facility.findUnique({
+    where: { name }
+  });
+
+  if (existingFacility) {
+    return "同じ名前の施設が既に存在します。";
+  }
+
+  await prisma.facility.create({
+    data: {
+      name,
+      type,
+      corporationId,
+      maxStaff
+    },
+  });
+
+  revalidatePath("/hq");
+}
+
+export async function hqCreateAdmin(formData: FormData) {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "HQ") {
+    throw new Error("Unauthorized");
+  }
+
+  const corporationId = session.user.corporationId;
+  const facilityId = formData.get("facilityId") as string;
+  const name = formData.get("name") as string;
+  const loginId = formData.get("loginId") as string;
+  const password = formData.get("password") as string;
+
+  if (!name || !loginId || !password || !facilityId) {
+    return "全ての項目を入力してください。";
+  }
+
+  // ログインIDの重複チェック
+  const existingUser = await prisma.user.findUnique({
+    where: { loginId },
+  });
+
+  if (existingUser) {
+    return "このログインIDは既に登録されています。";
+  }
+
+  await prisma.user.create({
+    data: {
+      name,
+      loginId,
+      password,
+      role: "ADMIN",
+      corporationId,
+      facilityId,
+    },
+  });
+
+  revalidatePath("/hq");
 }
 
 export async function updateFacility(id: string, formData: FormData) {
@@ -518,8 +641,42 @@ export async function deleteFacility(id: string) {
 }
 
 export async function deleteUser(id: string) {
-  // ... (既存のコード)
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  const role = (session?.user as any)?.role;
+
+  if (!session?.user || (role !== "SUPER_ADMIN" && role !== "HQ" && role !== "ADMIN")) {
+    throw new Error("Unauthorized");
+  }
+
+  // HQの場合、自分の法人に属しているかチェック
+  if (role === "HQ") {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: { corporationId: true }
+    });
+    if (user?.corporationId !== session.user.corporationId) {
+      throw new Error("Forbidden");
+    }
+  }
+
+  // ADMINの場合、自分の施設に属しているかチェック
+  if (role === "ADMIN") {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: { facilityId: true }
+    });
+    if (user?.facilityId !== session.user.facilityId) {
+      throw new Error("Forbidden");
+    }
+  }
+
+  await prisma.enrollment.deleteMany({ where: { userId: id } });
+  await prisma.user.delete({ where: { id } });
+
   revalidatePath("/admin");
+  revalidatePath("/hq");
+  revalidatePath("/super-admin/organizations");
 }
 
 // --- ASSIGNMENT ACTIONS ---
