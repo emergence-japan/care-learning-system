@@ -32,8 +32,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 ---
 
 - [ ] **Track: システム管理者（Super Admin）ダッシュボードの刷新**
-*内容: 統合管理画面のUIブラッシュアップ*
-*Link: [./tracks/super_admin_dashboard_refinement/](./tracks/super_admin_dashboard_refinement/)*
+*内容: 統合管理画面のUIブラッシュアップ、法人ステータス管理、誤字修正機能*
+*Link: [./tracks/super_admin_dashboard_refinement/plan.md](./tracks/super_admin_dashboard_refinement/plan.md)*
 
 ---
 
