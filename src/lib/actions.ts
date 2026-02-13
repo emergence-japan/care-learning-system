@@ -736,9 +736,12 @@ export async function deleteCourse(id: string) {
     throw new Error("Unauthorized");
   }
 
+  // 関連データを順番に削除（外部キー制約エラーを避けるため）
   await prisma.choice.deleteMany({ where: { question: { courseId: id } } });
   await prisma.question.deleteMany({ where: { courseId: id } });
+  await prisma.slide.deleteMany({ where: { courseId: id } });
   await prisma.enrollment.deleteMany({ where: { courseId: id } });
+  await prisma.courseAssignment.deleteMany({ where: { courseId: id } });
   await prisma.course.delete({ where: { id } });
 
   revalidatePath("/super-admin/courses");

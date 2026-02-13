@@ -19,8 +19,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 施設管理者ダッシュボードの機能強化と詳細UI改善**
-*内容: 監査用PDF出力機能、スタッフ管理アイコンへのツールチップ追加*
+- [x] **Track: 施設管理者ダッシュボードの機能強化と詳細UI改善**
+*内容: 監査用PDF出力機能、スタッフ管理アイコンへのツールチップ追加（一部完了）*
 *Link: [./tracks/admin_dashboard_refinement/](./tracks/admin_dashboard_refinement/)*
 
 ---
@@ -31,8 +31,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: システム管理者（Super Admin）ダッシュボードの刷新**
-*内容: 統合管理画面のUIブラッシュアップ、法人ステータス管理、誤字修正機能*
+- [x] **Track: システム管理者（Super Admin）ダッシュボードの刷新**
+*内容: 統合管理画面のUIブラッシュアップ、法人ステータス管理、研修フルプレビュー機能の実装*
 *Link: [./tracks/super_admin_dashboard_refinement/plan.md](./tracks/super_admin_dashboard_refinement/plan.md)*
 
 ---
@@ -43,6 +43,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 研修コンテンツの拡充**
-*内容: 準備中研修（13科目）の具体的内容（スライド・設問）の実装*
+- [ ] **Track: 研修コンテンツの拡充（法定要件100%網羅）**
+*内容: 虐待・認知症完了。残り11科目の具体的実装（スライド・設問）*
 *Link: [./tracks/content_enrichment/](./tracks/content_enrichment/)*

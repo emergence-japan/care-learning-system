@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { 
   deleteCorporation, 
   deleteFacility, 
-  deleteUser 
+  deleteUser,
+  deleteCourse
 } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
-type DeleteType = "corporation" | "facility" | "user";
+type DeleteType = "corporation" | "facility" | "user" | "course";
 
 interface Props {
   id: string;
@@ -28,6 +29,8 @@ export function DeleteButton({ id, name, type, className, variant = "ghost", siz
       message = `【警告】法人「${name}」を削除しますか？\n所属する全ての施設、ユーザー、受講記録が完全に削除されます。`;
     } else if (type === "facility") {
       message = `施設「${name}」を削除しますか？\n所属するスタッフと受講記録が削除されます。`;
+    } else if (type === "course") {
+      message = `研修コース「${name}」を完全に削除しますか？\n関連する学習スライド、テスト問題、受講記録もすべて削除されます。`;
     }
 
     if (!confirm(message)) return;
@@ -39,6 +42,8 @@ export function DeleteButton({ id, name, type, className, variant = "ghost", siz
         await deleteFacility(id);
       } else if (type === "user") {
         await deleteUser(id);
+      } else if (type === "course") {
+        await deleteCourse(id);
       }
     } catch (error) {
       console.error(error);
