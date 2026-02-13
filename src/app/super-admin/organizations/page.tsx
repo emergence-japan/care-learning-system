@@ -47,6 +47,7 @@ export default async function OrganizationManagementPage() {
           assignments: {
             select: {
               id: true,
+              courseId: true,
               course: { select: { title: true } }
             }
           },
