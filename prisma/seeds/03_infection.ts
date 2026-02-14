@@ -8,7 +8,7 @@ export async function seedInfection(prisma: PrismaClient) {
       introduction: `
         <div class="space-y-8">
           <div class="flex items-center gap-4"><span class="h-1 w-12 bg-sky-600 rounded-full"></span><p class="text-sky-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p></div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「目に見えない敵」は、<br/>あなたの手の中にいる。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">あなたの手は、今、本当に<br/>「安全」だと言い切れますか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>「自分は健康だから大丈夫」というその油断が、施設全体を巻き込むパンデミックの引き金になります。</p>
             <div class="p-8 bg-sky-50/50 rounded-[2rem] border border-sky-100 shadow-inner relative overflow-hidden">

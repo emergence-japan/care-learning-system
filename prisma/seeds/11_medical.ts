@@ -11,7 +11,7 @@ export async function seedMedical(prisma: PrismaClient) {
             <span class="h-1 w-12 bg-rose-600 rounded-full"></span>
             <p class="text-rose-600 font-black tracking-widest text-sm uppercase">Medical Bridge Hook</p>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">あなたの「違和感」が、<br/>命を救う最初の一歩。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">「いつもと何かが違う...」<br/>その直感を、自信を持って医療職に伝えられていますか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>毎日接しているあなただからこそ気づける、「なんとなく元気がない」「いつもより食いつきが悪い」という小さな変化。それは、医師も気づけない重大な急変のサインかもしれません。</p>
             <div class="p-8 bg-rose-50/50 rounded-[2rem] border border-rose-100 shadow-inner relative overflow-hidden">

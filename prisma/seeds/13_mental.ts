@@ -11,7 +11,7 @@ export async function seedMental(prisma: PrismaClient) {
             <span class="h-1 w-12 bg-indigo-600 rounded-full"></span>
             <p class="text-indigo-600 font-black tracking-widest text-sm uppercase">Empathy Support Hook</p>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「寄り添いたい」のに<br/>「イライラ」してしまう。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">一生懸命なあなたほど、<br/>自分の「心の悲鳴」を無視していませんか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>そんな自分を責めていませんか？介護は心を削る「感情労働」です。あなたの心のコップが溢れそうなとき、良いケアは生まれません。</p>
             <div class="p-8 bg-indigo-50/50 rounded-[2rem] border border-indigo-100 shadow-inner relative overflow-hidden">

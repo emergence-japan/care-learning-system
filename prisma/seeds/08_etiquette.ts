@@ -11,7 +11,7 @@ export async function seedEtiquette(prisma: PrismaClient) {
             <span class="h-1 w-12 bg-blue-600 rounded-full"></span>
             <p class="text-blue-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「また、あなたに<br/>会いたい」と思われる。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">「技術はいいけど、あの人はちょっと...」<br/>そう思われてしまう理由を考えたことはありますか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>介護技術がどれほど高くても、立ち居振る舞い一つで、利用者様は「大切にされていない」と感じてしまいます。</p>
             <div class="p-8 bg-blue-50/50 rounded-[2rem] border border-blue-100 shadow-inner relative overflow-hidden">

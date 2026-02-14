@@ -53,10 +53,10 @@ export async function seedDementia(prisma: PrismaClient) {
       questions: {
         create: [
           { text: '認知症基本法（2024）で定められたケアの目的はどれか。', explanation: '本人の尊厳を保持し、共生を目指すことが目的です。', order: 1, choices: { create: [{ text: '本人の尊厳を保持し、共生を目指す', isCorrect: true }, { text: '施設内での一律の安全管理', isCorrect: false }] } },
-          { text: 'BPSD（行動・心理症状）が発生する大きな要因のひとつは何か。', explanation: '便秘や痛みなどの身体的苦痛が原因となることが多いです。', order: 2, choices: { create: [{ text: '便秘や痛みなどの身体적苦痛', isCorrect: true }, { text: '本人の性格の問題', isCorrect: false }] } },
+          { text: 'BPSD（行動・心理症状）が発生する大きな要因のひとつは何か。', explanation: '便秘や痛みなどの身体的苦痛が原因となることが多いです。', order: 2, choices: { create: [{ text: '便秘や痛みなどの身体的苦痛', isCorrect: true }, { text: '本人の性格の問題', isCorrect: false }] } },
           { text: '本人の意向を最大限に尊重する支援方法を何というか。', explanation: '意思決定支援と呼ばれます。', order: 3, choices: { create: [{ text: '意思決定支援', isCorrect: true }, { text: '管理型ケア', isCorrect: false }] } },
           { text: '食事において本人が認識しやすくするための環境設定はどれか。', explanation: '食器のコントラストを上げることが有効です。', order: 4, choices: { create: [{ text: '食器の色のコントラストを上げる', isCorrect: true }, { text: 'テレビをつけたままで食事する', isCorrect: false }] } },
-          { text: '2024年度から義務化された研修の対象範囲は？', explanation: '全ての介護サービス事業所の無資格職員が対象です。', order: 5, choices: { create: [{ text: '全ての介護サービス事業所', isCorrect: true }, { text: '特定のサービスのみ', isCorrect: false }] } }
+          { text: '2024年度から義務化された「認知症介護基礎研修」の対象は誰か？', explanation: '介護サービス事業所に勤務する、無資格の全介護職員が受講義務の対象です。', order: 5, choices: { create: [{ text: '無資格の全介護職員', isCorrect: true }, { text: 'ケアマネジャーのみ', isCorrect: false }] } }
         ]
       }
     }

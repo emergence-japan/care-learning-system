@@ -11,7 +11,7 @@ export async function seedEthics(prisma: PrismaClient) {
             <span class="h-1 w-12 bg-zinc-600 rounded-full"></span>
             <p class="text-zinc-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「バレなければ、いい」が<br/>施設を壊す。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">「これくらい、みんなやってるし...」<br/>そんな小さな妥協が、大きな不正の入り口だとしたら？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>ひとつの小さな虚偽記載、慣れによるタメ口、同僚の不正の黙認。それらはすべて「利用者の人生」を軽んじる行為であり、施設の事業停止を招く重大なリスクです。</p>
             <div class="p-8 bg-zinc-50/50 rounded-[2rem] border border-zinc-100 shadow-inner relative overflow-hidden">

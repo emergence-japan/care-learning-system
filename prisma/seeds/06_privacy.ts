@@ -11,7 +11,7 @@ export async function seedPrivacy(prisma: PrismaClient) {
             <span class="h-1 w-12 bg-indigo-600 rounded-full"></span>
             <p class="text-indigo-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">信頼は一瞬で崩れ、<br/>二度と戻らない。</h2>
+          <h2 class="text-4xl font-black text-slate-900 leading-tight">何気ない一言が、利用者の人生を<br/>壊してしまうリスクを考えたことはありますか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
             <p>廊下での何気ない立ち話、個人のスマホでのうっかりした撮影、SNSへの匿名投稿。あなたが「これくらい」と思ったその瞬間、利用者の人生と施設の信頼が踏みにじられます。</p>
             <div class="p-8 bg-indigo-50/50 rounded-[2rem] border border-indigo-100 shadow-inner relative overflow-hidden">
