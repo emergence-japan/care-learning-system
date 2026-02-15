@@ -36,7 +36,6 @@ export default async function OrganizationManagementPage() {
             select: { 
               id: true, 
               name: true, 
-              email: true, 
               loginId: true, 
               role: true,
               enrollments: {
@@ -61,7 +60,7 @@ export default async function OrganizationManagementPage() {
       },
       users: {
         where: { role: "HQ" },
-        select: { id: true, name: true, email: true, loginId: true }
+        select: { id: true, name: true, loginId: true }
       }
     },
     orderBy: { createdAt: 'desc' }
