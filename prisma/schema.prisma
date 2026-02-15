@@ -12,7 +12,6 @@ model User {
   id            String   @id @default(cuid())
   name          String
   loginId       String   @unique  // ログイン用の独自ID
-  email         String?  @unique  // メールアドレスは任意
   password      String
   role          Role     @default(STAFF)
   facilityId    String?
@@ -22,6 +21,35 @@ model User {
   facility      Facility? @relation(fields: [facilityId], references: [id])
   corporation   Corporation? @relation(fields: [corporationId], references: [id])
   enrollments   Enrollment[]
+  inquiries     Inquiry[]
+}
+
+model Inquiry {
+  id            String   @id @default(cuid())
+  subject       String
+  content       String
+  senderId      String
+  status        InquiryStatus @default(UNREAD)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  sender        User     @relation(fields: [senderId], references: [id])
+  replies       InquiryReply[]
+}
+
+model InquiryReply {
+  id            String   @id @default(cuid())
+  inquiryId     String
+  content       String
+  senderId      String
+  createdAt     DateTime @default(now())
+  inquiry       Inquiry  @relation(fields: [inquiryId], references: [id])
+}
+
+enum InquiryStatus {
+  UNREAD
+  READ
+  REPLIED
+  CLOSED
 }
 
 model Facility {
@@ -60,6 +88,7 @@ enum Role {
 
 model Course {
   id          String   @id @default(cuid())
+  slug        String   @unique  // 管理用識別コード (abuse, dementia, etc.)
   title       String
   description String?
   introduction String?   // 注意喚起（導入）

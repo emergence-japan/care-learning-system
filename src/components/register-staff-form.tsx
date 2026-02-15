@@ -73,16 +73,6 @@ export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs font-bold text-slate-700">メールアドレス（任意）</Label>
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    placeholder="staff@example.com" 
-                    className="h-11 rounded-xl border-slate-200 focus:border-[#1d4ed8] focus:ring-0"
-                  />
-                </div>
-                <div className="space-y-1.5">
                   <Label htmlFor="password" className="text-xs font-bold text-slate-700">パスワード</Label>
                   <Input 
                     id="password" 

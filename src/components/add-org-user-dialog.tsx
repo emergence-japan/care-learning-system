@@ -70,14 +70,6 @@ export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onC
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between items-center px-1">
-                <Label htmlFor="user-email" className="text-xs font-bold text-slate-500">メールアドレス</Label>
-                <span className="text-[10px] font-bold text-slate-300 uppercase">任意</span>
-              </div>
-              <Input id="user-email" name="email" type="email" placeholder="admin@example.com (空欄可)" className="h-12 rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all font-medium" />
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="user-password" className="text-xs font-bold text-slate-500 ml-1">初期パスワード</Label>
               <div className="relative">
                 <Input id="user-password" name="password" type="password" placeholder="パスワードを設定" className="h-12 rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all font-bold pr-10" required />

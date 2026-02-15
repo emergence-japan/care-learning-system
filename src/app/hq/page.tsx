@@ -150,6 +150,9 @@ export default async function HQDashboardPage() {
           <a href="#facility-monitoring">
             <TuneSidebarItem icon={<PieChart className="w-5 h-5" />} label="施設別モニタリング" />
           </a>
+          <Link href="/hq/inquiry">
+            <TuneSidebarItem icon={<MessageSquare className="w-5 h-5" />} label="サポートセンター" />
+          </Link>
           
           <div className="mt-auto pt-6 border-t border-slate-800">
              <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>

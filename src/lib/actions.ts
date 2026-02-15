@@ -167,7 +167,6 @@ export async function registerStaff(
 
   const name = formData.get("name") as string;
   const loginId = formData.get("loginId") as string;
-  const email = formData.get("email") as string || null;
   const password = formData.get("password") as string;
 
   if (!name || !loginId || !password) {
@@ -186,7 +185,6 @@ export async function registerStaff(
     data: {
       name,
       loginId,
-      email,
       password,
       role: "STAFF",
       facilityId,
@@ -668,7 +666,6 @@ export async function createOrgUser(formData: FormData) {
 
   const name = formData.get("name") as string;
   const loginId = formData.get("loginId") as string;
-  const email = (formData.get("email") as string) || null;
   const password = formData.get("password") as string;
   const role = formData.get("role") as "HQ" | "ADMIN";
   const corporationId = formData.get("corporationId") as string;
@@ -691,7 +688,6 @@ export async function createOrgUser(formData: FormData) {
     data: {
       name,
       loginId,
-      email,
       password,
       role,
       corporationId,
@@ -952,4 +948,81 @@ export async function updateFiscalYearStartMonth(month: number) {
   });
 
   revalidatePath("/admin");
+}
+
+// --- INQUIRY ACTIONS ---
+
+export async function createInquiry(formData: FormData) {
+  const { auth } = await import('@/auth');
+  const session = await auth();
+
+  if (!session?.user?.id) throw new Error('Unauthorized');
+
+  const subject = formData.get('subject') as string;
+  const content = formData.get('content') as string;
+
+  if (!subject || !content) {
+    return '件名と内容を入力してください。';
+  }
+
+  await prisma.inquiry.create({
+    data: {
+      subject,
+      content,
+      senderId: session.user.id,
+      status: 'UNREAD',
+    },
+  });
+
+  revalidatePath('/admin/inquiry');
+  revalidatePath('/hq/inquiry');
+}
+
+export async function createInquiryReply(inquiryId: string, content: string) {
+  const { auth } = await import('@/auth');
+  const session = await auth();
+
+  if (!session?.user?.id) throw new Error('Unauthorized');
+
+  if (!content) return '内容を入力してください。';
+
+  await prisma.inquiryReply.create({
+    data: {
+      inquiryId,
+      content,
+      senderId: session.user.id,
+    },
+  });
+
+  const inquiry = await prisma.inquiry.findUnique({
+    where: { id: inquiryId },
+    select: { senderId: true }
+  });
+
+  if (session.user.role === 'SUPER_ADMIN') {
+    await prisma.inquiry.update({
+      where: { id: inquiryId },
+      data: { status: 'REPLIED' },
+    });
+  }
+
+  revalidatePath('/admin/inquiry');
+  revalidatePath('/hq/inquiry');
+  revalidatePath('/super-admin/inquiries');
+}
+
+export async function closeInquiry(inquiryId: string) {
+  const { auth } = await import('@/auth');
+  const session = await auth();
+
+  if (!session?.user) throw new Error('Unauthorized');
+
+  await prisma.inquiry.update({
+    where: { id: inquiryId },
+    data: { status: 'CLOSED' },
+  });
+
+  revalidatePath('/admin/inquiry');
+  revalidatePath('/hq/inquiry');
+  revalidatePath('/super-admin/inquiries');
 }

@@ -133,6 +133,9 @@ export default async function AdminDashboardPage() {
           <a href="#staff-management">
             <SidebarItem icon={<Users className="w-5 h-5" />} label="スタッフ管理" />
           </a>
+          <Link href="/admin/inquiry">
+            <SidebarItem icon={<MessageSquare className="w-5 h-5" />} label="サポートセンター" />
+          </Link>
           
           <div className="mt-auto pt-6 border-t border-slate-50">
              <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>

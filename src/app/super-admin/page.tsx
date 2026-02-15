@@ -18,11 +18,12 @@ export default async function SuperAdminDashboard() {
   }
 
   // 統計データの取得
-  const [corpCount, facilityCount, userCount, courseCount] = await Promise.all([
+  const [corpCount, facilityCount, userCount, courseCount, unreadInquiryCount] = await Promise.all([
     prisma.corporation.count(),
     prisma.facility.count(),
     prisma.user.count({ where: { NOT: { role: 'SUPER_ADMIN' } } }),
-    prisma.course.count()
+    prisma.course.count(),
+    prisma.inquiry.count({ where: { status: 'UNREAD' } })
   ]);
 
   return (
@@ -44,6 +45,12 @@ export default async function SuperAdminDashboard() {
           <NavItem icon={<LayoutDashboard />} label="ダッシュボード" active />
           <NavItem icon={<Building2 />} label="組織・施設管理" href="/super-admin/organizations" />
           <NavItem icon={<BookOpen />} label="研修コース管理" href="/super-admin/courses" />
+          <NavItem 
+            icon={<MessageSquare />} 
+            label="サポートセンター" 
+            href="/super-admin/inquiries" 
+            badge={unreadInquiryCount > 0 ? unreadInquiryCount : undefined}
+          />
         </div>
 
         <div className="px-4 mt-auto">
@@ -146,12 +153,17 @@ export default async function SuperAdminDashboard() {
   );
 }
 
-function NavItem({ icon, label, active, href }: { icon: React.ReactNode, label: string, active?: boolean, href?: string }) {
+function NavItem({ icon, label, active, href, badge }: { icon: React.ReactNode, label: string, active?: boolean, href?: string, badge?: number }) {
   const content = (
     <div className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group ${active ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
       <div className={`${active ? 'text-white' : 'group-hover:text-white transition-colors'}`}>{icon}</div>
       <span className="hidden lg:block text-sm font-bold">{label}</span>
-      {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white hidden lg:block" />}
+      {badge !== undefined && (
+        <div className="ml-auto bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg shadow-red-900/20 animate-pulse">
+          {badge}
+        </div>
+      )}
+      {active && !badge && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white hidden lg:block" />}
     </div>
   );
 

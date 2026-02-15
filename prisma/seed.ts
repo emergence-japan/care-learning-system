@@ -16,9 +16,7 @@ import { seedMental } from './seeds/13_mental'
 const prisma = new PrismaClient()
 
 async function main() {
-  // --- 全削除命令 (deleteMany) を撤廃しました ---
-
-  // 1. 組織・基本ユーザーの作成 (upsertを使用)
+  // 1. 組織の作成
   const corp = await prisma.corporation.upsert({
     where: { name: 'ケア・グループ法人' },
     update: {},
@@ -31,11 +29,11 @@ async function main() {
     create: { name: 'コスモス苑', type: '特別養護老人ホーム', corporationId: corp.id, maxStaff: 20 }
   })
   
-  // 管理者ユーザー (loginIdをキーにupsert)
+  // 管理者ユーザー
   const baseUsers = [
-    { email: 'owner@example.com', loginId: 'owner', name: 'システム運営者', password: 'owner_password', role: Role.SUPER_ADMIN },
-    { email: 'hq@example.com', loginId: 'hq', name: '法人本部 太郎', password: 'hq_password', role: Role.HQ, corporationId: corp.id },
-    { email: 'admin_a@example.com', loginId: 'admin_a', name: 'ひまわり管理者', password: 'admin_password', role: Role.ADMIN, corporationId: corp.id, facilityId: facilityA.id }
+    { loginId: 'owner', name: 'システム運営者', password: 'owner_password', role: Role.SUPER_ADMIN },
+    { loginId: 'hq', name: '法人本部 太郎', password: 'hq_password', role: Role.HQ, corporationId: corp.id },
+    { loginId: 'admin_a', name: 'ひまわり管理者', password: 'admin_password', role: Role.ADMIN, corporationId: corp.id, facilityId: facilityA.id }
   ]
 
   for (const u of baseUsers) {
@@ -46,7 +44,7 @@ async function main() {
     })
   }
 
-  // 2. 研修コンテンツの個別実行
+  // 2. 研修コンテンツの同期
   const courses = [
     await seedAbuse(prisma),
     await seedDementia(prisma),
@@ -63,38 +61,46 @@ async function main() {
     await seedMental(prisma)
   ]
 
-  // 3. 研修の割り当て (なければ作成)
+  // 3. 研修の割り当て (upsert化)
   for (const c of courses) {
-    const existing = await prisma.courseAssignment.findUnique({
-      where: { facilityId_courseId: { facilityId: facilityA.id, courseId: c.id } }
+    await prisma.courseAssignment.upsert({
+      where: { facilityId_courseId: { facilityId: facilityA.id, courseId: c.id } },
+      update: {},
+      create: { facilityId: facilityA.id, courseId: c.id, startDate: new Date('2024-04-01'), endDate: new Date('2025-03-31') }
     })
-    if (!existing) {
-      await prisma.courseAssignment.create({ 
-        data: { facilityId: facilityA.id, courseId: c.id, startDate: new Date('2024-04-01'), endDate: new Date('2025-03-31') } 
-      })
-    }
   }
 
-  // 4. 初期スタッフ作成 (sato, suzuki)
+  // 4. 初期スタッフ作成 (upsert化)
   const staffData = [
     { name: '佐藤 美咲', loginId: 'sato' }, 
     { name: '鈴木 健一', loginId: 'suzuki' }
   ];
+  
   for (const data of staffData) {
     const user = await prisma.user.upsert({
       where: { loginId: data.loginId },
-      update: {},
-      create: { email: `${data.loginId}@example.com`, loginId: data.loginId, name: data.name, password: 'password123', role: Role.STAFF, corporationId: corp.id, facilityId: facilityA.id }
+      update: { name: data.name },
+      create: { loginId: data.loginId, name: data.name, password: 'password123', role: Role.STAFF, corporationId: corp.id, facilityId: facilityA.id }
     });
 
-    // 最初の研修のみ完了状態にする (未設定の場合のみ)
-    const existingEnrollment = await prisma.enrollment.findUnique({
-      where: { userId_courseId: { userId: user.id, courseId: courses[0].id } }
-    })
-    if (!existingEnrollment) {
-      await prisma.enrollment.create({ data: { userId: user.id, courseId: courses[0].id, status: Status.COMPLETED, actionPlan: '尊厳を守るケアを徹底します。', completedAt: new Date() } });
-      for (let i = 1; i < courses.length; i++) {
-        await prisma.enrollment.create({ data: { userId: user.id, courseId: courses[i].id, status: Status.NOT_STARTED } });
+    // 受講状況の作成 (未設定の場合のみ)
+    for (let i = 0; i < courses.length; i++) {
+      const course = courses[i];
+      const existingEnrollment = await prisma.enrollment.findUnique({
+        where: { userId_courseId: { userId: user.id, courseId: course.id } }
+      })
+      
+      if (!existingEnrollment) {
+        if (i === 0) {
+          // 佐藤・鈴木の最初の研修のみ完了状態にする
+          await prisma.enrollment.create({ 
+            data: { userId: user.id, courseId: course.id, status: Status.COMPLETED, actionPlan: '尊厳を守るケアを徹底します。', completedAt: new Date() } 
+          });
+        } else {
+          await prisma.enrollment.create({ 
+            data: { userId: user.id, courseId: course.id, status: Status.NOT_STARTED } 
+          });
+        }
       }
     }
   }
