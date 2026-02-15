@@ -184,26 +184,39 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
                   opacity: { duration: 0.4 },
                   filter: { duration: 0.4 }
                 }}
-                className="flex-1 flex flex-col"
+                className="flex-1 flex flex-col relative h-full"
               >
-                {/* Header Accents */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-bl-[5rem] -z-10" />
+                {/* Header Accents - More subtle */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/30 rounded-bl-full -z-10 blur-3xl" />
                 
-                <div className="p-10 pb-6 text-center">
-                  <span className="text-blue-600 font-black text-[10px] uppercase tracking-[0.3em] mb-3 block">Topic Overview</span>
-                  <h3 className="text-3xl font-black text-slate-900 tracking-tight leading-[1.1]">
-                    {currentSlide.title}
-                  </h3>
-                </div>
+                <div className="flex-1 flex flex-col p-8 lg:p-16 h-full">
+                  <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
+                    {/* Only show top title if it's NOT the first slide (which usually has its own grand title) */}
+                    {currentSlideIndex !== 0 && (
+                      <div className="mb-12 text-center space-y-4">
+                        <div className="flex items-center justify-center gap-3 mb-2">
+                          <span className="h-px w-8 bg-blue-200"></span>
+                          <span className="text-blue-600 font-black text-[10px] uppercase tracking-[0.4em]">Section {currentSlideIndex}</span>
+                          <span className="h-px w-8 bg-blue-200"></span>
+                        </div>
+                        <h3 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.2] [word-break:keep-all] [overflow-wrap:anywhere]">
+                          {currentSlide.title}
+                        </h3>
+                      </div>
+                    )}
 
-                <div className="px-10 pb-12 flex-1 overflow-y-auto premium-content">
-                  <div 
-                    className="prose prose-slate max-w-none 
-                      prose-p:text-slate-600 prose-p:text-lg prose-p:leading-relaxed
-                      prose-strong:text-slate-900 prose-strong:font-black
-                      prose-ul:space-y-4 prose-li:text-slate-600"
-                    dangerouslySetInnerHTML={{ __html: currentSlide.content }}
-                  />
+                    {/* Main Content Area */}
+                    <div className="premium-content">
+                      <div 
+                        className="prose prose-slate max-w-none 
+                          prose-p:text-slate-600 prose-p:text-xl prose-p:leading-relaxed prose-p:font-medium
+                          prose-strong:text-slate-900 prose-strong:font-black
+                          prose-ul:space-y-4 prose-li:text-slate-700 prose-li:text-lg
+                          prose-h4:text-2xl prose-h4:font-black prose-h4:text-slate-900 prose-h4:mb-6"
+                        dangerouslySetInnerHTML={{ __html: currentSlide.content }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             )}

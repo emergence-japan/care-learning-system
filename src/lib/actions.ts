@@ -884,31 +884,52 @@ export async function updateCourseAssignment(id: string, startDate: Date, endDat
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "ADMIN") {
+  const facilityId = session?.user?.facilityId;
+  if (!session?.user || session.user.role !== "ADMIN" || !facilityId) {
     throw new Error("Unauthorized");
   }
 
-  await prisma.courseAssignment.update({
-    where: { id },
-    data: { startDate, endDate }
-  });
+  try {
+    await prisma.courseAssignment.update({
+      where: { 
+        id,
+        facilityId 
+      },
+      data: { startDate, endDate }
+    });
 
-  revalidatePath("/admin");
+    revalidatePath("/admin");
+    return { success: true };
+  } catch (error) {
+    console.error("Update assignment error:", error);
+    return { success: false, error: "更新に失敗しました。" };
+  }
 }
 
 export async function deleteCourseAssignment(id: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "ADMIN") {
+  const facilityId = session?.user?.facilityId;
+  if (!session?.user || session.user.role !== "ADMIN" || !facilityId) {
     throw new Error("Unauthorized");
   }
 
-  await prisma.courseAssignment.delete({
-    where: { id }
-  });
+  try {
+    // deleteMany を使うことで、対象が存在しない場合でもエラーにならずに「0件削除」として成功する
+    await prisma.courseAssignment.deleteMany({
+      where: { 
+        id,
+        facilityId
+      }
+    });
 
-  revalidatePath("/admin");
+    revalidatePath("/admin");
+    return { success: true };
+  } catch (error) {
+    console.error("Delete assignment error:", error);
+    return { success: false, error: "削除に失敗しました。" };
+  }
 }
 
 export async function updateFiscalYearStartMonth(month: number) {

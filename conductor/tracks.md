@@ -37,12 +37,12 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 法定研修コンテンツの最終品質保証（13科目）**
-*内容: ①厚労省要件100%、②IDルール準拠、③テストの妥当性を全科目で徹底検証*
+- [x] **Track: 法定研修コンテンツの最終品質保証（13科目）**
+*内容: ①厚労省要件100%、②IDルール準拠、③テスト品質、④PC最適化デザインの全13科目徹底検証・クリーンアップ完了*
 *Link: [./tracks/legal_content_final_qa/plan.md](./tracks/legal_content_final_qa/plan.md)*
 
 ---
 
-- [ ] **Track: 受講者（スタッフ）画面の刷新**
-*内容: 学習体験を向上させるモダンなモバイル・デスクトップUI*
+- [x] **Track: 受講者（スタッフ）画面の刷新**
+*内容: 学習体験を向上させるモダンなモバイル・デスクトップUI（ボトムナビ、進捗可視化、ライブラリ機能）*
 *Link: [./tracks/staff_screen_refinement/](./tracks/staff_screen_refinement/)*

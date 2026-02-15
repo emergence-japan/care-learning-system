@@ -6,6 +6,7 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { completeEnrollment, submitTestResults, saveActionPlan } from "@/lib/actions";
 import { CourseClient } from "./course-client";
+import { StaffMobileNav } from "@/components/staff-mobile-nav";
 
 export default async function CourseDetailPage({
   params,
@@ -67,7 +68,7 @@ export default async function CourseDetailPage({
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-20">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-24">
       <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 h-20 flex items-center px-6">
         <div className="max-w-xl mx-auto w-full flex items-center justify-between">
           <Link href="/">
@@ -111,6 +112,8 @@ export default async function CourseDetailPage({
           onSaveActionPlan={handleSaveActionPlan}
         />
       </main>
+
+      <StaffMobileNav />
     </div>
   );
 }

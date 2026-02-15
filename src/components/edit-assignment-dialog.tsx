@@ -22,6 +22,15 @@ export function EditAssignmentDialog({ assignment, onClose }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   
+  // 今日の日付 (yyyy-mm-dd)
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+
+  // デフォルト年度の計算
+  const defaultStartYear = now.getFullYear();
+  const fiscalYearStart = `${defaultStartYear}-04-01`;
+  const fiscalYearEnd = `${defaultStartYear + 1}-03-31`;
+
   // yyyy-mm-dd 形式に変換
   const formatDate = (date: Date) => {
     return new Date(date).toISOString().split('T')[0];
@@ -33,26 +42,33 @@ export function EditAssignmentDialog({ assignment, onClose }: Props) {
   const handleUpdate = async () => {
     setIsSubmitting(true);
     try {
-      await updateCourseAssignment(assignment.id, new Date(startDate), new Date(endDate));
-      onClose();
+      const result = await updateCourseAssignment(assignment.id, new Date(startDate), new Date(endDate));
+      if (result?.success) {
+        onClose();
+      } else {
+        alert(result?.error || "更新に失敗しました。");
+      }
     } catch (error) {
       console.error(error);
-      alert("更新に失敗しました。");
+      alert("通信エラーが発生しました。");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm(`研修「${assignment.course.title}」の計画を削除しますか？
-※スタッフの受講記録自体は削除されません。`)) return;
+    if (!confirm(`研修「${assignment.course.title}」の計画を削除しますか？\n※スタッフの受講記録自体は削除されません。`)) return;
     setIsDeleting(true);
     try {
-      await deleteCourseAssignment(assignment.id);
-      onClose();
+      const result = await deleteCourseAssignment(assignment.id);
+      if (result?.success) {
+        onClose();
+      } else {
+        alert(result?.error || "削除に失敗しました。");
+      }
     } catch (error) {
       console.error(error);
-      alert("削除に失敗しました。");
+      alert("通信エラーが発生しました。");
     } finally {
       setIsDeleting(false);
     }
@@ -78,9 +94,22 @@ export function EditAssignmentDialog({ assignment, onClose }: Props) {
 
         <CardContent className="p-8 space-y-8">
           <div className="space-y-6">
-            <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Training Course</label>
-              <p className="text-sm font-bold text-slate-900 bg-slate-50 p-4 rounded-xl border border-slate-100">{assignment.course.title}</p>
+            <div className="flex justify-between items-end">
+              <div className="space-y-1 flex-1 mr-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Training Course</label>
+                <p className="text-sm font-bold text-slate-900 bg-slate-50 p-4 rounded-xl border border-slate-100 truncate">{assignment.course.title}</p>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  setStartDate(fiscalYearStart);
+                  setEndDate(fiscalYearEnd);
+                }}
+                className="text-[10px] font-black uppercase tracking-widest text-blue-600 border-blue-100 bg-blue-50/30 hover:bg-blue-50 rounded-full h-7 mb-2"
+              >
+                {defaultStartYear}年度にセット
+              </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -88,6 +117,7 @@ export function EditAssignmentDialog({ assignment, onClose }: Props) {
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Start Date</label>
                 <input 
                   type="date" 
+                  min={todayStr}
                   className="w-full h-14 px-4 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-sm font-bold bg-slate-50/50"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
@@ -97,6 +127,7 @@ export function EditAssignmentDialog({ assignment, onClose }: Props) {
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">End Date</label>
                 <input 
                   type="date" 
+                  min={startDate || todayStr}
                   className="w-full h-14 px-4 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-sm font-bold bg-slate-50/50"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
