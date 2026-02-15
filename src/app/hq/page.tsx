@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { 
   Building2, TrendingUp, LogOut, 
   ShieldCheck, PieChart, Map, 
-  LayoutDashboard, Users as UsersIcon
+  LayoutDashboard, Users as UsersIcon, MessageSquare
 } from "lucide-react";
 import { OrgLimitStatus } from "@/components/org-limit-status";
 import { MobileNav } from "@/components/mobile-nav";
@@ -14,6 +14,7 @@ import { PrintButton } from "@/components/print-button";
 import { FacilityMonitoringClient } from "./facility-monitoring-client";
 import { AddFacilityDialog } from "@/components/add-facility-dialog";
 import { AddAdminGlobalDialog } from "@/components/add-admin-global-dialog";
+import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
 export default async function HQDashboardPage() {

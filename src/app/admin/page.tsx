@@ -6,9 +6,10 @@ import {
   Users, BookCheck, TrendingUp, LogOut, 
   Briefcase, ClipboardList, LayoutDashboard, Settings,
   GraduationCap, Bell, Plus, ChevronRight, MoreHorizontal,
-  ExternalLink, BarChart3, Clock, CalendarDays
+  ExternalLink, BarChart3, Clock, CalendarDays, MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { RegisterStaffForm } from "@/components/register-staff-form";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";

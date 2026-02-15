@@ -2,7 +2,8 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Clock, User, Building2, MessageCircle, ChevronRight, Inbox } from "lucide-react";
+import { MessageSquare, Clock, User, Building2, MessageCircle, ChevronRight, Inbox, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function SuperAdminInquiriesPage() {
@@ -26,6 +27,15 @@ export default async function SuperAdminInquiriesPage() {
 
   return (
     <div className="p-8 space-y-10 animate-in fade-in duration-700">
+      <div className="flex justify-start">
+        <Link href="/super-admin">
+          <Button variant="ghost" className="text-slate-400 hover:text-white font-bold gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            <span>ダッシュボードへ戻る</span>
+          </Button>
+        </Link>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-4 mb-2">

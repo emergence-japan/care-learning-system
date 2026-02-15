@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Plus, Clock, CheckCircle2, MessageCircle } from "lucide-react";
+import { MessageSquare, Plus, Clock, CheckCircle2, MessageCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { InquiryForm } from "./inquiry-form"; // 後で作成
 
@@ -22,6 +22,15 @@ export default async function AdminInquiryPage() {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex justify-start">
+        <Link href="/admin">
+          <Button variant="ghost" className="text-slate-400 hover:text-slate-900 font-bold gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            <span>ダッシュボードへ戻る</span>
+          </Button>
+        </Link>
+      </div>
+
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
