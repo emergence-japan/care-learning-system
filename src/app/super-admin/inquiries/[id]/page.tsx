@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { InquiryDetailClient } from "../../admin/inquiry/inquiry-detail-client";
+import { InquiryDetailClient } from "@/app/admin/inquiry/inquiry-detail-client";
 
 export default async function InquiryDetailPage({ params }: { params: { id: string } }) {
   const { id } = await params;

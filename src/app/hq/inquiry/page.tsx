@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, Clock, MessageCircle, ChevronRight, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { InquiryForm } from "../../admin/inquiry/inquiry-form"; // 共通フォームを使用
+import { InquiryForm } from "@/app/admin/inquiry/inquiry-form"; // 共通フォームを使用
 
 export default async function HQInquiryPage() {
   const session = await auth();
