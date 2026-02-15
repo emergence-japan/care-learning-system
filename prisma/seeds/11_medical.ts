@@ -26,7 +26,7 @@ export async function seedMedical(prisma: PrismaClient) {
         <div class="grid grid-cols-1 gap-6">
           <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-rose-50 transition-all duration-500 flex items-start gap-6">
             <div class="w-14 h-14 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">疾病の早期発見と観察術</h4><p class="text-slate-500 leading-relaxed font-medium">高齢者に多い疾患の兆候を理解し、バイタル数値と「見た目」を統合したアセスメントができる。</p></div>
+            <div><h4 class="text-xl font-black text-slate-900 mb-2">疾病の早期発見と観察術</h4><p class="text-slate-500 leading-relaxed font-medium">高齢者に多い疾患の兆兆を理解し、バイタル数値と「見た目」を統合したアセスメントができる。</p></div>
           </div>
           <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-rose-50 transition-all duration-500 flex items-start gap-6">
             <div class="w-14 h-14 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
@@ -34,6 +34,8 @@ export async function seedMedical(prisma: PrismaClient) {
           </div>
         </div>
       `,
+      badgeLabel: '医療連携',
+      badgeIcon: 'HeartPulse',
       slides: {
         create: [
           { title: '医療に関する研修（連携・観察・医療的ケア）', order: 0, content: `<div class="flex flex-col items-center text-center space-y-10"><div class="relative"><div class="absolute inset-0 bg-rose-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto"><div class="bg-rose-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Medical Collaboration</div><h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">医療に関する研修<br/><span class="text-rose-600 text-3xl">〜命をつなぐ観察と報告〜</span></h2></div></div><div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest"><span class="h-px w-8 bg-slate-200"></span>CARE LEARNING SYSTEM<span class="h-px w-8 bg-slate-200"></span></div></div>` },

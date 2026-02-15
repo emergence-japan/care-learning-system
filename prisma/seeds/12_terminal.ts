@@ -34,6 +34,8 @@ export async function seedTerminal(prisma: PrismaClient) {
           </div>
         </div>
       `,
+      badgeLabel: '看取り',
+      badgeIcon: 'HeartPulse',
       slides: {
         create: [
           { title: 'ターミナルケア（看取り）に関する研修', order: 0, content: `<div class="flex flex-col items-center text-center space-y-10"><div class="relative"><div class="absolute inset-0 bg-rose-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto"><div class="bg-rose-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Terminal Care</div><h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">看取り研修<br/><span class="text-rose-600 text-3xl">〜尊厳ある最期を支える〜</span></h2></div></div><div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest"><span class="h-px w-8 bg-slate-200"></span>CARE LEARNING SYSTEM<span class="h-px w-8 bg-slate-200"></span></div></div>` },

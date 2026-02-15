@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, XCircle, ChevronRight, AlertCircle } from "lucide-react";
+import { CheckCircle2, XCircle, ChevronRight, AlertCircle, Sparkles, Trophy } from "lucide-react";
+import confetti from "canvas-confetti";
 
 type Choice = {
   id: string;
@@ -59,6 +60,15 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
         setIsPassed(result.isPassed);
         setScore({ current: result.score, total: result.total });
         setShowResult(true);
+
+        if (result.isPassed) {
+          confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#4f46e5', '#10b981', '#f59e0b']
+          });
+        }
       } catch (error) {
         console.error(error);
         alert("送信中にエラーが発生しました。");
@@ -70,22 +80,34 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
 
   if (showResult) {
     return (
-      <Card className="border-2 rounded-2xl overflow-hidden shadow-lg animate-in fade-in zoom-in duration-300">
-        <CardContent className="p-8 text-center space-y-6">
+      <Card className="border-none rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] animate-in fade-in zoom-in duration-500 bg-white">
+        <CardContent className="p-12 text-center space-y-8 relative">
           {isPassed ? (
             <>
-              <div className="flex justify-center">
-                <CheckCircle2 className="w-20 h-20 text-green-500" />
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                <Trophy className="w-48 h-48 text-indigo-600" />
               </div>
-              <h3 className="text-2xl font-bold text-zinc-900">合格です！</h3>
-              <p className="text-zinc-600">
-                全問正解しました！知識がしっかり身についています。
-              </p>
+              <div className="flex justify-center relative">
+                <div className="absolute inset-0 bg-emerald-400 blur-3xl opacity-20 scale-150 animate-pulse" />
+                <div className="w-24 h-24 bg-emerald-500 rounded-[2rem] flex items-center justify-center shadow-2xl shadow-emerald-200 relative z-10 rotate-3">
+                  <CheckCircle2 className="w-12 h-12 text-white" />
+                </div>
+              </div>
+              <div className="space-y-3 relative z-10">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-[0.3em]">
+                  <Sparkles className="w-3 h-3" /> Excellent
+                </div>
+                <h3 className="text-3xl font-black text-slate-900 tracking-tight">おめでとうございます！</h3>
+                <p className="text-slate-500 font-medium leading-relaxed max-w-xs mx-auto text-sm">
+                  理解度テストに合格しました。<br/>この研修の内容がしっかりと身についています。
+                </p>
+              </div>
               <Button 
-                onClick={() => window.location.reload()} // CourseClient側でaction_planへ遷移するためリロード不要だが、確実に状態を同期させる
-                className="w-full h-14 text-xl font-bold bg-green-600 hover:bg-green-700 text-white rounded-2xl"
+                onClick={() => window.location.reload()}
+                className="w-full h-16 text-lg font-black bg-slate-900 hover:bg-slate-800 text-white rounded-3xl shadow-2xl shadow-slate-200 transition-all active:scale-95 group"
               >
-                次へ進む
+                <span>学習を完了する</span>
+                <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </>
           ) : (

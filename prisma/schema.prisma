@@ -65,6 +65,8 @@ model Course {
   introduction String?   // 注意喚起（導入）
   learningObjectives String? // 学習目標
   videoUrl    String?
+  badgeLabel  String?   // バッジ用短縮名
+  badgeIcon   String?   // バッジ用アイコンID (Shield, Zap, etc.)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   enrollments Enrollment[]

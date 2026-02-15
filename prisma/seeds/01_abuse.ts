@@ -47,6 +47,8 @@ export async function seedAbuse(prisma: PrismaClient) {
           </div>
         </div>
       `,
+      badgeLabel: '虐待防止',
+      badgeIcon: 'Shield',
       videoUrl: 'https://www.youtube.com/watch?v=JVLmK8A5k1U',
       slides: {
         create: [

@@ -34,6 +34,8 @@ export async function seedDisaster(prisma: PrismaClient) {
           </div>
         </div>
       `,
+      badgeLabel: '災害対策',
+      badgeIcon: 'Flame',
       slides: {
         create: [
           { title: '非常災害時の対応（BCP：業務継続計画を含む）に関する研修', order: 0, content: `<div class="flex flex-col items-center text-center space-y-10"><div class="relative"><div class="absolute inset-0 bg-orange-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto"><div class="bg-orange-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Crisis Management</div><h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">非常災害時の対応<br/><span class="text-orange-600 text-3xl">〜BCPの基本と実践〜</span></h2></div></div><div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest"><span class="h-px w-8 bg-slate-200"></span>CARE LEARNING SYSTEM<span class="h-px w-8 bg-slate-200"></span></div></div>` },

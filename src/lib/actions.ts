@@ -832,6 +832,7 @@ export async function deleteUser(id: string) {
   revalidatePath("/admin");
   revalidatePath("/hq");
   revalidatePath("/super-admin/organizations");
+  return { success: true };
 }
 
 // --- ASSIGNMENT ACTIONS ---

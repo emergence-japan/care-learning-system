@@ -30,10 +30,12 @@ export async function seedAccident(prisma: PrismaClient) {
           </div>
           <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-amber-50 transition-all duration-500 flex items-start gap-6">
             <div class="w-14 h-14 bg-amber-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">福祉用具の安全点検技術</h4><p class="text-slate-500 leading-relaxed font-medium">車椅子・ベッド・リフトの日常点検項目を理解し、福祉用具に起因する事故を100%防ぐための知識を習得する。</p></div>
+            <div><h4 class="text-xl font-black text-slate-900 mb-2">福祉用具の安全点検技術</h4><p class="text-slate-500 leading-relaxed font-medium">車椅子・ベッド・リフトの日常点検項目を理解し、福祉用具に起いる事故を100%防ぐための知識を習得する。</p></div>
           </div>
         </div>
       `,
+      badgeLabel: '事故防止',
+      badgeIcon: 'AlertCircle',
       slides: {
         create: [
           { title: '事故発生の防止・再発防止に関する研修（福祉用具含む）', order: 0, content: `<div class="flex flex-col items-center text-center space-y-10"><div class="relative"><div class="absolute inset-0 bg-amber-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto"><div class="bg-amber-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Risk Management</div><h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">事故防止・再発防止<br/><span class="text-amber-600 text-3xl">〜福祉用具の安全活用〜</span></h2></div></div><div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest"><span class="h-px w-8 bg-slate-200"></span>CARE LEARNING SYSTEM<span class="h-px w-8 bg-slate-200"></span></div></div>` },

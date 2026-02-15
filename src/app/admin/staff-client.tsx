@@ -2,6 +2,7 @@
 
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { ActionPlanDialog } from "@/components/action-plan-dialog";
+import { DeleteButton } from "@/components/delete-button";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
 

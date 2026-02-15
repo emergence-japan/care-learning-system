@@ -87,10 +87,10 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="bg-white border-none text-slate-600 rounded-[2rem] sm:max-w-[450px] p-0 overflow-hidden shadow-2xl focus:outline-none">
+      <DialogContent className="bg-white border-none text-slate-600 rounded-[2rem] sm:max-w-[450px] p-0 overflow-hidden shadow-2xl focus:outline-none flex flex-col max-h-[90vh]">
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-slate-700 to-slate-900" />
         
-        <DialogHeader className="p-8 pb-4 border-b border-slate-50 bg-slate-50/30">
+        <DialogHeader className="p-8 pb-4 border-b border-slate-50 bg-slate-50/30 shrink-0">
           <div className="flex items-center gap-3">
             <div className="bg-slate-100 p-2.5 rounded-xl text-slate-700">
               <ShieldCheck className="w-6 h-6" />
@@ -102,7 +102,7 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
           </div>
         </DialogHeader>
 
-        <div className="p-8 space-y-8">
+        <div className="p-8 space-y-8 overflow-y-auto custom-scrollbar flex-1">
           
           <div className="space-y-3">
             <Label className="text-xs font-bold text-slate-500 uppercase tracking-widest">対象スタッフを選択</Label>
