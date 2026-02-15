@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Plus, Clock, CheckCircle2, MessageCircle, ArrowLeft } from "lucide-react";
+import { MessageSquare, Plus, Clock, CheckCircle2, MessageCircle, ArrowLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { InquiryForm } from "./inquiry-form"; // 後で作成
 
@@ -113,10 +113,6 @@ function StatusBadge({ status }: { status: string }) {
   }
 }
 
-function ChevronRight({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
     </svg>
   );
 }

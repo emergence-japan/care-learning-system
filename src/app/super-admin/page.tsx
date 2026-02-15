@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Users, Building2, BookOpen, LogOut, 
   Settings, LayoutDashboard, ChevronRight, Activity,
-  Server, ShieldCheck, Zap
+  Server, ShieldCheck, Zap, MessageSquare
 } from "lucide-react";
 import Link from "next/link";
 
