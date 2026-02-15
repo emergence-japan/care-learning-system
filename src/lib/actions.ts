@@ -352,9 +352,12 @@ export async function createCourse(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const videoUrl = formData.get("videoUrl") as string;
+  // タイトルから英数字のみを抽出してslugを生成、またはタイムスタンプを付与
+  const slug = title.toLowerCase().replace(/[^a-z0-9]/g, "-") || `course-${Date.now()}`;
 
   const newCourse = await prisma.course.create({
     data: {
+      slug,
       title,
       description,
       videoUrl,
