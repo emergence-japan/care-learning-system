@@ -29,16 +29,17 @@ type Corp = {
     isActive: boolean;
     users: { 
       id: string; 
-      name: string; 
-      email: string | null; 
-      loginId: string; 
-      role: string;
+        name: string;
+        loginId: string;
+        role: string;
+      
       enrollments: { status: string }[];
     }[];
     assignments: { id: string; courseId: string; course: { title: string } }[];
     _count: { users: number; assignments: number };
   }[];
-  users: { id: string; name: string; email: string | null; loginId: string }[];
+      users: { id: string; name: string; loginId: string }[];
+  
 };
 
 export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
