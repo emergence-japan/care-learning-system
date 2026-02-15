@@ -86,7 +86,7 @@ export default async function SuperAdminInquiriesPage() {
                           {inquiry.subject}
                         </h3>
                         <p className="text-slate-500 line-clamp-1 font-medium text-lg italic">
-                          "{inquiry.content}"
+                          &quot;{inquiry.content}&quot;
                         </p>
                       </div>
 

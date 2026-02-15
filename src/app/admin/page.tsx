@@ -3,17 +3,14 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Users, BookCheck, TrendingUp, LogOut, 
-  Briefcase, ClipboardList, LayoutDashboard, Settings,
-  GraduationCap, Bell, Plus, ChevronRight, MoreHorizontal,
-  ExternalLink, BarChart3, Clock, CalendarDays, MessageSquare
+  Users, TrendingUp, LogOut, 
+  Briefcase, ClipboardList, GraduationCap, 
+  ChevronRight, CalendarDays, MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { RegisterStaffForm } from "@/components/register-staff-form";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
-import { OrgLimitStatus } from "@/components/org-limit-status";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
 import { FiscalYearSelector } from "@/components/fiscal-year-selector";
 import { MobileNav } from "@/components/mobile-nav";

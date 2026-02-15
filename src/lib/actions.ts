@@ -997,11 +997,6 @@ export async function createInquiryReply(inquiryId: string, content: string) {
     },
   });
 
-  const inquiry = await prisma.inquiry.findUnique({
-    where: { id: inquiryId },
-    select: { senderId: true }
-  });
-
   if (session.user.role === 'SUPER_ADMIN') {
     await prisma.inquiry.update({
       where: { id: inquiryId },

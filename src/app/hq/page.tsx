@@ -4,10 +4,8 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   Building2, TrendingUp, LogOut, 
-  ShieldCheck, PieChart, Map, 
-  LayoutDashboard, Users as UsersIcon, MessageSquare
+  PieChart, LayoutDashboard, Users as UsersIcon, MessageSquare
 } from "lucide-react";
-import { OrgLimitStatus } from "@/components/org-limit-status";
 import { MobileNav } from "@/components/mobile-nav";
 import { NotificationBell } from "@/components/notification-bell";
 import { PrintButton } from "@/components/print-button";
