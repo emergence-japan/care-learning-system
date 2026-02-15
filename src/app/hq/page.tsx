@@ -90,8 +90,7 @@ export default async function HQDashboardPage() {
       admins: adminMembers.map(a => ({
         id: a.id,
         name: a.name,
-        loginId: a.loginId,
-        email: a.email
+        loginId: a.loginId
       })),
       assignments: facility.assignments.map(a => ({
         id: a.id,
