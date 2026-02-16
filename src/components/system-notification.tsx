@@ -1,11 +1,13 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { AlertCircle, Info, AlertTriangle, Bell } from "lucide-react";
+import { Role } from "@prisma/client";
 
 export async function SystemNotification() {
   const session = await auth();
   if (!session?.user) return null;
 
+  const userRole = session.user.role as Role;
   const now = new Date();
   const notifications = await prisma.notification.findMany({
     where: {
@@ -22,17 +24,17 @@ export async function SystemNotification() {
             // 1. 全体宛（ロール指定なし、組織指定なし）
             { targetRole: null, targetCorporationId: null, targetFacilityId: null },
             // 2. ロールのみ指定（全組織のそのロール宛）
-            { targetRole: session.user.role, targetCorporationId: null, targetFacilityId: null },
+            { targetRole: userRole, targetCorporationId: null, targetFacilityId: null },
             // 3. 法人指定
             { 
               targetCorporationId: session.user.corporationId, 
               targetFacilityId: null,
-              OR: [{ targetRole: null }, { targetRole: session.user.role }] 
+              OR: [{ targetRole: null }, { targetRole: userRole }] 
             },
             // 4. 施設指定
             { 
               targetFacilityId: session.user.facilityId,
-              OR: [{ targetRole: null }, { targetRole: session.user.role }]
+              OR: [{ targetRole: null }, { targetRole: userRole }]
             }
           ]
         }
