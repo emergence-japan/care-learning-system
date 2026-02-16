@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, PlayCircle, XCircle, BookOpen, Layers } from "lucide-react";
+import { ChevronLeft, ChevronRight, PlayCircle, XCircle, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -29,6 +29,10 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
   const isLastSlide = currentSlideIndex === slides.length - 1;
   const progress = ((currentSlideIndex + 1) / slides.length) * 100;
 
+  // スクロールを無効にするスライドのインデックス (0始まり)
+  const nonScrollableIndices = [0, 3, 11, 15, 19, 20, 21];
+  const isScrollDisabled = nonScrollableIndices.includes(currentSlideIndex);
+
   const nextSlide = () => {
     if (isLastSlide) {
       onComplete();
@@ -52,203 +56,97 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
       videoId = url.split("v=")[1].split("&")[0];
     } else if (url.includes("youtu.be/")) {
       videoId = url.split("youtu.be/")[1].split("?")[0];
-    } else if (url.includes("embed/")) {
-      return url;
     }
-    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0` : "";
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : "";
   };
 
   const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 40 : -40,
-      opacity: 0,
-      filter: "blur(10px)",
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 40 : -40,
-      opacity: 0,
-      filter: "blur(10px)",
-    }),
+    enter: (direction: number) => ({ x: direction > 0 ? 30 : -30, opacity: 0 }),
+    center: { zIndex: 1, x: 0, opacity: 1 },
+    exit: (direction: number) => ({ zIndex: 0, x: direction < 0 ? 30 : -30, opacity: 0 }),
   };
 
   return (
-    <div className="space-y-8">
-      {/* Stage Meta Information */}
-      <div className="flex items-center justify-between px-2">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-white rounded-2xl shadow-xl shadow-blue-100 flex items-center justify-center ring-1 ring-blue-50">
-            <Layers className="w-6 h-6 text-blue-600" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-slate-900 leading-tight">メイン講義セッション</h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="inline-block w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-              <p className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">Section {currentSlideIndex + 1} / {slides.length}</p>
-            </div>
-          </div>
-        </div>
+    <div className="h-full w-full flex flex-col items-center justify-start space-y-2 lg:space-y-4">
+      {/* 1. Progress Bar - Extreme Slim */}
+      <div className="shrink-0 w-full bg-white/5 h-0.5 overflow-hidden rounded-full">
+        <motion.div className="bg-blue-500 h-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+      </div>
+
+      {/* 2. Main Area */}
+      <div className="flex-1 min-h-0 w-full flex items-center justify-center gap-4 lg:gap-8">
         
-        {courseVideoUrl && (
-          <button 
-            onClick={() => setShowVideo(!showVideo)}
-            className={cn(
-              "group relative px-6 py-2.5 rounded-full text-xs font-black transition-all duration-500 overflow-hidden",
-              showVideo 
-                ? "bg-slate-900 text-white" 
-                : "bg-white text-blue-600 ring-1 ring-blue-100 hover:ring-blue-600 shadow-sm"
-            )}
-          >
-            <div className="relative z-10 flex items-center gap-2">
-              {showVideo ? (
-                <><XCircle className="w-4 h-4" /> スライドに戻る</>
-              ) : (
-                <><PlayCircle className="w-4 h-4 group-hover:scale-110 transition-transform" /> 解説動画を見る</>
-              )}
-            </div>
-          </button>
-        )}
-      </div>
-
-      {/* Progress Experience */}
-      <div className="px-2 space-y-3">
-        <div className="flex justify-between items-end">
-          <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">Progress</span>
-          <span className="text-[10px] font-black text-slate-400 tabular-nums">{Math.round(progress)}%</span>
-        </div>
-        <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-          <motion.div 
-            className="bg-blue-600 h-full rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-      </div>
-
-      {/* The Premium Stage */}
-      <div className="relative">
-        {/* Ambient Background Glows */}
-        <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-400/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-[100px] pointer-events-none" />
-
-        <div className="relative bg-white border border-slate-200/60 rounded-[2.5rem] overflow-hidden shadow-[0_30px_70px_-10px_rgba(0,0,0,0.1)] min-h-[520px] flex flex-col backdrop-blur-sm">
-          <AnimatePresence mode="wait" custom={direction}>
-            {showVideo && courseVideoUrl ? (
-              <motion.div 
-                key="video-theater"
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0 bg-slate-950 flex flex-col z-20"
-              >
-                <div className="flex-1 relative">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={getYouTubeEmbedUrl(courseVideoUrl)}
-                    title="Course Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="absolute inset-0"
-                  ></iframe>
-                </div>
-                <div className="p-6 bg-slate-900/80 backdrop-blur-xl border-t border-white/5 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                    <p className="text-white text-[10px] font-black tracking-[0.2em] uppercase">Cinema Mode</p>
-                  </div>
-                  <button onClick={() => setShowVideo(false)} className="px-6 py-2 rounded-full text-[10px] font-black bg-white/10 hover:bg-white/20 text-white transition-all">
-                    スライドへ戻る
-                  </button>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key={currentSlide.id}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 200, damping: 30 },
-                  opacity: { duration: 0.4 },
-                  filter: { duration: 0.4 }
-                }}
-                className="flex-1 flex flex-col relative h-full"
-              >
-                {/* Header Accents - More subtle */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/30 rounded-bl-full -z-10 blur-3xl" />
-                
-                <div className="flex-1 flex flex-col p-8 lg:p-16 h-full">
-                  <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full">
-                    {/* Only show top title if it's NOT the first slide (which usually has its own grand title) */}
-                    {currentSlideIndex !== 0 && (
-                      <div className="mb-12 text-center space-y-4">
-                        <div className="flex items-center justify-center gap-3 mb-2">
-                          <span className="h-px w-8 bg-blue-200"></span>
-                          <span className="text-blue-600 font-black text-[10px] uppercase tracking-[0.4em]">Section {currentSlideIndex}</span>
-                          <span className="h-px w-8 bg-blue-200"></span>
-                        </div>
-                        <h3 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.2] [word-break:keep-all] [overflow-wrap:anywhere]">
-                          {currentSlide.title}
-                        </h3>
-                      </div>
-                    )}
-
-                    {/* Main Content Area */}
-                    <div className="premium-content">
-                      <div 
-                        className="prose prose-slate max-w-none 
-                          prose-p:text-slate-600 prose-p:text-xl prose-p:leading-relaxed prose-p:font-medium
-                          prose-strong:text-slate-900 prose-strong:font-black
-                          prose-ul:space-y-4 prose-li:text-slate-700 prose-li:text-lg
-                          prose-h4:text-2xl prose-h4:font-black prose-h4:text-slate-900 prose-h4:mb-6"
-                        dangerouslySetInnerHTML={{ __html: currentSlide.content }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Control Experience */}
-      <div className="flex gap-6 px-2">
+        {/* Prev Button */}
         <button
-          className="flex-1 h-20 rounded-3xl text-slate-400 hover:text-slate-900 font-bold transition-all flex items-center justify-center gap-2 hover:bg-slate-50 disabled:opacity-0"
+          className={cn(
+            "shrink-0 w-10 h-10 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-all duration-300",
+            "bg-white/5 border border-white/10 text-slate-500 hover:text-white shadow-lg",
+            currentSlideIndex === 0 ? "opacity-0 pointer-events-none" : "opacity-40 hover:opacity-100"
+          )}
           onClick={prevSlide}
           disabled={currentSlideIndex === 0 || showVideo}
         >
-          <ChevronLeft className="w-6 h-6" /> 
-          <span className="hidden sm:inline">PREV</span>
+          <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8" />
         </button>
-        
+
+        {/* Slide Stage */}
+        <div className="flex-1 h-full max-w-5xl bg-[#1e293b] border border-slate-800 rounded-[2.5rem] flex flex-col overflow-hidden shadow-2xl relative">
+          <div className="shrink-0 px-6 py-3 border-b border-slate-800 bg-slate-900/50 flex justify-between items-center">
+            <h4 className="font-bold text-slate-200 text-xs lg:text-sm truncate pr-4">{currentSlide.title}</h4>
+            <span className="text-[10px] font-mono text-slate-500 tracking-widest">{(currentSlideIndex + 1).toString().padStart(2, '0')} / {slides.length}</span>
+          </div>
+
+          <div className={cn(
+            "flex-1 relative flex flex-col justify-center",
+            isScrollDisabled ? "overflow-hidden" : "overflow-y-auto custom-scrollbar"
+          )}>
+            <AnimatePresence mode="wait" custom={direction}>
+              {showVideo ? (
+                <div className="absolute inset-0 bg-black">
+                  <iframe width="100%" height="100%" src={getYouTubeEmbedUrl(courseVideoUrl!)} frameBorder="0" allowFullScreen></iframe>
+                </div>
+              ) : (
+                <motion.div
+                  key={currentSlide.id}
+                  custom={direction}
+                  variants={variants}
+                  transition={{ duration: 0.3 }}
+                  className="p-6 lg:p-10 w-full"
+                >
+                  <div className="max-w-4xl mx-auto">
+                    <div 
+                      className="prose prose-invert prose-slate max-w-none text-center
+                        prose-p:text-slate-300 prose-p:text-base lg:prose-p:text-xl prose-p:leading-relaxed
+                        prose-strong:text-blue-400
+                        prose-ul:space-y-2 lg:prose-ul:space-y-4 prose-li:text-slate-300 prose-li:text-sm lg:prose-li:text-lg prose-ul:inline-block prose-ul:text-left
+                        prose-h4:text-lg lg:prose-h4:text-3xl prose-h4:font-black prose-h4:text-white prose-h4:mb-4"
+                      style={{ maxWidth: 'none', textWrap: 'balance' }} 
+                      dangerouslySetInnerHTML={{ __html: currentSlide.content }} 
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Next Button */}
         <button
           className={cn(
-            "flex-[3] h-20 rounded-[2rem] font-black text-xl shadow-[0_25px_50px_-12px_rgba(59,130,246,0.25)] transition-all active:scale-[0.97] flex items-center justify-center gap-3",
-            isLastSlide && !showTest 
-              ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200" 
-              : "bg-blue-600 hover:bg-blue-700 text-white"
+            "shrink-0 w-10 h-10 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl",
+            isLastSlide ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-900/20",
+            "hover:scale-110 active:scale-95"
           )}
           onClick={nextSlide}
           disabled={showVideo}
         >
-          {isLastSlide ? (showTest ? "理解度テストを開始する" : "受講を完了する") : "次のステップへ"}
-          {!isLastSlide && <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-2" />}
+          <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8" />
         </button>
+
       </div>
+      
+      {/* 3. Bottom Spacer */}
+      <div className="shrink-0 h-2" />
     </div>
   );
 }

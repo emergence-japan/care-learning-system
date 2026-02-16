@@ -4,8 +4,8 @@ export async function seedPrevention(prisma: PrismaClient) {
   const slug = 'prevention'
   const courseData = {
     slug,
-    title: '介護予防および要介護進行予防に関する研修',
-    description: '2024年改正の自立支援・重度化防止要件に対応。フレイル予防から具体的な生活リハビリ技術までを網羅した決定版。',
+    title: '介護予防・要介護進行予防に関する研修',
+    description: '2024年改正の自立支援・重度化防止要件に対応。フレイル予防から生活リハビリ技術までを網羅。',
     introduction: `
         <div class="space-y-8">
           <div class="flex items-center gap-4">
@@ -14,24 +14,30 @@ export async function seedPrevention(prisma: PrismaClient) {
           </div>
           <h2 class="text-4xl font-black text-slate-900 leading-tight">あなたの「親切」が、<br/>力を奪っていませんか？</h2>
           <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>何でも手伝ってあげることが「良い介護」だと思っていませんか？先回りした介助は、利用者が本来持っている「生きる力」を少しずつ削り取ってしまいます。</p>
+            <p>何でも手伝ってあげることが「良い介護」だと思っていませんか？<br/>先回りした介助は、利用者が本来持っている「生きる力」を<br/>少しずつ削り取ってしまいます。</p>
             <div class="p-8 bg-emerald-50/50 rounded-[2rem] border border-emerald-100 shadow-inner relative overflow-hidden">
               <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">2024年度の法改正では「自立支援・重度化防止」がさらに重視されています。私たちの役割は、利用者が「自分の人生の主役」であり続けるための黒子になることです。</p>
+              <p class="relative z-10 font-medium italic">2024年度の法改正では「自立支援・重度化防止」がさらに重視されています。<br/>私たちの役割は、利用者が「自分の人生の主役」であり続けるための<br/>黒子になることです。</p>
             </div>
-            <p>この研修では、廃用症候群を防ぎ、尊厳ある自立を支えるための「引き算の介護」を学びます。</p>
+            <p>この研修では、廃用症候群を防ぎ、尊厳ある自立を支えるための<br/>「引き算の介護」を学びます。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6">
+        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
           <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-emerald-50 transition-all duration-500 flex items-start gap-6">
             <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">フレイルと重度化防止の理解</h4><p class="text-slate-500 leading-relaxed font-medium">身体・口腔・栄養の三位一体となった予防の重要性を理解し、ADL維持等加算等の公的要件に基づいたケアを実践できる。</p></div>
+            <div>
+              <h4 class="text-xl font-black text-slate-900 mb-2">フレイルと重度化防止の理解</h4>
+              <p class="text-slate-500 leading-relaxed font-medium">身体・口腔・栄養の一体となった予防の重要性を理解し、<br/>ADL維持等加算等の公的要件に基づいたケアを実践できる。</p>
+            </div>
           </div>
           <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-emerald-50 transition-all duration-500 flex items-start gap-6">
             <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">生活リハビリの実践技術</h4><p class="text-slate-500 leading-relaxed font-medium">日常生活動作（ADL）そのものをリハビリと捉え、利用者の意欲を引き出す「待ちの姿勢」と環境設定を習得する。</p></div>
+            <div>
+              <h4 class="text-xl font-black text-slate-900 mb-2">生活リハビリの実践技術</h4>
+              <p class="text-slate-500 leading-relaxed font-medium">日常生活動作そのものをリハビリと捉え、<br/>利用者の意欲を引き出す「待ちの姿勢」を習得する。</p>
+            </div>
           </div>
         </div>
       `,
@@ -40,14 +46,191 @@ export async function seedPrevention(prisma: PrismaClient) {
   }
 
   const slidesData = [
-    { title: '介護予防および要介護進行予防に関する研修', order: 0, content: `<div class="flex flex-col items-center text-center space-y-10"><div class="relative"><div class="absolute inset-0 bg-emerald-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto"><div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Prevention Science</div><h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">介護予防・重度化防止<br/><span class="text-emerald-600 text-3xl">〜自立を支える黒子の技術〜</span></h2></div></div><div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest"><span class="h-px w-8 bg-slate-200"></span>CARE LEARNING SYSTEM<span class="h-px w-8 bg-slate-200"></span></div></div>` },
-    { title: '恐怖の「フレイル・サイクル」', order: 1, content: `<div class="space-y-10"><div class="inline-flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-xs font-black ring-1 ring-emerald-100"><span class="w-2 h-2 bg-emerald-600 rounded-full animate-ping"></span>FRAILTY CYCLE</div><h4 class="text-3xl font-black text-slate-900 leading-tight">衰えは「連鎖」します。<br/><span class="text-emerald-600 decoration-4 underline underline-offset-8">どこで食い止めるか</span>が勝負です</h4><div class="grid grid-cols-1 sm:grid-cols-2 gap-6"><div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors"><p class="text-lg font-black text-slate-900 mb-3">負の連鎖</p><p class="text-sm text-slate-500 font-medium leading-relaxed">動かない → お腹が空かない → 筋肉が減る（サルコペニア） → さらに動けなくなる。</p></div><div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors"><p class="text-lg font-black text-slate-900 mb-3">社会的孤立</p><p class="text-sm text-slate-500 font-medium leading-relaxed">他者との交流が減ることで意欲が低下し、身体的衰えを加速させます。</p></div></div></div>` },
-    { title: '2024年度改定の要：口腔と栄養', order: 2, content: `<div class="space-y-10 text-center"><div class="flex flex-col items-center"><div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Core Integration</div><h4 class="text-3xl font-black text-slate-900 leading-relaxed">「食べる力」が「歩く力」を作る</h4></div><div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl"><div class="p-10 bg-white space-y-4"><div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div><p class="text-lg font-black text-slate-900">口腔管理</p><p class="text-sm text-slate-400 leading-relaxed">「オーラルフレイル」の予防。<br/>噛む・飲み込む力を維持する</p></div><div class="p-10 bg-white space-y-4"><div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div><p class="text-lg font-black text-slate-900">栄養管理</p><p class="text-sm text-slate-400 leading-relaxed">低栄養の防止。<br/>筋肉の元となるタンパク質の摂取</p></div></div></div>` },
-    { title: '過剰介護という名の「廃用症候群」', order: 3, content: `<div class="space-y-10"><div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative text-center shadow-inner"><div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Over-Care Risk</div><h4 class="text-3xl font-black text-blue-900 mb-6">「親切心」がリハビリを妨げる</h4><p class="text-lg text-blue-800 italic font-bold">スタッフが何でもやってしまうことで、利用者が持っている機能（残存能力）が急速に失われます。</p></div><div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl"><p class="text-xl font-black text-slate-900 mb-8 flex items-center gap-3"><span class="w-2 h-8 bg-blue-600 rounded-full"></span>今日から変える介助視点</p><div class="grid grid-cols-2 gap-6"><div class="p-6 bg-slate-50 rounded-3xl"><p class="text-lg font-black text-slate-900 mb-2">× 100%全介助</p><p class="text-sm text-slate-500 font-bold">効率を優先して、すべてスタッフがやる</p></div><div class="p-6 bg-slate-50 rounded-3xl"><p class="text-lg font-black text-blue-600 mb-2">○ 1%の自立支援</p><p class="text-sm text-slate-500 font-bold">「最後の一口だけ自分で」「立ち上がる時だけ支える」</p></div></div></div></div>` },
-    { title: '科学的介護（LIFE）への対応', order: 4, content: `<div class="space-y-8"><div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden"><div class="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div><h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Evidence Based Care</h4><p class="text-2xl font-black mb-10 text-center">経験に頼らず「データ」で自立を支える</p><div class="space-y-6 text-xl font-black max-w-xl mx-auto"><div class="flex items-center gap-8"><span class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span><p>ADL利得の評価：食事・入浴等の変化を数値化し加算へ繋げる</p></div><div class="flex items-center gap-8"><span class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span><p>LIFEへのフィードバック：改善策をチームで科学的に分析する</p></div></div></div></div>` },
-    { title: '意欲を引き出す「動機付け」の技術', order: 5, content: `<div class="p-12 bg-emerald-50 rounded-[3.5rem] border border-emerald-100 flex flex-col items-center text-center space-y-10 shadow-inner"><div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-4xl text-emerald-600 shadow-emerald-100">Goal</div><h4 class="text-3xl font-black text-emerald-900">「訓練」ではなく「楽しみ」を</h4><p class="text-xl text-slate-600 font-bold leading-relaxed max-w-2xl">「歩く練習をしましょう」ではなく「またお孫さんと散歩に行きませんか？」という、本人の『やりたいこと』にフォーカスした声かけが、脳と体を動かします。</p></div>` },
-    { title: 'シミュレーション：待ちの姿勢', order: 6, content: `<div class="space-y-10"><div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] text-center shadow-sm"><p class="text-orange-900 text-2xl font-black leading-relaxed">利用者が自分で靴を履こうとしていますが、5分以上かかっています。次はレクリエーションの時間です。どうしますか？</p></div><div class="grid grid-cols-1 gap-6"><div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60"><span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span><p class="text-lg font-bold italic">「遅れますよ！」と言って、無理やり履かせて移動させる</p></div><div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8"><span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span><p class="text-lg font-black text-slate-900 leading-relaxed">見守りを継続し、「ゆっくりで大丈夫ですよ」と自立を促す。レクの参加時間は本人の達成感を優先して調整する。</p></div></div></div>` },
-    { title: 'まとめ：尊厳ある「自立」のために', order: 7, content: `<div class="flex flex-col items-center text-center space-y-12"><div class="w-28 h-28 bg-emerald-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-emerald-200 rotate-3"><svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg></div><h3 class="text-4xl font-black text-slate-900 leading-tight">介護予防とは、利用者の<br/>「自由」を守る活動です。</h3><p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">私たちは利用者の「足」になるのではなく、自ら歩み出そうとする「心」を支えるパートナーでありましょう。</p><div class="pt-12 border-t border-slate-100 w-full"><p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p></div></div>` }
+    { 
+      title: '介護予防および要介護進行予防に関する研修', 
+      order: 0, 
+      content: `
+        <div class="flex flex-col items-center text-center space-y-10">
+          <div class="relative">
+            <div class="absolute inset-0 bg-emerald-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
+            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
+              <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Prevention Science</div>
+              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                介護予防・重度化防止<br/>
+                <span class="text-emerald-600 text-3xl">〜自立を支える黒子の技術〜</span>
+              </h2>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
+            <span class="h-px w-8 bg-slate-200"></span>
+            CARE LEARNING SYSTEM
+            <span class="h-px w-8 bg-slate-200"></span>
+          </div>
+        </div>
+      ` 
+    },
+    { 
+      title: '恐怖の「フレイル・サイクル」', 
+      order: 1, 
+      content: `
+        <div class="space-y-10 text-center flex flex-col items-center">
+          <div class="inline-flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-xs font-black ring-1 ring-emerald-100">
+            <span class="w-2 h-2 bg-emerald-600 rounded-full animate-ping"></span>
+            FRAILTY CYCLE
+          </div>
+          <h4 class="text-3xl font-black text-slate-900 leading-tight">
+            衰えは「連鎖」します。<br/>
+            <span class="text-emerald-600 decoration-4 underline underline-offset-8">どこで食い止めるか</span>が勝負です
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto pt-4">
+            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors">
+              <p class="text-lg font-black text-slate-900 mb-3 text-center">負の連鎖</p>
+              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
+                動かない → お腹が空かない → <br/>
+                筋肉が減る（サルコペニア） → <br/>
+                さらに動けなくなる。
+              </p>
+            </div>
+            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors">
+              <p class="text-lg font-black text-slate-900 mb-3 text-center">社会的孤立</p>
+              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
+                他者との交流が減ることで<br/>
+                生活の意欲が低下し、<br/>
+                身体的衰えを加速させます。
+              </p>
+            </div>
+          </div>
+        </div>
+      ` 
+    },
+    { 
+      title: '2024年度改定の要：口腔と栄養', 
+      order: 2, 
+      content: `
+        <div class="space-y-10 text-center flex flex-col items-center">
+          <div class="flex flex-col items-center">
+            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Core Integration</div>
+            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">
+              「食べる力」が「歩く力」を作る
+            </h4>
+          </div>
+          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-3xl mx-auto">
+            <div class="p-10 bg-white space-y-4 text-center">
+              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div>
+              <p class="text-lg font-black text-slate-900">口腔管理</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-bold">
+                「オーラルフレイル」の予防。<br/>
+                噛む・飲み込む力を維持する
+              </p>
+            </div>
+            <div class="p-10 bg-white space-y-4 text-center">
+              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div>
+              <p class="text-lg font-black text-slate-900">栄養管理</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-bold">
+                低栄養の防止。<br/>
+                筋肉の元となるタンパク質を摂取
+              </p>
+            </div>
+          </div>
+        </div>
+      ` 
+    },
+    { 
+      title: '過剰介護という名の「廃用症候群」', 
+      order: 3, 
+      content: `
+        <div class="space-y-10 text-center flex flex-col items-center">
+          <div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Over-Care Risk</div>
+            <h4 class="text-3xl font-black text-blue-900 mb-6">「親切心」がリハビリを妨げる</h4>
+            <p class="text-lg text-blue-800 italic font-bold">
+              スタッフが何でもやってしまうことで、<br/>
+              利用者の持っている機能が急速に失われます。
+            </p>
+          </div>
+          <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl max-w-3xl mx-auto">
+            <p class="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
+              <span class="w-2 h-8 bg-blue-600 rounded-full"></span>今日から変える介助視点
+            </p>
+            <div class="grid grid-cols-2 gap-6">
+              <div class="p-6 bg-slate-50 rounded-3xl">
+                <p class="text-lg font-black text-slate-900 mb-2">× 100%全介助</p>
+                <p class="text-sm text-slate-500 font-bold">効率を優先して、<br/>すべてスタッフがやる</p>
+              </div>
+              <div class="p-6 bg-slate-50 rounded-3xl ring-2 ring-blue-100">
+                <p class="text-lg font-black text-blue-600 mb-2">○ 1%の自立支援</p>
+                <p class="text-sm text-slate-500 font-bold">「最後の一口だけ自分で」<br/>「立ち上がる時だけ支える」</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ` 
+    },
+    { 
+      title: '意欲を引き出す「動機付け」の技術', 
+      order: 4, 
+      content: `
+        <div class="p-12 bg-emerald-50 rounded-[3.5rem] border border-emerald-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
+          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-4xl text-emerald-600 shadow-emerald-100">Goal</div>
+          <h4 class="text-3xl font-black text-emerald-900">「訓練」ではなく「楽しみ」を</h4>
+          <p class="text-xl text-slate-600 font-bold leading-relaxed">
+            「歩く練習をしましょう」ではなく、<br/>
+            <span class="text-emerald-600 italic">「またお孫さんと散歩に行きませんか？」</span><br/>
+            という、本人の「やりたいこと」にフォーカスした<br/>
+            声かけが、脳と体を動かします。
+          </p>
+        </div>
+      ` 
+    },
+    { 
+      title: 'シミュレーション：待ちの姿勢', 
+      order: 5, 
+      content: `
+        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
+          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
+            <p class="text-orange-900 text-2xl font-black leading-relaxed">
+              利用者が自分で靴を履こうとしていますが、<br/>
+              5分以上かかっています。どうしますか？
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-6 w-full">
+            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
+              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
+              <p class="text-lg font-bold italic text-left">「遅れますよ！」と言って、<br/>無理やり履かせて移動させる</p>
+            </div>
+            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
+              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
+              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">見守りを継続し、自立を促す。<br/>達成感を優先して時間を調整する。</p>
+            </div>
+          </div>
+        </div>
+      ` 
+    },
+    { 
+      title: 'まとめ：尊厳ある「自立」のために', 
+      order: 6, 
+      content: `
+        <div class="flex flex-col items-center text-center space-y-12">
+          <div class="w-28 h-28 bg-emerald-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-emerald-200 rotate-3">
+            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h3 class="text-4xl font-black text-slate-900 leading-tight">
+            介護予防とは、利用者の<br/>
+            「自由」を守る活動です。
+          </h3>
+          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
+            私たちは利用者の「足」ではなく、<br/>
+            自ら歩み出そうとする「心」を支える<br/>
+            パートナーでありましょう。
+          </p>
+          <div class="pt-12 border-t border-slate-100 w-full max-w-xs mx-auto text-center">
+            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
+          </div>
+        </div>
+      ` 
+    }
   ]
 
   const questionsData = [

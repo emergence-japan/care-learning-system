@@ -1,8 +1,25 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## データベース運用ルール
 
-First, run the development server:
+このプロジェクトでは、データの整合性を保ち、消失を防ぐために以下のルールを徹底しています。
+
+1. **Supabaseの一元管理**
+   - データベースは常に Supabase (PostgreSQL) を使用します。ローカルの SQLite (`dev.db`) は使用せず、誤って作成された場合は削除してください。
+   - 接続先は `.env` の `DATABASE_URL` で管理します。
+
+2. **コンテンツの「正」は seed ファイル**
+   - 研修スライド、クイズ等のマスターデータは、`prisma/seeds/*.ts` ファイルが「正（Source of Truth）」です。
+   - **重要**: ブラウザやDBツールで内容を直接変更せず、必ず対応する `.ts` ファイルを修正し、以下のコマンドで反映させてください。
+     ```bash
+     npx prisma db seed
+     ```
+   - これにより、Gitで変更履歴が管理され、DBがリセットされても100%復旧可能です。
+
+3. **反映フロー**
+   - 修正: `prisma/seeds/xx_content.ts` を編集
+   - 反映: `npx prisma db seed` を実行
+   - 確認: ブラウザをリロード
 
 ```bash
 npm run dev

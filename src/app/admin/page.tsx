@@ -14,8 +14,8 @@ import { TrainingTimeline } from "@/components/training-timeline";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
 import { FiscalYearSelector } from "@/components/fiscal-year-selector";
 import { MobileNav } from "@/components/mobile-nav";
-import { NotificationBell } from "@/components/notification-bell";
 import { PrintButton } from "@/components/print-button";
+import { SystemNotification } from "@/components/system-notification";
 import { AdminClient } from "./admin-client";
 import { AlertCircle } from "lucide-react";
 
@@ -98,7 +98,7 @@ export default async function AdminDashboardPage() {
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-slate-900 rounded flex items-center justify-center shadow-lg shadow-slate-200">
               <GraduationCap className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900">careCORE</span>
+            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900">介護研修システム 施設管理画面</span>
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
@@ -115,7 +115,6 @@ export default async function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-2 lg:gap-4">
-          <NotificationBell alerts={alerts} />
         </div>
       </header>
 
@@ -148,6 +147,8 @@ export default async function AdminDashboardPage() {
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-12 relative">
           
+          <SystemNotification />
+
           {isSuspended && (
             <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse no-print">
               <AlertCircle className="w-6 h-6 shrink-0" />

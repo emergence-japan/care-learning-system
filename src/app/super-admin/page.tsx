@@ -18,10 +18,10 @@ export default async function SuperAdminDashboard() {
   }
 
   // 統計データの取得
-  const [corpCount, facilityCount, userCount, courseCount, unreadInquiryCount] = await Promise.all([
+  const [corpCount, facilityCount, staffCount, courseCount, unreadInquiryCount] = await Promise.all([
     prisma.corporation.count(),
     prisma.facility.count(),
-    prisma.user.count({ where: { NOT: { role: 'SUPER_ADMIN' } } }),
+    prisma.user.count({ where: { role: 'STAFF' } }),
     prisma.course.count(),
     prisma.inquiry.count({ where: { status: 'UNREAD' } })
   ]);
@@ -36,7 +36,7 @@ export default async function SuperAdminDashboard() {
             <Zap className="w-6 h-6 text-white" />
           </div>
           <div className="hidden lg:block">
-            <h1 className="font-black text-lg tracking-tight leading-none text-white">LMS ADMIN</h1>
+            <h1 className="font-black text-lg tracking-tight leading-none text-white">システム管理画面</h1>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">System Control</p>
           </div>
         </div>
@@ -54,15 +54,6 @@ export default async function SuperAdminDashboard() {
         </div>
 
         <div className="px-4 mt-auto">
-          <div className="p-4 bg-slate-900/50 rounded-2xl border border-slate-800 mb-6 hidden lg:block">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">システムステータス</span>
-            </div>
-            <p className="text-xs text-slate-300 font-mono">全システム正常稼働中</p>
-            <p className="text-[10px] text-slate-600 font-mono mt-1">v2.4.0-stable</p>
-          </div>
-
           <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
             <button className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all w-full group">
               <LogOut className="w-5 h-5 group-hover:text-red-400 transition-colors" />
@@ -78,7 +69,7 @@ export default async function SuperAdminDashboard() {
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-white">LMS ADMIN</span>
+          <span className="font-bold text-white">システム管理画面</span>
         </div>
         <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
           <Button variant="ghost" size="icon" className="text-slate-400">
@@ -101,7 +92,7 @@ export default async function SuperAdminDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
             <StatCard title="総法人数" value={corpCount} icon={<Building2 className="w-5 h-5" />} color="text-blue-400" bg="bg-blue-500/10" border="border-blue-500/20" />
             <StatCard title="総施設数" value={facilityCount} icon={<LayoutDashboard className="w-5 h-5" />} color="text-indigo-400" bg="bg-indigo-500/10" border="border-indigo-500/20" />
-            <StatCard title="利用者数" value={userCount} icon={<Users className="w-5 h-5" />} color="text-violet-400" bg="bg-violet-500/10" border="border-violet-500/20" />
+            <StatCard title="登録スタッフ数" value={staffCount} icon={<Users className="w-5 h-5" />} color="text-violet-400" bg="bg-violet-500/10" border="border-violet-500/20" />
             <StatCard title="公開済みコース" value={courseCount} icon={<BookOpen className="w-5 h-5" />} color="text-emerald-400" bg="bg-emerald-500/10" border="border-emerald-500/20" />
           </div>
 
@@ -134,19 +125,6 @@ export default async function SuperAdminDashboard() {
             </div>
           </div>
           
-          {/* Recent Activity Mockup (Visual Only) */}
-          <div className="pt-8 border-t border-slate-800 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-             <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-lg text-slate-300">システムアクティビティ</h3>
-                <span className="text-xs font-mono text-slate-500">リアルタイムモニタリング</span>
-             </div>
-             <div className="bg-slate-900/50 rounded-2xl border border-slate-800 p-6 space-y-4">
-                <ActivityRow time="今さっき" action="システムバックアップ" status="完了" />
-                <ActivityRow time="2分前" action="ユーザー同期処理" status="実行中" />
-                <ActivityRow time="1時間前" action="データベース最適化" status="完了" />
-             </div>
-          </div>
-
         </div>
       </main>
     </div>
@@ -217,22 +195,5 @@ function PortalCard({ title, subtitle, desc, link, icon, stats, color }: { title
         </div>
       </div>
     </Link>
-  );
-}
-
-function ActivityRow({ time, action, status }: { time: string, action: string, status: string }) {
-  return (
-    <div className="flex items-center justify-between text-sm py-2 border-b border-slate-800/50 last:border-0">
-      <div className="flex items-center gap-3">
-        <div className="w-1.5 h-1.5 rounded-full bg-slate-600" />
-        <span className="font-medium text-slate-300">{action}</span>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${status === '実行中' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>
-          {status}
-        </span>
-        <span className="text-xs text-slate-500 font-mono">{time}</span>
-      </div>
-    </div>
   );
 }

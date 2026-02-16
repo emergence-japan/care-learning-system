@@ -51,6 +51,21 @@ export default async function CourseDetailPage({
     notFound();
   }
 
+  // 開始日チェック（監査対応：計画期間外の受講を制限）
+  const assignment = await prisma.courseAssignment.findUnique({
+    where: {
+      facilityId_courseId: {
+        facilityId: session.user.facilityId!,
+        courseId: id,
+      },
+    },
+  });
+
+  const now = new Date();
+  if (assignment && assignment.startDate > now && enrollment.status !== 'COMPLETED') {
+    redirect("/");
+  }
+
   const handleComplete = async () => {
     "use server";
     await completeEnrollment(id);
@@ -69,7 +84,7 @@ export default async function CourseDetailPage({
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white pb-12">
       <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 h-20 flex items-center px-6">
-        <div className="max-w-xl mx-auto w-full flex items-center justify-between">
+        <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
           <Link href="/">
             <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-slate-100 transition-all">
               <ChevronLeft className="w-6 h-6 text-slate-900" />
@@ -83,7 +98,7 @@ export default async function CourseDetailPage({
         </div>
       </header>
 
-      <main className="max-w-xl mx-auto px-6 pt-10 space-y-10">
+      <main className="max-w-4xl mx-auto px-6 pt-10 space-y-10">
         <section className="text-center space-y-4">
           <div className="inline-block bg-slate-900 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
             Professional Course

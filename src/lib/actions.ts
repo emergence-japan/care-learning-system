@@ -1024,3 +1024,62 @@ export async function closeInquiry(inquiryId: string) {
   revalidatePath('/hq/inquiry');
   revalidatePath('/super-admin/inquiries');
 }
+
+// --- NOTIFICATION ACTIONS ---
+
+export async function createNotification(formData: FormData) {
+  const { auth } = await import('@/auth');
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const title = formData.get("title") as string;
+  const content = formData.get("content") as string;
+  const severity = (formData.get("severity") as any) || "INFO";
+  const targetRole = formData.get("targetRole") as any;
+  const corporationId = formData.get("targetCorporationId") as string;
+  const facilityId = formData.get("targetFacilityId") as string;
+  const expiresAtStr = formData.get("expiresAt") as string;
+
+  if (!title || !content) {
+    return "タイトルと内容を入力してください。";
+  }
+
+  await prisma.notification.create({
+    data: {
+      title,
+      content,
+      severity,
+      targetRole: targetRole === "ALL" || !targetRole ? null : targetRole,
+      targetCorporationId: corporationId || null,
+      targetFacilityId: facilityId || null,
+      expiresAt: expiresAtStr ? new Date(expiresAtStr) : null,
+      authorId: session.user.id,
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/hq");
+  revalidatePath("/");
+  revalidatePath("/super-admin/inquiries");
+}
+
+export async function deleteNotification(id: string) {
+  const { auth } = await import('@/auth');
+  const session = await auth();
+
+  if (!session?.user || session.user.role !== "SUPER_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.notification.delete({
+    where: { id },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/hq");
+  revalidatePath("/");
+  revalidatePath("/super-admin/inquiries");
+}

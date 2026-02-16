@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Building, Home, Trash2, Edit, AlertCircle, Users, BookOpen } from "lucide-react";
+import { 
+  Plus, Building, Home, Trash2, Edit, AlertCircle, Users, BookOpen, MessageSquare 
+} from "lucide-react";
 import { AddOrgUserDialog } from "@/components/add-org-user-dialog";
 import { EditCorporationDialog } from "@/components/edit-corporation-dialog";
 import { EditFacilityDialog } from "@/components/edit-facility-dialog";
 import { HQEditUserDialog } from "@/components/hq-edit-user-dialog";
+import { QuickNotificationDialog } from "@/components/quick-notification-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   Popover,
@@ -52,6 +55,11 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
 
   const [editCorp, setEditCorp] = useState<Corp | null>(null);
   const [editFacilityData, setEditFacilityData] = useState<Corp["facilities"][0] | null>(null);
+  const [quickMessage, setQuickMessage] = useState<{
+    targetName: string;
+    targetCorporationId?: string;
+    targetFacilityId?: string;
+  } | null>(null);
 
   const handleToggleCorpStatus = async (id: string, name: string, currentStatus: boolean) => {
     const message = currentStatus 
@@ -133,77 +141,81 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                   </div>
                   
                   {/* HQ Users */}
-                  <div className="flex flex-wrap items-center gap-2 w-[320px] shrink-0 px-4 border-l border-zinc-800 min-h-[40px]">
-                    <div className="flex items-center gap-2 w-full lg:w-auto">
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">本部担当者:</span>
-                    </div>
+                  <div className="flex flex-wrap items-center gap-2 max-w-[300px] shrink-0 px-4 border-l border-zinc-800 min-h-[40px]">
                     {corp.users.map(user => (
-                      <div key={user.id} className="bg-white/10 hover:bg-white/15 border border-white/5 pl-2.5 pr-1 py-0.5 rounded-lg flex items-center gap-1 transition-colors group/user shrink-0">
+                      <div key={user.id} className="bg-white/10 hover:bg-white/15 border border-white/5 pl-2 py-0.5 pr-1 rounded-lg flex items-center gap-1 transition-colors group/user shrink-0">
+                        <Users className="w-2.5 h-2.5 text-zinc-500" />
                         <span className="text-[10px] font-bold text-zinc-200">{user.name}</span>
                         <div className="flex items-center opacity-0 group-hover/user:opacity-100 transition-opacity">
                           <HQEditUserDialog user={user} />
                           <Button 
                             onClick={() => handleDeleteUser(user.id, user.name)}
-                            variant="ghost" size="icon" className="w-5 h-5 rounded-full text-zinc-500 hover:text-red-400 p-0"
+                            variant="ghost" size="icon" className="w-4 h-4 rounded-full text-zinc-500 hover:text-red-400 p-0"
                           >
-                            <Trash2 className="w-3 h-3" />
+                            <Trash2 className="w-2.5 h-2.5" />
                           </Button>
                         </div>
                       </div>
                     ))}
                     <Button 
                       onClick={() => setDialogConfig({ corporationId: corp.id, facilityId: null, orgName: corp.name, role: "HQ" })}
-                      variant="ghost" size="sm" className="h-6 px-2 text-[10px] font-bold text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border border-blue-400/20 rounded-lg shrink-0"
+                      variant="ghost" size="sm" className="h-6 px-2 text-[9px] font-bold text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border border-blue-400/20 rounded-lg shrink-0"
                     >
-                      <Plus className="w-3 h-3 mr-1" /> 追加
+                      <Plus className="w-2.5 h-2.5 mr-1" /> 追加
                     </Button>
                   </div>
 
-                  {/* Stats */}
-                  <div className="flex gap-6 border-l border-zinc-800 pl-6 py-1 shrink-0">
-                    <div>
-                      <div className="text-[9px] uppercase text-zinc-500 font-bold">法人進捗</div>
+                  {/* Stats - Re-enabled essential ones */}
+                  <div className="flex gap-4 border-l border-zinc-800 pl-4 py-1 shrink-0">
+                    <div className="hidden 2xl:block">
+                      <div className="text-[8px] uppercase text-zinc-500 font-bold leading-none mb-1">法人進捗</div>
                       <div className="flex items-center gap-2">
-                        <div className="w-12 bg-zinc-800 h-1 rounded-full overflow-hidden">
+                        <div className="w-10 bg-zinc-800 h-1 rounded-full overflow-hidden">
                           <div className="bg-orange-500 h-full" style={{ width: `${corpProgress}%` }} />
                         </div>
-                        <span className="text-xs font-black text-orange-400 tabular-nums">{corpProgress}%</span>
+                        <span className="text-[10px] font-black text-orange-400 tabular-nums">{corpProgress}%</span>
                       </div>
                     </div>
                     <div>
-                      <div className="text-[9px] uppercase text-zinc-500 font-bold">施設数</div>
-                      <div className={`text-xs font-bold ${facilityRate >= 100 ? 'text-red-400' : 'text-zinc-300'}`}>
-                        {facilityCount} / {corp.maxFacilities}
+                      <div className="text-[8px] uppercase text-zinc-500 font-bold leading-none mb-1">施設数</div>
+                      <div className={`text-[10px] font-bold ${facilityRate >= 100 ? 'text-red-400' : 'text-zinc-300'}`}>
+                        {facilityCount}<span className="text-zinc-600 mx-0.5">/</span>{corp.maxFacilities}
                       </div>
                     </div>
                     <div>
-                      <div className="text-[9px] uppercase text-zinc-500 font-bold">利用者数</div>
-                      <div className="text-xs font-bold text-zinc-300">
-                        {totalStaffCount} <span className="text-[9px] text-zinc-500 font-normal ml-0.5">名</span>
+                      <div className="text-[8px] uppercase text-zinc-500 font-bold leading-none mb-1">利用者数</div>
+                      <div className="text-[10px] font-bold text-zinc-300">
+                        {totalStaffCount}<span className="text-[8px] text-zinc-600 ml-0.5 font-normal">名</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-2 shrink-0 w-full xl:w-auto justify-end border-t xl:border-t-0 pt-4 xl:pt-0 border-zinc-800/50">
+                <div className="flex items-center gap-2 shrink-0 w-full xl:w-auto justify-end border-t xl:border-t-0 pt-4 xl:pt-0 border-zinc-800/50 ml-auto">
+                  <Button 
+                    onClick={() => setQuickMessage({ targetName: corp.name, targetCorporationId: corp.id })}
+                    variant="outline" size="sm" className="h-8 bg-zinc-800 border-zinc-700 text-blue-400 hover:bg-zinc-700 hover:text-blue-300 rounded-lg text-[10px] font-bold"
+                  >
+                    <MessageSquare className="w-3 h-3 mr-1.5" /> メッセージ
+                  </Button>
                   <Button 
                     onClick={() => handleToggleCorpStatus(corp.id, corp.name, corp.isActive)}
                     variant="outline" size="sm" 
-                    className={`h-9 bg-transparent border-zinc-700 rounded-xl text-xs font-bold transition-colors ${corp.isActive ? 'text-zinc-400 hover:text-red-400 hover:border-red-400' : 'text-emerald-400 border-emerald-800 hover:bg-emerald-800'}`}
+                    className={`h-8 bg-transparent border-zinc-700 rounded-lg text-[10px] font-bold transition-colors ${corp.isActive ? 'text-zinc-400 hover:text-red-400 hover:border-red-400' : 'text-emerald-400 border-emerald-800 hover:bg-emerald-800'}`}
                   >
                     {corp.isActive ? "利用停止" : "利用再開"}
                   </Button>
                   <Button 
                     onClick={() => setEditCorp(corp)}
-                    variant="outline" size="sm" className="h-9 bg-transparent border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-white rounded-xl text-xs font-bold"
+                    variant="outline" size="sm" className="h-8 bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-white rounded-lg text-[10px] font-bold"
                   >
-                    <Edit className="w-3.5 h-3.5 mr-1.5" /> 設定
+                    <Edit className="w-3 h-3 mr-1.5" /> 設定
                   </Button>
                   <Button 
                     onClick={() => handleDeleteCorp(corp.id, corp.name)}
-                    variant="ghost" size="icon" className="h-9 w-9 text-zinc-600 hover:text-red-500 hover:bg-red-500/10 rounded-xl"
+                    variant="ghost" size="icon" className="h-8 w-8 text-zinc-600 hover:text-red-500 hover:bg-red-500/10 rounded-lg"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </Button>
                 </div>
               </div>
@@ -330,7 +342,7 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                         </div>
 
                         {/* 5. Facility Progress Section (Condensed) */}
-                        <div className="w-[110px] shrink-0 px-4 border-l border-zinc-100 flex items-center">
+                        <div className="w-[100px] shrink-0 px-4 border-l border-zinc-100 flex items-center">
                           {(() => {
                             const staffCount = facility.users.filter(u => u.role === "STAFF").length;
                             const assignmentCount = facility._count.assignments;
@@ -350,11 +362,17 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                           })()}
                         </div>
 
-                        {/* 6. Actions (Flex-1, Right Aligned) */}
-                        <div className="flex-1 flex justify-end items-center gap-1 pl-4 border-l border-zinc-100">
-                          <Button onClick={() => handleToggleFacilityStatus(facility.id, facility.name, facility.isActive)} variant="ghost" size="sm" className={`h-7 px-2 text-[9px] font-bold rounded-lg ${facility.isActive ? 'text-zinc-400 hover:text-red-500' : 'text-emerald-600 hover:bg-emerald-50'}`}>{facility.isActive ? "停止" : "再開"}</Button>
-                          <Button onClick={() => setEditFacilityData(facility)} variant="ghost" size="icon" className="w-7 h-7 text-zinc-400 hover:text-blue-600 rounded-lg"><Edit className="w-3.5 h-3.5" /></Button>
-                          <Button onClick={() => handleDeleteFacility(facility.id, facility.name)} variant="ghost" size="icon" className="w-7 h-7 text-zinc-400 hover:text-red-500 rounded-lg"><Trash2 className="w-3.5 h-3.5" /></Button>
+                        {/* 6. Actions (Fixed width to prevent overlap) */}
+                        <div className="w-[160px] shrink-0 flex justify-end items-center gap-1 pl-4 border-l border-zinc-100 ml-auto">
+                          <Button 
+                            onClick={() => setQuickMessage({ targetName: facility.name, targetFacilityId: facility.id })}
+                            variant="ghost" size="icon" className="w-7 h-7 text-blue-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg shrink-0"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5" />
+                          </Button>
+                          <Button onClick={() => handleToggleFacilityStatus(facility.id, facility.name, facility.isActive)} variant="ghost" size="sm" className={`h-7 px-2 text-[9px] font-bold rounded-lg shrink-0 ${facility.isActive ? 'text-zinc-400 hover:text-red-500' : 'text-emerald-600 hover:bg-emerald-50'}`}>{facility.isActive ? "停止" : "再開"}</Button>
+                          <Button onClick={() => setEditFacilityData(facility)} variant="ghost" size="icon" className="w-7 h-7 text-zinc-400 hover:text-blue-600 rounded-lg shrink-0"><Edit className="w-3.5 h-3.5" /></Button>
+                          <Button onClick={() => handleDeleteFacility(facility.id, facility.name)} variant="ghost" size="icon" className="w-7 h-7 text-zinc-400 hover:text-red-500 rounded-lg shrink-0"><Trash2 className="w-3.5 h-3.5" /></Button>
                         </div>
 
                       </div>
@@ -372,6 +390,12 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
       {dialogConfig && <AddOrgUserDialog {...dialogConfig} onClose={() => setDialogConfig(null)} />}
       {editCorp && <EditCorporationDialog corporation={editCorp} onClose={() => setEditCorp(null)} />}
       {editFacilityData && <EditFacilityDialog facility={editFacilityData} onClose={() => setEditFacilityData(null)} />}
+      {quickMessage && (
+        <QuickNotificationDialog 
+          {...quickMessage} 
+          onClose={() => setQuickMessage(null)} 
+        />
+      )}
     </>
   );
 }

@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import { OrgLimitStatus } from "@/components/org-limit-status";
 import { MobileNav } from "@/components/mobile-nav";
-import { NotificationBell } from "@/components/notification-bell";
 import { PrintButton } from "@/components/print-button";
+import { SystemNotification } from "@/components/system-notification";
 import { FacilityMonitoringClient } from "./facility-monitoring-client";
 import { AddFacilityDialog } from "@/components/add-facility-dialog";
 import { AddAdminGlobalDialog } from "@/components/add-admin-global-dialog";
@@ -119,7 +119,7 @@ export default async function HQDashboardPage() {
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded flex items-center justify-center">
               <Building2 className="w-5 h-5 lg:w-6 lg:h-6 text-[#120a0a]" />
             </div>
-            <span className="font-black text-xl lg:text-2xl tracking-tighter text-white">careCORE HQ</span>
+            <span className="font-black text-xl lg:text-2xl tracking-tighter text-white">介護研修システム 法人管理画面</span>
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
@@ -136,7 +136,6 @@ export default async function HQDashboardPage() {
         </div>
 
         <div className="flex items-center gap-2 lg:gap-4">
-          <NotificationBell alerts={[]} />
         </div>
       </header>
 
@@ -166,6 +165,8 @@ export default async function HQDashboardPage() {
         {/* Main Content Area */}
         <main className="flex-1 bg-white rounded-tl-[4rem] overflow-y-auto p-6 lg:p-12 shadow-2xl relative">
           
+          <SystemNotification />
+
           {isSuspended && (
             <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse">
               <AlertCircle className="w-6 h-6 shrink-0" />
