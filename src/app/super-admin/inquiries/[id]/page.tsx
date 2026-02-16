@@ -13,7 +13,11 @@ export default async function InquiryDetailPage({ params }: { params: { id: stri
     where: { id },
     include: {
       replies: { orderBy: { createdAt: "asc" } },
-      sender: true
+      sender: {
+        include: {
+          corporation: true
+        }
+      }
     }
   });
 
