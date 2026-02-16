@@ -86,7 +86,7 @@ export function CourseClient({
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center">
+    <div className="w-full h-full flex flex-col items-center bg-[#fffdf0]">
       <AnimatePresence mode="wait">
         {view === "intro" && introduction && (
           <motion.div key="intro" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="w-full h-full flex flex-col items-center justify-start pt-2">

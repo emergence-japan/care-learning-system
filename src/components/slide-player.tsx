@@ -69,8 +69,8 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
   return (
     <div className="h-full w-full flex flex-col items-center justify-start space-y-2 lg:space-y-4">
       {/* 1. Progress Bar - Extreme Slim */}
-      <div className="shrink-0 w-full bg-white/5 h-0.5 overflow-hidden rounded-full">
-        <motion.div className="bg-blue-500 h-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+      <div className="shrink-0 w-full bg-slate-200 h-1 overflow-hidden rounded-full">
+        <motion.div className="bg-blue-600 h-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
       </div>
 
       {/* 2. Main Area */}
@@ -80,8 +80,8 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
         <button
           className={cn(
             "shrink-0 w-10 h-10 lg:w-14 lg:h-14 rounded-full flex items-center justify-center transition-all duration-300",
-            "bg-white/5 border border-white/10 text-slate-500 hover:text-white shadow-lg",
-            currentSlideIndex === 0 ? "opacity-0 pointer-events-none" : "opacity-40 hover:opacity-100"
+            "bg-white border border-slate-200 text-slate-400 hover:text-blue-600 shadow-md",
+            currentSlideIndex === 0 ? "opacity-0 pointer-events-none" : "opacity-100"
           )}
           onClick={prevSlide}
           disabled={currentSlideIndex === 0 || showVideo}
@@ -89,11 +89,10 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
           <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8" />
         </button>
 
-        {/* Slide Stage */}
-        <div className="flex-1 h-full max-w-5xl bg-[#1e293b] border border-slate-800 rounded-[2.5rem] flex flex-col overflow-hidden shadow-2xl relative">
-          <div className="shrink-0 px-6 py-3 border-b border-slate-800 bg-slate-900/50 flex justify-between items-center">
-            <h4 className="font-bold text-slate-200 text-xs lg:text-sm truncate pr-4">{currentSlide.title}</h4>
-            <span className="text-[10px] font-mono text-slate-500 tracking-widest">{(currentSlideIndex + 1).toString().padStart(2, '0')} / {slides.length}</span>
+        <div className="flex-1 h-full max-w-5xl bg-white border border-slate-200 rounded-[2.5rem] flex flex-col overflow-hidden shadow-2xl relative">
+          <div className="shrink-0 px-6 py-3 border-b border-orange-50 bg-[#fffef5] flex justify-between items-center">
+            <h4 className="font-bold text-slate-700 text-xs lg:text-sm truncate pr-4">{currentSlide.title}</h4>
+            <span className="text-[10px] font-mono text-slate-400 tracking-widest">{(currentSlideIndex + 1).toString().padStart(2, '0')} / {slides.length}</span>
           </div>
 
           <div className={cn(
@@ -115,11 +114,11 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
                 >
                   <div className="max-w-4xl mx-auto">
                     <div 
-                      className="prose prose-invert prose-slate max-w-none text-center
-                        prose-p:text-slate-300 prose-p:text-base lg:prose-p:text-xl prose-p:leading-relaxed
-                        prose-strong:text-blue-400
-                        prose-ul:space-y-2 lg:prose-ul:space-y-4 prose-li:text-slate-300 prose-li:text-sm lg:prose-li:text-lg prose-ul:inline-block prose-ul:text-left
-                        prose-h4:text-lg lg:prose-h4:text-3xl prose-h4:font-black prose-h4:text-white prose-h4:mb-4"
+                      className="prose prose-slate max-w-none text-center
+                        prose-p:text-slate-700 prose-p:text-base lg:prose-p:text-xl prose-p:leading-relaxed
+                        prose-strong:text-blue-600
+                        prose-ul:space-y-2 lg:prose-ul:space-y-4 prose-li:text-slate-700 prose-li:text-sm lg:prose-li:text-lg prose-ul:inline-block prose-ul:text-left
+                        prose-h4:text-lg lg:prose-h4:text-3xl prose-h4:font-black prose-h4:text-slate-900 prose-h4:mb-4"
                       style={{ maxWidth: 'none', textWrap: 'balance' }} 
                       dangerouslySetInnerHTML={{ __html: currentSlide.content }} 
                     />
