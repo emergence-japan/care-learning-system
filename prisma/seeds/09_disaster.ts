@@ -4,268 +4,111 @@ export async function seedDisaster(prisma: PrismaClient) {
   const slug = 'disaster'
   const courseData = {
     slug,
-    title: '非常災害時の対応（BCPを含む）に関する研修',
-    description: '2024年4月からのBCP義務化に対応。地震・水害・火災時の優先判断と組織的対応を網羅。',
+    title: '災害対策・防災訓練研修（2024年度）',
+    description: '〜命と生活を守り抜くBCPの実践力〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-orange-600 rounded-full"></span>
-            <p class="text-orange-600 font-black tracking-widest text-sm uppercase">BCP Essential Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-orange-700 rounded-full"></span>
+            <p class="text-orange-800 font-black tracking-widest text-lg lg:text-2xl uppercase">災害対策研修</p>
+            <span class="h-px w-8 lg:w-12 bg-orange-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">もし深夜、一人夜勤中に巨大地震が起きたら...<br/>あなたは誰の命を真っ先に守りますか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>地震、水害、そして火災。災害は、私たちが最も「準備ができていない時」に襲ってきます。<br/>パニックを抑え、命を救うのは、唯一「日頃の想定（BCP）」だけです。</p>
-            <div class="p-8 bg-orange-50/50 rounded-[2rem] border border-orange-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-orange-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">2024年度より、BCP（業務継続計画）の策定と職員への周知が「完全義務化」されました。<br/>未策定の場合は報酬減算の対象となる、極めて重要な項目です。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight">「その時、あなたは利用者の手を<br/>離さずにいられますか？」</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>災害は選べませんが、私たちの「備え」は選ぶことができます。<br class="lg:hidden" />パニックを最小限に抑えるのは、日々の訓練と具体的な「計画（BCP）」だけです。</p>
+            <div class="p-4 lg:p-5 bg-orange-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-orange-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-orange-100/50 rounded-bl-full"></div>
+              <p class="relative z-10 italic text-orange-900 font-black text-xs lg:text-sm leading-relaxed text-center">介護施設は地域の「最後の砦」です。発災直後の救命から、数日続く避難生活まで、利用者の命を守り抜くプロとしての対応力を磨きましょう。</p>
             </div>
-            <p>この研修では、災害発生時の「優先順位」と、<br/>組織としてケアを止めないための鉄則を学びます。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、想定外を想定内に変える「生き残るための知恵」を習得するためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-orange-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-orange-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">BCPに基づく優先業務の判断</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">極限状態で、どのケアを優先し、何を休止すべきかの<br/>組織的判断基準を理解する。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance text-center">
+          <div class="bg-orange-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-orange-200">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-orange-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-orange-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-orange-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">発災直後の初動を完遂できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">シェイクアウト、初期消火、避難判断（垂直・水平）の基準を習得する。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-orange-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-orange-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">避難技術と安全確保の完遂</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">地震（シェイクアウト）、水害（垂直・水平避難）、<br/>火災（初期消火・通報）の具体的行動手順をマスターする。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-orange-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-orange-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-orange-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">災害BCPの核心を理解する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">2024年度義務化に基づき、人員不足時の優先業務と備蓄管理の鉄則を学ぶ。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-orange-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-orange-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-orange-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">共助と連携の力を高める</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">安否確認、情報共有、地域（福祉避難所）との連携体制を習得する。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
+    videoUrl: null,
     badgeLabel: '災害対策',
     badgeIcon: 'Flame',
   }
 
   const slidesData = [
-    { 
-      title: '非常災害時の対応（BCP：業務継続計画を含む）に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-orange-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-orange-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Crisis Management</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                非常災害時の対応<br/>
-                <span class="text-orange-600 text-3xl">〜BCPの基本と実践〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '2024年度 義務化の背景：なぜBCPか', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-50 text-orange-600 rounded-full text-xs font-black ring-1 ring-orange-100">
-            <span class="w-2 h-2 bg-orange-600 rounded-full animate-ping"></span>
-            LEGAL MANDATE
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            「書類」ではなく<br/>
-            <span class="text-orange-600 decoration-4 underline underline-offset-8">「命を救う仕組み」</span>です
-          </h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto pt-4">
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-orange-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">未策定時の減算リスク</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                基本報酬の1%〜3%が減算対象です。<br/>組織的な対応体制の構築が不可欠です。
-              </p>
-            </div>
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-orange-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">研修と訓練の義務</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                全職員が「自分の役割」を<br/>知っていることが要件となります。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '災害時の「3大ピンチ」を想定する', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Crisis Analysis</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">これらが「同時」に起きた時、どう動くか</h4>
-          </div>
-          <div class="relative grid grid-cols-3 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-5xl mx-auto">
-            <div class="p-10 bg-white space-y-4">
-              <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">A</div>
-              <p class="text-lg font-black text-slate-900">インフラ停止</p>
-              <p class="text-xs text-slate-400 font-bold leading-relaxed">停電・断水・通信断絶。<br/>情報が集まらない恐怖</p>
-            </div>
-            <div class="p-10 bg-white space-y-4">
-              <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">B</div>
-              <p class="text-lg font-black text-slate-900">人員不足</p>
-              <p class="text-xs text-slate-400 font-bold leading-relaxed">スタッフ自身が被災。<br/>通常の半分以下でのケア</p>
-            </div>
-            <div class="p-10 bg-white space-y-4">
-              <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">C</div>
-              <p class="text-lg font-black text-slate-900">物品の枯渇</p>
-              <p class="text-xs text-slate-400 font-bold leading-relaxed">おむつ、食料、燃料不足。<br/>物流が止まった状態</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '避難判断の基準：垂直か、水平か', 
-      order: 3, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <h4 class="text-3xl font-black text-blue-900 mb-6">無理な移動が事故を招く</h4>
-            <p class="text-lg text-blue-800 italic font-bold">
-              「外へ逃げる」だけが避難ではありません。<br/>
-              状況に応じた最善を選択します。
-            </p>
-          </div>
-          <div class="grid grid-cols-2 gap-6 max-w-4xl mx-auto pt-4">
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-              <p class="text-lg font-black text-slate-900 mb-3 text-center">水平避難（屋外へ）</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
-                火災、地滑り、建物倒壊のリスクがある時。<br/>
-                安全な広場等へ水平移動します。
-              </p>
-            </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-              <p class="text-lg font-black text-slate-900 mb-3 text-center">垂直避難（上階へ）</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
-                水害、津波の危険がある時。<br/>
-                2階以上の浸水リスクのない場所へ移動します。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '業務のトリアージ：ケアの優先順位', 
-      order: 4, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Prioritization</h4>
-            <p class="text-xl text-orange-400 font-black mb-10 text-center">「全部やる」は不可能です。生命維持に特化します</p>
-            <div class="space-y-6 text-xl font-black max-w-md mx-auto text-left text-slate-200">
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>最優先：食事・水分、排泄、投薬、安否</p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>休止：レク、リハビリ、定期入浴、清掃</p>
-              </div>
-            </div>
-            <p class="text-sm text-slate-500 mt-10 text-center leading-relaxed italic">
-              何をやめるかを事前に決めておくことが、現場の混乱を防ぎます。
+    { title: "災害対策・防災訓練研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-orange-400 blur-3xl opacity-20 scale-150 animate-pulse text-center"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto text-center"><div class="bg-orange-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">災害対策・防災訓練</h2><p class="text-orange-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center">〜命と生活を守り抜くBCPの実践〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "2024年度 BCP完全義務化の背景", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-orange-200 mb-2 uppercase tracking-widest mx-auto">法的義務</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">「訓練」から「継続」へ</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-orange-50 border-none lg:border-2 lg:border-orange-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-orange-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4 text-center"><p class="font-black text-center text-balance">これまでの防災訓練は「逃げること」が目的でした。しかし2024年からのBCP（業務継続計画）は、被災後も人員や物資が足りない中で「どう介護を続けるか」までを計画することが義務化されました。</p></div></div>` },
+    { title: "災害対応の3原則：自助・共助・公助", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">助け合いのピラミッド</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 max-w-5xl mx-auto w-full text-center"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-orange-800 text-center">自助</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">まずは自分の身を守る。自分が無事でなければ、誰も助けられません。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-orange-800 text-center">共助</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">職員同士、近隣住民と協力して利用者を守る。施設の力の見せ所です。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-orange-800 text-center">公助</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">行政や自衛隊による支援。発災後3日は届かないと考えましょう。</p></div></div></div>` },
+    { title: "地震：発災直後の0〜3分", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 shadow-sm mx-auto uppercase tracking-widest text-center"><span class="w-2 h-2 bg-red-700 rounded-full animate-ping text-center"></span>即時行動</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">頭を守り、揺れに備える</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 max-w-4xl mx-auto w-full text-center px-4 text-center"><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">1. シェイクアウト（低く・頭を守り・動かない）</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">2. 窓ガラスや倒壊物から離れる</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">3. 利用者には布団や机で頭を保護</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">4. 揺れが収まるまで無理に動かない</div></div></div>` },
+    { title: "火災：初期消火の限界点", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center">「天井」に火が届いたら逃げる</h4><p class="text-[10px] lg:text-sm text-slate-900 font-black text-center text-center">消火器を諦めるタイミングが命を守る</p></div><div class="p-6 bg-orange-50 border-2 border-orange-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-inner text-center"><p class="text-sm lg:text-xl font-black text-orange-900 leading-relaxed text-balance text-center text-center">初期消火ができるのは「火が天井に届く前」までです。それ以降は、消火器を置いて即座に避難・誘導に切り替えてください。煙を吸わないよう、防火扉を閉めて延焼を防ぎます。</p></div></div>` },
+    { title: "避難の判断：垂直か水平か", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-orange-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-orange-700 rounded-full"></span>状況に応じた避難</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・水平避難：屋外の安全な場所へ移動</li><li>・垂直避難：水害時、上階へ移動</li><li>・屋内退避：外が危険な場合の待機</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">水害時は「早めの垂直避難」が鉄則です</p></div>` },
+    { title: "避難介助：状態別の誘導技術", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-orange-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-orange-700 rounded-full"></span>安全な搬送</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・車椅子：段差は後ろ向き、ベルト確認</li><li>・寝たきり：シーツ搬送、または担架</li><li>・独歩：手を繋ぐか、肩を貸す</li></ul><p class="text-blue-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">階段では「おんぶ」より「複数人での担架」</p></div>` },
+    { title: "火災：煙の恐怖と防煙対策", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-red-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-red-700 rounded-full"></span>煙は火より速い</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・姿勢を低く保つ（床付近に空気が残る）</li><li>・濡れタオルで口鼻を覆う</li><li>・防火扉・シャッターを閉め切る</li></ul></div>` },
+    { title: "災害BCP1：人員不足時の優先業務", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">「やらないこと」を決める</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center"><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-orange-50 border-2 border-orange-200 rounded-2xl text-orange-900 shadow-sm text-center text-center">最優先：救命・食事・排泄・投薬</span><span class="px-6 py-2.5 lg:py-3 bg-orange-50 border-2 border-orange-200 rounded-2xl text-orange-900 shadow-sm text-center text-center">休止：レク・行事・非緊急の清掃</span></div><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-orange-50 border-2 border-orange-200 rounded-2xl text-orange-900 shadow-sm text-center text-center">調整：入浴回数の削減、更衣の簡略化</span><span class="px-6 py-2.5 lg:py-3 bg-orange-50 border-2 border-orange-200 rounded-2xl text-orange-900 shadow-sm text-center text-center">応援：他事業所との相互支援要請</span></div></div><p class="text-orange-700 font-black text-sm lg:text-xl px-4 text-center w-full text-balance text-center text-center">限られた人員で、命に直結するケアを死守します。</p></div>` },
+    { title: "災害BCP2：備蓄管理の鉄則", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-900 text-center w-full text-center">最低3日、理想は7日分</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・水：1人1日3リットル（調理用含む）</li><li>・食料：常温保存、加熱不要なもの</li><li>・衛生：おむつ、簡易トイレ、消毒液</li></ul><p class="text-blue-700 font-black text-center w-full mt-4 text-center">ローリングストック（消費しながら備蓄）を推奨</p></div>` },
+    { title: "安否確認と情報共有の手順", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center">誰が・どこに・無事かどうか</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-orange-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>職員の安否：災害用伝言ダイヤル（171）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-orange-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>利用者の安否：トリアージと名簿作成</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-orange-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>外部への連絡：市町村・家族への被害報告</div></div></div>` },
+    { title: "水害・土砂災害：早期避難の重要性", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center w-full mb-4 px-4 animate-pulse text-center">「警戒レベル3」で高齢者避難</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">1</span>ハザードマップで浸水深を確認しておく</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">2</span>雨が強くなる前に、上階への移動を完了</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">3</span>夜間の大雨が予想される場合は日中に避難</div></div></div>` },
+    { title: "避難生活での衛生管理", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-orange-200 mb-2 mx-auto uppercase tracking-widest text-center text-center">二次被害防止</div><h4 class="text-xl lg:text-3xl font-black text-orange-900 leading-tight px-4 text-center w-full text-center text-center">「震災関連死」を防ぐ</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-orange-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center"><p class="text-lg lg:text-3xl font-black text-orange-900 leading-relaxed italic text-balance text-center text-center text-center text-center">断水時の食中毒、口腔ケア不足による肺炎、足の動かなすぎによる血栓（エコノミークラス症候群）。これらを防ぐのが災害時の介護です。</p></div></div>` },
+    { title: "心のケア：心理的応急処置（PFA）", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-700 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center">パニックを鎮める関わり</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center text-center"><div><p class="text-lg lg:text-3xl text-orange-600 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center"><span>●</span> 寄り添い：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center">無理に聞き出さず、そばにいる安心感を。</p></div><div><p class="text-lg lg:text-3xl text-orange-600 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center"><span>●</span> 正確な情報：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center">噂を否定し、事実を優しく繰り返し伝える。</p></div><div><p class="text-lg lg:text-3xl text-orange-600 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center text-center"><span>●</span> 休息の確保：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center text-center">職員自身も交代で休み、バーンアウトを防ぐ。</p></div></div></div>` },
+    { title: "福祉避難所としての役割", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-900 text-center w-full px-4 text-center text-center text-center text-center">地域を支える拠点</h4><div class="p-6 bg-white border-2 border-orange-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center">高齢者施設は、一般の避難所では生活が困難な方を受け入れる「福祉避難所」となる場合があります。受入人数や基準を事前に把握し、地域の安全に貢献しましょう。</p></div></div>` },
+    { title: "防災訓練：シナリオ型への転換", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full text-center text-center text-center text-center text-center">「想定」を崩す訓練</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center text-center text-center text-center text-center"><div class="p-6 lg:p-8 bg-orange-50 border-2 border-orange-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center text-center text-center"><p class="font-black text-lg lg:text-xl text-orange-800 text-center text-center text-center">夜間の発災想定</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-center text-center text-balance">職員が2人しかいない時に、どう利用者を誘導するか？具体策を練ります。</p></div><div class="p-6 lg:p-8 bg-orange-50 border-2 border-orange-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center text-center text-center text-center"><p class="font-black text-lg lg:text-xl text-orange-800 text-center text-center text-center text-center">ブラインド訓練</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-center text-center text-center text-balance text-center">事前の台本なし。その場で火災発生場所を伝え、臨機応変に動く練習。</p></div></div></div>` },
+    { title: "1. 事例：夜間少人数での火災", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-50 text-orange-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-orange-200 mb-2 mx-auto uppercase text-center text-center text-center text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center">場面：午前3時、厨房から出火</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center text-center text-center">職員はあなたと、もう1人のみ。利用者は20名。火の手が広がり、火災報知器が鳴り響いています。</p><div class="h-px bg-slate-100 text-center text-center"></div><p class="text-xs lg:text-lg font-black text-orange-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center text-center text-center">「消火」と「通報」と「誘導」、<br class="lg:hidden" />2人でどう役割分担しますか？<br class="lg:hidden" />誰を一番に避難させますか？</p></div></div>` },
+    { title: "2. 事例：地震でエレベーター停止", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-50 text-orange-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-orange-200 mb-2 mx-auto uppercase text-center text-center text-center text-center text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center">場面：3階建ての施設</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center text-center text-center text-center text-center text-balance">震度6強の地震が発生。建物は無事ですがエレベーターが停止。3階の利用者10名は全員車椅子です。階段での避難が必要ですが、余震が続いています。</p><div class="h-px bg-slate-100 text-center text-center"></div><p class="text-xs lg:text-lg font-black text-orange-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center text-center text-center text-center text-center">無理に階段を下ろしますか？<br class="lg:hidden" />「その場に留まる」選択肢はありますか？<br class="lg:hidden" />安全かどうかの判断基準は何ですか？</p></div></div>` },
+    { title: "解決：命を繋ぐBCP判断", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center">迷わないための行動指針</h4><div class="p-6 lg:p-10 bg-orange-50 border-2 border-orange-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center text-center text-center text-center text-center text-center text-center"><p class="text-base lg:text-xl font-black text-orange-900 text-center w-full text-balance text-center text-center text-center">安全確保のための具体策</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center text-center text-center text-center text-center text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-orange-100 shadow-sm text-center justify-center lg:justify-start text-center text-center text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center text-center">1</span>避難は「火災から遠い順」かつ「自力移動困難な順」</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-orange-100 shadow-sm text-center justify-center lg:justify-start text-center text-center text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center text-center">2</span>地震後はまず「安全な階」へ集め、安否と怪我を確認</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-orange-100 shadow-sm text-center justify-center lg:justify-start text-center text-center text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center text-center">3</span>応援が来るまで「生命維持（食事・投薬）」に業務を集中</div></div></div></div>` },
+    { title: "満足感：あなたの備えが安心を支える", order: 19, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center text-center">プロとしての安心を届ける</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-orange-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center text-center text-center"><p class="text-xl lg:text-3xl font-black text-orange-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center text-center">「訓練しているから大丈夫」<br/>その一言と落ち着いた態度が、<br/>何よりの「ケア」になります。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center text-balance text-center text-center text-center text-center text-center text-center">今日学んだ備えが、いざという時の「勇気」になります。</p></div>` },
+    { title: "災害時のリーダーシップと分担", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center">「指揮官」を明確にする</h4><div class="p-6 bg-white border-2 border-orange-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center text-center text-center">混乱期には、指示系統が複数あるとパニックを招きます。夜間は「最年長者」や「特定の役割」をあらかじめ決め、全員がその指示に従う。この徹底が、最短時間での避難を可能にします。</p></div></div>` },
+    { title: "非常用持ち出し袋の個人点検", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">自分の命を守る準備</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center text-center text-center text-center"><div><p class="text-lg lg:text-3xl text-orange-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center text-center text-center"><span>●</span> 個人備品：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center text-center">履き慣れた靴、予備の眼鏡、常備薬。</p></div><div><p class="text-lg lg:text-3xl text-orange-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span>●</span> モバイル：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">予備バッテリー、施設の連絡先メモ。</p></div></div></div>` },
+    { title: "まとめ：備えよ、常に", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-orange-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-orange-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto text-center text-center text-center text-center"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center text-center text-center text-center text-balance">想定外を、想定内に。<br/>備えこそが最高のケアです。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center text-center text-center text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center text-center text-center text-center text-center text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center text-center text-center text-center text-center text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-sky-50 rounded-2xl lg:rounded-3xl border-2 border-sky-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center text-center text-center text-center text-center">
+            <p class="text-sky-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center text-center text-center text-center text-center text-center">
+              <span class="w-2 h-2 bg-sky-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-sky-700 rounded-full"></span>    
             </p>
           </div>
         </div>
-      ` 
-    },
-    { 
-      title: '地震発生！その瞬間の初動行動', 
-      order: 5, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <h4 class="text-3xl font-black text-slate-900 leading-relaxed">自分と利用者の身を守る「3ステップ」</h4>
-          <div class="p-12 bg-white border-2 border-slate-100 rounded-[3.5rem] shadow-2xl max-w-2xl mx-auto w-full">
-            <div class="grid grid-cols-3 gap-4 text-center text-xs font-black uppercase text-orange-600 mb-6">
-              <p>1. DROP!</p>
-              <p>2. COVER!</p>
-              <p>3. HOLD ON!</p>
-            </div>
-            <div class="grid grid-cols-3 gap-4 text-center text-sm text-slate-700 font-bold">
-              <p>まず低く<br/>（転倒防止）</p>
-              <p>頭を守り<br/>（落下物から）</p>
-              <p>揺れが収まる<br/>まで待つ</p>
-            </div>
-          </div>
-          <div class="p-8 bg-orange-50 rounded-[2.5rem] text-sm font-bold leading-relaxed max-w-xl mx-auto border border-orange-100 italic text-orange-900">
-            ※介護現場では、利用者の車椅子ブレーキをかけ、<br/>
-            頭部をクッション等で保護する行動も同時に行います。
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：深夜の緊急事態', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              深夜2時、地震発生。スタッフはあなた一人。<br/>
-              全館停電し、利用者の悲鳴が聞こえます。<br/>どうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">真っ先に厨房の火元を確認し、<br/>その後に安否確認をする</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">まず自身の安全を確保。大声で呼びかけ<br/>利用者を安心させつつ、安否を確認する。</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：日頃の訓練が命を分ける', 
-      order: 7, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-orange-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-orange-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            BCPは、利用者の人生を<br/>
-            守り抜くための約束です。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            今日の知識を、明日の訓練へ。<br/>
-            備えだけが、パニックを<br/>「救命の技術」に変えます。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs mx-auto text-center">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "災害対策のあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-orange-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">命のバトンを繋ぐ</h4><div class="p-6 bg-white border-2 border-orange-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">災害対策は「一度やって終わり」ではありません。季節ごとにリスクを確認し、新入職員と共に訓練を繰り返す。その地道な継続こそが、いざという時の奇跡を生みます。今日からまた、新しい備えを始めましょう。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '2024年度より、全ての介護施設において策定と職員への周知が「義務化」された計画はどれか。', explanation: 'BCP（業務継続計画）と呼ばれます。感染症や自然災害が発生しても、重要な業務を継続するための計画です。未策定の場合は基本報酬の減算対象となります。', order: 1, choices: { create: [{ text: 'BCP（業務継続計画）', isCorrect: true }, { text: '中期経営計画', isCorrect: false }, { text: '職員旅行計画', isCorrect: false }, { text: 'ボランティア活用計画', isCorrect: false }] } },
-    { text: '地震発生時の身を守る基本行動「シェイクアウト」の正しい3つの手順はどれか。', explanation: '「まず低く(Drop)」「頭を守り(Cover)」「揺れが収まるまで待つ(Hold on)」が基本です。', order: 2, choices: { create: [{ text: 'まず低く・頭を守り・動かない', isCorrect: true }, { text: 'すぐに立ち上がり・窓を開け・外へ走る', isCorrect: false }, { text: '火元へ走り・消火器を持ち・叫ぶ', isCorrect: false }] } },
-    { text: '災害等による人員不足時に、BCPに基づいて優先的に継続すべき業務はどれか。', explanation: '生命維持に不可欠な食事・水分補給、排泄介助、必要な投薬などを最優先し、レクリエーション等は一時休止します。', order: 3, choices: { create: [{ text: '生命維持に関わる食事・排泄・投薬', isCorrect: true }, { text: '定期的なレクリエーション', isCorrect: false }, { text: '居室のワックス掛けや大掃除', isCorrect: false }] } },
-    { text: '水害や津波の危険がある際、建物の2階以上の安全な場所へ避難することを何というか。', explanation: '上階へ移動することを「垂直避難」、屋外の離れた安全な場所へ移動することを「水平避難」と呼びます。', order: 4, choices: { create: [{ text: '垂直避難', isCorrect: true }, { text: '水平避難', isCorrect: false }, { text: '平行避難', isCorrect: false }] } },
-    { text: '避難後の生活において、脱水や運動不足から生じる「エコノミークラス症候群」を防ぐために重要なことは？', explanation: 'こまめな水分補給と、足首を回すなどの適度な運動が血栓の予防に不可欠です。', order: 5, choices: { create: [{ text: 'こまめな水分補給と足の運動', isCorrect: true }, { text: '食事を極限まで減らすこと', isCorrect: false }, { text: '一日中横になって動かないこと', isCorrect: false }] } }
+    { text: '災害対応における「共助（きょうじょ）」とは、どのような助け合いを指すか？', explanation: '職員同士、施設、近隣住民などが互いに助け合うことを指し、施設防災の要となります。', order: 1, choices: { create: [{ text: '職員、施設、近隣住民による助け合い', isCorrect: true }, { text: '自分の命を自分で守ること', isCorrect: false }, { text: '行政や自衛隊による公的な支援', isCorrect: false }] } },
+    { text: '火災が発生した際、消火器による初期消火を断念し、避難に専念すべき基準はどれか？', explanation: '炎が天井にまで届いた場合は、初期消火の限界を超えているため、即座に避難・誘導に切り替えます。', order: 2, choices: { create: [{ text: '炎が天井まで届いたとき', isCorrect: true }, { text: '煙が出始めたとき', isCorrect: false }, { text: '火の粉が舞ったとき', isCorrect: false }] } },
+    { text: '水害の恐れがある場合、高齢者施設において「避難を開始すべき」気象情報のレベルは？', explanation: '「警戒レベル3（高齢者等避難）」が発令された段階で、施設では避難を開始する必要があります。', order: 3, choices: { create: [{ text: '警戒レベル3', isCorrect: true }, { text: '警戒レベル5', isCorrect: false }, { text: '注意報が出たとき', isCorrect: false }] } },
+    { text: '災害BCP（業務継続計画）において、人員や物資が不足した際に優先すべき業務はどれか？', explanation: '救命・食事・排泄・投薬など、利用者の生命維持に直結するケアを最優先します。', order: 4, choices: { create: [{ text: '救命、食事、排泄、投薬', isCorrect: true }, { text: 'レクリエーション、季節行事', isCorrect: false }, { text: 'シーツ交換、居室の模様替え', isCorrect: false }] } },
+    { text: '地震発生直後の初動として推奨される「シェイクアウト」の3つの行動はどれか？', explanation: '「姿勢を低く」「頭を守り」「揺れが収まるまで動かない」が基本動作です。', order: 5, choices: { create: [{ text: '低く、頭を守り、動かない', isCorrect: true }, { text: '立ち上がり、出口へ走る', isCorrect: false }, { text: '窓を開け、火を消しに行く', isCorrect: false }] } },
+    { text: '災害時に、職員や家族の安否を確認するために有効な、電話によるサービスはどれか？', explanation: '「171（災害用伝言ダイヤル）」は、被災地への電話が繋がりにくい時に有効な伝言板です。', order: 6, choices: { create: [{ text: '171（災害用伝言ダイヤル）', isCorrect: true }, { text: '117（時報）', isCorrect: false }, { text: '104（番号案内）', isCorrect: false }] } },
+    { text: '2024年度から介護施設に義務付けられた、災害後も業務を続けるための計画を何というか？', explanation: 'BCP（Business Continuity Plan：業務継続計画）と呼ばれ、全施設での策定が義務化されました。', order: 7, choices: { create: [{ text: 'BCP（業務継続計画）', isCorrect: true }, { text: '防災マニュアル', isCorrect: false }, { text: '避難経路図', isCorrect: false }] } },
+    { text: '水害時に、屋外への避難が困難な場合に「建物の2階以上へ移動する」ことを何というか？', explanation: '垂直方向に避難することを「垂直避難」と呼び、急な増水時などに有効な手段です。', order: 8, choices: { create: [{ text: '垂直避難', isCorrect: true }, { text: '水平避難', isCorrect: false }, { text: '屋内退避', isCorrect: false }] } },
+    { text: '避難生活において、足の静脈に血栓ができ、肺に詰まってしまう重大な病気はどれか？', explanation: '長時間同じ姿勢でいることで起きる「エコノミークラス症候群」は、避難生活での死因の一つです。', order: 9, choices: { create: [{ text: 'エコノミークラス症候群', isCorrect: true }, { text: '熱中症', isCorrect: false }, { text: '誤嚥性肺炎', isCorrect: false }] } },
+    { text: '災害時、施設における非常食や水の備蓄は「最低何日分」必要とされているか？', explanation: '支援物資が届くまでの間、自力で乗り切るために「最低3日分」の備蓄が強く推奨されています。', order: 10, choices: { create: [{ text: '3日分', isCorrect: true }, { text: '1日分', isCorrect: false }, { text: '1ヶ月分', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
