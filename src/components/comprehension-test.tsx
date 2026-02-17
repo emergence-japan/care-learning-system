@@ -138,78 +138,95 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
   }
 
   return (
-    <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center justify-between px-1">
-        <h3 className="font-bold text-lg text-zinc-900">理解度テスト</h3>
-        <span className="text-sm font-medium text-zinc-500">
+    <div className="space-y-3 animate-in slide-in-from-bottom-4 duration-500 h-full flex flex-col">
+      <div className="flex items-center justify-between px-2 shrink-0">
+        <h3 className="font-black text-xl text-slate-900 flex items-center gap-2">
+          <span className="w-2 h-6 bg-slate-900 rounded-full"></span>
+          理解度テスト
+        </h3>
+        <span className="text-sm font-black text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full">
           設問 {currentStep + 1} / {totalQuestions}
         </span>
       </div>
 
-      <Card className="border-zinc-100 shadow-sm rounded-2xl overflow-hidden">
-        <CardHeader className="bg-zinc-50/50 p-6">
-          <CardTitle className="text-lg leading-snug font-bold">
-            {currentQuestion.text}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-6 space-y-3">
-          {currentQuestion.choices.map((choice) => {
-            const isSelected = currentSelectedChoiceId === choice.id;
-            const showCorrect = showExplanation && choice.isCorrect;
-            const showWrong = showExplanation && isSelected && !choice.isCorrect;
-
-            return (
-              <button
-                key={choice.id}
-                disabled={showExplanation}
-                onClick={() => handleChoiceSelect(currentQuestion.id, choice.id)}
-                className={`w-full p-4 text-left rounded-xl border-2 transition-all flex items-center justify-between ${
-                  showCorrect
-                    ? "border-green-500 bg-green-50 text-green-900 shadow-sm"
-                    : showWrong
-                    ? "border-red-500 bg-red-50 text-red-900 shadow-sm"
-                    : isSelected
-                    ? "border-zinc-900 bg-zinc-900 text-white shadow-md"
-                    : "border-zinc-100 bg-white text-zinc-700 hover:border-zinc-200"
-                }`}
-              >
-                <span className="font-medium text-sm">{choice.text}</span>
-                {showCorrect && <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 ml-2" />}
-                {showWrong && <AlertCircle className="w-5 h-5 text-red-600 shrink-0 ml-2" />}
-              </button>
-            );
-          })}
-
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-0">
+        {/* 左側：問題文エリア */}
+        <Card className="border-2 border-slate-200 shadow-2xl shadow-slate-200/40 rounded-[2.5rem] bg-white overflow-hidden flex flex-col min-h-0 shrink-0 lg:shrink">
+          <CardHeader className="bg-slate-50/50 p-6 lg:p-8 flex-1 flex flex-col justify-center overflow-y-auto">
+            <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Question</div>
+            <CardTitle className="text-xl lg:text-2xl leading-snug font-black text-slate-900 text-balance">
+              {currentQuestion.text}
+            </CardTitle>
+          </CardHeader>
           {showExplanation && (
-            <div className="mt-6 p-5 bg-zinc-900 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-300">
-              <div className="flex items-center gap-2 mb-2 text-white/70">
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-xs font-bold uppercase tracking-wider">解説</span>
+            <div className="p-6 lg:p-8 bg-slate-900 animate-in fade-in slide-in-from-bottom-4 duration-500 shrink-0">
+              <div className="flex items-center gap-2 mb-2 text-white/50">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-[10px] font-black uppercase tracking-widest">解説</span>
               </div>
-              <p className="text-sm text-white leading-relaxed">
+              <p className="text-sm lg:text-base text-white font-bold leading-relaxed">
                 {currentQuestion.explanation || "この問題の解説はありません。"}
               </p>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </Card>
 
-      {!showExplanation ? (
-        <Button
-          disabled={!currentSelectedChoiceId}
-          onClick={handleCheckAnswer}
-          className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl shadow-lg disabled:opacity-30 transition-all"
-        >
-          回答を確認する
-        </Button>
-      ) : (
-        <Button
-          onClick={handleNext}
-          className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl shadow-lg animate-in zoom-in duration-200"
-        >
-          {currentStep < totalQuestions - 1 ? "次の問題へ" : "結果を確認する"}
-        </Button>
-      )}
+        {/* 右側：選択肢エリア */}
+        <div className="flex flex-col gap-2 justify-between bg-slate-50/50 p-3 lg:p-4 rounded-[2.5rem] min-h-0 lg:h-full">
+          <div className="space-y-2 flex-1 flex flex-col justify-center lg:overflow-y-auto pr-1">
+            {currentQuestion.choices.map((choice) => {
+              const isSelected = currentSelectedChoiceId === choice.id;
+              const showCorrect = showExplanation && choice.isCorrect;
+              const showWrong = showExplanation && isSelected && !choice.isCorrect;
+
+              return (
+                <button
+                  key={choice.id}
+                  disabled={showExplanation}
+                  onClick={() => handleChoiceSelect(currentQuestion.id, choice.id)}
+                  className={`w-full p-4 lg:p-5 text-left rounded-2xl lg:rounded-3xl border-2 transition-all flex items-center justify-between group relative overflow-hidden shrink-0 ${
+                    showCorrect
+                      ? "border-emerald-500 bg-emerald-50 text-emerald-900 shadow-lg shadow-emerald-100"
+                      : showWrong
+                      ? "border-rose-500 bg-rose-50 text-rose-900 shadow-lg shadow-rose-100"
+                      : isSelected
+                      ? "border-slate-900 bg-slate-900 text-white shadow-xl scale-[1.01]"
+                      : "border-white bg-white text-slate-700 hover:border-slate-200 hover:shadow-lg shadow-sm"
+                  }`}
+                >
+                  <span className="font-black text-sm lg:text-base relative z-10 pr-4">{choice.text}</span>
+                  <div className="relative z-10 shrink-0">
+                    {showCorrect && <CheckCircle2 className="w-6 h-6 text-emerald-600 animate-in zoom-in duration-300" />}
+                    {showWrong && <AlertCircle className="w-6 h-6 text-rose-600 animate-in zoom-in duration-300" />}
+                    {!showExplanation && isSelected && <div className="w-2.5 h-2.5 bg-white rounded-full animate-pulse" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="pt-2 shrink-0">
+            {!showExplanation ? (
+              <Button
+                disabled={!currentSelectedChoiceId}
+                onClick={handleCheckAnswer}
+                className="w-full h-14 lg:h-16 text-lg lg:text-xl font-black bg-slate-900 hover:bg-black text-white rounded-2xl lg:rounded-3xl shadow-2xl shadow-slate-200 disabled:opacity-20 disabled:scale-100 transition-all active:scale-95 group"
+              >
+                <span>回答を確認する</span>
+                <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                className="w-full h-14 lg:h-16 text-lg lg:text-xl font-black bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl lg:rounded-3xl shadow-2xl shadow-emerald-200 animate-in zoom-in duration-300 group"
+              >
+                <span>{currentStep < totalQuestions - 1 ? "次の問題へ" : "結果を確認する"}</span>
+                <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
