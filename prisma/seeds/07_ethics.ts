@@ -4,258 +4,111 @@ export async function seedEthics(prisma: PrismaClient) {
   const slug = 'ethics'
   const courseData = {
     slug,
-    title: '倫理・法令遵守（コンプライアンス）に関する研修',
-    description: '2024年改正の意思決定支援指針と虐待防止減算対応。プロとしての誠実さと法的責任を網羅。',
+    title: '倫理・法令遵守研修（2024年度）',
+    description: '〜誠実なケアを支えるプロの誇りと責任〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-zinc-600 rounded-full"></span>
-            <p class="text-zinc-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-amber-700 rounded-full"></span>
+            <p class="text-amber-800 font-black tracking-widest text-lg lg:text-2xl uppercase">倫理・法令遵守研修</p>
+            <span class="h-px w-8 lg:w-12 bg-amber-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「これくらい、みんなやってるし...」<br/>その妥協が、大きな不正の入り口だとしたら？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>ひとつの小さな虚偽記載、慣れによるタメ口、同僚の不正の黙認。<br/>それらはすべて「利用者の人生」を軽んじる行為であり、<br/>施設の事業停止を招く重大なリスクです。</p>
-            <div class="p-8 bg-zinc-50/50 rounded-[2rem] border border-zinc-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-zinc-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">倫理とは、誰も見ていない時のあなたの振る舞いです。<br/>法令遵守は守りの盾であり、倫理はプロとしての誇りです。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight">「これくらいならいいだろう」という甘い罠。<br/>その一歩が、利用者の人生を損なうかもしれません。</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>介護の仕事は、他者の人生に深く介入する「権力」を伴う仕事です。<br class="lg:hidden" />私たちの「慣れ」や「慢心」は、時に利用者の尊厳を傷つける武器に変わります。</p>
+            <div class="p-4 lg:p-5 bg-amber-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-amber-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4 text-center">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-amber-100/50 rounded-bl-full text-center"></div>
+              <p class="relative z-10 italic text-amber-900 font-black text-xs lg:text-sm leading-relaxed text-center">ルールを守ることは、利用者を守ること、そしてあなた自身のプロとしてのキャリアを守ることです。誇りある誠実なケアのために、今一度、倫理の原点に立ち返りましょう。</p>
             </div>
-            <p>2024年度より、意思決定支援の徹底や虐待防止措置未実施減算が強化されました。<br/>最新の指針に基づき、プロとしての誠実さを再定義しましょう。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、迷った時の「正しい判断軸」を自分の中に育てるためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-zinc-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-zinc-900 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">意思決定支援と法的義務</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">最新のガイドラインに基づき、本人の意向を尊重する<br/>意思決定支援の手順と、事業所の法的責任を100%理解する。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance text-center">
+          <div class="bg-amber-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-amber-200">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">介護職の倫理綱領を実践できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">人権尊重、自己決定の支援、公正な態度の重要性を再定義し、日々のケアに活かす。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-zinc-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-zinc-900 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">誠実な記録と内部報告</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">虚偽記載の禁止、ハラスメントの排除、および<br/>勇気ある内部報告の重要性を実践レベルで習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">法令遵守の重要事項を習得する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">不正請求防止、ハラスメント対策、身体拘束禁止の法的根拠と責任を理解する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">不適切な慣習を是正できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">金品の授受や言葉遣い、SNS利用など、現場で陥りやすい問題に毅然と対応する。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
+    videoUrl: null,
     badgeLabel: '倫理遵守',
-    badgeIcon: 'Scale',
+    badgeIcon: 'Gavel',
   }
 
   const slidesData = [
-    { 
-      title: '倫理・法令遵守（コンプライアンス）に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-zinc-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-zinc-900 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Compliance & Ethics</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                倫理・法令遵守<br/>
-                <span class="text-zinc-600 text-3xl">〜誠実なケアのために〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '法令遵守（コンプライアンス）の体系', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-zinc-50 text-zinc-600 rounded-full text-xs font-black ring-1 ring-zinc-100">
-            <span class="w-2 h-2 bg-zinc-600 rounded-full animate-ping"></span>
-            LEGAL FOUNDATION
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            法律は、あなたと利用者を<br/>
-            <span class="text-zinc-600 decoration-4 underline underline-offset-8">守るためのルール</span>です
-          </h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto pt-4">
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-zinc-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">介護保険法・運営基準</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                サービスの質を保つためのルール。<br/>違反は指定取消に繋がります。
-              </p>
-            </div>
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-zinc-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">高齢者虐待防止法</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                2024年度より「未実施減算」が導入。<br/>組織的対応がさらに厳格化されました。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'グレーゾーン行動の危険性', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Boundary Analysis</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">「慣れ」がプロの境界線を曖昧にする</h4>
-          </div>
-          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-4xl mx-auto">
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-zinc-50 text-zinc-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">A</div>
-              <p class="text-lg font-black text-slate-900">タメ口・愛称</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">親しき仲にも礼儀なしは、<br/>自尊心の侵害です</p>
-            </div>
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-zinc-50 text-zinc-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">B</div>
-              <p class="text-lg font-black text-slate-900">私物化・公私混同</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">備品の私的利用や、<br/>利用者への個人的贈答</p>
-            </div>
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-zinc-50 text-zinc-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">C</div>
-              <p class="text-lg font-black text-slate-900">記録の不正</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">「後で書けばいい」<br/>「やっていないがやったことにする」</p>
-            </div>
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-zinc-50 text-zinc-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">D</div>
-              <p class="text-lg font-black text-slate-900">ハラスメント</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">上下関係を利用した指導の逸脱、<br/>不適切な叱責</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '最新指針：意思決定支援', 
-      order: 3, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-10 bg-zinc-50 rounded-[3rem] border-2 border-zinc-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Self-Determination</div>
-            <h4 class="text-3xl font-black text-zinc-900 mb-6">「本人の意向」こそが正解</h4>
-            <p class="text-lg text-zinc-800 italic font-bold">
-              「安全のために管理する」のではなく、<br/>
-              「どうすれば本人の望みが叶うか」を追求します。
-            </p>
-          </div>
-          <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl max-w-3xl mx-auto">
-            <p class="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
-              <span class="w-2 h-8 bg-zinc-900 rounded-full"></span>2024年度 改正のポイント
-            </p>
-            <p class="text-base text-slate-600 leading-relaxed font-bold text-left">
-              意向の推察、選択肢の提示、多職種での合意形成など、<br/>
-              具体的な支援手順を理解し、実践することが<br/>
-              すべてのスタッフに法的に求められています。
+    { title: "倫理・法令遵守研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance text-center"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-amber-400 blur-3xl opacity-20 scale-150 animate-pulse text-center"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto text-center"><div class="bg-amber-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">倫理・法令遵守研修</h2><p class="text-amber-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center">〜誠実なケアを支えるプロの誇り〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "なぜ倫理が必要か？：権力性の自覚", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 uppercase tracking-widest mx-auto">倫理の核心</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">「力の差」があるという現実</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-amber-50 border-none lg:border-2 lg:border-amber-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-amber-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4 text-center"><p class="font-black text-center text-balance text-center">介助される側は、心身の弱さを介護職にさらけ出しています。この非対等な関係において、介護職が自らの価値観を押し付けることは「暴力」になり得ます。</p><p class="font-black text-center text-balance text-amber-900 underline underline-offset-8 decoration-2 text-center">高い倫理観とは、自分の「力」を常に律し、相手の尊厳を最優先する姿勢のことです。</p></div></div>` },
+    { title: "倫理とコンプライアンスの違い", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">二つの異なる判断軸</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center">法令遵守（コンプライアンス）</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">法律、マニュアル、就業規則を守ること。組織としての「最低限の義務」です。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center">倫理性（エシックス）</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">善悪の判断、誠実さ、相手を思いやる心。法に触れなくても「正しくないこと」をしない信念。</p></div></div></div>` },
+    { title: "2024年度 法令遵守体制の強化", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 shadow-sm mx-auto uppercase tracking-widest text-center"><span class="w-2 h-2 bg-red-700 rounded-full animate-ping text-center"></span>最重要確認</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">組織の健全性を保つ義務</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 max-w-4xl mx-auto w-full text-center px-4 text-center"><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">1. 法令遵守指針の策定</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">2. 内部通報制度の整備</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">3. 研修・監査の定期実施</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm">4. ハラスメント防止措置</div></div><p class="text-red-700 font-black text-[10px] lg:text-base mt-4 underline decoration-2 text-center w-full">※法令違反による運営停止・返還金リスクを回避する体制構築。</p></div>` },
+    { title: "倫理1：人権尊重（言葉遣いの重要性）", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center">「タメ口」はなぜ不適切か</h4><p class="text-[10px] lg:text-sm text-slate-900 font-black text-center text-center">親しみと馴れ馴れしさは違います</p></div><div class="p-6 bg-amber-50 border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-inner text-center"><p class="text-sm lg:text-xl font-black text-amber-900 leading-relaxed text-balance text-center text-center">赤ちゃん言葉やタメ口は、無意識のうちに相手を「自分より下の存在」と見なす心理を生みます。これが虐待の入り口になることが、科学的にも指摘されています。</p></div></div>` },
+    { title: "倫理2：自己決定の尊重", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-amber-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-amber-700 rounded-full"></span>自己決定の尊重</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・利用者の「意向」を最後まで探る</li><li>・介護側の都合で行動を制限しない</li><li>・「選べる」環境を整える</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">管理のしやすさより、本人の意志を</p></div>` },
+    { title: "法令1：不正請求の防止", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-red-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-red-700 rounded-full"></span>記録の捏造（ねつぞう）</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・やっていない介助を「やった」と記録</li><li>・数値の書き換え（血圧、室温等）</li><li>・指示なく行った処置の後付け記録</li></ul><p class="text-red-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">「1回の捏造」が事業所全体の信頼を壊します</p></div>` },
+    { title: "法令2：ハラスメント防止義務", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-red-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-red-700 rounded-full"></span>職場を蝕むハラスメント</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・パワハラ：職務上の地位を利用した嫌がらせ</li><li>・セクハラ：性的な言動による不快感</li><li>・カスハラ：利用者・家族からの過度な要求</li></ul></div>` },
+    { title: "実践1：金品の受け取りを断る技術", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">善意でも受け取らない</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center"><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center">特定の利用者への不公平防止</span><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center">贈収賄（ぞうしゅうわい）のリスク</span></div><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center">契約以外の対価の禁止</span><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center">「感謝」は言葉だけで十分</span></div></div><p class="text-amber-700 font-black text-[10px] lg:text-xl px-4 text-center w-full text-balance text-center text-center">「規則ですので」と、施設の代表として丁寧かつ毅然と断りましょう。</p></div>` },
+    { title: "実践2：業務外の付き合いの禁止", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center w-full text-center">適正な距離感を保つ</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・個人LINEやSNSでの直接連絡</li><li>・私的なプレゼントの受け渡し</li><li>・勤務時間外の個人的な面会</li></ul><p class="text-blue-700 font-black text-center w-full mt-4 text-center">境界線を守ることは、自分自身をトラブルから守ることです</p></div>` },
+    { title: "実践3：職場内での言動（職業倫理）", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center">チームの品格を保つ</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>同僚の悪口・陰口を他職種の前で言わない</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>他職種の専門性を尊重し、連携を疎かにしない</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>ミスを他人のせいにせず、改善案を共に考える</div></div></div>` },
+    { title: "法令3：身体拘束禁止の法的根拠", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center w-full mb-4 px-4 animate-pulse text-center">「やむを得ない」の厳格な判断</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">1</span>切迫性：命に関わる危険が目前にある</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">2</span>非代替性：他に代わるケアの方法がない</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">3</span>一時性：短時間かつ限定的である</div></div><p class="text-red-700 font-black text-xs lg:text-sm mt-4 text-center w-full">※3要件を満たし、記録を残すことが法的義務です。</p></div>` },
+    { title: "内部通報制度の活用と保護", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase tracking-widest text-center">公益通報</div><h4 class="text-xl lg:text-3xl font-black text-amber-900 leading-tight px-4 text-center w-full text-center">「見て見ぬふり」をしない勇気</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-amber-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-lg lg:text-3xl font-black text-amber-900 leading-relaxed italic text-balance text-center text-center">不正や虐待の疑いを発見した場合、<br/>勇気を持って通報してください。<br/>通報者が不利益を被ることは法律で禁じられています。</p></div></div>` },
+    { title: "倫理的葛藤：現場で迷った時の判断軸", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-700 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center">何のためのケアか？</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center"><span>●</span> 利用者の利益：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">その選択は、本人の望む幸せに繋がるか。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center"><span>●</span> 誠実な説明：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">家族や第三者に胸を張って説明できるか。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center"><span>●</span> 公平性：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-balance text-center">全ての利用者に対して同じ判断を下せるか。</p></div></div></div>` },
+    { title: "SNS利用の倫理ガイドライン", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center w-full text-center">プロとしてのデジタル・マナー</h4><div class="p-6 bg-white border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-balance"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">業務内容や利用者に関する投稿は、守秘義務違反だけでなく、介護職全体の社会的地位を貶める行為です。個人のアカウントであっても、常に「プロの顔」で見られている意識を持ちましょう。</p></div></div>` },
+    { title: "ハラスメントのグレーゾーンをなくす", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">主観ではなく「相手の不快感」</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-6 lg:p-8 bg-amber-50 border-2 border-amber-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center">指導かパワハラか</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-balance">業務上の必要性を超えた叱責、人格を否定する言葉。これらはすべてパワハラです。</p></div><div class="p-6 lg:p-8 bg-amber-50 border-2 border-amber-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center">セクハラの定義</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-balance">冗談のつもりの性的発言、不必要な身体接触。相手が不快と感じれば成立します。</p></div></div></div>` },
+    { title: "1. 事例：利用者からのチップ", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase text-center text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center">場面：感謝の現金</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center">「いつもお世話になっているから、これで美味しいものでも食べて」と、利用者のC様から1,000円札を差し出されました。</p><div class="h-px bg-slate-100 text-center"></div><p class="text-xs lg:text-lg font-black text-amber-700 italic text-center px-4 text-balance text-center w-full text-center text-center">「角が立つから」と、こっそり受け取ってもいいでしょうか？<br class="lg:hidden" />この行為が他の利用者に与える影響は何ですか？</p></div></div>` },
+    { title: "2. 事例：呼び捨てにする同僚", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase text-center text-center text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center">場面：日常の会話</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center">ベテランの職員が、認知症の利用者を「〜ちゃん」と呼んだり、呼び捨てにしたりして笑い合っています。本人は笑っていますが、周囲からは介護者が圧倒的に強く見えます。</p><div class="h-px bg-slate-100 text-center"></div><p class="text-xs lg:text-lg font-black text-amber-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center">「仲が良いから」という理由は、プロとして通用しますか？<br class="lg:hidden" />家族がその光景を見たら、どう感じるでしょうか？</p></div></div>` },
+    { title: "解決：誠実さが信頼を創る", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center">プロとしての境界線</h4><div class="p-6 lg:p-10 bg-amber-50 border-2 border-amber-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center text-center"><p class="text-base lg:text-xl font-black text-amber-900 text-center w-full text-balance text-center">倫理を守るための具体策</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">1</span>金品は「気持ちだけで十分です」と笑顔で断る</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">2</span>利用者の呼称は、原則として「名字＋様」で統一</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">3</span>不適切な言動を見かけたら、勇気を持って指摘・報告</div></div></div></div>` },
+    { title: "満足感：あなたの誠実さが未来を創る", order: 19, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center">介護プロフェッショナルの証</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-amber-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center"><p class="text-xl lg:text-3xl font-black text-amber-900 leading-relaxed italic text-balance text-center text-center text-center">誠実であることは、<br/>最も難しい技術の一つですが、<br/>最も多くの人を救う魔法でもあります。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center text-balance text-center text-center">その誇りを持って、日々のケアにあたりましょう。</p></div>` },
+    { title: "法令違反の社会的責任", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center">「知らなかった」では済まされない</h4><div class="p-6 bg-white border-2 border-red-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-balance text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center">不正請求や隠蔽行為は、個人の処罰だけでなく、事業所指定の取消（倒産）や、全職員の解雇に直結します。法令遵守は、仲間の雇用と生活を守るための絶対的な義務です。</p></div></div>` },
+    { title: "家族との適切な境界線", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center">「特別な関係」を作らない</h4><div class="p-6 bg-white border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-balance text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center">家族との信頼関係は不可欠ですが、過度な接近は「癒着（ゆちゃく）」や「不当な要求」を招くリスクがあります。あくまでプロとしての公的な関係を維持することが、長続きする信頼の秘訣です。</p></div></div>` },
+    { title: "まとめ：品格あるケアを目指して", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-amber-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-amber-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto text-center text-center"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center text-center text-balance">信頼を背負う、プロであれ。<br/>誠実な一歩を、今日から。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center text-center text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-amber-50 rounded-2xl lg:rounded-3xl border-2 border-amber-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center text-center">
+            <p class="text-amber-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center text-center">
+              <span class="w-2 h-2 bg-amber-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-amber-700 rounded-full"></span>    
             </p>
           </div>
         </div>
-      ` 
-    },
-    { 
-      title: '誠実な記録：事実のみを記す', 
-      order: 4, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl text-center">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Integrity in Records</h4>
-            <p class="text-2xl font-black mb-10 text-center">やったことは書く。<br/>やっていないことは書かない。</p>
-            <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 text-left space-y-6">
-              <p class="text-slate-200 text-lg leading-relaxed font-bold flex items-start gap-4">
-                <span class="w-2 h-2 bg-zinc-400 rounded-full mt-2 shrink-0"></span>
-                虚偽記載は、介護報酬の不正請求に直結します。
-              </p>
-              <p class="text-slate-200 text-lg leading-relaxed font-bold flex items-start gap-4">
-                <span class="w-2 h-2 bg-zinc-400 rounded-full mt-2 shrink-0"></span>
-                「忙しかった」は、監査では通用しません。
-              </p>
-              <p class="text-slate-200 text-lg leading-relaxed font-bold flex items-start gap-4">
-                <span class="w-2 h-2 bg-zinc-400 rounded-full mt-2 shrink-0"></span>
-                正確な記録こそが、自分を守る最強のエビデンスです。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '勇気ある報告：内部通報と保護', 
-      order: 5, 
-      content: `
-        <div class="p-12 bg-zinc-50 rounded-[3.5rem] border border-zinc-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-3xl text-zinc-600 shadow-zinc-100">!!</div>
-          <h4 class="text-3xl font-black text-zinc-900">「見て見ぬふり」は共犯と同じ</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            同僚の不適切な言動を見かけたら、報告してください。<br/>
-            公益通報者保護法により、不利益を受けることは<br/>
-            法律で禁じられています。<br/>
-            組織の自浄作用が、結局は命を救います。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：同僚の不正', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              同僚が「ケア記録を、やっていないが<br/>『やった』と書いておくよ」と言いました。<br/>あなたならどうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">みんな大変な時期だし、<br/>その場は同意して黙っておく</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">「重大な違反になるからやめよう」と伝え、<br/>改善されない場合は上司に報告する。</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：選ばれるプロであるために', 
-      order: 7, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-zinc-900 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-zinc-400 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            倫理は、あなた自身の<br/>
-            キャリアを守る最強の武器です
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            誠実さは、利用者様への最大のギフト。<br/>今日から、誇りを持って働ける職場を<br/>共に作りましょう。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs mx-auto text-center">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "倫理・法令遵守のあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center text-center">「見られている」意識を持つ</h4><div class="p-6 bg-white border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-balance text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center">倫理性とは、誰も見ていない時に正しい行動ができるかどうかです。あなたの誠実さが、利用者の安心と、この職場の品格を支えています。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '「誰も見ていない時の振る舞い」を重視し、プロとしての行動を律する考え方を何というか。', explanation: '倫理（エシックス）と呼ばれます。法令以前のプロとしての誇りの根幹です。', order: 1, choices: { create: [{ text: '倫理', isCorrect: true }, { text: '効率', isCorrect: false }, { text: '社交性', isCorrect: false }] } },
-    { text: '2024年度から介護報酬改定で強化された、虐待防止に関する措置はどれか。', explanation: '虐待防止措置未実施減算が導入されました。組織的な防止体制がない事業所には厳しい経済的制裁が課されます。', order: 2, choices: { create: [{ text: '虐待防止措置未実施減算', isCorrect: true }, { text: 'レクリエーション充実加算', isCorrect: false }, { text: '夜勤手当増額義務', isCorrect: false }] } },
-    { text: 'ケア記録において、実際には行っていない処置を「やった」と記載する行為はどのように評価されるか。', explanation: '重大な法令違反（虚偽記載・不正請求）であり、指定取消や返還請求の対象になります。', order: 3, choices: { create: [{ text: '重大な法令違反であり、決して許されない', isCorrect: true }, { text: '多忙な時期であれば多少の調整は許容される', isCorrect: false }, { text: '個人的なメモであれば問題ない', isCorrect: false }] } },
-    { text: '同僚による虐待の疑いや不正を、勇気を持って職場や行政に報告した職員を守る法律を何というか。', explanation: '公益通報者保護法です。通報を理由とした解雇や不利益な扱いは法律で禁じられています。', order: 4, choices: { create: [{ text: '公益通報者保護法', isCorrect: true }, { text: '労働基準法', isCorrect: false }, { text: '個人情報保護法', isCorrect: false }] } },
-    { text: '利用者の「意思決定支援」において、スタッフが最も優先すべきことは何か。', explanation: 'スタッフ側の都合や管理効率ではなく、本人の意向を最大限に尊重し、実現する方法を探ることです。', order: 5, choices: { create: [{ text: '本人の意向を最大限に尊重すること', isCorrect: true }, { text: '施設の管理効率を上げること', isCorrect: false }, { text: '家族の負担をゼロにすること', isCorrect: false }] } }
+    { text: '「法令遵守（コンプライアンス）」と「倫理（エシックス）」の違いとして正しい説明はどれか？', explanation: '法令遵守は最低限守るべきルール（法律）であり、倫理は善悪や誠実さに基づく高い行動規範です。', order: 1, choices: { create: [{ text: '倫理は法を超えた高い行動規範である', isCorrect: true }, { text: '法令遵守だけしていれば倫理は不要である', isCorrect: false }, { text: '法律の方が倫理よりも常に優先される', isCorrect: false }] } },
+    { text: '利用者や家族から「チップ（現金）」を差し出された際、プロとしてとるべき対応は？', explanation: '特定の利用者への不公平を防ぎ、トラブルを回避するため、丁寧かつ毅然とお断りするのが基本です。', order: 2, choices: { create: [{ text: '丁寧にお断りし、気持ちだけ頂く', isCorrect: true }, { text: '「今回だけ」と言って内密に受け取る', isCorrect: false }, { text: '相手が怒りそうなら受け取っても良い', isCorrect: false }] } },
+    { text: '利用者を「〜ちゃん」と呼んだり、タメ口で話したりすることの問題点は何か？', explanation: '対等な関係を損ない、相手を低く見る心理を生むことで、虐待への心理的障壁を下げる恐れがあります。', order: 3, choices: { create: [{ text: '相手を下に見て尊厳を傷つける恐れがある', isCorrect: true }, { text: '親しみやすくなるので全く問題ない', isCorrect: false }, { text: '本人が喜んでいれば問題ない', isCorrect: false }] } },
+    { text: '介護報酬の不正請求（記録の捏造等）が発覚した場合、事業所に下される最も重い処分は？', explanation: '不正請求は重大な法令違反であり、指定の取消（事業所の閉鎖）に追い込まれる可能性があります。', order: 4, choices: { create: [{ text: '事業所指定の取消（閉鎖）', isCorrect: true }, { text: '口頭での厳重注意のみ', isCorrect: false }, { text: '担当職員の配置換えのみ', isCorrect: false }] } },
+    { text: 'ハラスメント（パワハラ・セクハラ）の判断基準として、最も重視されるものはどれか？', explanation: '本人の意図にかかわらず、言動を受けた相手が不快と感じ、尊厳が傷ついたかどうかが基準となります。', order: 5, choices: { create: [{ text: '相手が不快に感じ、尊厳を傷つけたか', isCorrect: true }, { text: '行為者に悪意があったかどうか', isCorrect: false }, { text: '周囲の人が見て笑っていたかどうか', isCorrect: false }] } },
+    { text: '「守秘義務」について、正しい法的解釈はどれか？', explanation: '業務上知り得た情報の秘密を守る義務は、退職した後も一生涯続くものです。', order: 6, choices: { create: [{ text: '退職後であっても、守秘義務は継続する', isCorrect: true }, { text: '退職すれば義務は一切なくなる', isCorrect: false }, { text: '同僚になら何を話しても良い', isCorrect: false }] } },
+    { text: '法令で定められた「身体拘束」を行わざるを得ない場合の3要件に含まれないものはどれか？', explanation: '「切迫性・非代替性・一時性」が3要件であり、「人手不足」は理由になりません。', order: 7, choices: { create: [{ text: '人手不足による管理の都合', isCorrect: true }, { text: '命の危険がある「切迫性」', isCorrect: false }, { text: '他に方法がない「非代替性」', isCorrect: false }, { text: '短期間の「一時性」', isCorrect: false }] } },
+    { text: '同僚が不適切な行為（虐待や不正等）を行っているのを発見した際、とるべき態度は？', explanation: '見て見ぬふりは組織ぐるみの不正に繋がります。内部通報制度等を利用し、正しく報告する義務があります。', order: 8, choices: { create: [{ text: '速やかに管理者に報告または内部通報する', isCorrect: true }, { text: '関係が悪くなるので、見て見ぬふりをする', isCorrect: false }, { text: '自分には関係ないので無視する', isCorrect: false }] } },
+    { text: '意思決定支援において、介護職が最も注意すべきことはどれか？', explanation: '介護職の価値観や都合を押し付けず、本人の意向を最大限に尊重し、支援することが重要です。', order: 9, choices: { create: [{ text: '介護職の価値観を押し付けない', isCorrect: true }, { text: '効率的に介助を終わらせる', isCorrect: false }, { text: '全て家族の言う通りにする', isCorrect: false }] } },
+    { text: '2024年度の運営基準において、法令遵守のために設置や策定が義務付けられたものは？', explanation: 'コンプライアンス（法令遵守）体制の整備として、指針の策定や通報窓口の設置等が義務化されています。', order: 10, choices: { create: [{ text: '法令遵守指針や体制の整備', isCorrect: true }, { text: '接遇コンテストの開催', isCorrect: false }, { text: '全職員のSNSアカウント調査', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
