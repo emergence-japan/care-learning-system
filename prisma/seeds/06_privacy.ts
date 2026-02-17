@@ -4,252 +4,111 @@ export async function seedPrivacy(prisma: PrismaClient) {
   const slug = 'privacy'
   const courseData = {
     slug,
-    title: 'プライバシー保護・個人情報保護に関する研修',
-    description: '2025年改正ガイダンス対応。SNSリスクから守秘義務、日常業務のプライバシー配慮までを網羅。',
+    title: 'プライバシー保護・個人情報保護研修（2024年度）',
+    description: '〜信頼を守る情報のプロフェッショナルへ〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-indigo-600 rounded-full"></span>
-            <p class="text-indigo-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-sky-700 rounded-full"></span>
+            <p class="text-sky-800 font-black tracking-widest text-lg lg:text-2xl uppercase">プライバシー保護研修</p>
+            <span class="h-px w-8 lg:w-12 bg-sky-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">何気ない一言が、利用者の人生を<br/>壊してしまうリスクを考えたことはありますか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>廊下での立ち話、個人のスマホでのうっかりした撮影、SNSへの匿名投稿。<br/>あなたが「これくらい」と思ったその瞬間、<br/>利用者の人生と施設の信頼が踏みにじられます。</p>
-            <div class="p-8 bg-indigo-50/50 rounded-[2rem] border border-indigo-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">個人情報は、預かっている大切な「財産」です。<br/>プロとして情報を守ることは、利用者の「尊厳」を守ることそのものです。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight">「あなたの何気ないSNS投稿が、<br/>利用者の人生を変えてしまうかもしれません。」</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>介護の仕事は、利用者の「最もプライベートな空間」に踏み込む仕事です。<br class="lg:hidden" />私たちが知り得る情報は、本来、誰にも知られたくない大切な秘密です。</p>
+            <div class="p-4 lg:p-5 bg-sky-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-sky-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4 text-center">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-sky-100/50 rounded-bl-full text-center"></div>
+              <p class="relative z-10 italic text-sky-900 font-black text-xs lg:text-sm leading-relaxed">一度流出した情報は、二度と消せません。「信頼」を築くには何年もかかりますが、壊れるのは一瞬です。情報のプロとして、正しい知識を身につけましょう。</p>
             </div>
-            <p>この研修では、2025年改正の最新指針に基づき、<br/>デジタル時代の情報管理とプライバシー保護の鉄則を学びます。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、利用者とあなた自身の人生を守るための「情報の砦」を築くためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-indigo-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">個人情報と守秘義務の遵守</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">法的な定義を正しく理解し、SNSリスクや退職後の義務を含めた<br/>守秘義務を100%実践できるようになる。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance">
+          <div class="bg-sky-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-sky-200">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">守秘義務の範囲を正しく知る</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">業務上知り得た情報の範囲と、退職後も続く重い法的責任を理解する。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-indigo-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">日常業務でのプライバシー配慮</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">身体介助、申し送り、書類管理など、あらゆる場面で<br/>利用者のプライバシーを保護する手法を習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">現代のリスクを回避できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">SNS、スマホ撮影、口頭での漏洩など、身近に潜む危険箇所を特定し、対策を学ぶ。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">漏洩時の初動を理解する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">万が一事故が起きた際の、迅速な報告と被害拡大防止の手順を習得する。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
+    videoUrl: null,
     badgeLabel: '個人情報',
-    badgeIcon: 'BookOpen',
+    badgeIcon: 'Lock',
   }
 
   const slidesData = [
-    { 
-      title: 'プライバシー保護・個人情報保護に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-indigo-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-indigo-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Information Ethics</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                プライバシー保護<br/>
-                <span class="text-indigo-600 text-3xl">〜利用者の安心を守るために〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '個人情報とは何か？：識別情報の正体', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-xs font-black ring-1 ring-indigo-100">
-            <span class="w-2 h-2 bg-indigo-600 rounded-full animate-ping"></span>
-            LEGAL DEFINITION
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            「特定の誰か」がわかれば、<br/>
-            <span class="text-indigo-600 decoration-4 underline underline-offset-8">すべてが個人情報</span>です
-          </h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto pt-4">
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-indigo-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">直接的な情報</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                氏名、生年月日、住所、顔写真、<br/>マイナンバー、病歴など。
-              </p>
-            </div>
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-indigo-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3">組み合わせによる特定</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed">
-                単体では不明でも、複数を<br/>照合して個人を特定できるもの。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '日常に潜む「情報の漏洩」リスク', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Risk Analysis</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">悪意のない「うっかり」が人生を壊す</h4>
-          </div>
-          <div class="relative grid grid-cols-3 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-5xl mx-auto">
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">A</div>
-              <p class="text-lg font-black text-slate-900">施設外での立ち話</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">電車やカフェでの会話。<br/>匿名でも特定される<br/>リスクがあります</p>
-            </div>
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">B</div>
-              <p class="text-lg font-black text-slate-900">SNSへの投稿</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">名札や背景の景色、<br/>特定のケア内容から<br/>場所が特定されます</p>
-            </div>
-            <div class="p-8 bg-white space-y-4">
-              <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">C</div>
-              <p class="text-lg font-black text-slate-900">管理の不徹底</p>
-              <p class="text-xs text-slate-400 leading-relaxed font-bold">PCロック忘れ、書類放置、<br/>シュレッダー忘れなど</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '身体介助時のプライバシー配慮', 
-      order: 3, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Dignity First</div>
-            <h4 class="text-3xl font-black text-blue-900 mb-6">「羞恥心」への配慮は、ケアの質</h4>
-            <p class="text-lg text-blue-800 italic font-bold">
-              「認知症だから見えても平気」という傲慢さが、<br/>最大の権利侵害です。
+    { title: "プライバシー保護研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-sky-400 blur-3xl opacity-20 scale-150 animate-pulse text-center"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto text-center"><div class="bg-sky-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">プライバシー・個人情報保護</h2><p class="text-sky-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center">〜信頼を守る情報のプロフェッショナルへ〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "なぜ情報を守るのか？：信頼の基盤", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-100 text-sky-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-sky-200 mb-2 uppercase tracking-widest mx-auto">信頼の原則</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">情報は「預かりもの」である</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-sky-50 border-none lg:border-2 lg:border-sky-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-sky-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4 text-center"><p class="font-black text-center text-balance">利用者は、自分や家族の情報を「安全に管理してくれる」と信じて施設に預けています。</p><p class="font-black text-center text-balance text-sky-900 underline underline-offset-8 decoration-2">情報を守ることは、その方の尊厳と人生を丸ごと守ることなのです。</p></div></div>` },
+    { title: "プライバシーと個人情報の違い", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">似ているようで違う二つの概念</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">個人情報</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">氏名、住所、生年月日など、特定の個人を識別できる情報のこと。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">プライバシー</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">他人に知られたくない私生活上の情報や、自分の情報をコントロールする権利。</p></div></div></div>` },
+    { title: "守秘義務：退職後も続く重い責任", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 shadow-sm mx-auto uppercase tracking-widest text-center"><span class="w-2 h-2 bg-red-700 rounded-full animate-ping"></span>法的責任</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">一生、守り続ける約束</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-sky-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-lg lg:text-3xl font-black text-sky-900 leading-relaxed italic text-balance text-center">業務上知り得た秘密は、<br/>「退職した後」であっても、<br/>口外してはいけません。</p></div><p class="text-red-700 font-black text-[10px] lg:text-base mt-4 text-center w-full">※これに違反すると、刑罰や損害賠償の対象となる可能性があります。</p></div>` },
+    { title: "個人情報保護法の5つの基本原則", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center text-balance px-4">法律が求める適正な取り扱い</h4></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-4 lg:gap-y-3 font-black text-[10px] lg:text-sm w-full max-w-5xl text-center"><div class="p-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-left"><p class="text-sky-900 mb-1">1. 利用目的の特定</p><p class="text-slate-600">何に使うかを明確にし、それ以外には使いません。</p></div><div class="p-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-left"><p class="text-sky-900 mb-1">2. 適正な取得</p><p class="text-slate-600">偽りや不正な手段で情報を手に入れません。</p></div><div class="p-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-left"><p class="text-sky-900 mb-1">3. 正確性の確保</p><p class="text-slate-600">情報は常に最新かつ正確な状態に保ちます。</p></div><div class="p-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-left"><p class="text-sky-900 mb-1">4. 安全管理措置</p><p class="text-slate-600">漏洩や紛失を防ぐための対策（施錠等）を講じます。</p></div></div></div>` },
+    { title: "実践1：口頭での漏洩を防ぐ", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-sky-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-sky-700 rounded-full"></span>壁に耳あり</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・エレベーター内で実名を出す</li><li>・休憩室や送迎車内での会話</li><li>・受付で大きな声で病名を話す</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full">「誰も聞いていない」は思い込みです</p></div>` },
+    { title: "実践2：書類の管理と廃棄", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-sky-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-sky-700 rounded-full"></span>紙情報の徹底管理</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・書類を机の上に放置しない</li><li>・コピー機に原本を忘れない</li><li>・裏紙利用はせずシュレッダーへ</li></ul><p class="text-blue-800 font-black text-sm lg:text-2xl mt-4 text-center w-full">情報の「出しっぱなし」が事故の元です</p></div>` },
+    { title: "実践3：SNSとインターネットの罠", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>拡散されるリスク</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・利用者の写真を無断で投稿</li><li>・「今日あった出来事」を詳細に記述</li><li>・背景に写り込んだ掲示物からの特定</li></ul><p class="text-red-700 font-black text-sm lg:text-2xl mt-4 text-center w-full">SNSに「鍵付き」の安全はありません</p></div>` },
+    { title: "実践4：デジタルデバイスの管理", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">その1枚が人生を壊す</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center"><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-sky-900 shadow-sm text-center">個人スマホでの撮影禁止</span><span class="px-6 py-2.5 lg:py-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-sky-900 shadow-sm text-center">PCの画面ロックの徹底</span></div><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-sky-900 shadow-sm text-center">USBメモリの持ち出し禁止</span><span class="px-6 py-2.5 lg:py-3 bg-sky-50 border-2 border-sky-200 rounded-2xl text-sky-900 shadow-sm text-center">パスワードの推測防止</span></div></div><p class="text-rose-700 font-black text-sm lg:text-xl px-4 text-center w-full text-balance">「自分だけは大丈夫」という油断が、最大の脆弱性です。</p></div>` },
+    { title: "実践5：外出先での置き忘れ", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center w-full">カバンから目を離さない</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center w-full"><li>・訪問介護の移動中にカバンを放置</li><li>・車内に書類を置いたまま離れる</li><li>・飲食店や電車内での置き忘れ</li></ul><p class="text-blue-700 font-black text-center w-full mt-4 text-balance">氏名が書かれた書類1枚でも、重大な漏洩です</p></div>` },
+    { title: "ご家族への情報提供のルール", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4">善意でも確認が必要</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-sky-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>親族であっても、提供範囲を確認する</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-sky-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>キーパーソン以外への回答は慎重に</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-sky-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>迷ったら「上司・看護師」に相談</div></div></div>` },
+    { title: "漏洩事故が起きてしまったら", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center w-full mb-4 px-4 animate-pulse text-balance">隠蔽（いんぺい）は絶対に厳禁</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">1</span>直ちに管理者に報告（被害の把握）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">2</span>被害拡大の防止（ネット削除要請等）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">3</span>本人・ご家族への謝罪と誠実な説明</div></div></div>` },
+    { title: "情報の「持ち出し」は例外なし", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase tracking-widest text-center">鉄則</div><h4 class="text-xl lg:text-3xl font-black text-red-900 leading-tight px-4 text-center w-full">一歩も外へ出さない</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-lg lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center text-center">「自宅で仕事を終わらせたいから」<br/>その理由であっても、許可なく情報を<br/>持ち出すことは重大な契約違反です。</p></div></div>` },
+    { title: "環境整備：5つの点検", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-sky-700 text-center mb-4 uppercase tracking-widest w-full px-4 text-center">安全な職場を守るために</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-sky-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> キャビネット：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">鍵がかかっているか、鍵の管理は適切か。</p></div><div><p class="text-lg lg:text-3xl text-sky-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> PC画面：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">離席時にロック（Win + L）されているか。</p></div><div><p class="text-lg lg:text-3xl text-sky-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> 掲示物：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-balance">利用者の実名が入った掲示が外部から見えないか。</p></div></div></div>` },
+    { title: "他職種連携（共有）の正当な範囲", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center w-full px-4 text-center">「必要最小限」の共有</h4><div class="p-6 bg-white border-2 border-sky-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">より良いケアのために情報を共有することは重要ですが、それはあくまで「業務に必要な範囲」に限定されます。好奇心で情報を探ってはいけません。</p></div></div>` },
+    { title: "SNS利用の「グレーゾーン」はない", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">投稿前に1分考える</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-6 lg:p-8 bg-sky-50 border-2 border-sky-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">名前を出さなければOK？</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-balance">NO。特徴や状況から個人が特定される可能性があります。</p></div><div class="p-6 lg:p-8 bg-sky-50 border-2 border-sky-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">ストーリーなら消える？</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-balance">NO。スクショ（画面保存）されれば一生残ります。</p></div></div></div>` },
+    { title: "1. 事例：友人からの問いかけ", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-50 text-sky-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-sky-200 mb-2 mx-auto uppercase text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">場面：地元のスーパーで</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center">買い物中、友人に会いました。「そういえば、うちの隣のAさん、お宅の施設に入ったでしょ？元気にしている？」と聞かれました。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-sky-700 italic text-center px-4 text-balance text-center w-full">「元気ですよ」と答えてもいいでしょうか？<br class="lg:hidden" />角を立てずに断るには、何と言えばよいですか？</p></div></div>` },
+    { title: "2. 事例：可愛い姿を撮りたくなったら", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-50 text-sky-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-sky-200 mb-2 mx-auto uppercase text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">場面：行事の合間に</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-balance">敬老会で、利用者のB様がとても素敵な笑顔を見せられました。自分のスマホで1枚撮って、家族や同僚に見せたいと思いました。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-sky-700 italic text-center px-4 text-balance text-center w-full">「記念だから」という理由での撮影はOKですか？<br class="lg:hidden" />個人所有のデバイスを使う最大のリスクは何ですか？</p></div></div>` },
+    { title: "解決：プロとしての毅然（きぜん）とした対応", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">信頼を勝ち取る回答</h4><div class="p-6 lg:p-10 bg-sky-50 border-2 border-sky-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center"><p class="text-base lg:text-xl font-black text-sky-900 text-center w-full text-balance">情報を守るための具体策</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">1</span>友人等には「守秘義務がありお答えできません」と断る</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">2</span>写真は必ず施設の「業務用端末」で、許可を得て撮影</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">3</span>漏洩を発見したら「即座に」管理者に報告する</div></div></div></div>` },
+    { title: "満足感：あなたの誠実さが安心を支える", order: 19, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">プロ意識の証（あかし）</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-sky-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-xl lg:text-3xl font-black text-sky-900 leading-relaxed italic text-balance text-center text-center">情報を守ることは、<br/>利用者が安心して暮らすための<br/>「安全地帯」を作ることです。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center text-balance">あなたの誠実な行動が、施設全体の信頼を創り上げます。</p></div>` },
+    { title: "情報の適正な廃棄手順", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center">「ゴミ箱」は出口ではありません</h4><div class="p-6 bg-white border-2 border-sky-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">名前の入ったメモ、薬袋、食事札。これらをそのままゴミ箱へ捨てるのは重大なリスクです。必ずシュレッダーにかけるか、溶解処理を行ってください。</p></div></div>` },
+    { title: "家族への提供範囲の例外", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center">命に関わる時の判断</h4><div class="p-6 bg-white border-2 border-sky-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">緊急救命時や虐待の疑いがある場合など、法令により「本人の同意なし」での提供が認められる例外ケースがあります。迷った時は独断せず、管理者に確認しましょう。</p></div></div>` },
+    { title: "まとめ：情報の重さを知る", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-sky-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-sky-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto text-center"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center text-balance">信頼を形にする。<br/>情報を守るプロであり続けましょう。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-sky-50 rounded-2xl lg:rounded-3xl border-2 border-sky-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center">
+            <p class="text-sky-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center">
+              <span class="w-2 h-2 bg-sky-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-sky-700 rounded-full"></span>    
             </p>
           </div>
-          <div class="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-              <p class="text-lg font-black text-slate-900 mb-2">露出の最小化</p>
-              <p class="text-sm text-slate-500 font-bold">バスタオル等で、介助する部分以外は<br/>常に覆っておく</p>
-            </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-              <p class="text-lg font-black text-slate-900 mb-2">視線の遮断</p>
-              <p class="text-sm text-slate-500 font-bold">カーテンの隙間、ドアの開閉角度への<br/>細心の注意を払う</p>
-            </div>
-          </div>
         </div>
-      ` 
-    },
-    { 
-      title: 'SNS・デジタル利用の厳格なルール', 
-      order: 4, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-red-500/10 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Digital Rules</h4>
-            <div class="space-y-6 text-xl font-black max-w-xl mx-auto text-left">
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>個人のスマホで利用者を撮影することは、<br/>原則禁止です</p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>利用者に関する情報をSNSに書くことは、<br/>匿名でも禁止です</p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">03</span>
-                <p>家族の同意＝本人の同意ではありません。<br/>手続きを厳守します</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '守秘義務の継続性：退職後も続く義務', 
-      order: 5, 
-      content: `
-        <div class="p-12 bg-indigo-50 rounded-[3.5rem] border border-indigo-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-3xl text-indigo-600 shadow-indigo-100">Law</div>
-          <h4 class="text-3xl font-black text-indigo-900">「辞めたら関係ない」は通りません</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            法律および雇用契約により、<br/>
-            業務上知り得た秘密を守る義務は、<br/>
-            <span class="text-indigo-600 underline underline-offset-4">退職した後も一生涯継続</span>します。<br/>
-            元同僚や家族への話も漏洩にあたります。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：メールの誤送信', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              利用者のケアプランを家族に送る際、<br/>
-              間違えて別の人に送信してしまいました。<br/>どうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">気づかれないことを祈って、<br/>何も報告せず黙っておく</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">直ちに上司へ報告し、誤送信先に削除を依頼。<br/>本人・家族へ誠実に謝罪する。</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：尊厳を守る最後の砦', 
-      order: 7, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-indigo-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-indigo-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            プライバシーを守ることは、<br/>
-            その人の人生を敬うことです。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            あなたの「慎重な行動」が、<br/>施設の信頼と利用者の笑顔を支えています。<br/>今日からまた、プロの自覚を持ちましょう。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "プライバシー保護のあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center">「見られている」意識を持つ</h4><div class="p-6 bg-white border-2 border-sky-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-balance"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">プライバシー保護はマニュアルを守るだけの作業ではありません。相手の立場に立ち、「自分ならどう扱ってほしいか」を常に問い続ける心こそが、最高のセキュリティです。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '個人情報保護法において「個人情報」に該当するものはどれか。', explanation: '特定の個人を識別できるすべての情報は個人情報です。氏名や顔写真だけでなく、病歴や身体的特徴の組み合わせも含まれます。', order: 1, choices: { create: [{ text: '氏名、住所、顔写真など個人を特定できるものすべて', isCorrect: true }, { text: '名字だけ（フルネームでないもの）', isCorrect: false }, { text: '既に亡くなった方の情報すべて', isCorrect: false }] } },
-    { text: '職場の出来事や利用者の様子を個人のSNSに投稿する際、正しい態度はどれか。', explanation: '原則として、職場のいかなる情報も個人のSNSに投稿してはいけません。匿名や顔隠しであっても特定のリスクがあり、信頼を損なう行為です。', order: 2, choices: { create: [{ text: '絶対に投稿しない', isCorrect: true }, { text: '顔をスタンプで隠せば投稿してもよい', isCorrect: false }, { text: '利用者が喜んでいれば投稿してもよい', isCorrect: false }] } },
-    { text: '介護職員の守秘義務は、退職した後どうなるか。', explanation: '社会福祉士及び介護福祉士法等の規定により、退職した後も業務上知り得た秘密を守る義務は生涯継続します。', order: 3, choices: { create: [{ text: '退職した後も継続する', isCorrect: true }, { text: '退職届を受理された時点で無くなる', isCorrect: false }, { text: '1年経過すれば話してもよい', isCorrect: false }] } },
-    { text: '身体介助（入浴や排泄）の際に露出を最小限に抑え、カーテンを閉める主な理由は何か。', explanation: '利用者の羞恥心に配慮し、一人の人間としての尊厳を保持するためです。マナーではなく法的・倫理的な義務です。', order: 4, choices: { create: [{ text: '利用者の尊厳と羞恥心を守るため', isCorrect: true }, { text: '部屋の温度を保つため', isCorrect: false }, { text: 'スタッフの作業効率を上げるため', isCorrect: false }] } },
-    { text: '万が一、書類の紛失や情報の誤送信など「情報漏洩」に気づいた際、最初に行うべきことは何か。', explanation: '隠蔽は被害を拡大させ、信頼を致命的に壊します。直ちに上司や担当者に報告し、組織として対応することが最優先です。', order: 5, choices: { create: [{ text: '直ちに上司や管理者に報告する', isCorrect: true }, { text: '自分でこっそり回収・削除を試みる', isCorrect: false }, { text: '気づかれないようにシュレッダーする', isCorrect: false }] } }
+    { text: '「守秘義務」の範囲として、法的に正しい説明はどれか？', explanation: '業務上知り得た秘密は、退職後であっても口外してはいけない義務があります。', order: 1, choices: { create: [{ text: '退職後も一生続く義務である', isCorrect: true }, { text: '退職した瞬間に義務はなくなる', isCorrect: false }, { text: '友人になら話しても良い', isCorrect: false }] } },
+    { text: 'SNS利用における注意点として、最も適切なものはどれか？', explanation: 'たとえ名前を出さなくても、背景や状況から個人が特定されるリスクがあるため、投稿は極めて慎重であるべきです。', order: 2, choices: { create: [{ text: '名前を出さなくても個人特定の可能性がある', isCorrect: true }, { text: '鍵付きアカウントなら投稿しても安全である', isCorrect: false }, { text: '後ろ姿なら無断で載せても大丈夫である', isCorrect: false }] } },
+    { text: '個人スマホで利用者の可愛い写真を撮りたくなった時、とるべき正しい行動は？', explanation: '個人所有の端末での撮影は漏洩リスクが高いため禁止です。必ず業務用端末を使用します。', order: 3, choices: { create: [{ text: '個人スマホでは一切撮影しない', isCorrect: true }, { text: '後で消せば個人スマホでも撮影して良い', isCorrect: false }, { text: '本人の許可があれば個人スマホでも良い', isCorrect: false }] } },
+    { text: '情報の適切な廃棄方法として、正しいものはどれか？', explanation: '実名入りの書類等は、そのまま捨てると漏洩するため、必ず復元不可能なシュレッダー等で処理します。', order: 4, choices: { create: [{ text: '必ずシュレッダー等で判読不能にする', isCorrect: true }, { text: '小さく手で破ってゴミ箱に捨てる', isCorrect: false }, { text: '裏紙として再利用する', isCorrect: false }] } },
+    { text: 'エレベーター内で同僚と利用者の容態について話すのは、なぜ不適切か？', explanation: '誰が聞いているか分からず、不特定多数の人に情報を漏洩させてしまうリスクがあるからです。', order: 5, choices: { create: [{ text: '不特定多数に漏洩するリスクがあるため', isCorrect: true }, { text: 'エレベーター内は声が響くから', isCorrect: false }, { text: '業務の話は休憩室ですべきだから', isCorrect: false }] } },
+    { text: '情報を自宅に持ち出して仕事をすることへの見解として、正しいものは？', explanation: '許可なく外部へ持ち出すことは、いかなる理由があっても重大な情報漏洩リスク（契約違反）となります。', order: 6, choices: { create: [{ text: '許可なく持ち出すことは重大な違反である', isCorrect: true }, { text: 'サービス残業を減らすためなら推奨される', isCorrect: false }, { text: 'USBメモリなら持ち出しても安全である', isCorrect: false }] } },
+    { text: '情報漏洩を発見した際、最初に行うべき最優先の対応はどれか？', explanation: 'まずは事実を隠さず、直ちに管理者に報告し、組織として対策を講じることが最優先です。', order: 7, choices: { create: [{ text: '直ちに管理者に報告する', isCorrect: true }, { text: '自分で何とか解決しようと隠す', isCorrect: false }, { text: '数日様子を見てから報告する', isCorrect: false }] } },
+    { text: 'ご家族（キーパーソン以外）から電話で容態を聞かれた際の対応は？', explanation: 'たとえ親族であっても、提供範囲が決まっているため、確認の上で慎重に対応します。', order: 8, choices: { create: [{ text: '提供範囲を確認し、独断で答えない', isCorrect: true }, { text: '親族なら誰にでも全て答えて良い', isCorrect: false }, { text: '教えないと失礼なので即座に答える', isCorrect: false }] } },
+    { text: 'PCを使用して記録を入力中、急に席を離れる際に必ずすべきことは？', explanation: '画面を見られないよう、ショートカットキー等で画面を即座にロックします。', order: 9, choices: { create: [{ text: '画面をロック（Win+L等）する', isCorrect: true }, { text: '画面をつけっぱなしにする', isCorrect: false }, { text: 'キーボードを裏返しておく', isCorrect: false }] } },
+    { text: '個人情報保護法において、最も基本的とされる考え方はどれか？', explanation: '何のために情報を使うか（利用目的）を明確にし、それ以外には使わないことが基本です。', order: 10, choices: { create: [{ text: '利用目的を特定し、その範囲内で使う', isCorrect: true }, { text: '情報は多ければ多いほど良い', isCorrect: false }, { text: '利便性のために全ての職員で共有する', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
