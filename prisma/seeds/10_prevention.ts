@@ -1,244 +1,113 @@
 import { PrismaClient } from '@prisma/client'
 
 export async function seedPrevention(prisma: PrismaClient) {
-  const slug = 'prevention'
+  const slug = 'restraint' // 身体拘束廃止の共通スラグ
   const courseData = {
     slug,
-    title: '介護予防・要介護進行予防に関する研修',
-    description: '2024年改正の自立支援・重度化防止要件に対応。フレイル予防から生活リハビリ技術までを網羅。',
+    title: '身体拘束廃止研修（2024年度）',
+    description: '〜自由と尊厳を守る、拘束に頼らないケア〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance text-center">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-emerald-600 rounded-full"></span>
-            <p class="text-emerald-600 font-black tracking-widest text-sm uppercase">Independence Support Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-red-700 rounded-full"></span>
+            <p class="text-red-800 font-black tracking-widest text-lg lg:text-2xl uppercase text-center">身体拘束廃止研修</p>
+            <span class="h-px w-8 lg:w-12 bg-red-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">あなたの「親切」が、<br/>力を奪っていませんか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>何でも手伝ってあげることが「良い介護」だと思っていませんか？<br/>先回りした介助は、利用者が本来持っている「生きる力」を<br/>少しずつ削り取ってしまいます。</p>
-            <div class="p-8 bg-emerald-50/50 rounded-[2rem] border border-emerald-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">2024年度の法改正では「自立支援・重度化防止」がさらに重視されています。<br/>私たちの役割は、利用者が「自分の人生の主役」であり続けるための<br/>黒子になることです。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight text-center">「その拘束は、本当に<br/>『命』を守るためのものですか？」</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>「転倒が怖いから」「点滴を抜くから」<br class="lg:hidden" />そんな理由で行われる拘束が、実は利用者の「生きる意欲」を奪っているかもしれません。</p>
+            <div class="p-4 lg:p-5 bg-red-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-red-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4 text-center text-center">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-red-100/50 rounded-bl-full text-center"></div>
+              <p class="relative z-10 italic text-red-900 font-black text-xs lg:text-sm leading-relaxed text-center text-center">身体拘束は、単なる行動制限ではなく、その方の「人権」そのものを縛る行為です。2024年度の運営基準でも、拘束ゼロへの取り組みは、施設の質を問う絶対的な条件となっています。</p>
             </div>
-            <p>この研修では、廃用症候群を防ぎ、尊厳ある自立を支えるための<br/>「引き算の介護」を学びます。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4 text-center">この研修は、拘束という安易な手段を捨て、プロとして「自由」を守り抜く覚悟を決めるためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-emerald-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">フレイルと重度化防止の理解</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">身体・口腔・栄養の一体となった予防の重要性を理解し、<br/>ADL維持等加算等の公的要件に基づいたケアを実践できる。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance text-center">
+          <div class="bg-red-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-red-200 text-center text-center">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl text-center">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-red-400 transition-all duration-500 text-center lg:text-left text-center">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-red-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-red-200 text-center">1</div>
+              <div class="text-left text-center lg:text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">身体拘束の3要件を完遂できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">切迫性・非代替性・一時性の定義を理解し、例外的な拘束時の法的正当性を判断できる。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-emerald-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">生活リハビリの実践技術</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">日常生活動作そのものをリハビリと捉え、<br/>利用者の意欲を引き出す「待ちの姿勢」を習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-red-400 transition-all duration-500 text-center lg:text-left text-center">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-red-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-red-200 text-center">2</div>
+              <div class="text-left text-center lg:text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">拘束の弊害を科学的に理解する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">筋力低下、褥瘡、認知症悪化など、拘束がもたらす身体的・精神的な「二次被害」を学ぶ。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-red-400 transition-all duration-500 text-center lg:text-left text-center">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-red-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-red-200 text-center">3</div>
+              <div class="text-left text-center lg:text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">具体的な代替ケアを提案できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">立ち上がりや点滴抜去に対し、拘束以外の方法（環境調整や関わり）を選択できるようになる。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
-    badgeLabel: '介護予防',
-    badgeIcon: 'Trophy',
+    badgeLabel: '拘束廃止',
+    badgeIcon: 'UserX',
   }
 
   const slidesData = [
-    { 
-      title: '介護予防および要介護進行予防に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-emerald-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Prevention Science</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                介護予防・重度化防止<br/>
-                <span class="text-emerald-600 text-3xl">〜自立を支える黒子の技術〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '恐怖の「フレイル・サイクル」', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-xs font-black ring-1 ring-emerald-100">
-            <span class="w-2 h-2 bg-emerald-600 rounded-full animate-ping"></span>
-            FRAILTY CYCLE
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            衰えは「連鎖」します。<br/>
-            <span class="text-emerald-600 decoration-4 underline underline-offset-8">どこで食い止めるか</span>が勝負です
-          </h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto pt-4">
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3 text-center">負の連鎖</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
-                動かない → お腹が空かない → <br/>
-                筋肉が減る（サルコペニア） → <br/>
-                さらに動けなくなる。
-              </p>
-            </div>
-            <div class="p-8 bg-white border-2 border-slate-50 rounded-[2.5rem] shadow-sm hover:border-emerald-100 transition-colors">
-              <p class="text-lg font-black text-slate-900 mb-3 text-center">社会的孤立</p>
-              <p class="text-sm text-slate-500 font-bold leading-relaxed text-left">
-                他者との交流が減ることで<br/>
-                生活の意欲が低下し、<br/>
-                身体的衰えを加速させます。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '2024年度改定の要：口腔と栄養', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Core Integration</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">
-              「食べる力」が「歩く力」を作る
-            </h4>
-          </div>
-          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-3xl mx-auto">
-            <div class="p-10 bg-white space-y-4 text-center">
-              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div>
-              <p class="text-lg font-black text-slate-900">口腔管理</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">
-                「オーラルフレイル」の予防。<br/>
-                噛む・飲み込む力を維持する
-              </p>
-            </div>
-            <div class="p-10 bg-white space-y-4 text-center">
-              <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div>
-              <p class="text-lg font-black text-slate-900">栄養管理</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">
-                低栄養の防止。<br/>
-                筋肉の元となるタンパク質を摂取
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '過剰介護という名の「廃用症候群」', 
-      order: 3, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Over-Care Risk</div>
-            <h4 class="text-3xl font-black text-blue-900 mb-6">「親切心」がリハビリを妨げる</h4>
-            <p class="text-lg text-blue-800 italic font-bold">
-              スタッフが何でもやってしまうことで、<br/>
-              利用者の持っている機能が急速に失われます。
+    { title: "身体拘束廃止研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance text-center text-center"><div class="relative w-full max-w-4xl px-4 text-center"><div class="absolute inset-0 bg-red-400 blur-3xl opacity-20 scale-150 animate-pulse text-center"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto text-center"><div class="bg-red-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm text-center">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">身体拘束廃止研修</h2><p class="text-red-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center text-center">〜自由と尊厳を守り抜くために〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300 text-center"></span></div></div>` },
+    { title: "身体拘束とは？：定義の確認", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 uppercase tracking-widest mx-auto text-center">行動の自由の剥奪</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center">「自分の意思で動けない」状態</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-red-50 border-none lg:border-2 lg:border-red-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-red-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4 text-center text-center"><p class="font-black text-center text-balance text-center">身体拘束とは、衣類または綿入り手袋（ミトン）の着用、および器具を使用して、一時的に本人の身体を制限し、その行動の自由を奪う行為を指します。</p></div></div>` },
+    { title: "拘束の種類1：物理的な制限", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full text-center">現場に潜む代表的な拘束</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center text-center text-center"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-red-800 text-center">四方を柵で囲む</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center">ベッドの四方をサイドレール等で囲い、自力で降りられないようにする行為。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-red-800 text-center">ミトン・ベルトの使用</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-center">チューブを抜かないよう手を覆う、車椅子から落ちないようベルトで縛る行為。</p></div></div></div>` },
+    { title: "拘束の種類2：言葉と薬物", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 shadow-sm mx-auto uppercase tracking-widest text-center text-center">目に見えない拘束</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full text-center">心と脳を縛る行為</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 max-w-4xl mx-auto w-full text-center px-4 text-center text-center"><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm text-center">スピーチロック（言葉による拘束）：「座ってて！」「ダメ！」</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm text-center">化学的拘束：不穏を抑えるために、向精神薬を過剰に投与すること</div></div></div>` },
+    { title: "拘束がもたらす4つの弊害", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center text-center text-center text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center text-center">「守る」つもりが「壊す」結果に</h4></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-4 lg:gap-y-3 font-black text-[10px] lg:text-sm w-full max-w-5xl text-center text-center"><div class="p-3 bg-red-50 border-2 border-red-200 rounded-2xl text-left text-center"><p class="text-red-900 mb-1 text-center">身体的弊害</p><p class="text-slate-600 text-center">筋力の急激な低下（廃用症候群）、褥瘡、食欲不振、心肺機能の低下。</p></div><div class="p-3 bg-red-50 border-2 border-red-200 rounded-2xl text-left text-center text-center"><p class="text-red-900 mb-1 text-center">精神的弊害</p><p class="text-slate-600 text-center">絶望感、屈辱感、恐怖。認知症の症状が急速に悪化（不穏・徘徊等）。</p></div><div class="p-3 bg-red-50 border-2 border-red-200 rounded-2xl text-left text-center text-center text-center"><p class="text-red-900 mb-1 text-center">社会的弊害</p><p class="text-slate-600 text-center">家族との信頼関係の崩壊。施設全体の「介護の質」に対する不信感。</p></div><div class="p-3 bg-red-50 border-2 border-red-200 rounded-2xl text-left text-center text-center text-center text-center"><p class="text-red-900 mb-1 text-center text-center">経済的弊害</p><p class="text-slate-600 text-center text-center">ADL低下による介護負担増、治療費の増大、基本報酬の減算対象。</p></div></div></div>` },
+    { title: "身体拘束禁止の例外：3要件の厳格な遵守", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center text-center"><div class="space-y-4 lg:space-y-6 text-center text-center"><h4 class="text-2xl lg:text-5xl font-black text-red-900 flex items-center gap-4 lg:gap-6 justify-center text-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-red-700 rounded-full text-center"></span>やむを得ない場合の3要件</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center text-center text-center"><li>1. 切迫性：本人や他者の命に危険が目前にある</li><li>2. 非代替性：他に代わるケアの方法が全くない</li><li>3. 一時性：短時間かつ限定的である</li></ul><p class="text-red-700 font-black text-[10px] lg:text-xl mt-4 text-center w-full text-center text-center">※3つ全てを満たし、記録を残すことが義務です</p></div>` },
+    { title: "手続きなしの拘束は「虐待」である", order: 6, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase tracking-widest text-center text-center text-center">重大な権利侵害</div><h4 class="text-xl lg:text-3xl font-black text-red-900 leading-tight px-4 text-center w-full text-center text-center text-center">安易な判断が罪を生む</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center"><p class="text-lg lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center">正式な手続き（委員会検討・説明・同意・記録）を経ない拘束は、法的に「不適切なケア」ではなく「虐待」とみなされます。個人の判断で行うことは許されません。</p></div></div>` },
+    { title: "代替案1：転倒への対策（拘束しない工夫）", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center text-center text-center"><div class="space-y-4 lg:space-y-6 text-center text-center text-center"><h4 class="text-2xl lg:text-5xl font-black text-emerald-900 flex items-center gap-4 lg:gap-6 justify-center text-center text-center text-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-emerald-700 rounded-full text-center text-center"></span>転倒を防ぐ代替ケア</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center text-center text-center text-center"><li>・離床センサーによる早期の気づき</li><li>・ベッドの高さを「超低床」にする</li><li>・衝撃を吸収する床マットの活用</li></ul><p class="text-blue-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center text-center text-center text-center">「縛る」よりも「安全な環境」を作る</p></div>` },
+    { title: "代替案2：点滴抜去・弄便への対策", order: 8, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center text-center text-center text-center"><div class="space-y-4 lg:space-y-6 text-center text-center text-center text-center"><h4 class="text-2xl lg:text-5xl font-black text-emerald-900 flex items-center gap-4 lg:gap-6 justify-center text-center text-center text-center text-center text-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-emerald-700 rounded-full text-center text-center text-center"></span>不快感を取り除く</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center text-center text-center text-center text-center"><li>・抜去：チューブを衣服の中に隠す</li><li>・弄便：排泄リズムの把握と早期対応</li><li>・注意を逸らす（手遊び、音楽、会話）</li></ul></div>` },
+    { title: "代替案3：不穏・立ち上がりへの対策", order: 9, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full text-center text-center text-center text-center">なぜ立ち上がるのか？</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center text-center text-center text-center"><div class="flex flex-col gap-3 text-center text-center text-center text-center"><span class="px-6 py-2.5 lg:py-3 bg-emerald-50 border-2 border-emerald-200 rounded-2xl text-emerald-900 shadow-sm text-center text-center text-center text-center">便意・尿意はないか？</span><span class="px-6 py-2.5 lg:py-3 bg-emerald-50 border-2 border-emerald-200 rounded-2xl text-emerald-900 shadow-sm text-center text-center text-center text-center text-center">痛みや痒みはないか？</span></div><div class="flex flex-col gap-3 text-center text-center text-center text-center text-center text-center text-center"><span class="px-6 py-2.5 lg:py-3 bg-emerald-50 border-2 border-emerald-200 rounded-2xl text-emerald-900 shadow-sm text-center text-center text-center text-center text-center text-center">座り心地は悪くないか？</span><span class="px-6 py-2.5 lg:py-3 bg-emerald-50 border-2 border-emerald-200 rounded-2xl text-emerald-900 shadow-sm text-center text-center text-center text-center text-center text-center">寂しい・不安ではないか？</span></div></div><p class="text-emerald-700 font-black text-sm lg:text-xl px-4 text-center w-full text-balance text-center text-center text-center text-center text-center">「行動」の裏にある「ニーズ」を満たす介助へ。</p></div>` },
+    { title: "身体拘束廃止委員会の役割", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center text-center text-center">組織で取り組むゼロへの道</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center text-center text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">1</span>3ヶ月に1回以上の定期的な開催</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">2</span>拘束を行っている全事例の個別検討</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">3</span>廃止に向けた具体的期限と対策の策定</div></div></div>` },
+    { title: "家族への説明と同意：信頼の構築", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center text-center text-center text-center text-center">「安全のため」だけでは不十分</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center text-center text-center text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">1</span>拘束によるデメリットを正直に伝える</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">2</span>廃止に向けた施設の「努力」を共有する</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center">3</span>「一緒に見守る」関係性を築く</div></div></div>` },
+    { title: "満足感：あなたの「外す勇気」が尊厳を守る", order: 12, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center">プロとしての挑戦</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-xl lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center text-center text-center text-center">身体拘束を外した後に見せる、<br/>利用者の「晴れやかな表情」。<br/>それこそが、私たちが目指すべき<br/>最高の介護の姿です。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center">拘束に頼らない技術を、共に磨き続けましょう。</p></div>` },
+    { title: "車椅子での足置き（フットレフト）外し", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-50 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase text-center text-center text-center text-center">不適切な使用</div><h4 class="text-xl lg:text-3xl font-black text-red-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center">「足」を奪わない</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-lg lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center">自力で立ち上がれる方のフットレフト（足置き）を外さず、座面を高くして立ち上がれなくする行為は、立派な身体拘束です。移動の自由を制限してはいけません。</p></div></div>` },
+    { title: "認知症と身体拘束の関係", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center">不安を増幅させる悪循環</h4><div class="p-6 bg-white border-2 border-red-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">拘束される理由が理解できない認知症の方にとって、拘束は「突然の襲撃」と同じです。恐怖からパニックや暴言が強まり、さらに拘束を強めるという最悪の負の連鎖を断ち切る必要があります。</p></div></div>` },
+    { title: "環境調整：滑り止めとライティング", order: 15, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-emerald-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">暗がりを作らない</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center text-center text-center text-center"><div><p class="text-lg lg:text-3xl text-emerald-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center text-center text-center text-center"><span>●</span> 足元の照明：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center text-center text-center">夜間の足元灯を整備し、自分の位置を把握しやすくする。</p></div><div><p class="text-lg lg:text-3xl text-emerald-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span>●</span> 衣服の調整：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">裾の長いパジャマや、滑りやすい靴下を改善する。</p></div></div></div>` },
+    { title: "身体拘束記録の必須項目", order: 16, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center text-center text-center text-center text-center text-center">法的保護のための記録</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center text-center text-center text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center">1</span>拘束の具体的態様（方法）と理由</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center">2</span>拘束の開始時間と終了時間（都度記録）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center">3</span>その際の本人の心身の状況</div></div></div>` },
+    { title: "まとめ：身体拘束ゼロへ向けて", order: 17, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-red-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-red-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto text-center text-center text-center text-center text-center"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center text-center text-center text-center text-center text-center text-balance">縛らない、諦めない。<br/>それがプロのケアです。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em] text-center">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 18, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center text-center text-center text-center text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center text-center text-center text-center text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center text-center text-center text-center text-center text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-red-50 rounded-2xl lg:rounded-3xl border-2 border-red-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center text-center text-center text-center text-center text-center">
+            <p class="text-red-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center text-center text-center text-center text-center text-center text-center">
+              <span class="w-2 h-2 bg-red-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-red-700 rounded-full"></span>    
             </p>
           </div>
-          <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl max-w-3xl mx-auto">
-            <p class="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
-              <span class="w-2 h-8 bg-blue-600 rounded-full"></span>今日から変える介助視点
-            </p>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="p-6 bg-slate-50 rounded-3xl">
-                <p class="text-lg font-black text-slate-900 mb-2">× 100%全介助</p>
-                <p class="text-sm text-slate-500 font-bold">効率を優先して、<br/>すべてスタッフがやる</p>
-              </div>
-              <div class="p-6 bg-slate-50 rounded-3xl ring-2 ring-blue-100">
-                <p class="text-lg font-black text-blue-600 mb-2">○ 1%の自立支援</p>
-                <p class="text-sm text-slate-500 font-bold">「最後の一口だけ自分で」<br/>「立ち上がる時だけ支える」</p>
-              </div>
-            </div>
-          </div>
         </div>
-      ` 
-    },
-    { 
-      title: '意欲を引き出す「動機付け」の技術', 
-      order: 4, 
-      content: `
-        <div class="p-12 bg-emerald-50 rounded-[3.5rem] border border-emerald-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-4xl text-emerald-600 shadow-emerald-100">Goal</div>
-          <h4 class="text-3xl font-black text-emerald-900">「訓練」ではなく「楽しみ」を</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            「歩く練習をしましょう」ではなく、<br/>
-            <span class="text-emerald-600 italic">「またお孫さんと散歩に行きませんか？」</span><br/>
-            という、本人の「やりたいこと」にフォーカスした<br/>
-            声かけが、脳と体を動かします。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：待ちの姿勢', 
-      order: 5, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              利用者が自分で靴を履こうとしていますが、<br/>
-              5分以上かかっています。どうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">「遅れますよ！」と言って、<br/>無理やり履かせて移動させる</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">見守りを継続し、自立を促す。<br/>達成感を優先して時間を調整する。</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：尊厳ある「自立」のために', 
-      order: 6, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-emerald-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-emerald-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            介護予防とは、利用者の<br/>
-            「自由」を守る活動です。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            私たちは利用者の「足」ではなく、<br/>
-            自ら歩み出そうとする「心」を支える<br/>
-            パートナーでありましょう。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs mx-auto text-center">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "身体拘束廃止のあり方", order: 19, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">信頼を形にする</h4><div class="p-6 bg-white border-2 border-red-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">身体拘束廃止は、単なる法的義務ではなく、私たちの介護への「誠実さ」を問う試練です。利用者の自由を自分の自由と同じように大切にする。その当たり前の心を、現場の知恵で守り抜きましょう。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300 text-center text-center text-center text-center"></span></div></div>` },
+    { title: "1. 事例：立ち上がりへの対応", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-50 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase text-center text-center text-center text-center text-center text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center">場面：夜間のナースコール</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center">足元の不安定な利用者が、夜間に何度も一人でトイレに行こうとして立ち上がり、転倒の危険があります。</p><div class="h-px bg-slate-100 text-center text-center text-center text-center"></div><p class="text-xs lg:text-lg font-black text-red-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">「危ないから」とベルトを使いますか？<br class="lg:hidden" />それとも、ベッドの高さを変え、<br class="lg:hidden" />センサーの位置を調整しますか？</p></div></div>` },
+    { title: "2. 事例：点滴を抜いてしまう時", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-50 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase text-center text-center text-center text-center text-center text-center text-center text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center text-center text-center">場面：点滴治療中</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">点滴のチューブが気になり、何度も引っ張って抜こうとされます。ミトンを使えば安全に治療を継続できます。</p><div class="h-px bg-slate-100 text-center text-center text-center text-center text-center text-center"></div><p class="text-xs lg:text-lg font-black text-red-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">「治療のためだから」とミトンを使いますか？<br class="lg:hidden" />それとも、衣服の中に隠したり、<br class="lg:hidden" />興味を引く別の物を手渡しますか？</p></div></div>` },
+    { title: "リスク管理とチームの合意形成", order: 22, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">一人で抱え込まない</h4><div class="p-6 bg-white border-2 border-red-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">拘束を外すことは、転倒などの「事故リスク」を受け入れることでもあります。だからこそ、独断ではなくチーム全員で、そしてご家族とリスクを共有し、廃止に向けた「覚悟」を共有することが不可欠です。</p></div></div>` },
+    { title: "身体拘束廃止のプロセス", order: 23, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">段階的に減らす工夫</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center text-center text-center">1</span>アセスメント：拘束の理由を徹底分析</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center text-center text-center">2</span>試行：日中の数時間だけ外して様子を見る</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><span class="w-10 h-10 bg-red-700 text-white rounded-full flex items-center justify-center shrink-0 text-center text-center text-center text-center text-center text-center">3</span>検証：事故が起きていないか、本人の状態を確認</div></div></div>` },
+    { title: "最後の言葉：自由への責任", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><p class="text-xl lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">私たちは、利用者を「管理」するためにここにいるのではありません。その方が最後まで「自分らしく」あるために、ここにいるのです。そのことを、一瞬たりとも忘れないでください。</p></div></div>` }
   ]
 
   const questionsData = [
-    { text: '活動量の低下により低栄養や筋力低下が連鎖する現象を何というか。', explanation: 'フレイル・サイクルと呼ばれます。早期に発見し、この連鎖を断ち切ることが重度化防止の鍵です。', order: 1, choices: { create: [{ text: 'フレイル・サイクル', isCorrect: true }, { text: 'パレート・サイクル', isCorrect: false }, { text: 'ワーク・ライフ・サイクル', isCorrect: false }] } },
-    { text: 'スタッフが何でも手伝ってしまう「過剰介護」によって利用者の機能が低下することを何というか。', explanation: '廃用症候群（生活不活発病）と呼ばれます。親切心による過剰な手助けが、実は自立を妨げていることがあります。', order: 2, choices: { create: [{ text: '廃用症候群', isCorrect: true }, { text: '過活動症候群', isCorrect: false }, { text: '成長痛', isCorrect: false }] } },
-    { text: '2024年度の介護報酬改定において、重度化防止のためにリハビリと一体的に推進すべき要素はどれか。', explanation: '口腔管理と栄養管理を、リハビリテーションや機能訓練と一体的に進めることが強く求められています。', order: 3, choices: { create: [{ text: '口腔管理と栄養管理', isCorrect: true }, { text: '居室の清掃と洗濯', isCorrect: false }, { text: 'レクリエーションの回数', isCorrect: false }] } },
-    { text: '科学的介護情報システム（LIFE）において、ADL（日常生活動作）の改善を評価し加算に繋げる指標を何というか。', explanation: 'ADL利得（バーセルインデックス等の数値の変化）と呼ばれます。根拠に基づくケアの重要な指標です。', order: 4, choices: { create: [{ text: 'ADL利得', isCorrect: true }, { text: 'LIFEポイント', isCorrect: false }, { text: 'ケア・スコア', isCorrect: false }] } },
-    { text: '利用者のリハビリ意欲を引き出す「動機付け」として、最も適切な声かけはどれか。', explanation: '本人の「やりたいこと（生きがいや目標）」に焦点を当てた共感的な声かけが、自発的な動きを引き出します。', order: 5, choices: { create: [{ text: '「またお孫さんと散歩に行けるようになりましょう」', isCorrect: true }, { text: '「決まりですから訓練室へ行ってください」', isCorrect: false }, { text: '「スタッフが困るので自分でやってください」', isCorrect: false }] } }
+    { text: '身体拘束禁止の「3要件（切迫性・非代替性・一時性）」について、正しく説明しているものはどれか？', explanation: '身体拘束は、この3つの要件すべてを満たし、かつ適切な手続き（記録等）を踏んだ場合のみ例外的に認められます。', order: 1, choices: { create: [{ text: '3つの要件すべてを満たす必要がある', isCorrect: true }, { text: 'いずれか1つを満たせば良い', isCorrect: false }, { text: '人手不足であれば要件は免除される', isCorrect: false }] } },
+    { text: 'ベッドの四方をサイドレール（柵）等で囲み、自力で降りられないようにする行為への見解は？', explanation: 'これは「物理的拘束」に該当し、原則として禁止されている行為です。', order: 2, choices: { create: [{ text: '身体拘束に該当し、原則禁止である', isCorrect: true }, { text: '安全のためなら積極的に行うべきである', isCorrect: false }, { text: '家族の希望があれば自由に行って良い', isCorrect: false }] } },
+    { text: '「ちょっと待ってて！」などの言葉で利用者の行動を制限することを何というか？', explanation: 'これを「スピーチロック（言葉による拘束）」と呼び、身体拘束の一つとみなされます。', order: 3, choices: { create: [{ text: 'スピーチロック', isCorrect: true }, { text: 'タイムマネジメント', isCorrect: false }, { text: '行動の誘導', isCorrect: false }] } },
+    { text: '身体拘束がもたらす「身体的弊害」として、不適切なものはどれか？', explanation: '身体拘束は筋力の低下を早め、廃用症候群（はいようしょうこうぐん）を加速させます。', order: 4, choices: { create: [{ text: '筋力が向上し、歩行が安定する', isCorrect: true }, { text: '褥瘡（床ずれ）が発生しやすくなる', isCorrect: false }, { text: '食欲が低下し、低栄養に陥る', isCorrect: false }] } },
+    { text: '点滴を抜いてしまう利用者に対し、拘束以外の「代替ケア」として適切な工夫はどれか？', explanation: 'チューブを視界から隠したり、他のことに興味を逸らしたりする工夫が、拘束に頼らないケアの第一歩です。', order: 5, choices: { create: [{ text: 'チューブを衣服の中に隠して見えなくする', isCorrect: true }, { text: '両手をミトンで覆い、動かせなくする', isCorrect: false }, { text: '「抜いたらダメ」と大声で注意し続ける', isCorrect: false }] } },
+    { text: 'やむを得ず身体拘束を行う際、施設が必ず行わなければならない法的義務はどれか？', explanation: '拘束の態様、時間、本人の状態などを詳細に記録することが、運営基準で義務付けられています。', order: 6, choices: { create: [{ text: '拘束の態様や時間、理由を詳細に記録する', isCorrect: true }, { text: '管理者の判断だけで即座に開始する', isCorrect: false }, { text: '記録は特に残さず、口頭で共有する', isCorrect: false }] } },
+    { text: '身体拘束廃止委員会を開催すべき頻度として、運営基準で定められているのはどれか？', explanation: '身体拘束廃止委員会は、少なくとも3ヶ月に1回以上の開催が義務付けられています。', order: 7, choices: { create: [{ text: '3ヶ月に1回以上', isCorrect: true }, { text: '1年に1回程度', isCorrect: false }, { text: '事故が起きた時のみ', isCorrect: false }] } },
+    { text: '自力で立ち上がれる方の車椅子から、フットレフト（足置き）を外して立ち上がれなくする行為は？', explanation: '立ち上がる能力がある人の行動を阻害する行為であり、明白な身体拘束に該当します。', order: 8, choices: { create: [{ text: '身体拘束に該当する', isCorrect: true }, { text: '安全管理上の適切な配慮である', isCorrect: false }, { text: 'リハビリの一環である', isCorrect: false }] } },
+    { text: '身体拘束を廃止・削減していくために、チームで最も共有すべきことは何か？', explanation: '拘束を外す際のリスク（転倒等）をチームと家族で共有し、共に「覚悟」を持つことが不可欠です。', order: 9, choices: { create: [{ text: '廃止に伴うリスクとチームの合意形成', isCorrect: true }, { text: 'いかに効率よく拘束するか', isCorrect: false }, { text: '拘束器具の正しい縛り方', isCorrect: false }] } },
+    { text: '身体拘束の3要件のうち、「他に代わるケアの方法がない」ことを指すのはどれか？', explanation: 'これが「非代替性（ひだいたいせい）」であり、あらゆる代替案を検討した結果であることが求められます。', order: 10, choices: { create: [{ text: '非代替性', isCorrect: true }, { text: '切迫性', isCorrect: false }, { text: '一時性', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
