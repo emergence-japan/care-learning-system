@@ -4,284 +4,110 @@ export async function seedAccident(prisma: PrismaClient) {
   const slug = 'accident'
   const courseData = {
     slug,
-    title: '事故発生の防止・再発防止に関する研修（福祉用具含む）',
-    description: '重大事故を防ぐための要因分析と、福祉用具の安全点検技術を網羅した安全管理の決定版。',
+    title: '事故発生防止研修（2024年度）',
+    description: '〜「気づき」をチームの力に変える安全管理〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-amber-600 rounded-full"></span>
-            <p class="text-amber-600 font-black tracking-widest text-sm uppercase">Risk Management Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-rose-700 rounded-full"></span>
+            <p class="text-rose-800 font-black tracking-widest text-lg lg:text-2xl uppercase">事故発生防止研修</p>
+            <span class="h-px w-8 lg:w-12 bg-rose-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「いつも通り」のその瞬間に、<br/>事故が隠れているとしたら？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>1件の重大事故の影には、29件の軽微な事故があり、<br/>その下には300件の「ヒヤリハット」が隠れています。</p>
-            <div class="p-8 bg-amber-50/50 rounded-[2rem] border border-amber-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-amber-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">事故は「個人の性格」で起きるのではなく、本人・環境・ケアの「隙間」で起きます。<br/>命を救うのは、あなたの気づきと、組織の仕組みです。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight">「事故は『防ぐ』もの？<br/>それとも『起きてしまう』もの？」</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>介護の現場に「絶対」はありません。<br class="lg:hidden" />どれだけ注意していても、事故は一瞬の隙を突いて発生します。</p>
+            <div class="p-4 lg:p-5 bg-rose-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-rose-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-rose-100/50 rounded-bl-full"></div>
+              <p class="relative z-10 italic text-rose-900 font-black text-xs lg:text-sm leading-relaxed">大切なのは、事故を「誰かのせい」にすることではありません。なぜ起きたのかを分析し、組織として二度と同じ悲しみを繰り返さない仕組みを作ることです。</p>
             </div>
-            <p>この研修では、最新の事故予防ガイドラインに基づき、<br/>事故を未然に防ぐ分析力と、福祉用具を安全に使いこなす技術を学びます。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、利用者と職員の双方を守るための「安全の盾」を手に入れるためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-amber-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-amber-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">事故の要因分析と再発防止</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">「なぜなぜ分析」の手法を学び、個人の責任に帰さない<br/>組織的な再発防止策を立案できるようになる。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance">
+          <div class="bg-rose-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-rose-200">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">ハインリッヒの法則を理解する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">300件のヒヤリハットの裏にある1件の重大事故を防ぐ「気づき」の重要性を学ぶ。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-amber-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-amber-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">福祉用具の安全点検技術</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">車椅子・ベッド等の日常点検項目を理解し、<br/>福祉用具事故を100%防ぐための知識を習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">発生時の初動と報告を習得する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">救命優先の行動、正確な記録、ご家族・行政への適切な報告手順を理解する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">「なぜ」を深掘りし再発を防ぐ</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">個人の注意不足で終わらせず、環境や仕組みから対策を立てる技術を養う。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
     badgeLabel: '事故防止',
-    badgeIcon: 'AlertCircle',
+    badgeIcon: 'ShieldAlert',
   }
 
   const slidesData = [
-    { 
-      title: '事故発生の防止・再発防止に関する研修（福祉用具含む）', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-amber-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-amber-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Risk Management</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                事故防止・再発防止<br/>
-                <span class="text-amber-600 text-3xl">〜福祉用具の安全活用〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'ハインリッヒの法則：300件の宝', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-600 rounded-full text-xs font-black ring-1 ring-amber-100">
-            <span class="w-2 h-2 bg-amber-600 rounded-full animate-ping"></span>
-            Heinrich's Law
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            1件の重大事故の裏には、<br/>
-            <span class="text-amber-600 decoration-4 underline underline-offset-8">300件のヒヤリ</span>があります
-          </h4>
-          <div class="p-10 bg-white border-2 border-slate-50 rounded-[3rem] shadow-sm text-center font-bold text-slate-700 text-xl leading-relaxed italic max-w-2xl">
-            ヒヤリハット報告は「ミスした報告」ではありません。<br/>
-            重大事故を防ぐための「未来の命へのバトン」です。<br/>
-            隠さず共有することが最大の防御です。
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '事故の3要因分析：なぜ起きたか？', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Root Cause Analysis</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">
-              個人のせいにせず、多角的に分析する
-            </h4>
-          </div>
-          <div class="relative grid grid-cols-3 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-4xl mx-auto">
-            <div class="p-8 bg-white flex flex-col items-center text-center space-y-4">
-              <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div>
-              <p class="text-lg font-black text-slate-900">本人要因</p>
-              <p class="text-xs text-slate-400 leading-relaxed">体調、認知症、<br/>身体機能、副作用</p>
-            </div>
-            <div class="p-8 bg-white flex flex-col items-center text-center space-y-4">
-              <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div>
-              <p class="text-lg font-black text-slate-900">環境要因</p>
-              <p class="text-xs text-slate-400 leading-relaxed">濡れた床、照明、<br/>家具配置、段差</p>
-            </div>
-            <div class="p-8 bg-white flex flex-col items-center text-center space-y-4">
-              <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">3</div>
-              <p class="text-lg font-black text-slate-900">ケア要因</p>
-              <p class="text-xs text-slate-400 leading-relaxed">確認不足、焦り、<br/>無理な姿勢、手順</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '福祉用具の安全点検：車椅子', 
-      order: 3, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Equipment Check</h4>
-            <p class="text-lg text-amber-400 font-black mb-8 text-center">車椅子の事故は「点検」で100%防げます</p>
-            <div class="space-y-6 text-xl font-black max-w-md mx-auto text-left">
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>ブレーキ：遊びがないか、左右均等か</p>
-              </div>
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>タイヤ：空気圧は適切か、摩耗はないか</p>
-              </div>
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">03</span>
-                <p>足置き：緩みはないか、跳ね上げの確認</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '福祉用具の安全点検：ベッド・サイドレール', 
-      order: 4, 
-      content: `
-        <div class="p-12 bg-amber-50 rounded-[3.5rem] border border-amber-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center shadow-amber-100 font-black text-2xl text-amber-600">Bed</div>
-          <h4 class="text-3xl font-black text-amber-900">「隙間」が命を奪う</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            ベッド柵の隙間に首や手足が挟まる<br/>
-            重大事故が多発しています。<br/>
-            <span class="text-amber-600">JIS規格（T9254）適合品</span>か、<br/>
-            柵にガタつきがないか毎日確認しましょう。<br/>
-            特に夜間の安否確認時のチェックが必須です。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: '事故発生時の初動：命を守る3Step', 
-      order: 5, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl">
-            <div class="space-y-8 text-xl font-black max-w-xl mx-auto text-left">
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>救命と安全：呼吸・意識を確認。<br/>これ以上の転倒を防ぐ</p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>報告と応援：一人で抱えず、<br/>即座に看護師やリーダーを呼ぶ</p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">03</span>
-                <p>状況の保存：なぜ起きたか、<br/>そのままの状態で記録する</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '再発防止策の作り方：なぜなぜ分析', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <h4 class="text-3xl font-black text-slate-900 leading-relaxed">
-            「注意する」は対策ではありません
-          </h4>
-          <div class="p-12 bg-white border-2 border-slate-100 rounded-[3rem] shadow-2xl max-w-2xl mx-auto">
-            <p class="text-lg font-bold text-slate-400 mb-6">
-              × 「次は転ばないように職員全員で注意を徹底する」
-            </p>
-            <div class="h-px bg-slate-100 my-8"></div>
-            <p class="text-2xl font-black text-amber-600">
-              ○ 「センサーの配置を10cm手前に変更し、<br/>夜間の照明を上げる」
+    { title: "事故発生防止研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-rose-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto"><div class="bg-rose-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 px-4 text-center">事故発生防止研修</h2><p class="text-rose-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center w-full">〜「気づき」をチームの力に変える〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "ハインリッヒの法則：氷山の一角", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 uppercase tracking-widest mx-auto">1:29:300の法則</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">1件の重大事故の陰に<br class="lg:hidden" />300件のヒヤリがある</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-rose-50 border-none lg:border-2 lg:border-rose-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-rose-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4"><p class="font-black text-center lg:text-left">「あ、危ない！」というヒヤリハットを放置することは、重大事故へのカウントダウンを早めることと同じです。</p><p class="font-black text-center lg:text-left text-rose-900 underline underline-offset-8 decoration-2">ヒヤリとした時点で対策を打つ。これが事故防止の鉄則です。</p></div></div>` },
+    { title: "2024年度 安全管理の法的義務", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">組織として守るべき4つの義務</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">事故防止委員会の設置</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">3ヶ月に1回以上の開催と、検討結果の周知が必須です。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">指針・マニュアルの整備</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">事故防止の基本方針と、発生時の手順を明文化します。</p></div></div><p class="text-red-700 font-black text-[10px] lg:text-base mt-4 text-center w-full underline">※未整備の場合、基本報酬が減算の対象となります。</p></div>` },
+    { title: "事故防止の3原則", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 shadow-sm mx-auto uppercase tracking-widest">基本原則</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">安全を守る3つの視点</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 max-w-5xl mx-auto w-full px-4"><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">1. 予兆を逃さない</div><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">2. 隠さず報告する</div><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">3. 仕組みで防ぐ</div></div><p class="text-slate-500 font-black text-[10px] lg:text-base mt-4 text-center w-full">※「気をつける」という精神論だけでは、事故は防げません。</p></div>` },
+    { title: "高齢者施設で多い3大事故", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center">主要な事故リスクを知る</h4><p class="text-[10px] lg:text-sm text-slate-900 font-black">発生頻度と重症度が高い事故</p></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-x-4 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-5xl"><div class="p-4 bg-rose-50 border-2 border-rose-200 rounded-2xl text-left"><p class="text-rose-900 mb-1 text-center lg:text-left">転倒・転落</p><p class="text-[10px] lg:text-xs text-slate-600 text-center lg:text-left">骨折から寝たきりになるリスク。夜間やトイレでの発生が多いです。</p></div><div class="p-4 bg-rose-50 border-2 border-rose-200 rounded-2xl text-left"><p class="text-rose-900 mb-1 text-center lg:text-left">誤嚥・窒息</p><p class="text-[10px] lg:text-xs text-slate-600 text-center lg:text-left">誤嚥性肺炎の主因。食事形態の不一致や早食いが原因となります。</p></div><div class="p-4 bg-rose-50 border-2 border-rose-200 rounded-2xl text-left"><p class="text-rose-900 mb-1 text-center lg:text-left">誤薬（薬のミス）</p><p class="text-[10px] lg:text-xs text-slate-600 text-center lg:text-left">配膳ミス、飲み忘れ。命に関わる副作用を招く恐れがあります。</p></div></div></div>` },
+    { title: "転倒予防：脳と身体のミスマッチ", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>転倒のメカニズム</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li>・「足が上がっているつもり」で躓く</li><li>・急な立ち上がりによる血圧低下</li><li>・サイズの合わない履物や長い裾</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full">「段差のない場所」こそ最も危険です</p></div>` },
+    { title: "誤嚥予防：安全な食事姿勢", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>誤嚥を防ぐ基本</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li>・足の裏をしっかり床につける</li><li>・顎を引いた姿勢を保つ</li><li>・口腔ケアによる細菌の減少</li></ul><p class="text-blue-800 font-black text-sm lg:text-2xl mt-4 text-balance text-center w-full">「見守り」は飲み込むまでが1セットです</p></div>` },
+    { title: "誤薬予防：確認の形式化を防ぐ", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>誤薬を防ぐ仕組み</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li>・声出し確認（氏名・薬品名・用量）</li><li>・「ながら作業」の徹底排除</li><li>・薬袋と顔写真のダブルチェック</li></ul></div>` },
+    { title: "ヒヤリハット報告は「宝の山」", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">なぜ「報告」が必要なのか？</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left"><div class="flex flex-col gap-3"><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">潜在的な危険の可視化</span><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">対策のチーム共有</span><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">ケアの標準化</span></div><div class="flex flex-col gap-3"><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">法的保護（記録の重要性）</span><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">事故の芽を摘む訓練</span></div></div><p class="text-rose-700 font-black text-sm lg:text-xl px-4 text-balance text-center w-full">報告は「犯人探し」ではなく「組織の成長」です。</p></div>` },
+    { title: "良い報告書の書き方：事実と推測", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center w-full">客観的事実を正確に</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center w-full"><li>・「誰が・いつ・どこで・何を」したか</li><li>・「〜のようだ」ではなく「〜という状態だった」</li><li>・前後の状況（照明、室温、周囲の人）も記述</li></ul><p class="text-blue-700 font-black text-center w-full mt-4">5W1Hを意識した記録が、再発防止の第一歩です</p></div>` },
+    { title: "事故発生時の初動対応：救命優先", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4">事故が起きてしまったら</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>救急・応急処置（バイタル確認）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>速やかな報告（リーダー・看護師へ）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>現場の保存（状況を写真や図で記録）</div></div></div>` },
+    { title: "ご家族への説明と行政への報告", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4">誠実な対応が信頼を守る</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>発生後、速やかにご家族へ連絡・説明</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>市町村（保険者）への事故報告書の提出</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>事実関係をありのままに、真摯に伝える</div></div></div>` },
+    { title: "再発防止1：「なぜ」を5回繰り返す", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-700 text-center mb-4 uppercase tracking-widest w-full px-4">根本原因を探る思考</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> なぜ転倒したか？：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">急に立ち上がったから。</p></div><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> なぜ急に立ったか？：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">トイレに行きたかったから。</p></div><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> なぜ介助を呼ばなかったか？：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">ナースコールが遠かったから。</p></div></div><p class="text-rose-800 font-black text-sm lg:text-xl mt-4 text-center w-full">→ 対策：ナースコールの配置を見直す</p></div>` },
+    { title: "再発防止2：個人の注意に頼らない", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase tracking-widest">重要事項</div><h4 class="text-xl lg:text-3xl font-black text-rose-900 leading-tight px-4 text-center w-full">仕組みで防ぐという考え方</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-rose-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-lg lg:text-3xl font-black text-rose-900 leading-relaxed italic text-balance text-center">「気をつける」だけでは疲弊します。<br/>物理的な環境改善や、手順の標準化こそが、<br/>本当の再発防止に繋がります。</p></div></div>` },
+    { title: "福祉用具の安全な活用", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center">道具を過信しない</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> 車椅子のブレーキ：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">移乗時は必ず両輪ロック。緩みがないか毎日点検。</p></div><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> ベッドの高さ：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">離床時は足がしっかりつく高さに調整。</p></div><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> センサーマット：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center">作動確認と、鳴った時の迅速な駆けつけ体制。</p></div></div></div>` },
+    { title: "環境整備：5Sの徹底", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">安全は整理整頓から</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-6 lg:p-8 bg-rose-50 border-2 border-rose-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">整理・整頓</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">通路に物を置かない。電源コードをまとめ、躓きを防止する。</p></div><div class="p-6 lg:p-8 bg-rose-50 border-2 border-rose-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">清掃・清潔</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">水濡れや汚れは即座に拭き取る。足元の滑りを防ぐ。</p></div></div></div>` },
+    { title: "1. 事例：移乗介助中のヒヤリ", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-50 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">場面：車椅子への移乗</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center">車椅子へ移乗しようとした際、車椅子が少し後ろへ動き、ヒヤリとしました。幸い、利用者は転倒しませんでした。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-rose-700 italic text-center px-4 text-balance text-center w-full">「あー、よかった」で済ませますか？<br class="lg:hidden" />ブレーキの確認以外に、考えられる要因は何でしょうか？</p></div></div>` },
+    { title: "2. 事例：食事中のむせ込み", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-50 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-balance">場面：昼食の場面</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-balance">いつもより急いで食べていた利用者様が、激しくむせ込みました。背中を叩き落ち着きましたが、顔色が一時的に悪くなりました。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-rose-700 italic text-center px-4 text-balance text-center w-full">食事形態は合っていますか？<br class="lg:hidden" />見守りの配置はどうでしたか？</p></div></div>` },
+    { title: "解決：チームで共有する再発防止策", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">一人の気づきを全員の知恵に</h4><div class="p-6 lg:p-10 bg-rose-50 border-2 border-rose-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center"><p class="text-base lg:text-xl font-black text-rose-900 text-center w-full">安全を強化する具体策</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">1</span>ヒヤリハットは即座にメモし、終礼で共有</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">2</span>マニュアルの不備を見つけたら、すぐに修正を提案</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">3</span>「自分もやるかも」という謙虚な姿勢で学ぶ</div></div></div></div>` },
+    { title: "「非難しない」文化の構築", order: 19, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black italic text-rose-900 px-4 text-center w-full">失敗を責めない</h4><div class="p-8 lg:p-10 bg-white border-4 border-rose-100 rounded-[2rem] lg:rounded-[3rem] shadow-xl max-w-4xl mx-auto w-full text-center"><p class="text-xl lg:text-3xl font-black leading-relaxed text-center text-slate-900">正直な報告を賞賛する文化が、<br/><span class="text-rose-700 underline underline-offset-8 decoration-4">重大事故</span>を防ぐ唯一の道です。</p></div><p class="text-[10px] lg:text-lg font-black text-rose-800 px-4 text-center w-full">隠蔽は最大の不祥事。報告は最大の貢献です。</p></div>` },
+    { title: "事故後のメンタルケア", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-10 px-6 lg:px-12 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-800 flex items-center gap-4 w-full justify-center text-center">職員もまた、傷ついている</h4><p class="text-sm lg:text-2xl font-black leading-relaxed text-slate-900 max-w-4xl bg-rose-50 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-rose-100 w-full text-center">事故を起こした職員は、強い罪悪感と不安に襲われます。孤立させず、チーム全体で原因を分かち合い、心の回復を支えましょう。</p><p class="text-xs lg:text-xl font-black text-rose-800 text-center w-full px-4 text-center">安全な職場は、互いを思いやる心から生まれます。</p></div>` },
+    { title: "満足感：あなたの気づきが盾になる", order: 21, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">プロとしての誇り</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-rose-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-xl lg:text-3xl font-black text-rose-900 leading-relaxed italic text-balance text-center">あなたの小さな「違和感」が、<br/>誰かの大きな「明日」を<br/>守り抜くことに直結しています。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center">その誇りを持って、安全なケアを続けましょう。</p></div>` },
+    { title: "まとめ：安全な施設を、全員で", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance"><div class="w-24 h-24 lg:w-32 h-32 bg-rose-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-rose-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full">安全な施設を、<br/>チーム全員で創りましょう。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-rose-50 rounded-2xl lg:rounded-3xl border-2 border-rose-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center">
+            <p class="text-rose-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center">
+              <span class="w-2 h-2 bg-rose-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-rose-700 rounded-full"></span>    
             </p>
           </div>
-          <p class="text-sm text-slate-400 font-bold">
-            仕組みや環境を変えることが、<br/>真の再発防止（組織の安全）です
-          </p>
         </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：転倒を発見したら', 
-      order: 7, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              深夜、居室前で倒れている入所者を発見。<br/>
-              意識はありますが混乱しています。<br/>
-              あなたならどうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">すぐに抱き上げ、<br/>ベッドに運んでから様子を見る</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">動かさずに呼吸と脈拍を確認し、<br/>ナースコールで応援を呼ぶ</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '組織的な対応：事故防止検討委員会の役割', 
-      order: 8, 
-      content: `
-        <div class="p-12 bg-emerald-50 rounded-[3.5rem] border border-emerald-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-emerald-600 text-3xl shadow-emerald-100">Plan</div>
-          <h4 class="text-3xl font-black text-emerald-900">風通しの良い組織作り</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            ヒヤリハットを「言える」環境こそが<br/>最強の安全策です。<br/>
-            多職種で改善案を共有し、<br/>個人の責任にしない文化を作りましょう。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：安全は最大の思いやり', 
-      order: 9, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-amber-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-amber-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            安全管理は、プロとしての<br/>「誇り」を守ることです。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            あなたの「気づき」が、<br/>今日誰かの未来を救っています。<br/>
-            自信を持って日々の点検を続けましょう。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "事故防止のあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center mb-4 uppercase tracking-widest w-full text-center">組織の安全文化を作る</h4><div class="p-6 bg-white border-2 border-rose-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance">一人の不注意を責めるのではなく、なぜそのミスが起きたのかを真摯に考える姿勢こそが、最高のリスクマネジメントです。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '1件の重大事故の影に300件の無傷の事故（ヒヤリハット）が潜んでいるという法則を何というか。', explanation: 'ハインリッヒの法則と呼ばれます。この300件の「ヒヤリ」を共有することが重大事故の防止に繋がります。', order: 1, choices: { create: [{ text: 'ハインリッヒの法則', isCorrect: true }, { text: 'パレートの法則', isCorrect: false }, { text: 'ムーアの法則', isCorrect: false }] } },
-    { text: '事故の再発防止策を立案する際、不適切な考え方はどれか。', explanation: '「個人の不注意」や「努力」に頼るのではなく、手順や環境、仕組みを変えることが真の再発防止です。', order: 2, choices: { create: [{ text: '本人の不注意を厳しく叱責し反省させる', isCorrect: true }, { text: '作業手順やマニュアルを見直す', isCorrect: false }, { text: '福祉用具の種類や配置を変更する', isCorrect: false }, { text: '照明や床の材質などの環境を改善する', isCorrect: false }] } },
-    { text: '事故の要因分析における「3要因」の正しい組み合わせはどれか。', explanation: '本人要因（心身の状態）、環境要因（設備や場所）、ケア要因（介助方法や確認不足）の3つです。', order: 3, choices: { create: [{ text: '本人要因・環境要因・ケア要因', isCorrect: true }, { text: '性格要因・運要因・天気要因', isCorrect: false }, { text: '食事要因・睡眠要因・運動要因', isCorrect: false }] } },
-    { text: '車椅子の安全点検において、介助を開始する前に最も優先して確認すべきポイントはどこか。', explanation: 'ブレーキが確実に、かつ左右均等に効くことを確認することが最優先の安全点検です。', order: 4, choices: { create: [{ text: 'ブレーキの効き具合', isCorrect: true }, { text: 'クッションの柔らかさ', isCorrect: false }, { text: 'タイヤの汚れ', isCorrect: false }] } },
-    { text: '介護施設において事故防止検討委員会の設置や、事故防止指針の整備は義務か。', explanation: '介護保険法等の運営基準により、委員会の開催（3ヶ月に1回以上等）や指針の整備は完全に義務化されています。', order: 5, choices: { create: [{ text: '運営基準により完全に義務化されている', isCorrect: true }, { text: '努力目標であり任意である', isCorrect: false }, { text: '大規模な施設のみ義務である', isCorrect: false }] } }
+    { text: 'ハインリッヒの法則において、1件の重大事故の背景にあるとされる「ヒヤリハット」の件数はいくつか？', explanation: '「1:29:300の法則」と呼ばれ、300件のヒヤリハットが1件の重大事故に繋がるとされています。', order: 1, choices: { create: [{ text: '300件', isCorrect: true }, { text: '30件', isCorrect: false }, { text: '100件', isCorrect: false }] } },
+    { text: '2024年度の運営基準において、事故発生防止のために設置が義務付けられている組織はどれか？', explanation: '事故発生防止委員会を設置し、3ヶ月に1回以上の開催を行うことが義務化されています。', order: 2, choices: { create: [{ text: '事故発生防止委員会', isCorrect: true }, { text: '事故ゼロ達成チーム', isCorrect: false }, { text: '個人情報保護委員会', isCorrect: false }] } },
+    { text: '高齢者施設で発生頻度が最も高く、骨折などの重症化リスクも高い事故はどれか？', explanation: '転倒・転落は最も頻度が高く、生活の質（ADL）を大きく低下させるリスクがあります。', order: 3, choices: { create: [{ text: '転倒・転落', isCorrect: true }, { text: '誤薬', isCorrect: false }, { text: '離設（無断外出）', isCorrect: false }] } },
+    { text: '食事中の誤嚥を防ぐための姿勢として、最も適切なものはどれか？', explanation: '足の裏を床につけ、顎を引いた姿勢をとることで、誤嚥のリスクを下げられます。', order: 4, choices: { create: [{ text: '足の裏を床につけ、顎を引く', isCorrect: true }, { text: '上を向いて飲み込みやすくする', isCorrect: false }, { text: '足を浮かせた状態でリラックスする', isCorrect: false }] } },
+    { text: '事故が発生した際、職員が最初に行うべき最優先の対応はどれか？', explanation: '何よりもまず、利用者の生命の安全を確保するための救命・応急処置が最優先です。', order: 5, choices: { create: [{ text: '利用者の救命・応急処置', isCorrect: true }, { text: '速やかに事故報告書を書く', isCorrect: false }, { text: '管理者へ電話をする', isCorrect: false }] } },
+    { text: '事故報告書の目的として、不適切な考え方はどれか？', explanation: '報告書は再発防止や情報の共有のために書くものであり、個人の責任を追及するためのものではありません。', order: 6, choices: { create: [{ text: '個人の責任を追及し処罰するため', isCorrect: true }, { text: '再発防止策をチームで検討するため', isCorrect: false }, { text: '事実関係を正確に記録するため', isCorrect: false }] } },
+    { text: '再発防止策を検討する際、「なぜ」を繰り返して分析する手法を何というか？', explanation: '「なぜなぜ分析」と呼ばれ、根本的な原因（環境や仕組み）に辿り着くために有効です。', order: 7, choices: { create: [{ text: 'なぜなぜ分析', isCorrect: true }, { text: 'ハインリッヒ分析', isCorrect: false }, { text: 'SWOT分析', isCorrect: false }] } },
+    { text: '重大な事故が発生した際、事業所が報告を行うべき義務がある相手は誰か？', explanation: '市町村（保険者）への報告は、運営基準で定められた義務です。', order: 8, choices: { create: [{ text: '家族および市町村（保険者）', isCorrect: true }, { text: '警察のみ', isCorrect: false }, { text: '近隣の介護施設', isCorrect: false }] } },
+    { text: '車椅子からの転倒を防ぐため、移乗介助時に必ず行うべき点検はどれか？', explanation: '移乗時に車椅子が動かないよう、必ず両輪のブレーキがロックされているか確認します。', order: 9, choices: { create: [{ text: 'ブレーキが確実にかかっているか', isCorrect: true }, { text: 'タイヤの空気圧が十分か', isCorrect: false }, { text: '背もたれの角度が適切か', isCorrect: false }] } },
+    { text: '事故防止における「5S」のうち、躓きなどの原因となる不要な物を片付けるのはどれか？', explanation: '「整理」は、必要な物と不要な物を分け、不要な物を処分することです。', order: 10, choices: { create: [{ text: '整理', isCorrect: true }, { text: '清潔', isCorrect: false }, { text: '習慣', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
