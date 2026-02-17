@@ -4,289 +4,111 @@ export async function seedEtiquette(prisma: PrismaClient) {
   const slug = 'etiquette'
   const courseData = {
     slug,
-    title: '接遇に関する研修',
-    description: '「尊厳保持」を核としたプロのコミュニケーション技術。ミラーリングからセルフケアまで。',
+    title: '接遇・マナー研修（2024年度）',
+    description: '〜利用者の尊厳を守り、選ばれるプロになるために〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance text-center">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-blue-600 rounded-full"></span>
-            <p class="text-blue-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-amber-700 rounded-full"></span>
+            <p class="text-amber-800 font-black tracking-widest text-lg lg:text-2xl uppercase text-center">接遇・マナー研修</p>
+            <span class="h-px w-8 lg:w-12 bg-amber-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">「技術はいいけど、あの人はちょっと...」<br/>そう思われてしまう理由を考えたことはありますか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>介護技術がどれほど高くても、立ち居振る舞い一つで、<br/>利用者様は「大切にされていない」と感じてしまいます。</p>
-            <div class="p-8 bg-blue-50/50 rounded-[2rem] border border-blue-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-blue-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">接遇はマナー（作法）ではありません。<br/>それは利用者の「尊厳」を守り、あなたの「プロとしての誇り」を示す<br/>権利擁護の技術なのです。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight text-center">「技術は一流、でも接遇は二流。<br/>あなたはどちらの介護職からケアを受けたいですか？」</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>どんなに完璧な介助技術を持っていても、言葉遣いや態度一つで、利用者の心は閉ざされてしまいます。</p>
+            <div class="p-4 lg:p-5 bg-amber-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-amber-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4 text-center">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-amber-100/50 rounded-bl-full text-center"></div>
+              <p class="relative z-10 italic text-amber-900 font-black text-xs lg:text-sm leading-relaxed text-center">接遇とは単なる「お作法」ではありません。目の前の人の「尊厳」を認め、一人の人間として敬意を払う。その心の現れが、介助をスムーズにし、事故を防ぎ、施設を温かい「家」に変えるのです。</p>
             </div>
-            <p>笑顔と言葉遣いの一つが、ケアの効果を何倍にも高めます。<br/>利用者様との信頼関係を築く「魔法の技術」を学びましょう。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4 text-center">この研修は、プロとしての品格を磨き、利用者から「あなたで良かった」と選ばれる存在になるためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-blue-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">尊厳保持と非言語技術</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">目線の高さや空間の取り方、ミラーリング等を用い、<br/>利用者が「尊重されている」と感じる接遇を実践できる。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance text-center">
+          <div class="bg-amber-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-amber-200 text-center">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">接遇の5原則を完遂できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">挨拶、表情、身だしなみ、言葉遣い、態度の基本を、プロの基準で身につける。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-blue-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">感情管理とセルフケア</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">「感情労働」としての介護を理解し、笑顔を維持するための<br/>セルフケアとハラスメントへの対応を習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">スピーチロックを排除する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">「ちょっと待って」などの言葉による拘束を自覚し、肯定的な表現に言い換える技術を習得する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-amber-400 transition-all duration-500 text-center lg:text-left">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-amber-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-amber-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">非言語の力を活用できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">視線の高さ、頷き、相槌などの「聴く態度」を通じて、深い信頼関係を構築する。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
-    badgeLabel: '接遇マナー',
-    badgeIcon: 'Sparkles',
+    videoUrl: null,
+    badgeLabel: '接遇向上',
+    badgeIcon: 'Smile',
   }
 
   const slidesData = [
-    { 
-      title: '接遇に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-blue-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Hospitality Skill</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                接遇に関する研修<br/>
-                <span class="text-blue-600 text-3xl">〜選ばれるプロになるために〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '接遇の理念：サービスではなく「権利擁護」', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-black ring-1 ring-blue-100">
-            <span class="w-2 h-2 bg-blue-600 rounded-full animate-ping"></span>
-            CORE PHILOSOPHY
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            「人格の尊重」は<br/>
-            <span class="text-blue-600 decoration-4 underline underline-offset-8">法的義務</span>です
-          </h4>
-          <div class="p-10 bg-white border-2 border-slate-50 rounded-[3rem] shadow-sm font-bold text-slate-700 text-xl leading-relaxed max-w-3xl mx-auto">
-            介護保険法において「利用者の人格を尊重する」ことは<br/>
-            運営基準の第一歩です。不適切な態度は<br/>
-            単なる「マナー違反」ではなく、法的な<br/>
-            <span class="text-blue-600">人格尊重義務違反</span>となり得ることを認識しましょう。
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '接遇の5原則：プロの身だしなみ', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="relative grid grid-cols-5 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-5xl mx-auto">
-            <div class="p-6 bg-white space-y-4">
-              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black mx-auto text-lg shadow-sm">1</div>
-              <p class="text-base font-black text-slate-900">挨拶</p>
-              <p class="text-[10px] text-slate-400 leading-tight font-bold">相手を見て、<br/>明るく先手で</p>
-            </div>
-            <div class="p-6 bg-white space-y-4">
-              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black mx-auto text-lg shadow-sm">2</div>
-              <p class="text-base font-black text-slate-900">表情</p>
-              <p class="text-[10px] text-slate-400 leading-tight font-bold">穏やかな<br/>「専門職の笑顔」</p>
-            </div>
-            <div class="p-6 bg-white space-y-4">
-              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black mx-auto text-lg shadow-sm">3</div>
-              <p class="text-base font-black text-slate-900">態度</p>
-              <p class="text-[10px] text-slate-400 leading-tight font-bold">適切な<br/>距離感と姿勢</p>
-            </div>
-            <div class="p-6 bg-white space-y-4">
-              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black mx-auto text-lg shadow-sm">4</div>
-              <p class="text-base font-black text-slate-900">身だしなみ</p>
-              <p class="text-[10px] text-slate-400 leading-tight font-bold">清潔感と<br/>安全性の両立</p>
-            </div>
-            <div class="p-6 bg-white space-y-4">
-              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black mx-auto text-lg shadow-sm">5</div>
-              <p class="text-base font-black text-slate-900">言葉遣い</p>
-              <p class="text-[10px] text-slate-400 leading-tight font-bold">プロとしての<br/>正しい敬語</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '非言語の技術：目線の高さと空間', 
-      order: 3, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-3xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Non-Verbal Communication</h4>
-            <div class="space-y-6 text-xl font-black max-w-2xl mx-auto text-left text-slate-200">
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>目線の高さを合わせる：<br/><span class="text-sm opacity-70">見下ろすと、相手は威圧感を感じます</span></p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>パーソナルスペース：<br/><span class="text-sm opacity-70">斜め前から安心感を与えつつ近づく</span></p>
-              </div>
-              <div class="flex items-center gap-8">
-                <span class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">03</span>
-                <p>ミラーリング：<br/><span class="text-sm opacity-70">相手のリズムに合わせ、信頼感を醸成する</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '言葉の壁：赤ちゃん言葉の危険性', 
-      order: 4, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-10 bg-blue-50 rounded-[3rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Rights Advocacy</div>
-            <h4 class="text-3xl font-black text-blue-900 mb-6">「ちゃん付け」は人格の軽視です</h4>
-            <p class="text-lg text-blue-800 italic font-bold">
-              親しみを「なれなれしさ」と履き違えていませんか？<br/>
-              不適切な言葉遣いは、心理的虐待の第一歩です。
+    { title: "接遇・マナー研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance text-center"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-amber-400 blur-3xl opacity-20 scale-150 animate-pulse text-center"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto text-center"><div class="bg-amber-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">接遇・マナー研修</h2><p class="text-amber-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center">〜利用者の尊厳を守る品格〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center w-full"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "接遇は「最高のケア」の一部", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 uppercase tracking-widest mx-auto">信頼の基盤</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">「心」が開けば「身体」も動く</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-amber-50 border-none lg:border-2 lg:border-amber-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-amber-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4 text-center"><p class="font-black text-center text-balance text-center">接遇が不十分な状態での介助は、利用者にとって「侵入」や「攻撃」に感じられます。信頼関係があれば、介助への協力が得られ、お互いの負担が劇的に軽減します。</p><p class="font-black text-center text-balance text-amber-900 underline underline-offset-8 decoration-2 text-center">接遇は、介助を円滑にするための「最強の潤滑油」なのです。</p></div></div>` },
+    { title: "接遇の5原則", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">プロとしての基本チェック</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 max-w-5xl mx-auto w-full text-center px-4 text-center"><div class="p-4 bg-white border-2 border-slate-200 rounded-2xl shadow-sm font-black text-center">1. 挨拶</div><div class="p-4 bg-white border-2 border-slate-200 rounded-2xl shadow-sm font-black text-center">2. 表情（笑顔）</div><div class="p-4 bg-white border-2 border-slate-200 rounded-2xl shadow-sm font-black text-center">3. 身だしなみ</div><div class="p-4 bg-white border-2 border-slate-200 rounded-2xl shadow-sm font-black text-center">4. 言葉遣い</div><div class="p-4 bg-white border-2 border-slate-200 rounded-2xl shadow-sm font-black text-center">5. 態度</div></div><p class="text-slate-500 font-black text-[10px] lg:text-base mt-4 text-center w-full">※どれか一つでも欠けると、プロの接遇とは言えません。</p></div>` },
+    { title: "挨拶：作業の手を止める勇気", order: 3, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase tracking-widest text-center">挨拶の極意</div><h4 class="text-xl lg:text-3xl font-black text-amber-900 leading-tight px-4 text-center w-full text-center">「ながら挨拶」を卒業する</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-amber-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center"><p class="text-lg lg:text-3xl font-black text-amber-900 leading-relaxed italic text-balance text-center text-center">記録を書きながら、歩きながらの挨拶は、<br/>「あなたは重要ではない」というメッセージです。<br/>一度足を止め、相手の目を見て挨拶を届けましょう。</p></div></div>` },
+    { title: "身だしなみ：おしゃれとマナーの違い", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center">清潔感と安全性が大前提</h4></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-4 lg:gap-y-3 font-black text-[10px] lg:text-sm w-full max-w-5xl text-center"><div class="p-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-left text-center"><p class="text-amber-900 mb-1 text-center">爪の長さ・汚れ</p><p class="text-slate-600 text-center">皮膚を傷つけないよう短く。不潔感を与えない。</p></div><div class="p-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-left text-center"><p class="text-amber-900 mb-1 text-center">髪型・身なり</p><p class="text-slate-600 text-center">長い髪は結ぶ。シワのない衣服。派手な装飾品は避ける。</p></div></div></div>` },
+    { title: "言葉遣い1：タメ口・赤ちゃん言葉の弊害", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-amber-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-amber-700 rounded-full"></span>尊厳を奪う言葉</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・「〜してね」「あーんして」</li><li>・人生の大先輩であることを忘れない</li><li>・敬称を略さない（「〜ちゃん」禁止）</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">「親しみ」を「馴れ馴れしさ」へ履き違えない</p></div>` },
+    { title: "言葉遣い2：敬語の基本と丁寧さ", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-amber-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-amber-700 rounded-full"></span>プロの言葉選び</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・丁寧語（〜です、〜ます）が基本</li><li>・「〜でよろしかったでしょうか」などの誤用</li><li>・相手が聞き取りやすい声のトーンと速さ</li></ul></div>` },
+    { title: "態度：無意識の「拒絶サイン」を消す", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-amber-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-amber-700 rounded-full"></span>身体は語っている</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・腕組み、ポケットに手を入れる</li><li>・壁に寄りかかる、顎を出す</li><li>・利用者の方を向かずに作業する</li></ul><p class="text-rose-700 font-black text-sm lg:text-2xl mt-4 text-center w-full text-center">「聴く姿勢」そのものが安心を与えます</p></div>` },
+    { title: "クッション言葉の活用", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">一言添える、大人の配慮</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center"><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center text-center">「恐れ入りますが、」</span><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center text-center">「差し支えなければ、」</span></div><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center text-center">「お忙しいところ申し訳ありませんが」</span><span class="px-6 py-2.5 lg:py-3 bg-amber-50 border-2 border-amber-200 rounded-2xl text-amber-900 shadow-sm text-center text-center">「せっかくですが、今回は」</span></div></div><p class="text-amber-700 font-black text-sm lg:text-xl px-4 text-center w-full text-balance text-center">「命令」を「依頼」に変える魔法の言葉です。</p></div>` },
+    { title: "肯定的な表現への言い換え", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center w-full text-center">「〜しないで」を言わない</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center text-center"><li>・×「動かないで」→ ○「座っていましょう」</li><li>・×「こぼさないで」→ ○「ゆっくり召し上がれ」</li><li>・×「走らないで」→ ○「ゆっくり歩きましょう」</li></ul><p class="text-blue-700 font-black text-center w-full mt-4 text-center">脳は肯定的な指示に反応しやすくなります</p></div>` },
+    { title: "スピーチロック：言葉による拘束", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center w-full mb-4 px-4 animate-pulse text-center">無意識の「心の拘束」</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">1</span>「ちょっと待ってて！」</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">2</span>「まだダメですよ！」</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-red-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center shrink-0">3</span>「さっき言いましたよね！」</div></div><p class="text-red-700 font-black text-xs lg:text-sm mt-4 text-center w-full text-center">※これらは身体拘束に準ずる「不適切なケア」です。</p></div>` },
+    { title: "非言語コミュニケーションの力", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center text-center">言葉よりも「態度」が伝わる</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>視線の高さを合わせる（膝をつく）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>ゆっくりと深い頷き（受容のサイン）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start text-center"><span class="w-10 h-10 bg-amber-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>温かい眼差し（マスク越しでも笑顔を）</div></div></div>` },
+    { title: "傾聴の姿勢：腰を折らずに聴く", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-700 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center">相手の心の声を拾う</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center"><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center"><span>●</span> 受容：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">否定せず、ありのままの話を受け入れる。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center"><span>●</span> 共感：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center">「それはお辛かったですね」と感情に寄り添う。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3 justify-center text-center text-center"><span>●</span> 沈黙を待つ：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center">言葉に詰まっても急かさず、ゆっくり待つ。</p></div></div></div>` },
+    { title: "心の距離感：パーソナルスペース", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase tracking-widest text-center text-center">心理的領域</div><h4 class="text-xl lg:text-3xl font-black text-amber-900 leading-tight px-4 text-center w-full text-center text-center">いきなり触れない</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-amber-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center"><p class="text-lg lg:text-3xl font-black text-amber-900 leading-relaxed italic text-balance text-center text-center text-center text-center">身体に触れるケアは、相手の「最も近い領域」に入ることです。まずは遠くから声をかけ、視界に入り、了承を得てから触れる。これがマナーです。</p></div></div>` },
+    { title: "電話・来客対応：施設の顔として", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center">外部への敬意を示す</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center text-center"><div><p class="text-lg lg:text-3xl text-amber-700 mb-1 flex items-center gap-3 justify-center text-center text-center"><span>●</span> 電話：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center">「笑声（えごえ）」で明るく、ハキハキと。</p></div><div><p class="text-lg lg:text-3xl text-amber-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center"><span>●</span> 来客：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center">立ち上がって挨拶。「お越しいただきありがとうございます」。</p></div></div></div>` },
+    { title: "苦情対応：最初の3分間が勝負", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full text-center text-center text-center">「聴く」が最大の解決策</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center text-center text-center text-center"><div class="p-6 lg:p-8 bg-amber-50 border-2 border-amber-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center text-center">否定・反論をしない</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-center text-balance">たとえ事実と違っても、まずは「不快な思いをさせたこと」に共感します。</p></div><div class="p-6 lg:p-8 bg-amber-50 border-2 border-amber-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center text-center"><p class="font-black text-lg lg:text-xl text-amber-800 text-center text-center">誠実な事実確認</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center text-center text-center text-balance">「確認して折り返しご連絡いたします」と、責任を持って繋ぎます。</p></div></div></div>` },
+    { title: "1. 事例：忙しい時の呼びかけ", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase text-center text-center text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center">場面：配膳中のナースコール</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center">配膳で大忙しの時に「トイレに行きたい」とコールがありました。つい「今忙しいから、ちょっと待ってて！」と言ってしまいました。</p><div class="h-px bg-slate-100 text-center"></div><p class="text-xs lg:text-lg font-black text-amber-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center">この「ちょっと待って」は何分でしょうか？<br class="lg:hidden" />利用者にはどう響いているでしょうか？</p></div></div>` },
+    { title: "2. 事例：怒鳴っている利用者へ", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase text-center text-center text-center text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center">場面：不穏な状態</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center text-center text-center text-center text-center text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center text-center text-center text-center">「何やってるんだ！早くしろ！」と、D様が大きな声で怒鳴っています。周囲の利用者も不安そうな顔をしています。</p><div class="h-px bg-slate-100 text-center"></div><p class="text-xs lg:text-lg font-black text-amber-700 italic text-center px-4 text-balance text-center w-full text-center text-center text-center text-center text-center text-center">「静かにしてください！」と制止しますか？<br class="lg:hidden" />それとも怒りの奥にある「不安」に触れますか？</p></div></div>` },
+    { title: "解決：尊厳を形にする接遇", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center">プロとしての回答</h4><div class="p-6 lg:p-10 bg-amber-50 border-2 border-amber-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center text-center text-center"><p class="text-base lg:text-xl font-black text-amber-900 text-center w-full text-balance text-center text-center">心を動かす言葉掛け</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center text-center text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center">1</span>「10分後に参りますね」と具体的な時間を伝える</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center">2</span>怒りには「お待たせして申し訳ありません」とまず受容</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-amber-100 shadow-sm text-center justify-center lg:justify-start text-center text-center"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0 text-center">3</span>忙しい時こそ「笑顔」と「アイコンタクト」</div></div></div></div>` },
+    { title: "満足感：あなたの接遇が「家」を創る", order: 19, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-center text-center text-center text-center text-center">安心のバリアを作る</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-amber-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center text-center text-center text-center"><p class="text-xl lg:text-3xl font-black text-amber-900 leading-relaxed italic text-balance text-center text-center text-center text-center text-center">「自分を大切に扱ってくれる」<br/>その実感が、利用者の自立を促し、<br/>最高の安心へと繋がります。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center text-balance text-center text-center text-center text-center">あなたの接遇が、施設を真の安らぎの場に変えるのです。</p></div>` },
+    { title: "職員同士の接遇：職場の品格", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center">鏡としての同僚</h4><div class="p-6 bg-white border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-balance text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center">利用者は、職員同士の会話や態度をよく見ています。同僚への敬意がない職場では、利用者への敬意も必ず疎かになります。プロ同士として、互いに「様」や「さん」で呼び合い、感謝を伝え合う文化を創りましょう。</p></div></div>` },
+    { title: "電話応対：声の「おもてなし」", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center text-center text-center text-center text-center text-center text-center text-center">姿は見えなくても</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center text-center text-center text-center"><div><p class="text-lg lg:text-3xl text-amber-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center"><span>●</span> 3コール以内に：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center">「大変お待たせいたしました」を添える。</p></div><div><p class="text-lg lg:text-3xl text-amber-700 mb-1 flex items-center gap-3 justify-center text-center text-center text-center text-center text-center"><span>●</span> 復唱確認：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center text-center text-center text-center text-center">お名前、ご用件、折り返し先を正確に記録。</p></div></div></div>` },
+    { title: "まとめ：選ばれるプロフェッショナル", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center text-center text-center text-center text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-amber-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-amber-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto text-center text-center text-center"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center text-center text-center text-balance">あなたの笑顔が、<br/>この施設の最高の価値です。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center text-center text-center text-center text-center text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center text-center text-center text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center text-center text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center text-center text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center text-center text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-amber-50 rounded-2xl lg:rounded-3xl border-2 border-amber-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center text-center text-center">
+            <p class="text-amber-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center text-center text-center text-center">
+              <span class="w-2 h-2 bg-amber-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-amber-700 rounded-full"></span>    
             </p>
           </div>
-          <div class="grid grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-              <p class="text-lg font-black text-slate-400 mb-3">× 馴れ合い</p>
-              <p class="text-base text-slate-500 font-bold leading-relaxed">
-                「ごはん食べようね」<br/>「お利口さんだね」
-              </p>
-            </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm ring-2 ring-blue-50">
-              <p class="text-lg font-black text-blue-600 mb-3">○ プロの接遇</p>
-              <p class="text-base text-slate-900 font-bold leading-relaxed">
-                「お食事をお持ちしました」<br/>「素晴らしいですね」
-              </p>
-            </div>
-          </div>
         </div>
-      ` 
-    },
-    { 
-      title: '「聴く」技術：共感と傾聴', 
-      order: 5, 
-      content: `
-        <div class="p-12 bg-emerald-50 rounded-[3.5rem] border border-emerald-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center font-black text-4xl text-emerald-600 shadow-emerald-100">👂</div>
-          <h4 class="text-3xl font-black text-emerald-900">受容的態度の「オウム返し」</h4>
-          <p class="text-xl text-slate-600 font-bold leading-relaxed">
-            相手の言葉を繰り返すことで、<br/>
-            「自分の話を聴いてもらえている」という<br/>
-            安心感を与えます。否定や助言の前に、<br/>
-            まずは徹底的に聴くことが支援の基盤です。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: '感情労働：自分を守るセルフケア', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Mental Support</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">笑顔を保つための「心の余裕」</h4>
-          </div>
-          <div class="p-12 bg-white border-2 border-slate-50 rounded-[3.5rem] shadow-sm text-center font-bold text-slate-700 text-xl leading-relaxed italic max-w-2xl mx-auto">
-            介護は高度な「感情労働」です。<br/>
-            自分の疲れに気づき、「今、少し余裕がないです」と<br/>
-            チームに相談することは、プロとしての責任です。
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'ハラスメントと接遇の境界線', 
-      order: 7, 
-      content: `
-        <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative text-center overflow-hidden max-w-3xl mx-auto">
-          <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-red-500/10 rounded-full blur-[100px]"></div>
-          <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10">Boundary Management</h4>
-          <p class="text-2xl font-black mb-10">毅然とした接遇が、<br/>あなたと組織を守ります</p>
-          <p class="text-lg text-slate-300 leading-relaxed font-bold">
-            理不尽な要求に対しては、一人の問題にせず、<br/>
-            組織として「ガイドライン」に基づき、<br/>
-            礼儀を保ちつつ毅然と対応します。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：多忙な時のナースコール', 
-      order: 8, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              多忙な時間帯。何度もコールを鳴らす<br/>利用者に、どう声をかけますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">「ちょっと待ってください！<br/>今忙しいんです！」と声を荒らげる</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">「お呼びでしょうか。5分ほど後に<br/>お伺いしてもよろしいですか？」と伝える</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：選ばれるプロとしての誇り', 
-      order: 9, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-blue-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-blue-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            接遇は、あなた自身を<br/>
-            輝かせるための技術です。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            今日から一つ、新しい笑顔の習慣を。<br/>
-            あなたの立ち居振る舞いが、<br/>
-            この施設の「質」を決めています。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs mx-auto text-center">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "接遇・マナーのあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center text-center text-center text-center text-center text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-amber-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center text-center text-center text-center text-center">心を通わせる技術</h4><div class="p-6 bg-white border-2 border-amber-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center text-center text-center text-center text-center text-balance text-center text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center text-center text-center text-center">マナーは相手を縛るものではなく、自由にするためのものです。正しい接遇があるからこそ、利用者は遠慮なく思いを伝えられ、私たちは自信を持ってケアを提供できる。そんな相互信頼の架け橋を、あなたの言葉で築いてください。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center text-center text-center text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '接遇の「5原則」に含まれないものはどれか。', explanation: '挨拶、表情、態度、身だしなみ、言葉遣いが5原則です。「効率」は接遇の原則ではありません。', order: 1, choices: { create: [{ text: '挨拶', isCorrect: false }, { text: '表情', isCorrect: false }, { text: '効率・スピード', isCorrect: true }, { text: '身だしなみ', isCorrect: false }] } },
-    { text: '利用者とコミュニケーションをとる際、非言語技術として適切な態度はどれか。', explanation: '威圧感を与えず安心感を与えるため、相手の目線の高さに合わせることが重要です。', order: 2, choices: { create: [{ text: '目線の高さを合わせる（腰を下ろす）', isCorrect: true }, { text: '腕組みをしながら威厳を持って話す', isCorrect: false }, { text: '立ったまま見下ろして指示を出す', isCorrect: false }] } },
-    { text: '「赤ちゃん言葉」や過度なタメ口での介助は、どのような法的・倫理的リスクがあるか。', explanation: '本人の尊厳を傷つけ、権利侵害（虐待の芽）になる恐れがあります。厚生労働省の指針でも改善が求められています。', order: 3, choices: { create: [{ text: '本人の尊厳を侵害し、虐待に繋がる恐れがある', isCorrect: true }, { text: '親しみが増して利用者に喜ばれる', isCorrect: false }, { text: '認知症の方には理解しやすいため推奨される', isCorrect: false }] } },
-    { text: '相手の話を聴く際、相手の言葉を繰り返すことで共感を示す技術を何というか。', explanation: 'オウム返し（バックトラッキング）と呼ばれ、信頼関係構築に有効な傾聴術です。', order: 4, choices: { create: [{ text: 'オウム返し（ミラーリング・バックトラッキング）', isCorrect: true }, { text: 'スルー（聞き流し）', isCorrect: false }, { text: 'アドバイス（助言）', isCorrect: false }] } },
-    { text: '介護職が自身の感情を管理・抑制しながら働く「感情労働」において、適切な行動はどれか。', explanation: '一人で抱え込まず、チームに相談して応援を頼むことが、燃え尽き防止とケアの質維持に不可欠です。', order: 5, choices: { create: [{ text: '周囲に相談し、応援を頼む', isCorrect: true }, { text: '限界まで一人で我慢して笑顔を作る', isCorrect: false }, { text: 'イライラをそのまま利用者にぶつける', isCorrect: false }] } }
+    { text: '接遇の5原則（挨拶・表情・身だしなみ・言葉遣い・態度）において、最も重要とされる考え方はどれか？', explanation: '接遇の目的は単なる形式ではなく、相手への「敬意」と「尊厳の保持」を態度で示すことにあります。', order: 1, choices: { create: [{ text: '相手への敬意と尊厳の保持を示す', isCorrect: true }, { text: '施設側のルールを押し付ける', isCorrect: false }, { text: '効率的に作業を終わらせる', isCorrect: false }] } },
+    { text: '作業をしながら挨拶を行う「ながら挨拶」が不適切とされる最大の理由は何か？', explanation: '視線を合わせない挨拶は「あなたは大切ではない」という拒絶のメッセージとして伝わってしまうからです。', order: 2, choices: { create: [{ text: '相手を軽んじている印象を与えるため', isCorrect: true }, { text: '作業のミスが増えるから', isCorrect: false }, { text: '声が聞き取りにくくなるから', isCorrect: false }] } },
+    { text: '利用者を呼び捨てにしたり、「〜ちゃん」と呼んだりすることの危険性はどれか？', explanation: '不適切な呼称は対等な関係を損ない、虐待の入り口となる「心理的障壁の低下」を招く恐れがあります。', order: 3, choices: { create: [{ text: '心理的障壁が下がり虐待に繋がりやすい', isCorrect: true }, { text: '親しみやすくなるので推奨される', isCorrect: false }, { text: '本人が許可していれば全く問題ない', isCorrect: false }] } },
+    { text: '「ちょっと待ってて！」などの言葉で利用者の行動を制限することを何というか？', explanation: 'これを「スピーチロック（言葉による拘束）」と呼び、身体拘束と同様に不適切なケアとみなされます。', order: 4, choices: { create: [{ text: 'スピーチロック', isCorrect: true }, { text: 'タイムマネジメント', isCorrect: false }, { text: '優先順位の提示', isCorrect: false }] } },
+    { text: '「〜しないでください」という否定的な表現を、肯定的な表現に言い換えるメリットは？', explanation: '肯定的な言葉（例：座っていましょう）は、脳が行動を理解しやすく、安心感を与えやすいためです。', order: 5, choices: { create: [{ text: '本人が次にすべき行動を理解しやすい', isCorrect: true }, { text: '職員のストレスが減るから', isCorrect: false }, { text: '言葉数が少なくて済むから', isCorrect: false }] } },
+    { text: '相手に依頼や断りを入れる際、衝撃を和らげるために添える言葉を何というか？', explanation: '「恐れ入りますが」「差し支えなければ」などの言葉を「クッション言葉」と呼びます。', order: 6, choices: { create: [{ text: 'クッション言葉', isCorrect: true }, { text: 'ガード言葉', isCorrect: false }, { text: 'オブラート言葉', isCorrect: false }] } },
+    { text: '話を聴く際の「傾聴（けいちょう）」の姿勢として、不適切なものはどれか？', explanation: '話を途中で遮って自分の意見を言うのは傾聴ではありません。まずは最後まで聴き切ることが重要です。', order: 7, choices: { create: [{ text: '話の途中で自分の意見を被せる', isCorrect: true }, { text: '相手の言葉を否定せずに受け入れる', isCorrect: false }, { text: '適切なタイミングで相槌を打つ', isCorrect: false }] } },
+    { text: '認知症の利用者と視線を合わせて話す際の適切な高さはどれか？', explanation: '威圧感を与えないよう、相手よりも「少し低い」または「同じ高さ」に目線を合わせるのが基本です。', order: 8, choices: { create: [{ text: '相手の目線と同じか、少し低い位置', isCorrect: true }, { text: '立ったまま、上から見下ろす位置', isCorrect: false }, { text: '遠くから大きな声で呼びかける', isCorrect: false }] } },
+    { text: '来客（ご家族や外部専門職）への対応として、プロとしてふさわしい態度は？', explanation: '施設の顔として、作業を中断して立ち上がり、敬意を持って挨拶・対応することが求められます。', order: 9, choices: { create: [{ text: '立ち上がって、敬意を持って挨拶する', isCorrect: true }, { text: '忙しいので、座ったまま会釈する', isCorrect: false }, { text: '自分の担当外なら挨拶しなくて良い', isCorrect: false }] } },
+    { text: '電話応対において、相手に安心感を与える「笑声（えごえ）」とはどのような声か？', explanation: '顔は見えなくても、笑顔で話していることが伝わるような明るく温かいトーンの声のことです。', order: 10, choices: { create: [{ text: '笑顔が伝わるような明るいトーンの声', isCorrect: true }, { text: '大きな声で威圧的に話す声', isCorrect: false }, { text: '感情を抑えた機械的な声', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
