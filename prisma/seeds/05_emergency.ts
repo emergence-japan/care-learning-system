@@ -4,268 +4,111 @@ export async function seedEmergency(prisma: PrismaClient) {
   const slug = 'emergency'
   const courseData = {
     slug,
-    title: '緊急時対応に関する研修（福祉用具含む）',
-    description: '救急蘇生法（BLS/AED）から窒息対応、福祉用具の緊急操作までを網羅した「命を守る」研修。',
+    title: '緊急時対応研修（2024年度）',
+    description: '〜「迷わず動く」ための初動と救命技術〜',
     introduction: `
-        <div class="space-y-8">
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4 text-balance">
           <div class="flex items-center gap-4">
-            <span class="h-1 w-12 bg-red-600 rounded-full"></span>
-            <p class="text-red-600 font-black tracking-widest text-sm uppercase">Life Saving Hook</p>
+            <span class="h-px w-8 lg:w-12 bg-rose-700 rounded-full"></span>
+            <p class="text-rose-800 font-black tracking-widest text-lg lg:text-2xl uppercase">緊急時対応研修</p>
+            <span class="h-px w-8 lg:w-12 bg-rose-700 rounded-full"></span>
           </div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">もし今、目の前で利用者が倒れたら、<br/>あなたの「手」は動きますか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>目の前で利用者が倒れた時、喉を詰まらせた時。<br/>あなたの頭は真っ白になるかもしれません。<br/>しかし、あなたの「手」が動きを覚えていれば、救える命があります。</p>
-            <div class="p-8 bg-red-50/50 rounded-[2rem] border border-red-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-red-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">救急隊が到着するまでの「空白の数分間」が、その人の一生を左右します。<br/>最善の初動（BLS）と、福祉用具の緊急操作をマスターしましょう。</p>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight">目の前で利用者が倒れた。<br/>あなたは「冷静」でいられますか？</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4 text-center">
+            <p>緊急事態は、いつも突然やってきます。<br class="lg:hidden" />パニックになるのは、あなたが弱いからではなく、「何をすべきか」が明確でないからです。</p>
+            <div class="p-4 lg:p-5 bg-rose-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-rose-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-rose-100/50 rounded-bl-full"></div>
+              <p class="relative z-10 italic text-rose-900 font-black text-xs lg:text-sm leading-relaxed text-center">最初の数分間。その短時間の行動が、利用者の命の行方を左右します。医療職ではないあなたにしかできない「救命のバトン」があるのです。</p>
             </div>
-            <p>この研修は、厚生労働省の指針に準拠し、<br/>介護現場特有のトラブルへの即応力を養います。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、いざという時に「動ける自分」になるための、最強の備えです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-red-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-red-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">救急蘇生とAEDの完遂</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">意識障害や心肺停止時のABCD評価を行い、<br/>迷わず胸骨圧迫とAED操作を実施できるようになる。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full text-balance text-center">
+          <div class="bg-rose-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-rose-200">学習目標</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">救急要請の判断ができる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">直ちに119番通報すべき重大なサイン（レッドフラッグ）を習得する。</p>
+              </div>
             </div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-red-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-red-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div>
-              <h4 class="text-xl font-black text-slate-900 mb-2">窒息・用具トラブルへの即応</h4>
-              <p class="text-slate-500 leading-relaxed font-medium">誤嚥時の背部叩打法、および介護リフト等の<br/>重大故障時の非常降下操作を習得する。</p>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">心肺蘇生と窒息対応の完遂</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">胸骨圧迫、AED、背部叩打法などの具体的な緊急処置を正しく理解する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-rose-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-rose-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-rose-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">施設内連携を迷わず行う</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">救命・連絡・他利用者への配慮といった、チームでの役割分担を習得する。</p>
+              </div>
             </div>
           </div>
         </div>
       `,
+    videoUrl: null,
     badgeLabel: '緊急対応',
-    badgeIcon: 'Clock',
+    badgeIcon: 'Activity',
   }
 
   const slidesData = [
-    { 
-      title: '緊急時対応に関する研修（福祉用具含む）', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-red-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-red-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Emergency Protocol</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                緊急時対応研修<br/>
-                <span class="text-red-600 text-3xl">〜命をつなぐ初動の技術〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '第一発見者の「ABCD」評価', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-red-50 text-red-600 rounded-full text-xs font-black ring-1 ring-red-100">
-            <span class="w-2 h-2 bg-red-600 rounded-full animate-ping"></span>
-            INITIAL ASSESSMENT
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            パニックを抑え、<br/>
-            <span class="text-red-600 decoration-4 underline underline-offset-8">優先順位</span>を確認する
-          </h4>
-          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-2xl mx-auto">
-            <div class="p-8 bg-white text-center space-y-3">
-              <p class="text-xl font-black text-slate-900">A (Airway)</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">気道：<br/>詰まっていないか</p>
-            </div>
-            <div class="p-8 bg-white text-center space-y-3">
-              <p class="text-xl font-black text-slate-900">B (Breathing)</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">呼吸：<br/>胸が動いているか</p>
-            </div>
-            <div class="p-8 bg-white text-center space-y-3">
-              <p class="text-xl font-black text-slate-900">C (Circulation)</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">循環：<br/>顔色、出血の有無</p>
-            </div>
-            <div class="p-8 bg-white text-center space-y-3">
-              <p class="text-xl font-black text-slate-900">D (Disability)</p>
-              <p class="text-sm text-slate-400 leading-relaxed font-bold">意識：<br/>呼びかけへの反応</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '救命の鎖：胸骨圧迫とAED', 
-      order: 2, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-4xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-red-500/10 rounded-full blur-3xl"></div>
-            <h4 class="text-3xl font-black mb-8">絶え間ない圧迫が脳を守る</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-left max-w-3xl mx-auto">
-              <div class="p-8 bg-white/5 border border-white/10 rounded-3xl shadow-inner">
-                <p class="text-emerald-400 font-black text-sm mb-4 flex items-center gap-2">
-                  <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>胸骨圧迫
-                </p>
-                <p class="text-base leading-relaxed text-slate-300 font-bold">
-                  ・「強く、速く、絶え間なく」<br/>
-                  ・1分間に100〜120回のリズム<br/>
-                  ・5cm以上沈むまで押す<br/>
-                  ・圧迫のみでも有効です
-                </p>
-              </div>
-              <div class="p-8 bg-white/5 border border-white/10 rounded-3xl shadow-inner">
-                <p class="text-emerald-400 font-black text-sm mb-4 flex items-center gap-2">
-                  <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>AEDの役割
-                </p>
-                <p class="text-base leading-relaxed text-slate-300 font-bold">
-                  ・電源を入れれば音声が誘導<br/>
-                  ・心停止をリセットする唯一の手段<br/>
-                  ・電気ショック後すぐ圧迫再開
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '高齢者施設で多い「窒息」への対応', 
-      order: 3, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center">
-          <div class="p-12 bg-blue-50 rounded-[3.5rem] border-2 border-blue-100 border-dashed relative shadow-inner max-w-3xl mx-auto">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-10 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-xl">Choking Hazard</div>
-            <h4 class="text-3xl font-black text-blue-900 mb-8">1分1秒を争う異物除去</h4>
-            <div class="grid grid-cols-2 gap-8 mt-6 text-left">
-              <div class="p-8 bg-white rounded-3xl shadow-sm border border-blue-100">
-                <p class="text-blue-600 font-black text-lg mb-4">背部叩打法</p>
-                <p class="text-sm leading-relaxed text-slate-600 font-bold">
-                  肩甲骨の間を、手のひらの付け根で強く叩く。<br/>
-                  意識の有無を問わず実施可能。
-                </p>
-              </div>
-              <div class="p-8 bg-white rounded-3xl shadow-sm border border-blue-100">
-                <p class="text-blue-600 font-black text-lg mb-4">腹部突き上げ法</p>
-                <p class="text-sm leading-relaxed text-slate-600 font-bold">
-                  後ろから抱え、みぞおちを上方へ圧迫。<br/>
-                  意識がある場合のみ実施。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '福祉用具の緊急トラブル対応', 
-      order: 4, 
-      content: `
-        <div class="p-12 bg-red-50 rounded-[3.5rem] border border-red-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center shadow-red-100 font-black text-2xl text-red-600">SOS</div>
-          <h4 class="text-3xl font-black text-red-900">宙吊り・停電・挟まり</h4>
-          <div class="grid grid-cols-1 gap-6 w-full text-left">
-            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-sm border border-red-50">
-              <p class="text-lg font-bold text-slate-700 leading-relaxed">
-                <span class="text-red-600">介護リフト：</span><br/>
-                非常降下レバーの場所を確認してください。<br/>
-                停電時でも手動で下げることが可能です。
-              </p>
-            </div>
-            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-sm border border-red-50">
-              <p class="text-lg font-bold text-slate-700 leading-relaxed">
-                <span class="text-red-600">電動ベッド：</span><br/>
-                停電時は手動ハンドルへの切り替え、<br/>
-                または予備バッテリーでの操作が必要です。
-              </p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '救急隊への情報伝達：ISBAR', 
-      order: 5, 
-      content: `
-        <div class="space-y-8 flex flex-col items-center">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden w-full max-w-2xl">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Professional Handover</h4>
-            <div class="space-y-4 text-lg font-bold text-left max-w-xl mx-auto">
-              <p class="flex items-center gap-6"><span class="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">I</span><span>Identity: 名前、対象者名</span></p>
-              <p class="flex items-center gap-6"><span class="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">S</span><span>Situation: 主症状、発見時間</span></p>
-              <p class="flex items-center gap-6"><span class="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">B</span><span>Background: 既往歴、服薬</span></p>
-              <p class="flex items-center gap-6"><span class="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">A</span><span>Assessment: 自分の評価</span></p>
-              <p class="flex items-center gap-6"><span class="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">R</span><span>Recommendation: 搬送要請</span></p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'シミュレーション：食事中の急変', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center flex flex-col items-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              食事中の利用者が突然喉を<br/>かきむしり、顔が真っ赤になりました。<br/>どうしますか？
+    { title: "緊急時対応研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full text-balance text-center"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-rose-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto"><div class="bg-rose-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-center">緊急時対応研修</h2><p class="text-rose-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap text-center">〜命を繋ぐ初動の技術〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "はじめに：救命の連鎖", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 uppercase tracking-widest mx-auto">救命のバトン</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">救急隊が来るまでの<br class="lg:hidden" />「空白の数分」を埋める</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-rose-50 border-none lg:border-2 lg:border-rose-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-rose-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4"><p class="font-black text-center text-balance">心停止から1分経つごとに、救命率は約10%ずつ低下します。あなたがその場で行う処置こそが、利用者の命を救う唯一の希望です。</p></div></div>` },
+    { title: "救急要請の判断基準：レッドフラッグ", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">迷わず119番すべきサイン</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">意識と呼吸の異常</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">返事がない、呼吸が止まっている、あえいでいる（死戦期呼吸）。</p></div><div class="p-4 lg:p-8 bg-white border-2 border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">顔色と痛みの異常</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center">顔面蒼白、激しい胸痛、突然の片麻痺、激しい頭痛。</p></div></div></div>` },
+    { title: "緊急時対応の3原則", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4 text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 shadow-sm mx-auto uppercase tracking-widest text-center">基本原則</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">初動を支える3つの視点</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 max-w-5xl mx-auto w-full px-4 text-center"><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">1. 救命を最優先</div><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">2. 応援を呼ぶ</div><div class="p-4 lg:p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-rose-900 shadow-sm">3. 医療へ繋ぐ</div></div><p class="text-slate-500 font-black text-[10px] lg:text-base mt-4 text-center w-full px-4">※一人で抱え込まず、即座に周囲へ助けを求めましょう。</p></div>` },
+    { title: "心肺蘇生1：胸骨圧迫の鉄則", order: 4, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center text-balance text-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0 text-center"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900 text-center">強く・速く・絶え間なく</h4><p class="text-[10px] lg:text-sm text-slate-900 font-black text-center">血液を脳に送り続ける唯一の手段</p></div><div class="p-6 bg-rose-50 border-2 border-rose-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-inner text-center"><p class="text-sm lg:text-xl font-black text-rose-900 leading-relaxed text-balance text-center">位置：胸の真ん中<br/>深さ：約5cm（沈み込むまで）<br/>速さ：1分間に100〜120回（アンパンマンのマーチのテンポ）</p></div></div>` },
+    { title: "心肺蘇生2：AEDの活用", order: 5, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>AEDの使い方</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・電源を入れる（音声案内開始）</li><li>・パッドを右胸と左脇腹に貼る</li><li>・ショック時は全員「離れる」</li></ul><p class="text-blue-800 font-black text-sm lg:text-2xl mt-4 text-center w-full">器械の指示に従うだけで大丈夫です</p></div>` },
+    { title: "窒息対応：背部叩打法（はいぶこうだほう）", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>背中を強く叩く</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・手の付け根で肩甲骨の間を叩く</li><li>・「異物を出すまで」強く繰り返す</li><li>・意識がなくなれば心肺蘇生へ</li></ul><p class="text-red-700 font-black text-sm lg:text-2xl mt-4 text-center w-full">掃除機での吸引は、肺を傷めるため避けます</p></div>` },
+    { title: "施設内連絡体制の徹底", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><div class="space-y-4 lg:space-y-6 text-center"><h4 class="text-2xl lg:text-5xl font-black text-rose-900 flex items-center gap-4 lg:gap-6 justify-center"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-700 rounded-full"></span>報告のライン</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight text-center"><li>・第一発見者は「大声で応援を呼ぶ」</li><li>・看護師または管理者に即座に報告</li><li>・指示系統を一元化し混乱を防ぐ</li></ul></div>` },
+    { title: "119番通報のポイント", order: 8, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight text-center w-full">正確な情報を伝える</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left text-center"><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">施設名と正確な住所</span><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">容態（呼吸・意識・出血）</span></div><div class="flex flex-col gap-3 text-center"><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">年齢・性別・既往歴</span><span class="px-6 py-2.5 lg:py-3 bg-rose-50 border-2 border-rose-200 rounded-2xl text-rose-900 shadow-sm text-center">現在の応急処置の内容</span></div></div><p class="text-rose-700 font-black text-sm lg:text-xl px-4 text-center w-full">電話を切らずに、通信指令員の指示を仰ぎます。</p></div>` },
+    { title: "様子を見るべきか、受診すべきか", order: 9, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center w-full">非緊急時の判断</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center w-full"><li>・嘔吐：その後、水分が取れるか？</li><li>・熱：水分・食事が取れ、意識ははっきりしているか？</li><li>・外傷：出血が止まり、痛みも強くないか？</li></ul><p class="text-blue-700 font-black text-center w-full mt-4">迷ったら看護師や#7119（救急安心センター）へ相談</p></div>` },
+    { title: "外傷・打撲：24時間の観察ポイント", order: 10, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center">頭を打った後の変化</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>何度も吐く（嘔吐の繰り返し）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>ボーッとしている、呼びかけに答えない</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black text-center justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>手足の動きが左右で違う、力が入らない</div></div></div>` },
+    { title: "痙攣（けいれん）時の対応", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 px-4 text-center">「口の中に物を入れない」</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl text-center text-center"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">1</span>周囲の物をどけ、安全を確保する</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">2</span>持続時間と、痙攣の部位を観察する</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black justify-center lg:justify-start"><span class="w-10 h-10 bg-rose-700 text-white rounded-full flex items-center justify-center shrink-0">3</span>嘔吐があれば顔を横に向け、窒息を防ぐ</div></div></div>` },
+    { title: "「いつもと違う」への気づき", order: 12, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-700 text-center mb-4 uppercase tracking-widest w-full px-4 text-center">急変の前兆を捉える</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> 顔色が悪い：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">白っぽい、土色、唇が紫色（チアノーゼ）。</p></div><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> 呼吸の変化：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">ゼーゼーしている、肩で息をしている。</p></div><div><p class="text-lg lg:text-3xl text-rose-600 mb-1 flex items-center gap-3 justify-center"><span>●</span> 意識の変化：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center text-center">呼びかけに答えない、つじつまが合わない。</p></div></div></div>` },
+    { title: "看取り・ターミナル期の方への緊急対応", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase tracking-widest text-center">DNARへの配慮</div><h4 class="text-xl lg:text-3xl font-black text-rose-900 leading-tight px-4 text-center w-full">本人の意思を再確認する</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-rose-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-lg lg:text-3xl font-black text-rose-900 leading-relaxed italic text-balance text-center text-center">延命を希望しない（DNAR）の方でも、<br/>窒息や転倒などの「不慮の事故」では、<br/>原則として救命・応急処置を行います。</p></div></div>` },
+    { title: "救命処置の交代と連携", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center mb-4 uppercase tracking-widest w-full px-4 text-center">一人で頑張りすぎない</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full text-center"><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> 胸骨圧迫の交代：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">体力を激しく消耗します。2分おきに交代を。</p></div><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> 他利用者への配慮：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">パニックが広がらないよう、別室へ誘導します。</p></div><div><p class="text-lg lg:text-3xl text-rose-700 mb-1 flex items-center gap-3 justify-center"><span>●</span> 救急隊への引き継ぎ：</p><p class="text-sm lg:text-xl text-slate-600 font-bold text-center text-center">経過時間、実施した処置、記録を渡します。</p></div></div></div>` },
+    { title: "環境整備：緊急用具の点検", order: 15, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center text-balance text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">「その時」に使える状態か</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full text-center"><div class="p-6 lg:p-8 bg-rose-50 border-2 border-rose-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">AEDの点検</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center">インジケーター（緑ランプ）の確認。パッドの有効期限チェック。</p></div><div class="p-6 lg:p-8 bg-rose-50 border-2 border-rose-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4 text-center"><p class="font-black text-lg lg:text-xl text-rose-800 text-center">緊急カート</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-center text-center">血圧計、経皮的酸素飽和度（SpO2）計、懐中電灯の動作確認。</p></div></div></div>` },
+    { title: "1. 事例：食堂で突然の意識消失", order: 16, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-50 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase text-center">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">場面：食事中に倒れる</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-center">昼食時、隣の方が急にガクッと椅子から崩れ落ちました。声をかけましたが反応がありません。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-rose-700 italic text-center px-4 text-balance text-center w-full">「大丈夫ですか！」と呼びかけながら、<br class="lg:hidden" />あなたが次に行う「最も重要な確認」は？</p></div></div>` },
+    { title: "2. 事例：夜間の高熱と喘鳴（ぜんめい）", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-rose-50 text-rose-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-rose-200 mb-2 mx-auto uppercase text-center">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full text-balance text-center">場面：夜間の巡回</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full text-center"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance px-4 text-center text-balance text-center">午前2時、利用者が荒い息を吐きながら苦しんでいます。検温すると39度。酸素飽和度（SpO2）は88%に低下しています。</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-rose-700 italic text-center px-4 text-balance text-center w-full">夜間、看護師がいない時間です。<br class="lg:hidden" />あなたはまず、どこに連絡しますか？</p></div></div>` },
+    { title: "解決：命を救う初動アルゴリズム", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">迷わない、止まらない</h4><div class="p-6 lg:p-10 bg-rose-50 border-2 border-rose-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto text-center"><p class="text-base lg:text-xl font-black text-rose-900 text-center w-full">救命のための行動指針</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800 text-center"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">1</span>「10秒以内」に呼吸の有無を確認する</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">2</span>迷ったら「119番」と「胸骨圧迫」を開始</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-rose-100 shadow-sm text-center justify-center lg:justify-start"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-rose-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">3</span>夜間はマニュアルに従いオンコール・救急要請</div></div></div></div>` },
+    { title: "介護職に求められる正確な報告", order: 19, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black italic text-rose-900 px-4 text-center w-full">「ありのまま」を伝える</h4><div class="p-8 lg:p-10 bg-white border-4 border-rose-100 rounded-[2rem] lg:rounded-[3rem] shadow-xl max-w-4xl mx-auto w-full text-center"><p class="text-xl lg:text-3xl font-black leading-relaxed text-center text-slate-900">推測ではなく、<br/><span class="text-rose-700 underline underline-offset-8 decoration-4">客観的事実</span>（数値と状態）を！</p></div><p class="text-[10px] lg:text-lg font-black text-rose-800 px-4 text-center w-full">あなたの正確な一言が、救急医の判断を助けます。</p></div>` },
+    { title: "救急車を呼ぶための準備", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-10 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-800 flex items-center gap-4 w-full justify-center text-center">受診セットの確認</h4><p class="text-sm lg:text-2xl font-black leading-relaxed text-slate-900 max-w-4xl bg-rose-50 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-rose-100 w-full text-center text-center">健康保険証、介護保険証、現在服用中の薬（お薬手帳）、直近のバイタル記録、ご家族の連絡先。</p><p class="text-xs lg:text-xl font-black text-rose-800 text-center w-full px-4 text-center">これらを「受診バッグ」にまとめ、誰でも持ち出せるようにしておきましょう。</p></div>` },
+    { title: "満足感：あなたの備えが盾になる", order: 21, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full text-balance text-center text-center text-balance"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-center w-full">勇気ある行動のために</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-rose-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full text-center"><p class="text-xl lg:text-3xl font-black text-rose-900 leading-relaxed italic text-balance text-center text-center">技術を磨くことは、<br/>命を守るための「最強の優しさ」です。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-center w-full px-4 text-center">今日学んだことが、いざという時の「勇気」になります。</p></div>` },
+    { title: "まとめ：命のバトンを繋ぐ", order: 22, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4 text-center text-balance text-center"><div class="w-24 h-24 lg:w-32 h-32 bg-rose-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-rose-200 rotate-3 transition-transform hover:rotate-0 duration-500 mx-auto"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight text-center w-full text-center">落ち着いて、確実な一歩を。<br/>チーム全員で救いましょう。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center mx-auto text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修修了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 23, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4 text-center text-balance text-center">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg px-4 text-center">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-center w-full text-balance text-center">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 text-center">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-rose-50 rounded-2xl lg:rounded-3xl border-2 border-rose-100 max-w-lg mx-auto mt-6 lg:mt-8 text-center text-center">
+            <p class="text-rose-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3 text-center text-center">
+              <span class="w-2 h-2 bg-rose-700 rounded-full"></span>    
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-rose-700 rounded-full"></span>    
             </p>
           </div>
-          <div class="grid grid-cols-1 gap-6 w-full">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">「大丈夫ですか！」と背中をさすり、<br/>水を飲ませようとする</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">咳を促し、出なければ「背部叩打法」。<br/>同時に応援と119番、AEDを指示する。</p>
-            </div>
-          </div>
         </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：迷わず、動く', 
-      order: 7, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-red-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-red-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            救急対応に「完璧」はありません。<br/>
-            でも、「迷わない」ことは可能です。
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            今日の知識が、明日誰かの命を<br/>つなぐバトンになります。<br/>
-            自信を持って、その一歩を。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` },
+    { title: "緊急時対応のあり方", order: 24, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full text-balance text-center text-center"><h4 class="text-xl lg:text-3xl font-black text-rose-900 text-center mb-4 uppercase tracking-widest w-full text-center text-center">救命の第一走者として</h4><div class="p-6 bg-white border-2 border-rose-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-sm mx-auto text-center text-center"><p class="text-sm lg:text-xl font-black text-slate-800 leading-relaxed text-center text-balance text-center">緊急時に最も大切なのは、知識そのものではなく「行動する勇気」です。あなたが呼ぶ大声が、あなたが押す胸が、一人の未来を繋ぎます。</p></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4 w-full text-center text-center"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>ケア・ラーニング・システム<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` }
   ]
 
   const questionsData = [
-    { text: '意識・呼吸がない利用者への胸骨圧迫の強さとリズムで正しいものはどれか。', explanation: '「強く（5cm以上沈むまで）」「速く（1分間に100〜120回）」「絶え間なく」行うことが救命の基本です。', order: 1, choices: { create: [{ text: '1分間に100〜120回、5cm以上沈むまで', isCorrect: true }, { text: '1分間に60回、優しくゆっくり', isCorrect: false }, { text: '1分間に200回、できるだけ速く', isCorrect: false }] } },
-    { text: '喉に異物を詰まらせた際（窒息）、最初に行うべき対応はどれか。', explanation: '咳ができるなら咳を促し、出せない場合は直ちに背部叩打法等で異物の除去を試みます。水を飲ませるのは禁忌です。', order: 2, choices: { create: [{ text: '咳き込みを促し、出なければ背部叩打法を行う', isCorrect: true }, { text: '水をたくさん飲ませて流し込む', isCorrect: false }, { text: '意識がなくなるまで様子を見る', isCorrect: false }] } },
-    { text: '介護リフト使用中に停電や故障で停止し、利用者が宙吊りになった際の対応は？', explanation: 'リフトには必ず「非常降下レバー（またはボタン）」が備わっています。手動で安全な位置まで下げる操作を行います。', order: 3, choices: { create: [{ text: '非常降下レバーを操作して手動で下ろす', isCorrect: true }, { text: '修理業者が来るまでそのまま待つ', isCorrect: false }, { text: 'リフトから無理やり抱きかかえて下ろす', isCorrect: false }] } },
-    { text: '医療職や救急隊への正確な情報伝達のために用いられる、報告の構成手法を何というか。', explanation: 'ISBAR（Identity, Situation, Background, Assessment, Recommendation）と呼ばれます。', order: 4, choices: { create: [{ text: 'ISBAR（アイズバー）', isCorrect: true }, { text: 'PDCA（ピーディーシーエー）', isCorrect: false }, { text: 'OJT（オージェーティー）', isCorrect: false }] } },
-    { text: 'AED（自動体外式除細動器）を使用すべき状態はどのような時か。', explanation: '呼びかけに反応がなく（意識なし）、正常な呼吸がない場合です。', order: 5, choices: { create: [{ text: '意識がなく、正常な呼吸がない時', isCorrect: true }, { text: '少し意識が朦朧としているが話せる時', isCorrect: false }, { text: '寝息を立ててぐっすり眠っている時', isCorrect: false }] } }
+    { text: '利用者が倒れているのを発見した際、第一発見者が最初に行うべき行動はどれか？', explanation: 'まずは自分自身の安全を確保しつつ、大声で周囲のスタッフに助け（応援）を求めます。', order: 1, choices: { create: [{ text: '大声で周囲に応援を求める', isCorrect: true }, { text: '一人で救急車を呼ぶ', isCorrect: false }, { text: 'まず管理者に電話をする', isCorrect: false }] } },
+    { text: '意識がない利用者の呼吸を確認する際、最大で何秒以内に判断すべきか？', explanation: '呼吸の確認は10秒以内に行い、判断に迷う場合は「呼吸なし」とみなして処置を開始します。', order: 2, choices: { create: [{ text: '10秒以内', isCorrect: true }, { text: '30秒以内', isCorrect: false }, { text: '1分以内', isCorrect: false }] } },
+    { text: '胸骨圧迫を行う際、1分間に推奨されるテンポはどれくらいか？', explanation: '1分間に100〜120回の速いテンポで、絶え間なく圧迫を続けることが重要です。', order: 3, choices: { create: [{ text: '100〜120回', isCorrect: true }, { text: '60〜80回', isCorrect: false }, { text: '150回以上', isCorrect: false }] } },
+    { text: 'AED（自動体外式除細動器）を使用する際、最も優先すべきことは何か？', explanation: '電源を入れた後は、AEDが発する音声ガイダンスの指示に従うことが最も安全で確実です。', order: 4, choices: { create: [{ text: '音声ガイダンスの指示に従う', isCorrect: true }, { text: '即座に電気ショックのボタンを押す', isCorrect: false }, { text: '医師の到着を待ってから使用する', isCorrect: false }] } },
+    { text: '食べ物を喉に詰まらせた際（窒息）、意識がある場合に行うべき最初の処置は？', explanation: '背中を手の付け根で強く叩く「背部叩打法」を行い、異物の除去を試みます。', order: 5, choices: { create: [{ text: '背部叩打法を行う', isCorrect: true }, { text: '掃除機で吸引する', isCorrect: false }, { text: '水をたくさん飲ませる', isCorrect: false }] } },
+    { text: '119番通報の際、救急隊に伝えるべき情報として「不適切」なものはどれか？', explanation: 'その日の献立などの救急に関係のない情報は不要です。容態や住所などの救急情報を優先します。', order: 6, choices: { create: [{ text: 'その日の食事の献立', isCorrect: true }, { text: '施設の正確な住所と名称', isCorrect: false }, { text: '意識と呼吸の有無', isCorrect: false }] } },
+    { text: '心停止の可能性がある場合、処置を開始するのが1分遅れるごとに救命率は約何%低下するか？', explanation: '1分遅れるごとに約7〜10%ずつ救命率が低下するため、一刻も早い処置が必要です。', order: 7, choices: { create: [{ text: '約10%', isCorrect: true }, { text: '約1%', isCorrect: false }, { text: '約50%', isCorrect: false }] } },
+    { text: '頭部を打撲した利用者において、緊急性が高いレッドフラッグサインはどれか？', explanation: '嘔吐を繰り返す場合は頭蓋内での出血の疑いがあり、極めて緊急性が高いです。', order: 8, choices: { create: [{ text: '繰り返し嘔吐する', isCorrect: true }, { text: '打った場所が少し赤い', isCorrect: false }, { text: '「痛い」と話している', isCorrect: false }] } },
+    { text: '痙攣（けいれん）が発生している利用者への対応として、不適切なものはどれか？', explanation: '口の中にタオル等を入れると、窒息や怪我の原因になるため、現在は行ってはいけません。', order: 9, choices: { create: [{ text: '舌を噛まないよう口に物を入れる', isCorrect: true }, { text: '周囲の物をどけて安全を確保する', isCorrect: false }, { text: '何分続いているか時間を計る', isCorrect: false }] } },
+    { text: '延命を希望しない（DNAR）意思がある利用者が「喉を詰まらせた」場合の対応は？', explanation: '不慮の事故（窒息・転倒等）はDNARの範囲外であることが多く、原則として応急処置を行います。', order: 10, choices: { create: [{ text: '原則として応急処置・救命を行う', isCorrect: true }, { text: '何もしないで見守る', isCorrect: false }, { text: '家族の到着を待ってから考える', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
