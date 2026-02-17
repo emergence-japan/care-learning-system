@@ -4,328 +4,111 @@ export async function seedInfection(prisma: PrismaClient) {
   const slug = 'infection'
   const courseData = {
     slug,
-    title: '感染症・食中毒の予防および蔓延防止に関する研修',
-    description: '「持ち込まない・広げない」を徹底するための標準予防策と、2024年義務化のBCPまでを完全網羅。',
+    title: '感染症・食中毒予防研修（2024年度）',
+    description: '〜「持ち込まない・広げない」防衛技術〜',
     introduction: `
-        <div class="space-y-8">
-          <div class="flex items-center gap-4"><span class="h-1 w-12 bg-sky-600 rounded-full"></span><p class="text-sky-600 font-black tracking-widest text-sm uppercase">Curriculum Hook</p></div>
-          <h2 class="text-4xl font-black text-slate-900 leading-tight">あなたの手は、今、本当に<br/>「安全」だと言い切れますか？</h2>
-          <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
-            <p>「自分は健康だから大丈夫」というその油断が、<br/>施設全体を巻き込むパンデミックの引き金になります。</p>
-            <div class="p-8 bg-sky-50/50 rounded-[2rem] border border-sky-100 shadow-inner relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-24 h-24 bg-sky-100/30 rounded-bl-full"></div>
-              <p class="relative z-10 font-medium italic">高齢者の命を奪うのは病気だけではありません。<br/>私たちが持ち込むウイルスや細菌こそが、最大の脅威なのです。</p>
+        <div class="flex flex-col items-center justify-center text-center space-y-3 pt-4 px-4">
+          <div class="flex items-center gap-4">
+            <span class="h-px w-8 lg:w-12 bg-sky-700 rounded-full"></span>
+            <p class="text-sky-800 font-black tracking-widest text-lg lg:text-2xl uppercase">感染症・食中毒予防研修</p>
+            <span class="h-px w-8 lg:w-12 bg-sky-700 rounded-full"></span>
+          </div>
+          <h2 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight text-balance">あなたの手は、今、本当に<br/>「安全」だと言い切れますか？</h2>
+          <div class="max-w-2xl space-y-2 text-slate-800 text-sm lg:text-base leading-relaxed font-bold px-4">
+            <p>目に見えないウイルスや細菌は、私たちの「油断」を入り口にして施設内に侵入します。</p>
+            <div class="p-4 lg:p-5 bg-sky-50 rounded-[1.5rem] lg:rounded-[2rem] border-2 border-sky-200 shadow-inner relative overflow-hidden text-[10px] lg:text-xs text-left mt-4">
+              <div class="absolute top-0 right-0 w-16 h-16 lg:w-24 lg:h-24 bg-blue-100/50 rounded-bl-full"></div>
+              <p class="relative z-10 italic text-sky-900 font-black text-xs lg:text-sm leading-relaxed">高齢者の命を奪うのは病気だけではありません。私たちが持ち込む一粒のウイルスが、施設全体を巻き込むパンデミックの引き金になるのです。</p>
             </div>
-            <p>この研修は、プロフェッショナルとして利用者の命を守る「盾」になるための、<br/>最新の防衛技術を学ぶ時間です。</p>
+            <p class="text-[10px] lg:text-sm text-slate-900 font-black text-center mt-4">この研修は、プロとして利用者の命を守る「最強の盾」を手に入れるためのものです。</p>
           </div>
         </div>
       `,
     learningObjectives: `
-        <div class="grid grid-cols-1 gap-6">
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-sky-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">1</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">標準予防策（PPE・手洗い）の完遂</h4><p class="text-slate-500 leading-relaxed font-medium">全ての利用者が感染している可能性を前提とした、<br/>正しい防護具の着脱と手指衛生の手順をマスターする。</p></div>
-          </div>
-          <div class="group p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-sky-50 transition-all duration-500 flex items-start gap-6">
-            <div class="w-14 h-14 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:scale-110 transition-transform">2</div>
-            <div><h4 class="text-xl font-black text-slate-900 mb-2">蔓延防止とBCPの実践</h4><p class="text-slate-500 leading-relaxed font-medium">ノロウイルス等の発生時の初動対応と、<br/>2024年度から義務化された「BCP（業務継続計画）」の役割を理解する。</p></div>
+        <div class="flex flex-col items-center justify-center text-center space-y-4 pt-4 px-4 w-full">
+          <div class="bg-sky-700 text-white px-6 py-2 rounded-full text-[10px] font-black tracking-[0.3em] uppercase mb-2 shadow-lg shadow-sky-200">Learning Objectives</div>
+          <div class="grid grid-cols-1 gap-3 w-full max-w-2xl">
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">1</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">標準予防策を完遂できる</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">全ての人が感染している前提で、正しい手洗いと防護具着脱を習得する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">2</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">発生時の初動を迷わない</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">ノロウイルス等の嘔吐物処理や、感染拡大を止める鉄則を理解する。</p>
+              </div>
+            </div>
+            <div class="group p-4 bg-white border-2 border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] shadow-sm flex items-center gap-4 lg:gap-6 hover:shadow-xl hover:border-sky-400 transition-all duration-500">
+              <div class="w-10 h-10 lg:w-12 lg:h-12 bg-sky-700 text-white rounded-xl flex items-center justify-center text-base lg:text-lg font-black shrink-0 shadow-lg shadow-sky-200">3</div>
+              <div class="text-left">
+                <h4 class="text-sm lg:text-lg font-black text-slate-900">BCPの役割を理解する</h4>
+                <p class="text-slate-800 text-[10px] lg:text-xs font-bold leading-relaxed">人員不足などの緊急事態でも、命を守り抜く優先順位を知る。</p>
+              </div>
+            </div>
           </div>
         </div>
       `,
+    videoUrl: null,
     badgeLabel: '感染症',
     badgeIcon: 'HeartPulse',
   }
 
   const slidesData = [
-    { 
-      title: '感染症・食中毒の予防および蔓延防止に関する研修', 
-      order: 0, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-10">
-          <div class="relative">
-            <div class="absolute inset-0 bg-sky-400 blur-3xl opacity-20 scale-150 animate-pulse"></div>
-            <div class="relative bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-100 max-w-lg mx-auto">
-              <div class="bg-sky-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-8">Infection Control</div>
-              <h2 class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                感染症・食中毒予防<br/>
-                <span class="text-sky-600 text-3xl">〜持ち込まない・広げない〜</span>
-              </h2>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-4 text-slate-400 font-black text-[10px] tracking-widest">
-            <span class="h-px w-8 bg-slate-200"></span>
-            CARE LEARNING SYSTEM
-            <span class="h-px w-8 bg-slate-200"></span>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '基本概念：スタンダード・プリコーション', 
-      order: 1, 
-      content: `
-        <div class="space-y-10 text-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-50 text-sky-600 rounded-full text-xs font-black ring-1 ring-sky-100 mx-auto">
-            <span class="w-2 h-2 bg-sky-600 rounded-full animate-ping"></span>
-            CORE CONCEPT
-          </div>
-          <h4 class="text-3xl font-black text-slate-900 leading-tight">
-            「全ての利用者が感染している」<br/>
-            と<span class="text-sky-600 decoration-4 underline underline-offset-8">想定する</span>ことが基本です
-          </h4>
-          <div class="p-10 bg-white border-2 border-slate-50 rounded-[3rem] shadow-sm font-bold text-slate-700 text-xl leading-relaxed italic mx-auto max-w-2xl">
-            血液、体液、排泄物、傷のある皮膚。<br/>
-            これらは全て感染源であるとみなし、誰に対しても平等に、<br/>
-            常に同じ高いレベルの予防策を実施します。
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '3つの主要な感染経路', 
-      order: 2, 
-      content: `
-        <div class="grid grid-cols-1 gap-4 max-w-2xl mx-auto">
-          <div class="group p-6 bg-slate-50/50 rounded-3xl border border-slate-100 flex items-center gap-8 hover:bg-white hover:shadow-2xl transition-all duration-500">
-            <div class="w-16 h-16 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shrink-0 shadow-lg">1</div>
-            <div class="flex-1 text-left">
-              <p class="text-xl font-black text-slate-900 mb-1">接触感染</p>
-              <p class="text-sm text-slate-500 font-medium">手やドアノブを介して広がる。<br/>ノロウイルス、疥癬など。</p>
-            </div>
-          </div>
-          <div class="group p-6 bg-slate-50/50 rounded-3xl border border-slate-100 flex items-center gap-8 hover:bg-white hover:shadow-2xl transition-all duration-500">
-            <div class="w-16 h-16 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shrink-0 shadow-lg">2</div>
-            <div class="flex-1 text-left">
-              <p class="text-xl font-black text-slate-900 mb-1">飛沫感染</p>
-              <p class="text-sm text-slate-500 font-medium">咳やくしゃみのしぶき（2m以内）で広がる。<br/>インフルエンザなど。</p>
-            </div>
-          </div>
-          <div class="group p-6 bg-slate-50/50 rounded-3xl border border-slate-100 flex items-center gap-8 hover:bg-white hover:shadow-2xl transition-all duration-500">
-            <div class="w-16 h-16 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shrink-0 shadow-lg">3</div>
-            <div class="flex-1 text-left">
-              <p class="text-xl font-black text-slate-900 mb-1">空気感染</p>
-              <p class="text-sm text-slate-500 font-medium">空気中に漂う微粒子を吸い込んで広がる。<br/>結核、麻疹など。</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '【IDクイズ】アルコールが効かないのは？', 
-      order: 3, 
-      content: `
-        <div class="p-12 bg-slate-900 text-white rounded-[3.5rem] shadow-2xl relative overflow-hidden text-center">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[100px]"></div>
-          <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10">Interactive Quiz</h4>
-          <p class="text-2xl font-black mb-12">次の中で、通常のアルコール消毒液が<br/>ほとんど効かないウイルスはどれ？</p>
-          <div class="grid grid-cols-2 gap-8 max-w-xl mx-auto">
-            <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
-              <p class="font-black text-lg group-hover:scale-110 transition-transform">インフルエンザ</p>
-            </div>
-            <div class="p-8 bg-red-600 rounded-[2.5rem] border border-red-500 shadow-xl animate-pulse">
-              <p class="font-black text-lg mb-2">ノロウイルス</p>
-              <p class="text-xs opacity-90 font-bold text-white">正解！次亜塩素酸Naが必要です</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '最強の武器：正しい手指衛生', 
-      order: 4, 
-      content: `
-        <div class="space-y-10 text-center">
-          <h4 class="text-3xl font-black text-slate-900 leading-relaxed">石鹸で「30秒」洗っていますか？</h4>
-          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-2xl mx-auto">
-            <div class="p-10 bg-white space-y-4">
-              <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div>
-              <p class="text-lg font-black text-slate-900">タイミング</p>
-              <p class="text-sm text-slate-400 leading-relaxed">ケアの前後、汚染物に触れた後、<br/>手袋を脱いだ後も必須です</p>
-            </div>
-            <div class="p-10 bg-white space-y-4">
-              <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div>
-              <p class="text-lg font-black text-slate-900">洗い残し注意</p>
-              <p class="text-sm text-slate-400 leading-relaxed">指先、親指の付け根、手首、<br/>指の間は特に残ります</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '重要：PPE（防護具）の「脱ぐ」順番', 
-      order: 5, 
-      content: `
-        <div class="space-y-8">
-          <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px]"></div>
-            <h4 class="text-[10px] font-black tracking-[0.4em] uppercase opacity-50 mb-10 text-center">Strict Rules</h4>
-            <p class="text-lg text-emerald-400 font-black mb-8 text-center">汚染面に触れないための「脱ぐ順番」が命を分けます</p>
-            <div class="space-y-6 text-xl font-black max-w-md mx-auto">
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">01</span>
-                <p>手袋：外側を触らずに裏返して脱ぐ</p>
-              </div>
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">02</span>
-                <p>ガウン：内側から丸めるように脱ぐ</p>
-              </div>
-              <div class="flex items-center gap-6">
-                <span class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-sm shadow-lg shrink-0">03</span>
-                <p>マスク：表面に触れずゴム紐を持つ</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '食中毒予防の3原則', 
-      order: 6, 
-      content: `
-        <div class="space-y-10 text-center">
-          <div class="p-12 bg-amber-50 rounded-[3.5rem] border-2 border-amber-100 border-dashed relative shadow-inner mx-auto max-w-2xl">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-amber-600 text-white px-10 py-2 rounded-full text-xs font-black tracking-[0.3em] uppercase shadow-xl">Food Safety</div>
-            <h4 class="text-3xl font-black text-amber-900 mb-8">つけない・増やさない・やっつける</h4>
-            <div class="grid grid-cols-3 gap-6">
-              <div class="p-6 bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow">
-                <p class="text-lg font-black text-slate-900 mb-2">1. 清潔</p>
-                <p class="text-xs text-slate-500 font-bold">（つけない）</p>
-              </div>
-              <div class="p-6 bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow">
-                <p class="text-lg font-black text-slate-900 mb-2">2. 迅速</p>
-                <p class="text-xs text-slate-500 font-bold">（増やさない）</p>
-              </div>
-              <div class="p-6 bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow">
-                <p class="text-lg font-black text-slate-900 mb-2">3. 加熱</p>
-                <p class="text-xs text-slate-500 font-bold">（やっつける）</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: 'ノロウイルス嘔吐物処理の鉄則', 
-      order: 7, 
-      content: `
-        <div class="p-12 bg-red-50 rounded-[3.5rem] border border-red-100 flex flex-col items-center text-center space-y-10 shadow-inner max-w-2xl mx-auto">
-          <div class="w-24 h-24 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center shadow-red-100">
-            <svg class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          <h4 class="text-3xl font-black text-red-900">乾燥は最大の敵</h4>
-          <p class="text-xl text-red-800 font-bold leading-relaxed">
-            乾燥してウイルスが舞い上がると、<br/>
-            吸い込んで感染してしまいます。<br/>
-            次亜塩素酸Naで浸し、外側から内側へ<br/>
-            静かに拭き取ることが鉄則です。
-          </p>
-        </div>
-      ` 
-    },
-    { 
-      title: '発生時の初動シミュレーション', 
-      order: 8, 
-      content: `
-        <div class="space-y-10 text-center max-w-2xl mx-auto">
-          <div class="p-10 bg-orange-50 border-2 border-orange-100 rounded-[3rem] shadow-sm">
-            <p class="text-orange-900 text-2xl font-black leading-relaxed">
-              利用者が突然の嘔吐。<br/>
-              周囲には他の利用者もいます。<br/>
-              あなたならどうしますか？
-            </p>
-          </div>
-          <div class="grid grid-cols-1 gap-6">
-            <div class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm flex items-center gap-8 opacity-60">
-              <span class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-2xl font-black shrink-0">×</span>
-              <p class="text-lg font-bold italic text-left">すぐに素手で介助し、後で手洗いをする</p>
-            </div>
-            <div class="p-8 bg-white border border-emerald-100 rounded-3xl shadow-2xl ring-2 ring-emerald-50 flex items-center gap-8">
-              <span class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shrink-0">○</span>
-              <p class="text-lg font-black text-slate-900 leading-relaxed text-left">周囲を遠ざけ、応援を呼び、<br/>PPEを装着してから処理を開始する</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '2024年度最新要件：感染症BCP', 
-      order: 9, 
-      content: `
-        <div class="space-y-10 text-center">
-          <div class="flex flex-col items-center">
-            <div class="bg-slate-100 px-6 py-1.5 rounded-full text-[10px] font-black text-slate-500 tracking-[0.3em] uppercase mb-6">Business Continuity</div>
-            <h4 class="text-3xl font-black text-slate-900 leading-relaxed">
-              職員の半数が欠勤しても、<br/>
-              命を守り抜くために
-            </h4>
-          </div>
-          <div class="relative grid grid-cols-2 gap-px bg-slate-200 p-px rounded-[3rem] overflow-hidden border border-slate-200 shadow-2xl max-w-2xl mx-auto">
-            <div class="p-10 bg-white space-y-4 text-center">
-              <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">1</div>
-              <p className="text-lg font-black text-slate-900">優先業務の絞り込み</p>
-              <p className="text-xs text-slate-400 leading-relaxed">生命に関わるケアを最優先。<br/>レク等は休止します</p>
-            </div>
-            <div class="p-10 bg-white space-y-4 text-center">
-              <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-black mx-auto text-xl shadow-sm">2</div>
-              <p className="text-lg font-black text-slate-900">情報共有ルート</p>
-              <p className="text-xs text-slate-400 leading-relaxed">誰が、誰に、いつ報告するか。<br/>BCP指針を事前に共有する</p>
-            </div>
-          </div>
-        </div>
-      ` 
-    },
-    { 
-      title: '健康管理と「出勤しない勇気」', 
-      order: 10, 
-      content: `
-        <div class="bg-slate-900 text-white p-12 rounded-[3.5rem] shadow-2xl relative text-center overflow-hidden max-w-2xl mx-auto">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-[100px]"></div>
-          <h4 class="text-3xl font-black mb-10 italic text-sky-400">小さな「違和感」を隠さない</h4>
-          <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 text-left space-y-6">
-            <p class="text-slate-200 text-xl font-bold flex items-start gap-6">
-              <span class="w-2 h-2 bg-sky-400 rounded-full mt-3 shrink-0"></span>
-              自身に熱や下痢がある場合は必ず報告し、<br/>施設からの指示を仰いでください。
-            </p>
-            <p class="text-slate-200 text-xl font-bold flex items-start gap-6">
-              <span class="w-2 h-2 bg-sky-400 rounded-full mt-3 shrink-0"></span>
-              自分の健康を守ることは、<br/>利用者を守ることそのものです。
+    { title: "感染症・食中毒予防研修", order: 0, content: `<div class="flex flex-col items-center justify-center text-center space-y-6 w-full h-full"><div class="relative w-full max-w-4xl px-4"><div class="absolute inset-0 bg-sky-400 blur-3xl opacity-20 scale-150 animate-pulse"></div><div class="relative bg-transparent lg:bg-white p-0 lg:p-16 rounded-none lg:rounded-[3.5rem] shadow-none lg:shadow-2xl border-none lg:border lg:border-slate-200 w-full mx-auto"><div class="bg-sky-700 text-white px-4 lg:px-6 py-1 lg:py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-6 lg:mb-8 shadow-sm text-balance">法定研修 2024</div><h2 class="text-3xl lg:text-6xl font-black text-slate-900 leading-tight mb-4 text-balance px-4">感染症・食中毒予防研修</h2><p class="text-sky-700 text-sm lg:text-3xl font-black mt-2 whitespace-nowrap">〜「持ち込まない・広げない」防衛技術〜</p></div></div><div class="flex items-center justify-center gap-4 text-slate-500 font-black text-[8px] lg:text-[10px] tracking-widest pt-4"><span class="h-px w-6 lg:w-8 bg-slate-300"></span>CARE LEARNING SYSTEM<span class="h-px w-6 lg:w-8 bg-slate-300"></span></div></div>` },
+    { title: "はじめに：目に見えない脅威", order: 1, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center"><div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-100 text-sky-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-sky-200 mb-2 uppercase tracking-widest mx-auto">はじめに</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4">一粒のウイルスが<br class="lg:hidden" />日常を奪います</h4><div class="p-0 lg:p-10 bg-transparent lg:bg-sky-50 border-none lg:border-2 lg:border-sky-100 shadow-none lg:shadow-xl rounded-none lg:rounded-[3rem] text-center lg:text-left text-sm lg:text-xl font-bold text-sky-800 space-y-4 lg:space-y-6 leading-relaxed max-w-4xl mx-auto px-4"><p class="font-black">感染症対策は、単なる「ルール」ではありません。自分自身、同僚、および利用者様の尊い命を守るための「義務」です。</p><p class="font-black">正しい知識に基づいたケアこそが、施設をパンデミックから救う唯一の手段となります。</p></div></div>` },
+    { title: "なぜ今、対策が強化されたのか", order: 2, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-balance text-center w-full">なぜ今、対策が強化されたのか</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full"><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-200 rounded-none lg:rounded-[2.5rem] shadow-none lg:shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-balance text-center">繰り返されるクラスター</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-balance text-center">一度侵入を許せば、高齢者施設での蔓延は防げず、多くの命が危険に晒されます。</p></div><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-200 rounded-none lg:rounded-[2.5rem] shadow-none lg:shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-balance text-center">業務継続の限界</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-balance text-center">職員の集団感染により、最低限の介護サービスすら提供不能になるリスクがあります。</p></div></div></div>` },
+    { title: "義務化された4つの措置", order: 3, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 shadow-sm mx-auto"><span class="w-2 h-2 bg-red-700 rounded-full animate-ping"></span>重要確認</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-balance text-center w-full">全ての事業所が実施すべき<br/>4つの必須事項</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 max-w-4xl mx-auto w-full px-4"><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm hover:border-sky-400 transition-all">1. 感染対策委員会の開催</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm hover:border-sky-400 transition-all">2. 指針（BCP含む）の整備</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm hover:border-sky-400 transition-all">3. 定期的な研修・訓練の実施</div><div class="p-4 lg:p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-slate-900 shadow-sm hover:border-sky-400 transition-all">4. 担当者の配置</div></div><p class="text-red-700 font-black text-[10px] lg:text-base mt-4 underline underline-offset-4 decoration-2 text-balance px-4">※未実施の場合、基本報酬が減算の対象となります。</p></div>` },
+    { title: "感染対策の3原則", order: 4, content: `<div class="space-y-6 lg:space-y-8 text-center h-full flex flex-col justify-center px-4"><div class="inline-flex items-center gap-3 px-4 py-2 bg-sky-100 text-sky-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-sky-200 mb-2 shadow-sm mx-auto uppercase tracking-widest">基本原則</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight">防衛を完遂するための3原則</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 max-w-5xl mx-auto w-full px-4"><div class="p-4 lg:p-6 bg-sky-50 border-2 border-sky-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-sky-900 shadow-sm">1. 持ち込まない</div><div class="p-4 lg:p-6 bg-sky-50 border-2 border-sky-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-sky-900 shadow-sm">2. 広げない</div><div class="p-4 lg:p-6 bg-sky-50 border-2 border-sky-200 rounded-2xl lg:rounded-3xl text-center font-black text-sm lg:text-base text-sky-900 shadow-sm">3. 持ち出さない</div></div><p class="text-slate-500 font-black text-[10px] lg:text-base mt-4 text-balance">※この3つを常に意識することが、施設防衛の鉄則です。</p></div>` },
+    { title: "標準予防策（スタンダード・プリコーション）", order: 5, content: `<div class="flex flex-col items-center text-center space-y-4 lg:space-y-6 px-4 h-full justify-center"><div class="p-4 lg:p-6 bg-white rounded-[2rem] lg:rounded-[3.5rem] w-full max-w-2xl shadow-xl border-2 border-slate-200 shrink-0"><h4 class="text-xl lg:text-2xl font-black mb-2 text-slate-900">標準予防策の真の意味</h4><p class="text-[10px] lg:text-sm text-slate-900 font-black">「全員が感染している」と想定する勇気</p></div><div class="p-6 bg-sky-50 border-2 border-sky-100 rounded-3xl text-left max-w-3xl space-y-4 shadow-inner"><p class="text-sm lg:text-xl font-black text-sky-900 leading-relaxed text-balance text-center">血液、体液、排泄物、傷のある皮膚、粘膜。<br/>これらはすべて「感染源」であるとみなし、誰に対しても平等に、常に同じレベルの予防策を実施します。</p></div></div>` },
+    { title: "主要な3つの感染経路：接触感染", order: 6, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-sky-900 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-sky-700 rounded-full"></span>接触感染</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li class="whitespace-nowrap">・手やドアノブを介して広がる</li><li class="whitespace-nowrap">・最も多い感染経路である</li><li class="whitespace-nowrap text-balance">・ノロウイルス、疥癬、食中毒</li></ul></div>` },
+    { title: "主要な3つの感染経路：飛沫感染", order: 7, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-rose-800 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-rose-600 rounded-full"></span>飛沫感染</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li class="whitespace-nowrap">・咳やくしゃみのしぶき（2m以内）</li><li class="whitespace-nowrap">・しぶきを直接浴びることで感染</li><li class="whitespace-nowrap text-balance">・インフルエンザ、風邪</li></ul></div>` },
+    { title: "主要な3つの感染経路：空気感染", order: 8, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left"><div class="space-y-4 lg:space-y-6"><h4 class="text-2xl lg:text-5xl font-black text-emerald-800 flex items-center gap-4 lg:gap-6"><span class="w-2 h-10 lg:w-3 lg:h-16 bg-emerald-600 rounded-full"></span>空気感染</h4></div><ul class="space-y-4 lg:space-y-8 text-lg lg:text-4xl font-black text-slate-800 pl-0 leading-tight"><li class="whitespace-nowrap">・空気中に漂う微粒子を吸い込む</li><li class="whitespace-nowrap">・遠くまで広がり長時間漂う</li><li class="whitespace-nowrap text-balance">・結核、麻疹、水痘</li></ul></div>` },
+    { title: "手洗いの盲点：汚れが残る場所", order: 9, content: `<div class="flex flex-col items-center text-center space-y-6 lg:space-y-10 px-4 h-full justify-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight">どこに「汚れ」が残っていますか？</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-x-12 lg:gap-y-3 font-black text-sm lg:text-base w-full max-w-4xl text-left"><div class="flex flex-col gap-3"><span class="px-6 py-2.5 lg:py-3 bg-red-50 border-2 border-red-200 rounded-2xl text-red-900 shadow-sm text-center">指先・爪のまわり</span><span class="px-6 py-2.5 lg:py-3 bg-red-50 border-2 border-red-200 rounded-2xl text-red-900 shadow-sm text-center">親指の付け根</span><span class="px-6 py-2.5 lg:py-3 bg-red-50 border-2 border-red-200 rounded-2xl text-red-900 shadow-sm text-center">指の間</span></div><div class="flex flex-col gap-3"><span class="px-6 py-2.5 lg:py-3 bg-red-50 border-2 border-red-200 rounded-2xl text-red-900 shadow-sm text-center">手首</span><span class="px-6 py-2.5 lg:py-3 bg-red-50 border-2 border-red-200 rounded-2xl text-red-900 shadow-sm text-center">手のひらのしわ</span></div></div><p class="text-red-700 font-black text-sm lg:text-xl px-4 text-balance text-center w-full">石鹸で「30秒以上」洗わないと、ウイルスは落ちません。</p></div>` },
+    { title: "手指衛生：アルコールの5つのタイミング", order: 10, content: `<div class="flex flex-col justify-center h-full space-y-8 lg:space-y-12 px-4 lg:px-12 text-left"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center w-full">5つのタイミング（WHO推奨）</h4><ul class="space-y-4 lg:space-y-6 text-sm lg:text-2xl font-black text-slate-800 pl-0 leading-tight text-center w-full"><li>1. 利用者に触れる前</li><li>2. 清潔・無菌操作の前</li><li>3. 体液に暴露した可能性のある後</li><li>4. 利用者に触れた後</li><li>5. 利用者の周囲の物品に触れた後</li></ul></div>` },
+    { title: "個人防護具（PPE）の着用の順番", order: 11, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full"><h4 class="text-xl lg:text-3xl font-black text-slate-900 text-center w-full mb-4 text-balance px-4">正しい「着る」順番</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl"><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">1</span>ガウン（袖を通し腰紐を結ぶ）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">2</span>マスク（鼻とあごを覆う）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">3</span>ゴーグル・フェイスシールド</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">4</span>手袋（ガウンの袖口を覆う）</div></div></div>` },
+    { title: "最重要：防護具を「脱ぐ」順番", order: 12, content: `<div class="flex flex-col items-center justify-center h-full space-y-6 lg:space-y-8 px-4 w-full"><h4 class="text-xl lg:text-3xl font-black text-red-900 text-center w-full mb-4 animate-pulse text-balance">汚染を広げない「脱ぐ」順番</h4><div class="grid grid-cols-1 gap-3 lg:gap-4 w-full max-w-2xl"><div class="flex items-center gap-4 bg-red-50 p-4 rounded-2xl border-2 border-red-200 shadow-sm font-black"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center">1</span>手袋（表面を触らず裏返して脱ぐ）</div><div class="flex items-center gap-4 bg-red-50 p-4 rounded-2xl border-2 border-red-200 shadow-sm font-black"><span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center">2</span>ガウン（内側から丸めるように）</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">3</span>ゴーグル・フェイスシールド</div><div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm font-black"><span class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center">4</span>マスク（表面に触れずゴムを持つ）</div></div></div>` },
+    { title: "食中毒予防の3原則", order: 13, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full"><h4 class="text-xl lg:text-3xl font-black text-amber-700 text-center mb-4 uppercase tracking-widest w-full px-4">食中毒予防の3原則</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full"><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3"><span>●</span> 清潔（つけない）：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">手洗いや器具の消毒を徹底する。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3"><span>●</span> 迅速（増やさない）：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">調理後すぐに食べる。適切な温度管理。</p></div><div><p class="text-lg lg:text-3xl text-amber-600 mb-1 flex items-center gap-3"><span>●</span> 加熱（やっつける）：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">中心部を75℃で1分以上加熱する。</p></div></div></div>` },
+    { title: "ノロウイルス嘔吐物処理の鉄則", order: 14, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full"><div class="inline-flex items-center gap-3 px-4 py-2 bg-red-100 text-red-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-red-200 mb-2 mx-auto uppercase tracking-widest">重要事項</div><h4 class="text-xl lg:text-3xl font-black text-red-900 leading-tight px-4 text-balance">「乾燥」は最大の敵</h4><div class="p-6 lg:p-10 bg-white border-[4px] lg:border-[6px] border-red-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full"><p class="text-lg lg:text-3xl font-black text-red-900 leading-relaxed italic text-balance text-center">乾燥してウイルスが舞い上がると、吸い込んで感染します。<br/>次亜塩素酸Naで浸し、外側から内側へ静かに拭き取ることが鉄則です。</p></div></div>` },
+    { title: "感染症BCP：人員不足時の優先順位", order: 15, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-8 px-6 lg:px-12 w-full"><h4 class="text-xl lg:text-3xl font-black text-sky-900 text-center mb-4 uppercase tracking-widest w-full">命を守る優先業務</h4><div class="space-y-6 lg:space-y-10 font-black text-slate-900 max-w-4xl mx-auto w-full"><div><p class="text-lg lg:text-3xl text-sky-700 mb-1 flex items-center gap-3"><span>●</span> 生命維持業務：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">食事、排泄、投薬、生命に関わるケア。</p></div><div><p class="text-lg lg:text-3xl text-sky-700 mb-1 flex items-center gap-3"><span>●</span> 休止・延期業務：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">レクリエーション、季節行事、非緊急の清掃。</p></div><div><p class="text-lg lg:text-3xl text-sky-700 mb-1 flex items-center gap-3"><span>●</span> 情報共有：</p><p class="text-sm lg:text-xl pl-8 lg:pl-12 text-slate-600 font-bold text-balance">誰がいつ報告するか、連絡ルートの事前共有。</p></div></div></div>` },
+    { title: "環境整備：消毒液の使い分け", order: 16, content: `<div class="space-y-6 lg:space-y-8 text-center px-4 h-full flex flex-col justify-center"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight mb-2 px-4 text-center w-full">相手に合わせた「武器」の選択</h4><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto w-full"><div class="p-6 lg:p-8 bg-sky-50 border-2 border-sky-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">アルコール</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-balance text-center">インフルエンザ、風邪などの細菌・ウイルスに有効。手すりや机に。</p></div><div class="p-6 lg:p-8 bg-rose-50 border-2 border-rose-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-xl flex flex-col items-center gap-2 lg:gap-4"><p class="font-black text-lg lg:text-xl text-sky-800 text-center">次亜塩素酸Na</p><p class="text-sm lg:text-sm font-bold text-slate-700 leading-relaxed text-balance text-center">ノロウイルス等の嘔吐物・下痢便の汚染箇所。※手指（皮膚）には絶対に使用しないでください。</p></div></div></div>` },
+    { title: "1. ケーススタディ：突然の嘔吐", order: 17, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase">事例 1</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-balance">場面：利用者が突然の嘔吐</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance text-center px-4">食堂でA様が突然の嘔吐。周囲には他の利用者もいます。<br class="lg:hidden" />あなたはまずどう動きますか？</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-sky-700 italic text-center px-4 text-balance">「素手で助ける」のは正解でしょうか？<br class="lg:hidden" />防護具を取りに行く時間をどう稼ぎますか？</p></div></div>` },
+    { title: "2. ケーススタディ：自身の体調不良", order: 18, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full"><div class="inline-flex items-center gap-3 px-4 py-2 bg-amber-50 text-amber-800 rounded-full text-[10px] lg:text-xs font-black ring-1 ring-amber-200 mb-2 mx-auto uppercase">事例 2</div><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-balance">場面：出勤前の違和感</h4><div class="p-0 lg:p-8 bg-transparent lg:bg-white border-none lg:border-2 lg:border-slate-100 rounded-none lg:rounded-[2rem] shadow-none lg:shadow-xl max-w-4xl text-left space-y-4 lg:space-y-6 w-full"><p class="text-sm lg:text-xl font-bold text-slate-800 leading-relaxed text-balance text-center px-4">今朝、喉の痛みと微熱があります。<br class="lg:hidden" />今日は人手が足りない日。あなたはどうしますか？</p><div class="h-px bg-slate-100"></div><p class="text-xs lg:text-lg font-black text-sky-700 italic text-center px-4 text-balance">「責任感による無理な出勤」が<br class="lg:hidden" />もたらす最大のリスクは何でしょうか？</p></div></div>` },
+    { title: "解決：施設全体を守る初動", order: 19, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4 text-balance">プロとしての「防衛」判断</h4><div class="p-6 lg:p-10 bg-sky-50 border-2 border-sky-100 rounded-[2.5rem] lg:rounded-[4rem] shadow-inner text-left max-w-4xl space-y-4 lg:space-y-6 mx-auto"><p class="text-base lg:text-xl font-black text-sky-900 text-center w-full">蔓延を食い止める具体策</p><div class="grid grid-cols-1 gap-3 lg:gap-4 text-sm lg:text-lg font-bold text-slate-800"><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">1</span>嘔吐時は周囲を2m以上遠ざけ、応援を呼ぶ</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">2</span>必ずPPE（防護具）をフル装着して処理する</div><div class="flex items-center gap-3 lg:gap-4 bg-white p-3 lg:p-4 rounded-xl lg:rounded-2xl border border-sky-100 shadow-sm"><span class="w-6 h-6 lg:w-8 lg:h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-[10px] lg:text-sm shrink-0">3</span>体調不良は「出勤しない勇気」が施設を救う</div></div></div></div>` },
+    { title: "早期発見と報告の重要性", order: 20, content: `<div class="flex flex-col items-center justify-center h-full text-center space-y-6 lg:space-y-8 px-4 w-full"><h4 class="text-xl lg:text-3xl font-black italic text-red-900 px-4 text-balance">「いつもと違う」を見逃さない</h4><div class="p-8 lg:p-10 bg-white border-4 border-red-100 rounded-[2rem] lg:rounded-[3rem] shadow-xl max-w-4xl mx-auto w-full"><p class="text-xl lg:text-3xl font-black leading-relaxed text-center text-slate-900">利用者の「発熱・下痢・嘔吐」は<br/><span class="text-red-700 underline underline-offset-8 decoration-4">即座に</span>報告！</p></div><p class="text-[10px] lg:text-lg font-black text-red-800 px-4 text-balance">※一人の遅れが、全館感染（クラスター）の原因になります。</p></div>` },
+    { title: "換気と空間の衛生", order: 21, content: `<div class="flex flex-col items-center justify-center h-full text-left space-y-6 lg:space-y-10 px-6 lg:px-12 w-full"><h4 class="text-xl lg:text-3xl font-black text-sky-800 flex items-center gap-4 w-full px-4 justify-center text-balance">空気の流れを作る</h4><p class="text-sm lg:text-2xl font-black leading-relaxed text-slate-900 max-w-4xl bg-sky-50 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-sky-100 w-full text-balance text-center">「30分に1回、数分間の全開」よりも、「常に数センチ開けておく」ほうが換気効率は高いです。</p><p class="text-xs lg:text-xl font-black text-sky-800 text-center w-full text-balance px-4">冬場でも対角線上の窓を開け、常に新鮮な空気を。</p></div>` },
+    { title: "誇りを持ってケアにあたる", order: 22, content: `<div class="space-y-6 lg:space-y-10 text-center flex flex-col items-center justify-center h-full px-4 w-full"><h4 class="text-xl lg:text-3xl font-black text-slate-900 leading-tight px-4">命を守るプロフェッショナル</h4><div class="p-8 lg:p-12 bg-white border-[4px] lg:border-[6px] border-sky-600 rounded-[2rem] lg:rounded-[3rem] shadow-2xl max-w-3xl mx-auto w-full"><p class="text-xl lg:text-3xl font-black text-sky-900 leading-relaxed italic text-balance text-center">あなたの正しい手洗い一つが、<br/>誰かの大切な明日を<br/>守り抜くことに繋がっています。</p></div><p class="font-black text-sm lg:text-xl text-slate-800 mt-4 text-balance text-center w-full px-4">その誇りを持って、日々のケアにあたりましょう。</p></div>` },
+    { title: "まとめ：持ち込まない・広げない", order: 23, content: `<div class="flex flex-col items-center text-center space-y-8 lg:space-y-12 w-full h-full justify-center text-slate-900 px-4"><div class="w-24 h-24 lg:w-32 h-32 bg-sky-700 rounded-[2.5rem] lg:rounded-[3.5rem] flex items-center justify-center shadow-2xl shadow-blue-200 rotate-3 transition-transform hover:rotate-0 duration-500"><svg class="w-12 h-12 lg:w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div><h3 class="text-2xl lg:text-5xl font-black leading-tight">清潔感のある施設を、<br/>全員で守り抜きましょう。</h3><div class="pt-8 lg:pt-12 border-t-2 border-slate-200 w-full max-w-md text-center"><p class="text-slate-500 font-black text-[8px] lg:text-[10px] uppercase tracking-[0.5em]">研修終了</p></div></div>` },
+    { title: "実践チェックのご案内", order: 24, content: `
+        <div class="flex flex-col items-center text-center space-y-6 lg:space-y-8 w-full h-full justify-center px-4">
+          <div class="bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.3em] uppercase inline-block mb-4 lg:mb-6 shadow-lg">修了</div>
+          <h2 class="text-2xl lg:text-5xl font-black text-slate-900 leading-tight mb-2 lg:mb-4 text-balance text-center w-full px-4">講義セッション終了</h2>
+          <p class="text-emerald-800 text-base lg:text-2xl font-black leading-relaxed text-center w-full text-balance px-4 px-4">大変お疲れ様でした。<br/>最後に理解度テスト（全10問）を行います。</p>
+          <div class="p-4 lg:p-6 bg-blue-50 rounded-2xl lg:rounded-3xl border-2 border-blue-100 max-w-lg mx-auto mt-6 lg:mt-8">
+            <p class="text-blue-900 font-black text-sm lg:text-xl flex items-center justify-center gap-3">
+              <span class="w-2 h-2 bg-blue-700 rounded-full"></span>
+              全問正解を目指しましょう！
+              <span class="w-2 h-2 bg-blue-700 rounded-full"></span>
             </p>
           </div>
         </div>
-      ` 
-    },
-    { 
-      title: 'まとめ：利用者の命を守る盾として', 
-      order: 11, 
-      content: `
-        <div class="flex flex-col items-center text-center space-y-12">
-          <div class="w-28 h-28 bg-sky-600 rounded-[3rem] flex items-center justify-center shadow-2xl shadow-sky-200 rotate-3">
-            <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 class="text-4xl font-black text-slate-900 leading-tight">
-            手洗い一つが、<br/>誰かの未来を救う
-          </h3>
-          <p class="text-slate-500 font-bold text-xl max-w-sm mx-auto leading-relaxed">
-            プロフェッショナルとして、<br/>「持ち込まない・広げない」を<br/>今日から再徹底しましょう。
-          </p>
-          <div class="pt-12 border-t border-slate-100 w-full max-w-xs">
-            <p class="text-slate-400 font-black text-[10px] uppercase tracking-[0.5em]">End of Session</p>
-          </div>
-        </div>
-      ` 
-    }
+      ` }
   ]
 
   const questionsData = [
-    { text: 'ノロウイルスに最も効果的な消毒液はどれか。', explanation: 'アルコールはノロウイルスには効きにくいため、0.1%以上の次亜塩素酸ナトリウムを使用します。', order: 1, choices: { create: [{ text: '次亜塩素酸ナトリウム', isCorrect: true }, { text: 'アルコール', isCorrect: false }, { text: '消毒用ハンドソープ', isCorrect: false }] } },
-    { text: '個人防護具（PPE）を脱ぐ際、最も適切な順番はどれか。', explanation: '汚染の激しいものから脱ぎます。一般的に「手袋 → ガウン → マスク」の順で脱ぎます。', order: 2, choices: { create: [{ text: '手袋 → ガウン → マスク', isCorrect: true }, { text: 'マスク → 手袋 → ガウン', isCorrect: false }, { text: 'ガウン → マスク → 手袋', isCorrect: false }] } },
-    { text: '食中毒予防の3原則に含まれないものはどれか。', explanation: '「つけない・増やさない・やっつける」が3原則です。', order: 3, choices: { create: [{ text: '冷まさない', isCorrect: true }, { text: 'つけない（清潔）', isCorrect: false }, { text: '増やさない（迅速）', isCorrect: false }, { text: 'やっつける（殺菌）', isCorrect: false }] } },
-    { text: 'ノロウイルスの嘔吐物を処理する際、最も注意すべきことは何か。', explanation: '乾燥するとウイルスが空気中に舞い上がり、吸入感染を引き起こすため、乾燥させないことが最優先です。', order: 4, choices: { create: [{ text: '乾燥させないように素早く覆う', isCorrect: true }, { text: '掃除機で吸い取る', isCorrect: false }, { text: '水で薄めて広げる', isCorrect: false }] } },
-    { text: '人員不足時に優先すべき業務はどれか（感染症BCP）。', explanation: '生命維持に直結する食事・排泄・投薬などの身体ケアを最優先し、レクリエーションなどは休止します。', order: 5, choices: { create: [{ text: '食事・排泄・投薬の身体ケア', isCorrect: true }, { text: '季節の行事やレクリエーション', isCorrect: false }, { text: '居室のワックス掛け', isCorrect: false }] } }
+    { text: '全ての利用者が感染源であるとみなして対応する基本概念を何というか？', explanation: '「スタンダード・プリコーション（標準予防策）」と呼ばれ、現代の感染対策の根幹です。', order: 1, choices: { create: [{ text: 'スタンダード・プリコーション', isCorrect: true }, { text: 'ユニバーサル・マナー', isCorrect: false }, { text: '個別感染対応', isCorrect: false }] } },
+    { text: '通常のアルコール消毒液がほとんど効かない、冬場に多いウイルスはどれか？', explanation: 'ノロウイルスにはアルコールが効きにくいため、次亜塩素酸ナトリウムでの消毒が必須です。', order: 2, choices: { create: [{ text: 'ノロウイルス', isCorrect: true }, { text: 'インフルエンザウイルス', isCorrect: false }, { text: 'アデノウイルス', isCorrect: false }] } },
+    { text: '石鹸による手洗いで、ウイルスを十分に落とすために必要な時間は最短どれくらいか？', explanation: '30秒以上の時間をかけて丁寧に洗うことで、物理的にウイルスを洗い流せます。', order: 3, choices: { create: [{ text: '30秒以上', isCorrect: true }, { text: '10秒程度', isCorrect: false }, { text: '5分以上', isCorrect: false }] } },
+    { text: '個人防護具（PPE）を「脱ぐ」際、最も汚染が激しいため最初に脱ぐべきものはどれか？', explanation: '最も汚染物に直接触れる「手袋」を最初に脱ぎ、その後ガウン、マスクの順に進みます。', order: 4, choices: { create: [{ text: '手袋', isCorrect: true }, { text: 'マスク', isCorrect: false }, { text: 'ガウン', isCorrect: false }, { text: 'ゴーグル', isCorrect: false }] } },
+    { text: 'ノロウイルスの嘔吐物を処理する際、最も避けるべき状態はどれか？', explanation: '乾燥させるとウイルスが空気中に舞い上がり、吸入感染の原因になります。常に湿らせた状態で処理します。', order: 5, choices: { create: [{ text: '汚染箇所を乾燥させること', isCorrect: true }, { text: '次亜塩素酸Naで浸すこと', isCorrect: false }, { text: '使い捨て防護具を使うこと', isCorrect: false }] } },
+    { text: '食中毒予防の3原則のうち、「75℃で1分以上の加熱」が該当するのはどれか？', explanation: '「つけない・増やさない・やっつける」のうち、加熱は「やっつける（殺菌）」にあたります。', order: 6, choices: { create: [{ text: 'やっつける', isCorrect: true }, { text: 'つけない', isCorrect: false }, { text: '増やさない', isCorrect: false }] } },
+    { text: '空気感染する疾患（結核、麻疹など）の対策として、最も有効な環境整備はどれか？', explanation: '空気中に漂う微粒子を排出するため、換気が最も重要です。', order: 7, choices: { create: [{ text: '常に空気の流れを作る（換気）', isCorrect: true }, { text: '手すりをアルコールで拭く', isCorrect: false }, { text: '床を水拭きする', isCorrect: false }] } },
+    { text: '感染症BCP（業務継続計画）において、人員不足時に「休止・延期」すべき業務はどれか？', explanation: '生命に直結しないレクリエーションや行事は休止し、身体ケアを最優先します。', order: 8, choices: { create: [{ text: '季節行事やレクリエーション', isCorrect: true }, { text: '食事・排泄の介助', isCorrect: false }, { text: '処方薬の与薬', isCorrect: false }] } },
+    { text: '自身の体調に熱や下痢などの違和感がある場合、プロとしてとるべき行動は？', explanation: '無理な出勤は施設崩壊（クラスター）の原因になります。即座に報告し指示を仰ぐのが正解です。', order: 9, choices: { create: [{ text: '即座に報告し、出勤の可否を確認する', isCorrect: true }, { text: '人手が足りないので、黙って出勤する', isCorrect: false }, { text: '薬を飲んで熱を下げてから出勤する', isCorrect: false }] } },
+    { text: '次亜塩素酸ナトリウムを使用する際の注意点として「誤っている」ものはどれか？', explanation: '次亜塩素酸Naは手指の消毒には刺激が強すぎるため、人体（手指）には使用してはいけません。', order: 10, choices: { create: [{ text: '手指の消毒に直接使用する', isCorrect: true }, { text: '使用する濃度を適切に希釈する', isCorrect: false }, { text: '金属を腐食させる可能性がある', isCorrect: false }] } }
   ]
 
   let course = await prisma.course.findUnique({ where: { slug } })
