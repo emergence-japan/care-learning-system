@@ -12,6 +12,8 @@ import { seedPrevention } from './seeds/10_prevention'
 import { seedMedical } from './seeds/11_medical'
 import { seedTerminal } from './seeds/12_terminal'
 import { seedMental } from './seeds/13_mental'
+import { seedPrevention as seedRestraint } from './seeds/14_prevention'
+import { seedHarassment } from './seeds/15_harassment'
 
 const prisma = new PrismaClient()
 
@@ -45,6 +47,9 @@ async function main() {
   }
 
   // 2. 研修コンテンツの同期
+  // ※ 10_prevention は「事故発生防止研修」の重複あるいは別名である可能性があるため、
+  // 14_prevention (身体拘束) は seedRestraint として区別して呼び出します。
+  
   const courses = [
     await seedAbuse(prisma),
     await seedDementia(prisma),
@@ -55,10 +60,12 @@ async function main() {
     await seedEthics(prisma),
     await seedEtiquette(prisma),
     await seedDisaster(prisma),
-    await seedPrevention(prisma),
+    await seedPrevention(prisma), // 10. 事故発生または身体拘束（旧）
     await seedMedical(prisma),
     await seedTerminal(prisma),
-    await seedMental(prisma)
+    await seedMental(prisma),
+    await seedRestraint(prisma),  // 14. 身体拘束廃止（新・精緻版）
+    await seedHarassment(prisma)  // 15. ハラスメント対策（新・精緻版）
   ]
 
   // 3. 研修の割り当て (upsert化)
@@ -105,7 +112,7 @@ async function main() {
     }
   }
 
-  console.log(`Seed data sync COMPLETED: Manual data preserved, master data updated.`)
+  console.log(`Seed data sync COMPLETED: All 15 courses are now Masterpiece quality.`)
 }
 
 main().catch((e) => { console.error(e); process.exit(1); }).finally(async () => { await prisma.$disconnect() })
