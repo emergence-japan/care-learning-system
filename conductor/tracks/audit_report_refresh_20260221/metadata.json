@@ -1,0 +1,8 @@
+{
+  "track_id": "audit_report_refresh_20260221",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-21T09:35:00Z",
+  "updated_at": "2026-02-21T09:35:00Z",
+  "description": "監査用レポート機能の刷新: 実地指導に耐えうるPDF出力、年間スケジュール反映、一括生成機能の実装"
+}
