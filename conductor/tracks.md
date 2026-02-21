@@ -56,3 +56,9 @@ This file tracks all major tracks for the project. Each track has its own detail
 *Link: [./tracks/audit_report_refresh_20260221/](./tracks/audit_report_refresh_20260221/)*
 
 
+
+
+---
+
+- [ ] **Track: 研修スライドの最終確認**
+*Link: [./tracks/training_slides_final_check_20260221/](./tracks/training_slides_final_check_20260221/)*
