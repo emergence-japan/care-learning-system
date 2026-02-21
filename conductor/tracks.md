@@ -48,15 +48,11 @@ This file tracks all major tracks for the project. Each track has its own detail
 *Link: [./tracks/staff_screen_refinement/](./tracks/staff_screen_refinement/)*
 
 
----
-
-- [ ] **Track: 監査用レポ�Eト機�Eの刷新とスライドエチE��タの実裁E*
-*冁E��: 実地持E��に耐えぁE��PDF出力機�Eの開発、およ�E管琁E��面からのスライド編雁E���Eの実裁E
-*Link: [./tracks/audit_and_editor_function_dev_20260217/](./tracks/audit_and_editor_function_dev_20260217/)*
 
 
 ---
 
 - [ ] **Track: 監査用レポート機能の刷新**
 *Link: [./tracks/audit_report_refresh_20260221/](./tracks/audit_report_refresh_20260221/)*
+
 
