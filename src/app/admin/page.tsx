@@ -160,11 +160,10 @@ export default async function AdminDashboardPage() {
                   {!isSuspended && (
                     <>
                       <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
-                      <CourseAssignmentDialog 
-                        courses={courses} 
-                        currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
-                      />
-                    </>
+                                              <CourseAssignmentDialog 
+                                                courses={courses} 
+                                                currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
+                                              />                    </>
                   )}
                 </div>
               </div>
