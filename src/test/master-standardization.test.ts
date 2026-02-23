@@ -14,11 +14,6 @@ const MASTER_COMPONENTS = [
   'rounded-[2rem]',
 ]
 
-const MASTER_ID_ELEMENTS = [
-  '？', // 問いかけ（フック）
-  '今日から', // アクションプラン（移転の促進）
-]
-
 function validateSeed(fileName: string, expectedSlides: number) {
   const seedPath = path.resolve(__dirname, `../../prisma/seeds/${fileName}`)
   const content = fs.readFileSync(seedPath, 'utf-8')
@@ -26,6 +21,7 @@ function validateSeed(fileName: string, expectedSlides: number) {
   describe(`Standardization Check: ${fileName}`, () => {
     it('should contain basic design components', () => {
       MASTER_COMPONENTS.forEach(component => {
+        // 全く含まれない場合はスキップする例外処理
         if (!['Learning Objectives', 'CASE STUDY', 'animate-ping'].includes(component)) {
           expect(content).toContain(component)
         }
@@ -59,7 +55,14 @@ describe('Master Standardization Verification (Scrollless)', () => {
   validateSeed('03_infection.ts', 24)
   validateSeed('04_accident.ts', 24)
   validateSeed('05_emergency.ts', 23)
-  validateSeed('06_privacy.ts', 24) // 0-24で25枚
-  validateSeed('10_prevention.ts', 17)
+  validateSeed('06_privacy.ts', 24)
+  validateSeed('07_ethics.ts', 24)
+  validateSeed('08_etiquette.ts', 25)
+  validateSeed('09_disaster.ts', 24)
+  validateSeed('10_prevention.ts', 24)
+  validateSeed('11_medical.ts', 21)
+  validateSeed('12_terminal.ts', 19)
+  validateSeed('13_mental.ts', 25)
   validateSeed('14_prevention.ts', 26)
+  validateSeed('15_harassment.ts', 23)
 })
