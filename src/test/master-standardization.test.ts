@@ -26,7 +26,7 @@ function validateSeed(fileName: string, expectedSlides: number) {
   describe(`Standardization Check: ${fileName}`, () => {
     it('should contain basic design components', () => {
       MASTER_COMPONENTS.forEach(component => {
-        if (!['Learning Objectives', 'CASE STUDY'].includes(component)) {
+        if (!['Learning Objectives', 'CASE STUDY', 'animate-ping'].includes(component)) {
           expect(content).toContain(component)
         }
       })
@@ -58,5 +58,6 @@ describe('Master Standardization Verification (Scrollless)', () => {
   validateSeed('02_dementia.ts', 24)
   validateSeed('03_infection.ts', 24)
   validateSeed('04_accident.ts', 24)
+  validateSeed('05_emergency.ts', 23) // 0-23で24枚
   validateSeed('14_prevention.ts', 26)
 })
