@@ -7,14 +7,17 @@ import { Label } from "@/components/ui/label";
 import { registerStaff } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserPlus, Loader2, X, AlertCircle, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, dispatch, isPending] = useActionState(
     async (state: string | undefined, formData: FormData) => {
       const error = await registerStaff(formData);
       if (!error) {
         setIsOpen(false);
+        router.refresh();
       }
       return error;
     },

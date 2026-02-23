@@ -207,6 +207,7 @@ export async function registerStaff(
   }
 
   revalidatePath("/admin");
+  revalidatePath("/");
 }
 
 export async function updateUser(userId: string, formData: FormData) {
