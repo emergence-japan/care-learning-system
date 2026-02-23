@@ -1,13 +1,12 @@
 import { auth, signOut } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { 
-  Users, TrendingUp, LogOut, 
+  Users, LogOut, 
   Briefcase, ClipboardList, GraduationCap, 
-  ChevronRight, CalendarDays, MessageSquare
+  CalendarDays, MessageSquare
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
@@ -22,11 +21,12 @@ import { AlertCircle } from "lucide-react";
 export default async function AdminDashboardPage() {
   const session = await auth();
 
+  // 1. セッションとロールの基本ガード
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }
 
-  const isSuspended = session.user.isSuspended;
+  const isSuspended = !!session.user.isSuspended;
   const facilityId = session.user.facilityId;
   
   if (!facilityId) {
@@ -40,44 +40,34 @@ export default async function AdminDashboardPage() {
     );
   }
 
+  // 2. 施設・法人データの取得（厳格なガード）
   const facility = await prisma.facility.findUnique({ 
     where: { id: facilityId },
     include: { corporation: true }
   });
 
-  if (!facility || !facility.corporation) {
-    return <div className="p-20 text-center font-bold text-slate-400">所属情報が見つかりません。</div>;
+  if (!facility) {
+    return <div className="p-20 text-center font-bold text-slate-400">所属施設(ID: {facilityId})が見つかりません。データベースのリセットにより、ユーザーの紐付けが切れている可能性があります。</div>;
   }
 
-  // スタッフ取得
-  const staffMembers = await prisma.user.findMany({
-    where: { facilityId: facilityId, role: "STAFF" },
-    include: {
-      enrollments: {
-        include: { course: true }
-      }
-    },
-    orderBy: { name: 'asc' }
-  }) || [];
+  // 3. 各種データの取得
+  const [staffMembers, allAvailableCourses, currentAssignments] = await Promise.all([
+    prisma.user.findMany({
+      where: { facilityId: facilityId, role: "STAFF" },
+      include: { enrollments: { include: { course: true } } },
+      orderBy: { name: 'asc' }
+    }),
+    prisma.course.findMany({ orderBy: { title: 'asc' } }),
+    prisma.courseAssignment.findMany({
+      where: { facilityId },
+      include: { course: true },
+      orderBy: { endDate: 'asc' }
+    })
+  ]);
 
-  const totalStaff = staffMembers.length;
-  
-  // コース取得
-  const allAvailableCourses = await prisma.course.findMany({ orderBy: { title: 'asc' } }) || [];
-  
-  // 割当取得
-  const currentAssignments = await prisma.courseAssignment.findMany({
-    where: { facilityId },
-    include: { course: true },
-    orderBy: { endDate: 'asc' }
-  }) || [];
-
-  const totalCompletedEnrollments = staffMembers.reduce((acc, user) => {
-    return acc + (user.enrollments?.filter(e => e.status === 'COMPLETED').length || 0);
-  }, 0);
-  
-  const totalAssignments = totalStaff * currentAssignments.length;
-  const progressRate = totalAssignments > 0 ? Math.round((totalCompletedEnrollments / totalAssignments) * 100) : 0;
+  const totalStaff = staffMembers?.length || 0;
+  const assignments = currentAssignments || [];
+  const courses = allAvailableCourses || [];
 
   return (
     <div className="h-screen bg-slate-50 flex flex-col font-sans overflow-hidden">
@@ -110,17 +100,21 @@ export default async function AdminDashboardPage() {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r border-slate-100 hidden lg:flex flex-col p-6 space-y-2 overflow-y-auto custom-scrollbar shrink-0">
-          <Link href="#annual-plan">
-            <SidebarItem icon={<CalendarDays className="w-5 h-5" />} label="年間計画" active />
+          <Link href="#annual-plan" className="flex items-center gap-4 px-4 py-3.5 rounded-xl bg-slate-900 text-white shadow-xl">
+            <CalendarDays className="w-5 h-5 text-blue-400" />
+            <span className="text-[13px] font-bold">年間計画</span>
           </Link>
-          <Link href="#course-management">
-            <SidebarItem icon={<ClipboardList className="w-5 h-5" />} label="研修管理" />
+          <Link href="#course-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50">
+            <ClipboardList className="w-5 h-5" />
+            <span className="text-[13px] font-bold">研修管理</span>
           </Link>
-          <Link href="#staff-management">
-            <SidebarItem icon={<Users className="w-5 h-5" />} label="スタッフ管理" />
+          <Link href="#staff-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50">
+            <Users className="w-5 h-5" />
+            <span className="text-[13px] font-bold">スタッフ管理</span>
           </Link>
-          <Link href="/admin/inquiry">
-            <SidebarItem icon={<MessageSquare className="w-5 h-5" />} label="サポートセンター" />
+          <Link href="/admin/inquiry" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50">
+            <MessageSquare className="w-5 h-5" />
+            <span className="text-[13px] font-bold">サポートセンター</span>
           </Link>
           
           <div className="mt-auto pt-6 border-t border-slate-50">
@@ -138,11 +132,9 @@ export default async function AdminDashboardPage() {
           <SystemNotification />
 
           {isSuspended && (
-            <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse no-print">
+            <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 no-print">
               <AlertCircle className="w-6 h-6 shrink-0" />
-              <div>
-                <p className="font-black text-sm">【利用停止中】制限モードになっています。</p>
-              </div>
+              <p className="font-black text-sm">【利用停止中】制限モードになっています。</p>
             </div>
           )}
 
@@ -165,8 +157,8 @@ export default async function AdminDashboardPage() {
                       <>
                         <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
                         <CourseAssignmentDialog 
-                          courses={allAvailableCourses} 
-                          currentAssignments={currentAssignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
+                          courses={courses} 
+                          currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: a.endDate }))} 
                         />
                       </>
                     )}
@@ -175,10 +167,10 @@ export default async function AdminDashboardPage() {
               </div>
               
               <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm overflow-hidden min-h-[200px] flex items-center justify-center">
-                {currentAssignments.length > 0 ? (
+                {assignments.length > 0 ? (
                   <TrainingTimeline 
                       startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
-                      assignments={currentAssignments} 
+                      assignments={assignments} 
                   />
                 ) : (
                   <div className="text-center py-12">
@@ -199,7 +191,7 @@ export default async function AdminDashboardPage() {
               </h3>
 
               <div className="grid grid-cols-1 gap-3">
-                {currentAssignments.length > 0 ? currentAssignments.map((assign) => {
+                {assignments.length > 0 ? assignments.map((assign) => {
                   const courseCompletedCount = staffMembers.filter(user => 
                     user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
                   ).length;
@@ -210,16 +202,16 @@ export default async function AdminDashboardPage() {
                         <div className="flex items-center gap-4 flex-1">
                             <GraduationCap className="w-5 h-5 text-blue-600" />
                             <div className="flex-1">
-                              <h4 className="font-bold text-slate-900 text-sm">{assign.course.title}</h4>
+                              <h4 className="font-bold text-slate-900 text-sm">{assign.course?.title || "研修タイトル不明"}</h4>
                               <div className="flex items-center gap-4 mt-1">
                                 <span className="text-[10px] font-bold text-slate-400">{courseProgressRate}% 完了</span>
-                                <span className="text-[10px] text-slate-300">期限: {new Date(assign.endDate).toLocaleDateString()}</span>
+                                <span className="text-[10px] text-slate-300">期限: {assign.endDate ? new Date(assign.endDate).toLocaleDateString() : "-"}</span>
                               </div>
                             </div>
                         </div>
                         <div className="no-print">
                           <IncompleteUsersDialog 
-                            courseTitle={assign.course.title}
+                            courseTitle={assign.course?.title || ""}
                             incompleteUsers={staffMembers
                               .filter(user => !user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED'))
                               .map(u => ({ id: u.id, name: u.name }))
@@ -240,23 +232,14 @@ export default async function AdminDashboardPage() {
             {/* スタッフ管理 Section */}
             <AdminClient 
               staffMembers={staffMembers}
-              currentAssignments={currentAssignments}
-              maxStaff={facility.maxStaff}
+              currentAssignments={assignments}
+              maxStaff={facility.maxStaff ?? 20} // NULL対策：デフォルト20
               isSuspended={isSuspended}
             />
 
           </div>
         </main>
       </div>
-    </div>
-  );
-}
-
-function SidebarItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
-  return (
-    <div className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-all ${active ? 'bg-slate-900 text-white shadow-xl' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}`}>
-      <div className={`${active ? 'text-blue-400' : ''}`}>{icon}</div>
-      <span className="text-[13px] font-bold">{label}</span>
     </div>
   );
 }
