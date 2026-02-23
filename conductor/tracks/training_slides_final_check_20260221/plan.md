@@ -9,7 +9,7 @@
 - [x] Task: master_checklist.md の作成（自動テスト/目視用） [00356ff]
 - [x] Task: 検証用テストスクリプトの作成 (src/test/master-standardization.test.ts) [00356ff]
 
-## フェーズ 2: 全15科目の順次検証と「マスター化」修正（セクションA） [checkpoint: 3ad61fc]
+## フェーズ 2: 全15科目の順次検証と「マスター化」修正（セクションA） [DONE]
 主要な法定研修科目を1つずつ目視確認し、マスターの構造に適合させるフェーズ。
 
 - [x] Task: 01_abuse.ts（高齢者虐待防止）の最終確認（基準としての確定） [00356ff]
@@ -17,26 +17,25 @@
 - [x] Task: 03_infection.ts（感染症対策）のマスター準拠修正 [9369419]
 - [x] Task: 04_accident.ts（事故発生防止）のマスター準拠修正 [aeee100]
 - [x] Task: 05_emergency.ts（緊急時対応）のマスター準拠修正 [6cc0bd4]
-- [x] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正 [3ad61fc]
+- [x] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正 [7372ee0]
 - [x] Task: 14_prevention.ts（介護予防）のマスター準拠修正 [f781ac6]
-- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: 3ad61fc]
 
-## フェーズ 3: 全15科目の順次検証と「マスター化」修正（セクションB） [checkpoint: 87f4e9b]
+## フェーズ 3: 全15科目の順次検証と「マスター化」修正（セクションB） [DONE]
 残りの科目を同様の手順で、デザインとIDの両面からアップグレードするフェーズ。
 
 - [x] Task: 06_privacy.ts（個人情報保護）のマスター準拠修正 [86583ce]
-- [x] Task: 07_ethics.ts（倫理・法令遵守）のマスター準拠修正 [33dfa2e]
-- [x] Task: 08_etiquette.ts（接遇・マナー）のマスター準拠修正 [d4415b1]
-- [x] Task: 09_disaster.ts（災害対策・BCP）のマスター準拠修正 [6490f22]
+- [x] Task: 07_ethics.ts（倫理・法令遵守）のマスター準拠修正 [7372ee0]
+- [x] Task: 08_etiquette.ts（接遇・マナー）のマスター準拠修正 [7372ee0]
+- [x] Task: 09_disaster.ts（災害対策・BCP）のマスター準拠修正 [7372ee0]
 - [x] Task: 11_medical.ts（医療的ケア）のマスター準拠修正 [6ea7acb]
 - [x] Task: 12_terminal.ts（看取りケア）のマスター準拠修正 [a6e8d0c]
-- [x] Task: 13_mental.ts（精神的ケア）のマスター準拠修正 [f7e0d8c]
-- [x] Task: 15_harassment.ts（ハラスメント対策）のマスター準拠修正 [87f4e9b]
+- [x] Task: 13_mental.ts（精神的ケア）のマスター準拠修正 [7372ee0]
+- [x] Task: 15_harassment.ts（ハラスメント対策）のマスター準拠修正 [7372ee0]
 
-## フェーズ 4: 最終品質保証とDB統合
+## フェーズ 4: 最終品質保証とDB統合 [IN PROGRESS]
 全科目がマスター基準を満たしていることを最終確認し、本番用シードとして統合する。
 
-- [ ] Task: 全科目一括テスト実行 (Standardization Test)
-- [ ] Task: 全科目一括シード実行 (Full Seed)
+- [x] Task: 全科目一括テスト実行 (Standardization Test) [7372ee0]
+- [x] Task: 全科目一括シード実行 (Full Seed) [7372ee0]
 - [ ] Task: スライドプレイヤーでの全科目最終目視（スクロール有無）
 - [ ] Task: 完了報告
