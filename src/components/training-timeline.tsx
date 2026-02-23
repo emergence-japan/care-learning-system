@@ -48,9 +48,10 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
             <div className="divide-y divide-slate-100">
               {assignments.length > 0 ? (
                 assignments.map((assignment) => {
-                  // スケジュールバーの開始位置と長さを計算 (月単位)
-                  const startIdx = months.indexOf(new Date(assignment.startDate).getMonth() + 1);
-                  const endIdx = months.indexOf(new Date(assignment.endDate).getMonth() + 1);
+                  const sDate = new Date(assignment.startDate);
+                  const eDate = new Date(assignment.endDate);
+                  const startIdx = months.indexOf(sDate.getMonth() + 1);
+                  const endIdx = months.indexOf(eDate.getMonth() + 1);
                   
                   const left = startIdx >= 0 ? (startIdx / 12) * 100 : 0;
                   const width = endIdx >= startIdx 
