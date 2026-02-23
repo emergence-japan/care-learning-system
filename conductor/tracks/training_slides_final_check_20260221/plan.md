@@ -30,8 +30,8 @@
 - [x] Task: 06_privacy.ts（個人情報保護）のマスター準拠修正 [86583ce]
 - [x] Task: 07_ethics.ts（倫理・法令遵守）のマスター準拠修正 [33dfa2e]
 - [x] Task: 08_etiquette.ts（接遇・マナー）のマスター準拠修正 [d4415b1]
-- [~] Task: 09_disaster.ts（災害対策・BCP）のマスター準拠修正
-- [ ] Task: 11_medical.ts（医療的ケア）のマスター準拠修正
+- [x] Task: 09_disaster.ts（災害対策・BCP）のマスター準拠修正 [6490f22]
+- [~] Task: 11_medical.ts（医療的ケア）のマスター準拠修正
 - [ ] Task: 12_terminal.ts（看取りケア）のマスター準拠修正
 - [ ] Task: 13_mental.ts（精神的ケア）のマスター準拠修正
 - [ ] Task: 15_harassment.ts（ハラスメント対策）のマスター準拠修正
