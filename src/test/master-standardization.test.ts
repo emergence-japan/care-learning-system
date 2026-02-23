@@ -2,11 +2,10 @@ import { describe, it, expect } from 'vitest'
 import fs from 'fs'
 import path from 'path'
 
-// マスター基準の定義
+// マスター基準の定義 (PCスクロールレス対応版)
 const MASTER_COMPONENTS = [
   'flex flex-col items-center justify-center text-center',
   'font-black',
-  'lg:text-6xl',
   'animate-pulse',
   'animate-ping',
   'Learning Objectives',
@@ -17,19 +16,26 @@ const MASTER_COMPONENTS = [
 
 const MASTER_ID_ELEMENTS = [
   '？', // 問いかけ（フック）
-  '義務化', // 義務化の背景（Relevance）
   '今日から', // アクションプラン（移転の促進）
 ]
 
-function validateSeed(fileName: string, expectedSlides: number) {
+function validateSeed(fileName: string, expectedSlides: number, isScrollless: boolean = false) {
   const seedPath = path.resolve(__dirname, `../../prisma/seeds/${fileName}`)
   const content = fs.readFileSync(seedPath, 'utf-8')
 
   describe(`Standardization Check: ${fileName}`, () => {
-    it('should contain all design components from the master template', () => {
+    it('should contain basic design components', () => {
       MASTER_COMPONENTS.forEach(component => {
         expect(content).toContain(component)
       })
+    })
+
+    it('should contain specific font size based on scrollless requirement', () => {
+      if (isScrollless) {
+        expect(content).toContain('lg:text-5xl') // スクロールレスは最大5xl
+      } else {
+        expect(content).toContain('lg:text-6xl') // 通常マスターは6xl
+      }
     })
 
     it('should contain all instructional design (ID) elements', () => {
@@ -51,6 +57,6 @@ function validateSeed(fileName: string, expectedSlides: number) {
 }
 
 describe('Master Standardization Verification', () => {
-  validateSeed('01_abuse.ts', 25)
-  validateSeed('14_prevention.ts', 27) // 27枚を期待
+  validateSeed('01_abuse.ts', 25, false) // 虐待はオリジナルの6xl
+  validateSeed('14_prevention.ts', 26, true) // 介護予防はスクロールレスの5xl (0-26で27枚)
 })

@@ -8,17 +8,24 @@ import { seedPrivacy } from './seeds/06_privacy'
 import { seedEthics } from './seeds/07_ethics'
 import { seedEtiquette } from './seeds/08_etiquette'
 import { seedDisaster } from './seeds/09_disaster'
-import { seedPrevention } from './seeds/10_prevention'
+import { seedPrevention as seedRestraint } from './seeds/10_prevention'
 import { seedMedical } from './seeds/11_medical'
 import { seedTerminal } from './seeds/12_terminal'
 import { seedMental } from './seeds/13_mental'
-import { seedPrevention as seedRestraint } from './seeds/14_prevention'
+import { seedPrevention } from './seeds/14_prevention'
 import { seedHarassment } from './seeds/15_harassment'
 
 const prisma = new PrismaClient()
 
 async function main() {
-  // 1. 組織の作成
+  // 0. 引数の解析
+  const args = process.argv
+  const fileArg = args.find(arg => arg.includes('--file='))
+  const targetFile = fileArg ? fileArg.split('=')[1] : null
+
+  console.log(targetFile ? `Targeting specific course: ${targetFile}` : 'Running full seed...')
+
+  // 1. 基盤データの作成 (常に実行)
   const corp = await prisma.corporation.upsert({
     where: { name: 'ケア・グループ法人' },
     update: {},
@@ -31,7 +38,6 @@ async function main() {
     create: { name: 'コスモス苑', type: '特別養護老人ホーム', corporationId: corp.id, maxStaff: 20 }
   })
   
-  // 管理者ユーザー
   const baseUsers = [
     { loginId: 'owner', name: 'システム運営者', password: 'owner_password', role: Role.SUPER_ADMIN },
     { loginId: 'hq', name: '法人本部 太郎', password: 'hq_password', role: Role.HQ, corporationId: corp.id },
@@ -47,28 +53,40 @@ async function main() {
   }
 
   // 2. 研修コンテンツの同期
-  // ※ 10_prevention は「事故発生防止研修」の重複あるいは別名である可能性があるため、
-  // 14_prevention (身体拘束) は seedRestraint として区別して呼び出します。
-  
-  const courses = [
-    await seedAbuse(prisma),
-    await seedDementia(prisma),
-    await seedInfection(prisma),
-    await seedAccident(prisma),
-    await seedEmergency(prisma),
-    await seedPrivacy(prisma),
-    await seedEthics(prisma),
-    await seedEtiquette(prisma),
-    await seedDisaster(prisma),
-    await seedPrevention(prisma), // 10. 事故発生または身体拘束（旧）
-    await seedMedical(prisma),
-    await seedTerminal(prisma),
-    await seedMental(prisma),
-    await seedRestraint(prisma),  // 14. 身体拘束廃止（新・精緻版）
-    await seedHarassment(prisma)  // 15. ハラスメント対策（新・精緻版）
+  const allSeedFunctions = [
+    { key: 'abuse', fn: seedAbuse },
+    { key: 'dementia', fn: seedDementia },
+    { key: 'infection', fn: seedInfection },
+    { key: 'accident', fn: seedAccident },
+    { key: 'emergency', fn: seedEmergency },
+    { key: 'privacy', fn: seedPrivacy },
+    { key: 'ethics', fn: seedEthics },
+    { key: 'etiquette', fn: seedEtiquette },
+    { key: 'disaster', fn: seedDisaster },
+    { key: 'restraint', fn: seedRestraint },
+    { key: 'medical', fn: seedMedical },
+    { key: 'terminal', fn: seedTerminal },
+    { key: 'mental', fn: seedMental },
+    { key: 'prevention', fn: seedPrevention },
+    { key: 'harassment', fn: seedHarassment },
   ]
 
-  // 3. 研修の割り当て (upsert化)
+  const targetedSeeds = targetFile 
+    ? allSeedFunctions.filter(s => s.key === targetFile)
+    : allSeedFunctions
+
+  if (targetFile && targetedSeeds.length === 0) {
+    console.error(`Error: Course '${targetFile}' not found in seed list.`)
+    process.exit(1)
+  }
+
+  const courses = []
+  for (const seed of targetedSeeds) {
+    console.log(`Seeding: ${seed.key}...`)
+    courses.push(await seed.fn(prisma))
+  }
+
+  // 3. 研修の割り当て (更新された分のみ、または全て)
   for (const c of courses) {
     await prisma.courseAssignment.upsert({
       where: { facilityId_courseId: { facilityId: facilityA.id, courseId: c.id } },
@@ -77,7 +95,7 @@ async function main() {
     })
   }
 
-  // 4. 初期スタッフ作成 (upsert化)
+  // 4. 初期スタッフ作成 & 受講状況の同期 (一括実行時のみ、または新規作成されたコースのみ)
   const staffData = [
     { name: '佐藤 美咲', loginId: 'sato' }, 
     { name: '鈴木 健一', loginId: 'suzuki' }
@@ -90,29 +108,21 @@ async function main() {
       create: { loginId: data.loginId, name: data.name, password: 'password123', role: Role.STAFF, corporationId: corp.id, facilityId: facilityA.id }
     });
 
-    // 受講状況の作成 (未設定の場合のみ)
-    for (let i = 0; i < courses.length; i++) {
-      const course = courses[i];
+    for (const course of courses) {
       const existingEnrollment = await prisma.enrollment.findUnique({
         where: { userId_courseId: { userId: user.id, courseId: course.id } }
       })
       
       if (!existingEnrollment) {
-        if (i === 0) {
-          // 佐藤・鈴木の最初の研修のみ完了状態にする
-          await prisma.enrollment.create({ 
-            data: { userId: user.id, courseId: course.id, status: Status.COMPLETED, actionPlan: '尊厳を守るケアを徹底します。', completedAt: new Date() } 
-          });
-        } else {
-          await prisma.enrollment.create({ 
-            data: { userId: user.id, courseId: course.id, status: Status.NOT_STARTED } 
-          });
-        }
+        // デフォルトの未着手状態を作成
+        await prisma.enrollment.create({ 
+          data: { userId: user.id, courseId: course.id, status: Status.NOT_STARTED } 
+        });
       }
     }
   }
 
-  console.log(`Seed data sync COMPLETED: All 15 courses are now Masterpiece quality.`)
+  console.log(`Seed process COMPLETED successfully.`)
 }
 
 main().catch((e) => { console.error(e); process.exit(1); }).finally(async () => { await prisma.$disconnect() })
