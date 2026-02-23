@@ -13,46 +13,49 @@ import { FiscalYearSelector } from "@/components/fiscal-year-selector";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
+import { FiscalYearSelector as FYSelector } from "@/components/fiscal-year-selector"; // Duplicate guard
+import { MobileNav } from "@/components/mobile-nav";
 import { PrintButton } from "@/components/print-button";
+import { SystemNotification } from "@/components/system-notification";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
 
+  // 1. 基本ガード
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }
 
+  const isSuspended = !!session.user.isSuspended;
   const facilityId = session.user.facilityId;
+  
+  if (!facilityId) {
+    return <div className="p-20 text-center font-bold">所属施設が設定されていません</div>;
+  }
+
+  // 2. データの取得
   const facility = await prisma.facility.findUnique({ 
-    where: { id: facilityId || "" },
+    where: { id: facilityId },
     include: { corporation: true }
   });
 
-  if (!facility) return <div className="p-20 text-center font-bold">施設が見つかりません</div>;
+  if (!facility) return <div className="p-20 text-center font-bold">施設情報が見つかりません。</div>;
 
   const [rawStaff, allAvailableCourses, rawAssignments] = await Promise.all([
     prisma.user.findMany({
-      where: { facilityId: facilityId || "", role: "STAFF" },
+      where: { facilityId: facilityId, role: "STAFF" },
       include: { enrollments: { include: { course: true } } },
       orderBy: { name: 'asc' }
     }),
     prisma.course.findMany({ orderBy: { title: 'asc' } }),
     prisma.courseAssignment.findMany({
-      where: { facilityId: facilityId || "" },
+      where: { facilityId },
       include: { course: true },
       orderBy: { endDate: 'asc' }
     })
   ]);
 
-  // シリアライズ（日付の文字列化）
-  const assignments = (rawAssignments || []).map(a => ({
-    ...a,
-    startDate: a.startDate.toISOString(),
-    endDate: a.endDate.toISOString(),
-    createdAt: a.createdAt.toISOString(),
-    updatedAt: a.updatedAt.toISOString(),
-  }));
-
+  // 3. データ変換（シリアライズ）
   const staffMembers = (rawStaff || []).map(s => ({
     ...s,
     enrollments: (s.enrollments || []).map(e => ({
@@ -63,21 +66,36 @@ export default async function AdminDashboardPage() {
     }))
   }));
 
+  const assignments = (rawAssignments || []).map(a => ({
+    ...a,
+    startDate: a.startDate.toISOString(),
+    endDate: a.endDate.toISOString(),
+    createdAt: a.createdAt.toISOString(),
+    updatedAt: a.updatedAt.toISOString(),
+  }));
+
   const totalStaff = staffMembers.length;
 
   return (
     <div className="h-screen bg-slate-50 flex flex-col font-sans overflow-hidden">
-      {/* Header (Minimal - No MobileNav yet) */}
+      {/* Header */}
       <header className="h-20 lg:h-24 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0 z-50">
         <div className="flex items-center gap-4 lg:gap-12">
+          <MobileNav />
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-slate-900 rounded flex items-center justify-center shadow-lg">
               <GraduationCap className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900 uppercase tracking-widest">CARE LEARNING</span>
+            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900 uppercase">Care Learning</span>
           </div>
-          <div className="hidden lg:flex items-center gap-3 border-l border-slate-100 pl-6">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{facility.name}</p>
+
+          <div className="hidden lg:flex items-center gap-6">
+            <div className="flex items-center gap-3 border-l border-slate-100 pl-6">
+              <div>
+                <h2 className="text-slate-900 font-bold text-sm leading-none">{session.user.name} さん</h2>
+                <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">{facility.name}</p>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -89,13 +107,17 @@ export default async function AdminDashboardPage() {
             <CalendarDays className="w-5 h-5 text-blue-400" />
             <span className="text-[13px] font-bold">年間計画</span>
           </Link>
-          <Link href="#course-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50">
+          <Link href="#course-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all">
             <ClipboardList className="w-5 h-5" />
             <span className="text-[13px] font-bold">研修管理</span>
           </Link>
-          <Link href="#staff-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50">
+          <Link href="#staff-management" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all">
             <Users className="w-5 h-5" />
             <span className="text-[13px] font-bold">スタッフ管理</span>
+          </Link>
+          <Link href="/admin/inquiry" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all">
+            <MessageSquare className="w-5 h-5" />
+            <span className="text-[13px] font-bold">サポートセンター</span>
           </Link>
           
           <div className="mt-auto pt-6 border-t border-slate-50">
@@ -110,10 +132,11 @@ export default async function AdminDashboardPage() {
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-12 space-y-12">
-          
+          <SystemNotification />
+
           {/* 1. 年間計画 */}
-          <div id="annual-plan" className="space-y-6">
-            <div className="flex items-center justify-between gap-4">
+          <div id="annual-plan" className="space-y-6 scroll-mt-10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
               <h3 className="font-bold text-xl text-slate-900 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
                   <CalendarDays className="w-4 h-4 text-blue-600" />
@@ -122,13 +145,18 @@ export default async function AdminDashboardPage() {
               </h3>
               <div className="flex items-center gap-2 no-print">
                 <PrintButton />
-                <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
-                <CourseAssignmentDialog 
-                  courses={allAvailableCourses} 
-                  currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
-                />
+                {!isSuspended && (
+                  <>
+                    <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
+                    <CourseAssignmentDialog 
+                      courses={allAvailableCourses} 
+                      currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
+                    />
+                  </>
+                )}
               </div>
             </div>
+            
             <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm min-h-[200px] flex items-center justify-center overflow-hidden">
               {assignments.length > 0 ? (
                 <TrainingTimeline 
@@ -137,33 +165,34 @@ export default async function AdminDashboardPage() {
                 />
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-slate-400 font-bold text-sm">研修が割り当てられていません</p>
+                  <p className="text-slate-400 font-bold">研修が割り当てられていません</p>
+                  <p className="text-slate-300 text-xs mt-2">右上のボタンから計画を設定してください。</p>
                 </div>
               )}
             </Card>
           </div>
 
           {/* 2. 研修管理 */}
-          <div id="course-management" className="space-y-6">
-            <h3 className="font-bold text-xl text-slate-900 flex items-center gap-3">
+          <div id="course-management" className="space-y-6 scroll-mt-10">
+            <h3 className="font-bold text-xl text-slate-900 px-2 flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center">
                 <ClipboardList className="w-4 h-4 text-emerald-600" />
               </div>
               研修管理
             </h3>
             <div className="grid grid-cols-1 gap-3">
-              {assignments.length > 0 ? assignments.slice(0, 15).map((assign) => {
-                const completed = staffMembers.filter(user => 
+              {assignments.length > 0 ? assignments.map((assign) => {
+                const completedCount = staffMembers.filter(user => 
                   user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
                 ).length;
-                const rate = totalStaff > 0 ? Math.round((completed / totalStaff) * 100) : 0;
+                const rate = totalStaff > 0 ? Math.round((completedCount / totalStaff) * 100) : 0;
 
                 return (
                   <div key={assign.id} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
                           <GraduationCap className="w-5 h-5 text-blue-600" />
                           <div className="flex-1">
-                            <h4 className="font-bold text-slate-900 text-sm">{assign.course?.title || "研修"}</h4>
+                            <h4 className="font-bold text-slate-900 text-sm">{assign.course?.title}</h4>
                             <div className="flex items-center gap-4 mt-1">
                               <span className="text-[10px] font-bold text-slate-400">{rate}% 完了</span>
                               <span className="text-[10px] text-slate-300">期限: {new Date(assign.endDate).toLocaleDateString()}</span>
@@ -195,6 +224,7 @@ export default async function AdminDashboardPage() {
             staffMembers={staffMembers as any}
             currentAssignments={assignments as any}
             maxStaff={facility.maxStaff ?? 20}
+            isSuspended={isSuspended}
           />
 
         </main>
