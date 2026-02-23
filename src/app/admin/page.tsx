@@ -186,11 +186,21 @@ export default async function AdminDashboardPage() {
                   </div>
                 </div>
               </div>
-              <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm overflow-hidden">
-                <TrainingTimeline 
-                    startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
-                    assignments={currentAssignments} 
-                />
+              <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm overflow-hidden min-h-[300px] flex items-center justify-center">
+                {currentAssignments.length > 0 ? (
+                  <TrainingTimeline 
+                      startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
+                      assignments={currentAssignments} 
+                  />
+                ) : (
+                  <div className="text-center space-y-4 py-12">
+                    <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                      <CalendarDays className="w-8 h-8 text-slate-300" />
+                    </div>
+                    <p className="text-slate-500 font-bold">まだ年間計画が作成されていません</p>
+                    <p className="text-slate-400 text-sm">右上の「研修を割り当てる」ボタンから、<br/>実施する研修と期限を設定してください。</p>
+                  </div>
+                )}
               </Card>
             </div>
 
@@ -207,7 +217,7 @@ export default async function AdminDashboardPage() {
               </div>
 
               <div className="grid grid-cols-1 gap-3">
-                {currentAssignments.slice(0, 15).map((assign) => {
+                {currentAssignments.length > 0 ? currentAssignments.slice(0, 15).map((assign) => {
                   const courseCompletedCount = staffMembers.filter(user => 
                     user.enrollments.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
                   ).length;
@@ -248,7 +258,11 @@ export default async function AdminDashboardPage() {
                         </div>
                     </div>
                   );
-                })}
+                }) : (
+                  <div className="bg-white border-2 border-dashed border-slate-200 rounded-[2rem] p-12 text-center">
+                    <p className="text-slate-400 font-bold">研修が割り当てられていません</p>
+                  </div>
+                )}
               </div>
             </div>
 
