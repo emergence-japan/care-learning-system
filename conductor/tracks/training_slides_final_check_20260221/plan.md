@@ -16,8 +16,8 @@
 主要な法定研修科目を1つずつ目視確認し、マスターの構造に適合させるフェーズ。
 
 - [x] Task: 01_abuse.ts（高齢者虐待防止）の最終確認（基準としての確定） [00356ff]
-- [~] Task: 02_dementia.ts（認知症ケア）のマスター準拠修正
-- [ ] Task: 03_infection.ts（感染症対策）のマスター準拠修正
+- [x] Task: 02_dementia.ts（認知症ケア）のマスター準拠修正 [189efa4]
+- [~] Task: 03_infection.ts（感染症対策）のマスター準拠修正
 - [ ] Task: 04_accident.ts（事故発生防止）のマスター準拠修正
 - [ ] Task: 05_emergency.ts（緊急時対応）のマスター準拠修正
 - [ ] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正
