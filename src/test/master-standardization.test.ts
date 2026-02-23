@@ -59,6 +59,7 @@ describe('Master Standardization Verification (Scrollless)', () => {
   validateSeed('03_infection.ts', 24)
   validateSeed('04_accident.ts', 24)
   validateSeed('05_emergency.ts', 23)
-  validateSeed('10_prevention.ts', 17) // 0-17で18枚
+  validateSeed('06_privacy.ts', 24) // 0-24で25枚
+  validateSeed('10_prevention.ts', 17)
   validateSeed('14_prevention.ts', 26)
 })

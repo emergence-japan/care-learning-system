@@ -12,7 +12,7 @@
     - [x] マスターのHTML構造をベースに、介護予防のテキストを流し込み、事例とテストを構築
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: f6bb6ad]
 
-## フェーズ 2: 全15科目の順次検証と「マスター化」修正（セクションA）
+## フェーズ 2: 全15科目の順次検証と「マスター化」修正（セクションA） [checkpoint: 3ad61fc]
 主要な法定研修科目を1つずつ目視確認し、マスターの構造に適合させるフェーズ。
 
 - [x] Task: 01_abuse.ts（高齢者虐待防止）の最終確認（基準としての確定） [00356ff]
@@ -20,14 +20,14 @@
 - [x] Task: 03_infection.ts（感染症対策）のマスター準拠修正 [9369419]
 - [x] Task: 04_accident.ts（事故発生防止）のマスター準拠修正 [aeee100]
 - [x] Task: 05_emergency.ts（緊急時対応）のマスター準拠修正 [6cc0bd4]
-- [~] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正
-- [ ] Task: 14_prevention.ts（介護予防）のマスター準拠修正
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+- [x] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正 [3ad61fc]
+- [x] Task: 14_prevention.ts（介護予防）のマスター準拠修正 [f781ac6]
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: 3ad61fc]
 
 ## フェーズ 3: 全15科目の順次検証と「マスター化」修正（セクションB）
 残りの科目を同様の手順で、デザインとIDの両面からアップグレードするフェーズ。
 
-- [ ] Task: 06_privacy.ts（個人情報保護）のマスター準拠修正
+- [~] Task: 06_privacy.ts（個人情報保護）のマスター準拠修正
 - [ ] Task: 07_ethics.ts（倫理・法令遵守）のマスター準拠修正
 - [ ] Task: 08_etiquette.ts（接遇・マナー）のマスター準拠修正
 - [ ] Task: 09_disaster.ts（災害対策・BCP）のマスター準拠修正
