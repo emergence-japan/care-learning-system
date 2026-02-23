@@ -49,6 +49,7 @@ export default async function AdminDashboardPage() {
     return <div className="p-20 text-center font-bold text-slate-400">所属情報が見つかりません。</div>;
   }
 
+  // スタッフ取得
   const staffMembers = await prisma.user.findMany({
     where: { facilityId: facilityId, role: "STAFF" },
     include: {
@@ -57,48 +58,39 @@ export default async function AdminDashboardPage() {
       }
     },
     orderBy: { name: 'asc' }
-  });
+  }) || [];
 
   const totalStaff = staffMembers.length;
-  const allAvailableCourses = await prisma.course.findMany({ orderBy: { title: 'asc' } });
+  
+  // コース取得
+  const allAvailableCourses = await prisma.course.findMany({ orderBy: { title: 'asc' } }) || [];
+  
+  // 割当取得
   const currentAssignments = await prisma.courseAssignment.findMany({
     where: { facilityId },
     include: { course: true },
     orderBy: { endDate: 'asc' }
-  });
+  }) || [];
 
   const totalCompletedEnrollments = staffMembers.reduce((acc, user) => {
-    return acc + user.enrollments.filter(e => e.status === 'COMPLETED').length;
+    return acc + (user.enrollments?.filter(e => e.status === 'COMPLETED').length || 0);
   }, 0);
+  
   const totalAssignments = totalStaff * currentAssignments.length;
   const progressRate = totalAssignments > 0 ? Math.round((totalCompletedEnrollments / totalAssignments) * 100) : 0;
-
-  // 通知（アラート）の計算
-  const now = new Date();
-  const alerts = currentAssignments
-    .map(assign => {
-      const incompleteCount = staffMembers.filter(user => 
-        !user.enrollments.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
-      ).length;
-      const daysLeft = Math.ceil((new Date(assign.endDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-      
-      return { courseId: assign.courseId, courseTitle: assign.course.title, daysLeft, incompleteCount };
-    })
-    .filter(a => a.daysLeft <= 7 && a.daysLeft >= 0 && a.incompleteCount > 0);
 
   return (
     <div className="h-screen bg-slate-50 flex flex-col font-sans overflow-hidden">
       
-      {/* Professional White Header */}
+      {/* Header */}
       <header className="h-20 lg:h-24 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0 z-50">
         <div className="flex items-center gap-4 lg:gap-12">
           <MobileNav />
-          
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-slate-900 rounded flex items-center justify-center shadow-lg shadow-slate-200">
               <GraduationCap className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900">介護研修システム 施設管理画面</span>
+            <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900 uppercase">Care Learning</span>
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
@@ -113,23 +105,20 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
         </div>
-
-        <div className="flex items-center gap-2 lg:gap-4">
-        </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - White Modern Style */}
+        {/* Sidebar */}
         <aside className="w-64 bg-white border-r border-slate-100 hidden lg:flex flex-col p-6 space-y-2 overflow-y-auto custom-scrollbar shrink-0">
-          <a href="#annual-plan">
+          <Link href="#annual-plan">
             <SidebarItem icon={<CalendarDays className="w-5 h-5" />} label="年間計画" active />
-          </a>
-          <a href="#course-management">
+          </Link>
+          <Link href="#course-management">
             <SidebarItem icon={<ClipboardList className="w-5 h-5" />} label="研修管理" />
-          </a>
-          <a href="#staff-management">
+          </Link>
+          <Link href="#staff-management">
             <SidebarItem icon={<Users className="w-5 h-5" />} label="スタッフ管理" />
-          </a>
+          </Link>
           <Link href="/admin/inquiry">
             <SidebarItem icon={<MessageSquare className="w-5 h-5" />} label="サポートセンター" />
           </Link>
@@ -146,22 +135,20 @@ export default async function AdminDashboardPage() {
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-12 relative">
-          
           <SystemNotification />
 
           {isSuspended && (
             <div className="max-w-6xl mx-auto mb-8 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4 text-red-800 animate-pulse no-print">
               <AlertCircle className="w-6 h-6 shrink-0" />
               <div>
-                <p className="font-black text-sm">【利用停止中】契約満了または停止設定により、現在このアカウントは「閲覧・出力のみ」の制限モードになっています。</p>
-                <p className="text-xs font-bold mt-0.5">新規スタッフの登録や研修の割当は行えません。監査用書類の出力は可能です。</p>
+                <p className="font-black text-sm">【利用停止中】制限モードになっています。</p>
               </div>
             </div>
           )}
 
           <div className="max-w-6xl mx-auto space-y-12">
             
-            {/* Top Section: Timeline (annual-plan) */}
+            {/* 年間計画 Section */}
             <div id="annual-plan" className="space-y-6 scroll-mt-10">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3 px-2">
@@ -186,87 +173,71 @@ export default async function AdminDashboardPage() {
                   </div>
                 </div>
               </div>
-              <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm overflow-hidden min-h-[300px] flex items-center justify-center">
+              
+              <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm overflow-hidden min-h-[200px] flex items-center justify-center">
                 {currentAssignments.length > 0 ? (
                   <TrainingTimeline 
                       startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
                       assignments={currentAssignments} 
                   />
                 ) : (
-                  <div className="text-center space-y-4 py-12">
-                    <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
-                      <CalendarDays className="w-8 h-8 text-slate-300" />
-                    </div>
-                    <p className="text-slate-500 font-bold">まだ年間計画が作成されていません</p>
-                    <p className="text-slate-400 text-sm">右上の「研修を割り当てる」ボタンから、<br/>実施する研修と期限を設定してください。</p>
+                  <div className="text-center py-12">
+                    <p className="text-slate-400 font-bold">研修が割り当てられていません</p>
+                    <p className="text-slate-300 text-xs mt-2">右上の「研修を割り当てる」ボタンから設定してください。</p>
                   </div>
                 )}
               </Card>
             </div>
 
-            {/* Middle Section: Course Management */}
+            {/* 研修管理 Section */}
             <div id="course-management" className="space-y-6 scroll-mt-10">
-              <div className="flex items-center justify-between px-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center">
-                      <ClipboardList className="w-4 h-4 text-emerald-600" />
-                  </div>
-                  <h3 className="font-bold text-xl text-slate-900">研修管理</h3>
-                  <span className="text-[10px] bg-slate-100 text-slate-500 font-black px-2 py-0.5 rounded-full ml-2 uppercase">Active: {currentAssignments.length}</span>
+              <h3 className="font-bold text-xl text-slate-900 px-2 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center">
+                  <ClipboardList className="w-4 h-4 text-emerald-600" />
                 </div>
-              </div>
+                研修管理
+              </h3>
 
               <div className="grid grid-cols-1 gap-3">
-                {currentAssignments.length > 0 ? currentAssignments.slice(0, 15).map((assign) => {
+                {currentAssignments.length > 0 ? currentAssignments.map((assign) => {
                   const courseCompletedCount = staffMembers.filter(user => 
-                    user.enrollments.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
+                    user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
                   ).length;
                   const courseProgressRate = totalStaff > 0 ? Math.round((courseCompletedCount / totalStaff) * 100) : 0;
 
                   return (
-                    <div key={assign.id} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm hover:shadow-md hover:border-blue-200 transition-all flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 group">
-                        <div className="flex items-center gap-4 flex-1 min-w-[200px]">
-                            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100">
-                                <GraduationCap className="w-5 h-5 text-blue-600" />
-                            </div>
-                            <div className="flex items-center justify-between flex-1 min-w-0">
-                              <h4 className="font-bold text-slate-900 text-sm truncate mr-4" title={assign.course.title}>{assign.course.title}</h4>
-                              <div className="flex items-center gap-6 shrink-0">
-                                <div className="flex items-center gap-2">
-                                  <div className="w-20 bg-slate-100 h-1 rounded-full overflow-hidden hidden md:block">
-                                    <div className="bg-blue-600 h-full" style={{ width: `${courseProgressRate}%` }}></div>
-                                  </div>
-                                  <span className="text-[10px] font-bold text-slate-400 tabular-nums">{courseProgressRate}%</span>
-                                </div>
-                                <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap hidden sm:inline">{courseCompletedCount} / {totalStaff} 名完了</span>
+                    <div key={assign.id} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-4 flex-1">
+                            <GraduationCap className="w-5 h-5 text-blue-600" />
+                            <div className="flex-1">
+                              <h4 className="font-bold text-slate-900 text-sm">{assign.course.title}</h4>
+                              <div className="flex items-center gap-4 mt-1">
+                                <span className="text-[10px] font-bold text-slate-400">{courseProgressRate}% 完了</span>
+                                <span className="text-[10px] text-slate-300">期限: {new Date(assign.endDate).toLocaleDateString()}</span>
                               </div>
                             </div>
                         </div>
-                        <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-50">
-                            <p className="text-[10px] text-slate-400 font-bold uppercase whitespace-nowrap bg-slate-50 px-2 py-1 rounded">期限: {new Date(assign.endDate).toLocaleDateString()}</p>
-                            
-                            <div className="no-print">
-                              <IncompleteUsersDialog 
-                                courseTitle={assign.course.title}
-                                incompleteUsers={staffMembers
-                                  .filter(user => !user.enrollments.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED'))
-                                  .map(u => ({ id: u.id, name: u.name }))
-                                }
-                                totalCount={totalStaff}
-                              />
-                            </div>
+                        <div className="no-print">
+                          <IncompleteUsersDialog 
+                            courseTitle={assign.course.title}
+                            incompleteUsers={staffMembers
+                              .filter(user => !user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED'))
+                              .map(u => ({ id: u.id, name: u.name }))
+                            }
+                            totalCount={totalStaff}
+                          />
                         </div>
                     </div>
                   );
                 }) : (
-                  <div className="bg-white border-2 border-dashed border-slate-200 rounded-[2rem] p-12 text-center">
-                    <p className="text-slate-400 font-bold">研修が割り当てられていません</p>
+                  <div className="p-8 text-center text-slate-300 font-bold border-2 border-dashed rounded-2xl">
+                    データなし
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Bottom Section: Staff Management (Using AdminClient) */}
+            {/* スタッフ管理 Section */}
             <AdminClient 
               staffMembers={staffMembers}
               currentAssignments={currentAssignments}
@@ -283,7 +254,7 @@ export default async function AdminDashboardPage() {
 
 function SidebarItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
   return (
-    <div className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-all ${active ? 'bg-slate-900 text-white shadow-xl shadow-slate-200' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}`}>
+    <div className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-all ${active ? 'bg-slate-900 text-white shadow-xl' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}`}>
       <div className={`${active ? 'text-blue-400' : ''}`}>{icon}</div>
       <span className="text-[13px] font-bold">{label}</span>
     </div>
