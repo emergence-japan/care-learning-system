@@ -37,7 +37,7 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
               <th key={assign.id} className="px-1 py-4 font-bold text-[10px] text-slate-400 uppercase tracking-wider w-[80px] border-r border-slate-100 text-center">
                 <div className="truncate text-slate-700 px-1" title={assign.course.title}>{assign.course.title}</div>
                 <div className="text-[8px] text-slate-400 mt-1 font-normal">
-                  ~ {format(assign.endDate, 'MM/dd', { locale: ja })}
+                  ~ {format(new Date(assign.endDate), 'MM/dd', { locale: ja })}
                 </div>
               </th>
             ))}
@@ -71,8 +71,9 @@ export function StaffClient({ staffMembers, currentAssignments }: { staffMembers
                   {currentAssignments.map(assign => {
                     const enrollment = staff.enrollments.find(e => e.courseId === assign.courseId);
                     const isCompleted = enrollment?.status === "COMPLETED";
-                    const isOverdue = !isCompleted && new Date() > new Date(assign.endDate);
-                    const daysLeft = Math.ceil((new Date(assign.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                    const assignEndDate = new Date(assign.endDate);
+                    const isOverdue = !isCompleted && new Date() > assignEndDate;
+                    const daysLeft = Math.ceil((assignEndDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
 
                     return (
                       <td key={assign.id} className="px-1 py-4 text-center align-middle border-r border-slate-100">
