@@ -19,7 +19,7 @@ const MASTER_ID_ELEMENTS = [
   '今日から', // アクションプラン（移転の促進）
 ]
 
-function validateSeed(fileName: string, expectedSlides: number, isScrollless: boolean = false) {
+function validateSeed(fileName: string, expectedSlides: number) {
   const seedPath = path.resolve(__dirname, `../../prisma/seeds/${fileName}`)
   const content = fs.readFileSync(seedPath, 'utf-8')
 
@@ -30,12 +30,9 @@ function validateSeed(fileName: string, expectedSlides: number, isScrollless: bo
       })
     })
 
-    it('should contain specific font size based on scrollless requirement', () => {
-      if (isScrollless) {
-        expect(content).toContain('lg:text-5xl') // スクロールレスは最大5xl
-      } else {
-        expect(content).toContain('lg:text-6xl') // 通常マスターは6xl
-      }
+    it('should contain scrollless font size (5xl max)', () => {
+      expect(content).toContain('lg:text-5xl')
+      expect(content).not.toContain('lg:text-6xl') // 6xlは廃止
     })
 
     it('should contain all instructional design (ID) elements', () => {
@@ -56,7 +53,7 @@ function validateSeed(fileName: string, expectedSlides: number, isScrollless: bo
   })
 }
 
-describe('Master Standardization Verification', () => {
-  validateSeed('01_abuse.ts', 25, false) // 虐待はオリジナルの6xl
-  validateSeed('14_prevention.ts', 26, true) // 介護予防はスクロールレスの5xl (0-26で27枚)
+describe('Master Standardization Verification (Scrollless)', () => {
+  validateSeed('01_abuse.ts', 24) // 0-24で25枚
+  validateSeed('14_prevention.ts', 26) // 0-26で27枚
 })
