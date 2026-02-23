@@ -19,8 +19,8 @@
 - [x] Task: 02_dementia.ts（認知症ケア）のマスター準拠修正 [189efa4]
 - [x] Task: 03_infection.ts（感染症対策）のマスター準拠修正 [9369419]
 - [x] Task: 04_accident.ts（事故発生防止）のマスター準拠修正 [aeee100]
-- [~] Task: 05_emergency.ts（緊急時対応）のマスター準拠修正
-- [ ] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正
+- [x] Task: 05_emergency.ts（緊急時対応）のマスター準拠修正 [6cc0bd4]
+- [~] Task: 10_prevention.ts（身体拘束廃止）のマスター準拠修正
 - [ ] Task: 14_prevention.ts（介護予防）のマスター準拠修正
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 

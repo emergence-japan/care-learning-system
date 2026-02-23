@@ -58,6 +58,7 @@ describe('Master Standardization Verification (Scrollless)', () => {
   validateSeed('02_dementia.ts', 24)
   validateSeed('03_infection.ts', 24)
   validateSeed('04_accident.ts', 24)
-  validateSeed('05_emergency.ts', 23) // 0-23で24枚
+  validateSeed('05_emergency.ts', 23)
+  validateSeed('10_prevention.ts', 17) // 0-17で18枚
   validateSeed('14_prevention.ts', 26)
 })
