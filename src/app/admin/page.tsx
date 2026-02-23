@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { 
   Users, LogOut, 
-  Briefcase, ClipboardList, GraduationCap, 
+  ClipboardList, GraduationCap, 
   CalendarDays, MessageSquare
 } from "lucide-react";
 import Link from "next/link";
@@ -13,7 +13,6 @@ import { FiscalYearSelector } from "@/components/fiscal-year-selector";
 import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
-import { FiscalYearSelector as FYSelector } from "@/components/fiscal-year-selector"; // Duplicate guard
 import { MobileNav } from "@/components/mobile-nav";
 import { PrintButton } from "@/components/print-button";
 import { SystemNotification } from "@/components/system-notification";
@@ -21,27 +20,22 @@ import { SystemNotification } from "@/components/system-notification";
 export default async function AdminDashboardPage() {
   const session = await auth();
 
-  // 1. 基本ガード
   if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/");
   }
 
-  const isSuspended = !!session.user.isSuspended;
   const facilityId = session.user.facilityId;
-  
-  if (!facilityId) {
-    return <div className="p-20 text-center font-bold">所属施設が設定されていません</div>;
-  }
+  if (!facilityId) return <div className="p-20 text-center font-bold">所属施設が未設定です</div>;
 
-  // 2. データの取得
   const facility = await prisma.facility.findUnique({ 
     where: { id: facilityId },
     include: { corporation: true }
   });
 
-  if (!facility) return <div className="p-20 text-center font-bold">施設情報が見つかりません。</div>;
+  if (!facility) return <div className="p-20 text-center font-bold">施設情報が見つかりません</div>;
 
-  const [rawStaff, allAvailableCourses, rawAssignments] = await Promise.all([
+  // 1. 全てのデータを取得
+  const [rawStaff, rawCourses, rawAssignments] = await Promise.all([
     prisma.user.findMany({
       where: { facilityId: facilityId, role: "STAFF" },
       include: { enrollments: { include: { course: true } } },
@@ -55,15 +49,29 @@ export default async function AdminDashboardPage() {
     })
   ]);
 
-  // 3. データ変換（シリアライズ）
+  // 2. 重要：クライアントに渡すすべてのデータを安全に文字列化（ISO String）
+  // これを行わないと Vercel の Server Components でシリアライズエラーになります
   const staffMembers = (rawStaff || []).map(s => ({
     ...s,
+    createdAt: s.createdAt.toISOString(),
+    updatedAt: s.updatedAt.toISOString(),
     enrollments: (s.enrollments || []).map(e => ({
       ...e,
       completedAt: e.completedAt ? e.completedAt.toISOString() : null,
       createdAt: e.createdAt.toISOString(),
       updatedAt: e.updatedAt.toISOString(),
+      course: {
+        ...e.course,
+        createdAt: e.course.createdAt.toISOString(),
+        updatedAt: e.course.updatedAt.toISOString(),
+      }
     }))
+  }));
+
+  const allAvailableCourses = (rawCourses || []).map(c => ({
+    ...c,
+    createdAt: c.createdAt.toISOString(),
+    updatedAt: c.updatedAt.toISOString(),
   }));
 
   const assignments = (rawAssignments || []).map(a => ({
@@ -72,6 +80,11 @@ export default async function AdminDashboardPage() {
     endDate: a.endDate.toISOString(),
     createdAt: a.createdAt.toISOString(),
     updatedAt: a.updatedAt.toISOString(),
+    course: {
+      ...a.course,
+      createdAt: a.course.createdAt.toISOString(),
+      updatedAt: a.course.updatedAt.toISOString(),
+    }
   }));
 
   const totalStaff = staffMembers.length;
@@ -88,14 +101,8 @@ export default async function AdminDashboardPage() {
             </div>
             <span className="font-black text-xl lg:text-2xl tracking-tighter text-slate-900 uppercase">Care Learning</span>
           </div>
-
-          <div className="hidden lg:flex items-center gap-6">
-            <div className="flex items-center gap-3 border-l border-slate-100 pl-6">
-              <div>
-                <h2 className="text-slate-900 font-bold text-sm leading-none">{session.user.name} さん</h2>
-                <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">{facility.name}</p>
-              </div>
-            </div>
+          <div className="hidden lg:flex items-center gap-3 border-l border-slate-100 pl-6">
+            <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">{facility.name}</p>
           </div>
         </div>
       </header>
@@ -119,7 +126,6 @@ export default async function AdminDashboardPage() {
             <MessageSquare className="w-5 h-5" />
             <span className="text-[13px] font-bold">サポートセンター</span>
           </Link>
-          
           <div className="mt-auto pt-6 border-t border-slate-50">
              <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
               <button className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-600 transition-all w-full text-left font-bold text-sm">
@@ -145,18 +151,13 @@ export default async function AdminDashboardPage() {
               </h3>
               <div className="flex items-center gap-2 no-print">
                 <PrintButton />
-                {!isSuspended && (
-                  <>
-                    <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
-                    <CourseAssignmentDialog 
-                      courses={allAvailableCourses} 
-                      currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
-                    />
-                  </>
-                )}
+                <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
+                <CourseAssignmentDialog 
+                  courses={allAvailableCourses as any} 
+                  currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
+                />
               </div>
             </div>
-            
             <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm min-h-[200px] flex items-center justify-center overflow-hidden">
               {assignments.length > 0 ? (
                 <TrainingTimeline 
@@ -224,7 +225,6 @@ export default async function AdminDashboardPage() {
             staffMembers={staffMembers as any}
             currentAssignments={assignments as any}
             maxStaff={facility.maxStaff ?? 20}
-            isSuspended={isSuspended}
           />
 
         </main>
