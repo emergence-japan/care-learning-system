@@ -50,10 +50,11 @@ export function AdminClient({ staffMembers, currentAssignments, maxStaff, isSusp
       </div>
 
       <div className="bg-white border border-slate-200 rounded-[2rem] overflow-hidden shadow-sm shadow-slate-200/50">
-        <StaffClient 
+        {/* <StaffClient 
           staffMembers={staffMembers} 
           currentAssignments={currentAssignments} 
-        />
+        /> */}
+        <div className="p-12 text-center text-slate-400 font-bold">テーブル表示テスト中...</div>
       </div>
     </div>
   );
