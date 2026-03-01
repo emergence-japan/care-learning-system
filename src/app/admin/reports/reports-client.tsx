@@ -156,10 +156,10 @@ export function ReportsClient({ facilityName, summaryData, staffMembers, fiscalY
                 ))}
               </select>
 
-              {selectedStaffId && (
+              {selectedStaffId && selectedStaff && (
                 <PDFDownloadLink
-                  document={<StaffReport data={selectedStaff?.reportData} />}
-                  fileName={`受講記録証明書_${selectedStaff?.name}_${fiscalYear}年度.pdf`}
+                  document={<StaffReport data={selectedStaff.reportData} />}
+                  fileName={`受講記録証明書_${selectedStaff.name}_${fiscalYear}年度.pdf`}
                 >
                   {({ loading }) => (
                     <Button 
@@ -167,7 +167,7 @@ export function ReportsClient({ facilityName, summaryData, staffMembers, fiscalY
                       className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-black flex items-center justify-center gap-3 shadow-lg transition-all active:scale-95"
                     >
                       <Download className="w-5 h-5" />
-                      {loading ? "生成中..." : `${selectedStaff?.name}様のPDFを生成`}
+                      {loading ? "生成中..." : `${selectedStaff.name}様のPDFを生成`}
                     </Button>
                   )}
                 </PDFDownloadLink>
