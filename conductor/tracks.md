@@ -52,13 +52,12 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: 監査用レポート機能の刷新**
-*Link: [./tracks/audit_report_refresh_20260221/](./tracks/audit_report_refresh_20260221/)*
-
-
-
+- [x] **Track: 研修スライドの最終確認**
+*内容: 全15科目のマスター化（25枚・高密度・リッチUI）を完遂。コンテンツのブラッシュアップを一旦完了。*
+*Link: [./tracks/training_slides_final_check_20260221/](./tracks/training_slides_final_check_20260221/)*
 
 ---
 
-- [~] **Track: 研修スライドの最終確認**
-*Link: [./tracks/training_slides_final_check_20260221/](./tracks/training_slides_final_check_20260221/)*
+- [ ] **Track: 監査用レポート機能の刷新**
+*内容: 実地指導に耐えうるPDF出力機能（実施状況報告書・修了証明書等）の実装。*
+*Link: [./tracks/audit_report_refresh_20260221/](./tracks/audit_report_refresh_20260221/)*
