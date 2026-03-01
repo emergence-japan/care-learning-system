@@ -150,7 +150,7 @@ export function StaffReport({ data }: { data: StaffReportData }) {
               <Text style={styles.courseTitle}>{enroll.courseTitle}</Text>
               <Text style={[
                 styles.statusBadge, 
-                enroll.status !== "COMPLETED" && styles.notStartedBadge
+                enroll.status !== "COMPLETED" ? styles.notStartedBadge : {}
               ]}>
                 {enroll.status === "COMPLETED" ? "修了" : "未修了"}
               </Text>
