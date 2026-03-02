@@ -5,7 +5,8 @@ import { Card } from "@/components/ui/card";
 import { 
   Users, LogOut, 
   ClipboardList, GraduationCap, 
-  CalendarDays, MessageSquare
+  CalendarDays, MessageSquare,
+  FileText
 } from "lucide-react";
 import Link from "next/link";
 import { AdminClient } from "./admin-client";
@@ -14,7 +15,6 @@ import { CourseAssignmentDialog } from "@/components/course-assignment-dialog";
 import { TrainingTimeline } from "@/components/training-timeline";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
 import { MobileNav } from "@/components/mobile-nav";
-import { PrintButton } from "@/components/print-button";
 import { SystemNotification } from "@/components/system-notification";
 
 export default async function AdminDashboardPage() {
@@ -122,6 +122,10 @@ export default async function AdminDashboardPage() {
             <Users className="w-5 h-5" />
             <span className="text-[13px] font-bold">スタッフ管理</span>
           </Link>
+          <Link href="/admin/reports" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all">
+            <FileText className="w-5 h-5" />
+            <span className="text-[13px] font-bold">監査レポート管理</span>
+          </Link>
           <Link href="/admin/inquiry" className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all">
             <MessageSquare className="w-5 h-5" />
             <span className="text-[13px] font-bold">サポートセンター</span>
@@ -150,7 +154,6 @@ export default async function AdminDashboardPage() {
                 年間計画
               </h3>
               <div className="flex items-center gap-2 no-print">
-                <PrintButton />
                 <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
                 <CourseAssignmentDialog 
                   courses={allAvailableCourses as any} 

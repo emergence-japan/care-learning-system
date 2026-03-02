@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, CalendarDays, ClipboardList, Users, LogOut } from "lucide-react";
+import { Menu, X, CalendarDays, ClipboardList, Users, LogOut, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function MobileNav() {
@@ -11,6 +11,7 @@ export function MobileNav() {
     { icon: <CalendarDays className="w-5 h-5" />, label: "年間計画", href: "#annual-plan" },
     { icon: <ClipboardList className="w-5 h-5" />, label: "研修管理", href: "#course-management" },
     { icon: <Users className="w-5 h-5" />, label: "スタッフ管理", href: "#staff-management" },
+    { icon: <FileText className="w-5 h-5" />, label: "監査レポート管理", href: "/admin/reports" },
   ];
 
   return (
