@@ -36,7 +36,7 @@ type Corp = {
         loginId: string;
         role: string;
       
-      enrollments: { status: string }[];
+      enrollments: { status: string; courseId: string }[];
     }[];
     assignments: { id: string; courseId: string; course: { title: string } }[];
     _count: { users: number; assignments: number };
@@ -107,16 +107,15 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
           const totalStaffCount = corp.facilities.reduce((acc, f) => acc + f._count.users, 0);
           const facilityRate = Math.round((facilityCount / corp.maxFacilities) * 100);
 
-          // 法人全体の進捗計算
+          // 法人全体の進捗計算（割り当て済み研修のみを対象とする）
           let corpTotalTasks = 0;
           let corpCompletedTasks = 0;
           corp.facilities.forEach(f => {
-            const staffCount = f._count.users;
-            const assignmentCount = f._count.assignments;
-            corpTotalTasks += (staffCount * assignmentCount);
-            
-            f.users.filter(u => u.role === "STAFF").forEach(u => {
-              corpCompletedTasks += u.enrollments.filter(e => e.status === "COMPLETED").length;
+            const assignedCourseIds = new Set(f.assignments.map(a => a.courseId));
+            const staffMembers = f.users.filter(u => u.role === "STAFF");
+            corpTotalTasks += staffMembers.length * assignedCourseIds.size;
+            staffMembers.forEach(u => {
+              corpCompletedTasks += u.enrollments.filter(e => assignedCourseIds.has(e.courseId) && e.status === "COMPLETED").length;
             });
           });
           const corpProgress = corpTotalTasks > 0 ? Math.round((corpCompletedTasks / corpTotalTasks) * 100) : 0;
@@ -325,7 +324,7 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                                   {facility.assignments.map((a) => {
                                     const staffMembers = facility.users.filter(u => u.role === "STAFF");
                                     const totalStaff = staffMembers.length;
-                                    const completedCount = staffMembers.filter(u => u.enrollments.some(e => (e as any).courseId === a.courseId && e.status === "COMPLETED")).length;
+                                    const completedCount = staffMembers.filter(u => u.enrollments.some(e => e.courseId === a.courseId && e.status === "COMPLETED")).length;
                                     const progress = totalStaff > 0 ? Math.round((completedCount / totalStaff) * 100) : 0;
                                     return (
                                       <div key={a.id} className="text-xs font-bold text-zinc-700 flex items-center justify-between gap-3 leading-none py-0.5 group/item">
@@ -344,12 +343,12 @@ export function OrganizationClient({ corporations }: { corporations: Corp[] }) {
                         {/* 5. Facility Progress Section (Condensed) */}
                         <div className="w-[100px] shrink-0 px-4 border-l border-zinc-100 flex items-center">
                           {(() => {
-                            const staffCount = facility.users.filter(u => u.role === "STAFF").length;
-                            const assignmentCount = facility._count.assignments;
-                            const totalTasks = staffCount * assignmentCount;
+                            const assignedCourseIds = new Set(facility.assignments.map(a => a.courseId));
+                            const staffMembers2 = facility.users.filter(u => u.role === "STAFF");
+                            const totalTasks = staffMembers2.length * assignedCourseIds.size;
                             let completedTasks = 0;
-                            facility.users.filter(u => u.role === "STAFF").forEach(u => {
-                              completedTasks += u.enrollments.filter(e => e.status === "COMPLETED").length;
+                            staffMembers2.forEach(u => {
+                              completedTasks += u.enrollments.filter(e => assignedCourseIds.has(e.courseId) && e.status === "COMPLETED").length;
                             });
                             const facilityProgress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
                             

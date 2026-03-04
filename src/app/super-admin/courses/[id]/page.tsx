@@ -65,13 +65,6 @@ export default async function CourseDetailPage({
               <Eye className="w-3.5 h-3.5 mr-2" /> 受講画面をフルプレビュー
             </Button>
           </Link>
-
-          <Button variant="outline" className="h-9 px-4 rounded-xl border-slate-800 bg-transparent text-slate-400 hover:text-white hover:bg-white/5 text-xs font-bold">
-            基本情報の編集
-          </Button>
-          <Button className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-lg shadow-blue-900/20">
-            変更を保存
-          </Button>
         </div>
       </header>
 
@@ -138,9 +131,6 @@ export default async function CourseDetailPage({
               <h3 className="font-black text-xl text-white">スライド構成</h3>
               <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-bold ml-2">{course.slides.length} SLIDES</span>
             </div>
-            <Button variant="outline" size="sm" className="rounded-xl border-slate-800 text-xs font-bold text-slate-400">
-              スライドを追加
-            </Button>
           </div>
 
           <div className="space-y-4">
@@ -151,15 +141,11 @@ export default async function CourseDetailPage({
                   <span className="text-xl font-black text-slate-800 tracking-tighter">{(index + 1).toString().padStart(2, '0')}</span>
                 </div>
                 <div className="bg-[#1e293b] border border-slate-800 rounded-[2rem] overflow-hidden transition-all hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/10">
-                  <div className="px-8 py-5 border-b border-slate-800 flex items-center justify-between bg-slate-900/30">
+                  <div className="px-8 py-5 border-b border-slate-800 flex items-center bg-slate-900/30">
                     <h4 className="font-bold text-slate-200 text-sm flex items-center gap-3">
                       <FileText className="w-4 h-4 text-slate-500" />
                       {slide.title}
                     </h4>
-                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button variant="ghost" size="sm" className="h-8 text-[10px] font-bold text-slate-500 hover:text-white">編集</Button>
-                      <Button variant="ghost" size="sm" className="h-8 text-[10px] font-bold text-red-500/70 hover:text-red-500">削除</Button>
-                    </div>
                   </div>
                   <div className="p-8 overflow-hidden">
                     <div 
@@ -187,23 +173,14 @@ export default async function CourseDetailPage({
               <h3 className="font-black text-xl text-white">理解度テスト</h3>
               <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-bold ml-2">{course.questions.length} QUESTIONS</span>
             </div>
-            <Button variant="outline" size="sm" className="rounded-xl border-slate-800 text-xs font-bold text-slate-400">
-              設問を追加
-            </Button>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
             {course.questions.map((q, qIndex) => (
               <div key={q.id} className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-8 space-y-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Question {qIndex + 1}</p>
-                    <h4 className="text-lg font-bold text-white leading-tight">{q.text}</h4>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg text-slate-500 hover:text-white"><LayoutGrid className="w-4 h-4" /></Button>
-                    <Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg text-slate-500 hover:text-red-500"><ChevronLeft className="w-4 h-4" /></Button>
-                  </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Question {qIndex + 1}</p>
+                  <h4 className="text-lg font-bold text-white leading-tight">{q.text}</h4>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

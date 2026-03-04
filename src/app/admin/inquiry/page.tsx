@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, Plus, Clock, CheckCircle2, MessageCircle, ArrowLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { InquiryForm } from "./inquiry-form"; // 後で作成
+import { InquiryForm } from "./inquiry-form";
 
 export default async function AdminInquiryPage() {
   const session = await auth();
@@ -105,7 +105,7 @@ export default async function AdminInquiryPage() {
 function StatusBadge({ status }: { status: string }) {
   switch (status) {
     case "UNREAD":
-      return <Badge className="bg-blue-50 text-blue-600 border-blue-100 px-2 py-0 h-5 rounded-md text-[10px] font-bold">送信済み</Badge>;
+      return <Badge className="bg-blue-50 text-blue-600 border-blue-100 px-2 py-0 h-5 rounded-md text-[10px] font-bold">未読</Badge>;
     case "READ":
       return <Badge className="bg-slate-50 text-slate-500 border-slate-200 px-2 py-0 h-5 rounded-md text-[10px] font-bold">既読</Badge>;
     case "REPLIED":

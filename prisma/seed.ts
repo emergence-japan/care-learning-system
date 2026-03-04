@@ -1,4 +1,5 @@
 import { PrismaClient, Role } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 import { seedAbuse } from './seeds/01_abuse'
 import { seedDementia } from './seeds/02_dementia'
 import { seedInfection } from './seeds/03_infection'
@@ -25,17 +26,24 @@ async function main() {
   console.log(targetFile ? `Targeting specific course: ${targetFile}` : 'Running system content sync...')
 
   // 1. 初期スーパー管理者の作成 (システムログインに必須)
-  // パスワードは後ほど画面から変更することを推奨
+  const initialPassword = process.env.SUPER_ADMIN_INITIAL_PASSWORD
+  if (!initialPassword) {
+    throw new Error(
+      'SUPER_ADMIN_INITIAL_PASSWORD が .env に設定されていません。' +
+      'セットアップ手順を確認してください。'
+    )
+  }
   await prisma.user.upsert({
     where: { loginId: 'owner' },
     update: {},
     create: {
       loginId: 'owner',
       name: 'システム運営者',
-      password: 'owner_password',
+      password: await bcrypt.hash(initialPassword, 12),
       role: Role.SUPER_ADMIN,
     }
   })
+  console.log('Super Admin created. Login ID: owner')
 
   // 2. 研修コンテンツの同期 (マスターデータ)
   const allSeedFunctions = [

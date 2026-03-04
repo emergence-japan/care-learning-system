@@ -67,22 +67,23 @@ export function RegisterStaffForm({ disabled }: { disabled?: boolean }) {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="loginId" className="text-xs font-bold text-slate-700">ログインID</Label>
-                  <Input 
-                    id="loginId" 
-                    name="loginId" 
-                    placeholder="例: tanaka_taro" 
-                    required 
+                  <Input
+                    id="loginId"
+                    name="loginId"
+                    placeholder="例: asagao_001"
+                    required
                     className="h-11 rounded-xl border-slate-200 focus:border-[#1d4ed8] focus:ring-0"
                   />
+                  <p className="text-[9px] text-slate-400 leading-tight">※ 施設略称_連番 の形式を推奨します（例: asagao_001）。システム全体で重複不可です。</p>
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="password" className="text-xs font-bold text-slate-700">パスワード</Label>
-                  <Input 
-                    id="password" 
-                    name="password" 
-                    type="text" 
-                    placeholder="例: 123456" 
-                    required 
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="例: 123456"
+                    required
                     className="h-11 rounded-xl border-slate-200 focus:border-[#1d4ed8] focus:ring-0 font-mono"
                   />
                   <p className="text-[9px] text-slate-400 leading-tight">※パスワードは管理者が決定します。スタッフに伝えてください。</p>

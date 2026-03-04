@@ -39,7 +39,7 @@ export default async function OrganizationManagementPage() {
               loginId: true, 
               role: true,
               enrollments: {
-                select: { status: true }
+                select: { status: true, courseId: true }
               }
             }
           },

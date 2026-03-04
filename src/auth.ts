@@ -64,8 +64,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           throw new Error("所属組織の利用が停止されているため、ログインできません。")
         }
 
-        const isPasswordCorrect = credentials.password === user.password || 
-                                  await bcrypt.compare(credentials.password as string, user.password)
+        const isPasswordCorrect = await bcrypt.compare(credentials.password as string, user.password)
 
         if (!isPasswordCorrect) return null
 

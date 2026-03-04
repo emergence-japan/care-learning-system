@@ -38,7 +38,11 @@ export default async function AdminDashboardPage() {
   const [rawStaff, rawCourses, rawAssignments] = await Promise.all([
     prisma.user.findMany({
       where: { facilityId: facilityId, role: "STAFF" },
-      include: { enrollments: { include: { course: true } } },
+      select: {
+        id: true, name: true, loginId: true,
+        createdAt: true, updatedAt: true,
+        enrollments: { include: { course: true } }
+      },
       orderBy: { name: 'asc' }
     }),
     prisma.course.findMany({ orderBy: { title: 'asc' } }),
@@ -224,10 +228,11 @@ export default async function AdminDashboardPage() {
           </div>
 
           {/* 3. スタッフ管理 */}
-          <AdminClient 
+          <AdminClient
             staffMembers={staffMembers as any}
             currentAssignments={assignments as any}
             maxStaff={facility.maxStaff ?? 20}
+            isSuspended={!facility.isActive || facility.corporation?.isActive === false}
           />
 
         </main>

@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -181,11 +182,13 @@ export async function registerStaff(
     return "このログインIDは既に登録されています。別のIDを指定してください。";
   }
 
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   const newUser = await prisma.user.create({
     data: {
       name,
       loginId,
-      password,
+      password: hashedPassword,
       role: "STAFF",
       facilityId,
       corporationId: facility.corporationId,
@@ -265,7 +268,7 @@ export async function updateUser(userId: string, formData: FormData) {
   const updateData: any = {};
   if (name) updateData.name = name;
   if (loginId) updateData.loginId = loginId;
-  if (password && password.length >= 4) updateData.password = password;
+  if (password && password.length >= 4) updateData.password = await bcrypt.hash(password, 12);
 
   await prisma.user.update({
     where: { id: userId },
@@ -303,7 +306,7 @@ export async function hqUpdateUserPassword(userId: string, formData: FormData) {
 
   await prisma.user.update({
     where: { id: userId },
-    data: { password: newPassword }
+    data: { password: await bcrypt.hash(newPassword, 12) }
   });
 
   revalidatePath("/hq/facilities/[id]", "page");
@@ -334,7 +337,7 @@ export async function updateStaffPassword(staffId: string, formData: FormData) {
 
   await prisma.user.update({
     where: { id: staffId },
-    data: { password: newPassword }
+    data: { password: await bcrypt.hash(newPassword, 12) }
   });
 
   revalidatePath("/admin");
@@ -501,9 +504,9 @@ export async function hqCreateFacility(formData: FormData) {
     return `法人全体の施設登録枠の上限（${corporation.maxFacilities}施設）に達しています。これ以上追加できません。`;
   }
 
-  // 施設名の重複チェック
+  // 施設名の重複チェック（同一法人内）
   const existingFacility = await prisma.facility.findUnique({
-    where: { name }
+    where: { corporationId_name: { corporationId, name } }
   });
 
   if (existingFacility) {
@@ -594,7 +597,7 @@ export async function hqCreateAdmin(formData: FormData) {
     data: {
       name,
       loginId,
-      password,
+      password: await bcrypt.hash(password, 12),
       role: "ADMIN",
       corporationId,
       facilityId,
@@ -692,7 +695,7 @@ export async function createOrgUser(formData: FormData) {
     data: {
       name,
       loginId,
-      password,
+      password: await bcrypt.hash(password, 12),
       role,
       corporationId,
       facilityId,
@@ -1008,6 +1011,9 @@ export async function createInquiryReply(inquiryId: string, content: string) {
   revalidatePath('/admin/inquiry');
   revalidatePath('/hq/inquiry');
   revalidatePath('/super-admin/inquiries');
+  revalidatePath('/admin/inquiry/[id]', 'page');
+  revalidatePath('/hq/inquiry/[id]', 'page');
+  revalidatePath('/super-admin/inquiries/[id]', 'page');
 }
 
 export async function closeInquiry(inquiryId: string) {
@@ -1024,6 +1030,9 @@ export async function closeInquiry(inquiryId: string) {
   revalidatePath('/admin/inquiry');
   revalidatePath('/hq/inquiry');
   revalidatePath('/super-admin/inquiries');
+  revalidatePath('/admin/inquiry/[id]', 'page');
+  revalidatePath('/hq/inquiry/[id]', 'page');
+  revalidatePath('/super-admin/inquiries/[id]', 'page');
 }
 
 // --- NOTIFICATION ACTIONS ---

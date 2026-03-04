@@ -19,14 +19,16 @@ type Props = {
 
 export function EditFacilityDialog({ facility, onClose }: Props) {
   const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (formData: FormData) => {
     setIsPending(true);
+    setError(null);
     try {
       await updateFacility(facility.id, formData);
       onClose();
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      setError("更新に失敗しました。入力内容を確認してください。");
     } finally {
       setIsPending(false);
     }
@@ -56,12 +58,15 @@ export function EditFacilityDialog({ facility, onClose }: Props) {
               <Input id="edit-fac-max-staff" name="maxStaff" type="number" defaultValue={facility.maxStaff} min={1} required />
             </div>
 
+            {error && (
+              <p className="text-sm text-red-600 font-bold bg-red-50 px-3 py-2 rounded-lg">{error}</p>
+            )}
             <div className="pt-4 flex gap-2">
               <Button type="button" variant="outline" onClick={onClose} className="flex-1 rounded-xl">
                 キャンセル
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isPending}
                 className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-bold"
               >

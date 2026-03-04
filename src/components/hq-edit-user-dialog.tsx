@@ -93,7 +93,7 @@ export function HQEditUserDialog({ user }: Props) {
             <Input 
               id="edit-user-password" 
               name="password" 
-              type="text"
+              type="password"
               placeholder="Leave blank to keep current"
               className="h-12 rounded-xl bg-slate-50 border-slate-200 font-mono font-bold focus:ring-emerald-500"
             />

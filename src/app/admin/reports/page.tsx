@@ -45,6 +45,7 @@ export default async function ReportsPage({
   // 2. スタッフ一覧とそれぞれのレポートデータの取得
   const staff = await prisma.user.findMany({
     where: { facilityId, role: "STAFF" },
+    select: { id: true, name: true },
     orderBy: { name: "asc" },
   });
 

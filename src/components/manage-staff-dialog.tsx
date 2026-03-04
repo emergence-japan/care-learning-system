@@ -25,7 +25,6 @@ type Staff = {
   id: string;
   name: string;
   loginId: string;
-  password?: string;
 };
 
 type Props = {
@@ -124,21 +123,13 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
               
               <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-4 relative overflow-hidden">
-                <div className="flex justify-between items-start relative z-10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-slate-100 text-slate-400">
-                      <User className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase">Login ID</p>
-                      <p className="font-mono font-black text-slate-900 text-lg">{selectedStaff.loginId}</p>
-                    </div>
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-slate-100 text-slate-400">
+                    <User className="w-5 h-5" />
                   </div>
-                  <div className="text-right">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase">Current Password</p>
-                    <p className="font-mono font-bold text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-100 inline-block mt-1">
-                      {selectedStaff.password || '********'}
-                    </p>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Login ID</p>
+                    <p className="font-mono font-black text-slate-900 text-lg">{selectedStaff.loginId}</p>
                   </div>
                 </div>
               </div>
@@ -169,11 +160,11 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
                 <div className="space-y-2">
                   <Label htmlFor="new-password" className="text-xs font-bold text-slate-500">新しいパスワード (変更する場合のみ)</Label>
                   <div className="flex gap-2">
-                    <Input 
-                      id="new-password" 
-                      name="password" 
-                      type="text" 
-                      placeholder="New Password" 
+                    <Input
+                      id="new-password"
+                      name="password"
+                      type="password"
+                      placeholder="New Password"
                       className="h-11 rounded-xl bg-white border-slate-200 font-mono font-bold"
                     />
                   </div>

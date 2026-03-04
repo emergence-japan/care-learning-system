@@ -75,7 +75,7 @@ enum Severity {
 
 model Facility {
   id            String   @id @default(cuid())
-  name          String   @unique
+  name          String
   type          String?  // 業態
   corporationId String?
   maxStaff      Int      @default(20)   // 施設ごとのスタッフ上限
@@ -85,6 +85,7 @@ model Facility {
   corporation   Corporation? @relation(fields: [corporationId], references: [id])
   users         User[]
   assignments   CourseAssignment[]
+  @@unique([corporationId, name])
 }
 
 model Corporation {

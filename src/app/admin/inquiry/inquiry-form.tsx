@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createInquiry } from "@/lib/actions";
@@ -37,7 +36,8 @@ export function InquiryForm() {
       </Button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
           <Card className="w-full max-w-xl bg-white rounded-[2.5rem] shadow-2xl border-none overflow-hidden animate-in zoom-in duration-300">
             <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
               <div className="flex items-center gap-4">
@@ -58,13 +58,21 @@ export function InquiryForm() {
               <form action={handleSubmit} className="space-y-8">
                 <div className="space-y-2">
                   <Label htmlFor="subject" className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">件名</Label>
-                  <Input 
-                    id="subject" 
-                    name="subject" 
-                    placeholder="相談したい内容のタイトルを入力してください" 
-                    required 
-                    className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white focus:border-blue-600 transition-all font-bold text-lg"
-                  />
+                  <select
+                    id="subject"
+                    name="subject"
+                    required
+                    defaultValue=""
+                    className="w-full h-14 rounded-2xl border border-slate-100 bg-slate-50/50 focus:bg-white focus:border-blue-600 focus:outline-none transition-all font-bold text-lg px-4 text-slate-700 appearance-none"
+                  >
+                    <option value="" disabled>カテゴリを選択してください</option>
+                    <option value="ログイン・パスワードについて">ログイン・パスワードについて</option>
+                    <option value="スタッフ管理について">スタッフ管理について</option>
+                    <option value="研修コンテンツについて">研修コンテンツについて</option>
+                    <option value="システムの不具合・エラー">システムの不具合・エラー</option>
+                    <option value="請求・契約について">請求・契約について</option>
+                    <option value="その他">その他</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
@@ -107,6 +115,7 @@ export function InquiryForm() {
               </form>
             </CardContent>
           </Card>
+          </div>
         </div>
       )}
     </>

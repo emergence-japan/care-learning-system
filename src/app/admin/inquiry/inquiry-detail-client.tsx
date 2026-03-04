@@ -35,20 +35,31 @@ type Props = {
 
 export function InquiryDetailClient({ inquiry, currentUserId, currentUserRole, backPath }: Props) {
   const [content, setContent] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const handleReply = async () => {
     if (!content.trim()) return;
+    setError(null);
     startTransition(async () => {
-      await createInquiryReply(inquiry.id, content);
-      setContent("");
+      try {
+        await createInquiryReply(inquiry.id, content);
+        setContent("");
+      } catch {
+        setError("送信に失敗しました。もう一度お試しください。");
+      }
     });
   };
 
   const handleClose = async () => {
     if (!confirm("この問い合わせを完了（クローズ）しますか？")) return;
+    setError(null);
     startTransition(async () => {
-      await closeInquiry(inquiry.id);
+      try {
+        await closeInquiry(inquiry.id);
+      } catch {
+        setError("操作に失敗しました。もう一度お試しください。");
+      }
     });
   };
 
@@ -108,6 +119,12 @@ export function InquiryDetailClient({ inquiry, currentUserId, currentUserRole, b
           );
         })}
       </div>
+
+      {error && (
+        <div className="p-3 rounded-lg bg-red-50 text-red-600 text-[11px] font-bold border border-red-100">
+          {error}
+        </div>
+      )}
 
       {!isClosed ? (
         <div className="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-xl border-t border-slate-100 p-4 z-40">
