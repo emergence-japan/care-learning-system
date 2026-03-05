@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { hqCreateFacility } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, Plus, Loader2, Building2 } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 interface Props {
   disabled?: boolean;
@@ -14,26 +15,9 @@ interface Props {
 
 export function AddFacilityDialog({ disabled }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    setError(null);
-    try {
-      const result = await hqCreateFacility(formData);
-      if (typeof result === "string") {
-        setError(result);
-      } else {
-        setIsOpen(false);
-      }
-    } catch (err) {
-      console.error(err);
-      setError("エラーが発生しました。");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, error, handleSubmit } = useFormAction(hqCreateFacility, () =>
+    setIsOpen(false),
+  );
 
   return (
     <>

@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Edit2, Loader2, Building2 } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   facility: {
@@ -23,20 +24,11 @@ type Props = {
 };
 
 export function HQEditFacilityDialog({ facility }: Props) {
-  const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    try {
-      await hqUpdateFacility(facility.id, formData);
-      setIsOpen(false);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, handleSubmit } = useFormAction(
+    (formData) => hqUpdateFacility(facility.id, formData),
+    () => setIsOpen(false),
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

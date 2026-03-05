@@ -6,24 +6,7 @@ import { ComprehensionTest } from "@/components/comprehension-test";
 import { Button } from "@/components/ui/button";
 import { Award, ArrowRight, Lightbulb, Target } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-interface Slide {
-  id: string;
-  title: string;
-  content: string;
-  order: number;
-}
-
-interface Question {
-  id: string;
-  text: string;
-  explanation: string | null;
-  choices: {
-    id: string;
-    text: string;
-    isCorrect: boolean;
-  }[];
-}
+import type { Slide, Question } from "@/types";
 
 interface CourseClientProps {
   courseId: string;

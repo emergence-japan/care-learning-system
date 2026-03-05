@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
 import { registerFonts } from "@/lib/pdf-fonts";
+import type { SummaryData } from "@/types";
 
 registerFonts();
 
@@ -119,23 +120,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ReportData {
-  facilityName: string;
-  fiscalYear: number;
-  generatedAt: string;
-  courses: Array<{
-    title: string;
-    targetCount: number;
-    completedCount: number;
-    completionRate: number;
-    plannedEndDate: string;
-    actualEndDate: string;
-    learningObjectives: string;
-    curriculum: string[];
-  }>;
-}
-
-export function SummaryReport({ data }: { data: ReportData }) {
+export function SummaryReport({ data }: { data: SummaryData }) {
   return (
     <Document>
       {/* 1枚目：実績対比表 */}

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createOrgUser } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, UserPlus, Loader2, KeyRound } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   corporationId: string;
@@ -18,20 +19,7 @@ type Props = {
 
 export function AddOrgUserDialog({ corporationId, facilityId, orgName, role, onClose }: Props) {
   const roleName = role === "HQ" ? "法人本部" : "施設長";
-  const [isPending, startTransition] = useTransition();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const handleSubmit = async (formData: FormData) => {
-    setErrorMessage(null);
-    startTransition(async () => {
-      const error = await createOrgUser(formData);
-      if (error) {
-        setErrorMessage(error);
-      } else {
-        onClose();
-      }
-    });
-  };
+  const { isPending, error: errorMessage, handleSubmit } = useFormAction(createOrgUser, onClose);
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">

@@ -10,32 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { KeyRound, Loader2, CheckCircle2 } from "lucide-react";
 import { hqUpdateUserPassword } from "@/lib/actions";
+import { useFormAction } from "@/hooks/use-form-action";
 
 export function HQResetPasswordDialog({ userId, userName }: { userId: string, userName: string }) {
   const [open, setOpen] = useState(false);
-  const [isPending, setIsPending] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsPending(true);
-    setMessage(null);
-
-    const formData = new FormData(e.currentTarget);
-    const error = await hqUpdateUserPassword(userId, formData);
-
-    if (error) {
-      setMessage(error);
-      setIsPending(false);
-    } else {
-      setMessage("success");
-      setTimeout(() => {
-        setOpen(false);
-        setMessage(null);
-        setIsPending(false);
-      }, 1500);
-    }
-  };
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { isPending, error: message, handleSubmit } = useFormAction(
+    (formData) => hqUpdateUserPassword(userId, formData),
+    () => { setIsSuccess(true); setTimeout(() => { setOpen(false); setIsSuccess(false); }, 1500); },
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -52,7 +35,7 @@ export function HQResetPasswordDialog({ userId, userName }: { userId: string, us
           </DialogTitle>
         </DialogHeader>
 
-        {message === "success" ? (
+        {isSuccess ? (
           <div className="py-10 flex flex-col items-center justify-center space-y-4">
             <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center">
               <CheckCircle2 className="w-8 h-8 text-emerald-500" />
@@ -60,7 +43,7 @@ export function HQResetPasswordDialog({ userId, userName }: { userId: string, us
             <p className="font-bold text-emerald-500">パスワードを更新しました</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+          <form action={handleSubmit} className="space-y-6 pt-4">
             <div className="space-y-4">
               <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">対象ユーザー</p>

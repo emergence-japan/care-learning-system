@@ -7,39 +7,24 @@ import { Label } from "@/components/ui/label";
 import { updateStaffPassword } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, KeyRound, Loader2, CheckCircle2, ShieldAlert } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   staff: {
     id: string;
     name: string;
     loginId: string;
-    password?: string; // 表示用にパスワードを受け取れるように拡張
+    password?: string;
   };
   onClose: () => void;
 };
 
 export function ResetPasswordDialog({ staff, onClose }: Props) {
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    setError(null);
-    try {
-      const result = await updateStaffPassword(staff.id, formData);
-      if (result) {
-        setError(result);
-      } else {
-        setIsSuccess(true);
-        setTimeout(onClose, 1500);
-      }
-    } catch (err) {
-      setError("エラーが発生しました。");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, error, handleSubmit } = useFormAction(
+    (formData) => updateStaffPassword(staff.id, formData),
+    () => { setIsSuccess(true); setTimeout(onClose, 1500); },
+  );
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">

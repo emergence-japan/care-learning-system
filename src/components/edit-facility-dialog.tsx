@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateFacility } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, Edit, Loader2 } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   facility: {
@@ -18,21 +18,10 @@ type Props = {
 };
 
 export function EditFacilityDialog({ facility, onClose }: Props) {
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    setError(null);
-    try {
-      await updateFacility(facility.id, formData);
-      onClose();
-    } catch (e) {
-      setError("更新に失敗しました。入力内容を確認してください。");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, error, handleSubmit } = useFormAction(
+    (formData) => updateFacility(facility.id, formData),
+    onClose,
+  );
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">

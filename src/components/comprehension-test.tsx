@@ -5,19 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, XCircle, ChevronRight, AlertCircle, Sparkles, Trophy } from "lucide-react";
 import confetti from "canvas-confetti";
-
-type Choice = {
-  id: string;
-  text: string;
-  isCorrect: boolean;
-};
-
-type Question = {
-  id: string;
-  text: string;
-  explanation: string | null;
-  choices: Choice[];
-};
+import type { Question } from "@/types";
 
 type Props = {
   courseId: string;

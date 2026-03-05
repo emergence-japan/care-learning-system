@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Megaphone, Send, Loader2, Calendar } from "lucide-react";
 import { createNotification } from "@/lib/actions";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   targetName: string;
@@ -28,28 +29,14 @@ type Props = {
 };
 
 export function QuickNotificationDialog({ targetName, targetCorporationId, targetFacilityId, onClose }: Props) {
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsPending(true);
-    setError(null);
-
-    const formData = new FormData(e.currentTarget);
-    if (targetCorporationId) formData.append("targetCorporationId", targetCorporationId);
-    if (targetFacilityId) formData.append("targetFacilityId", targetFacilityId);
-
-    const result = await createNotification(formData);
-
-    if (typeof result === "string") {
-      setError(result);
-      setIsPending(false);
-    } else {
-      setIsPending(false);
-      onClose();
-    }
-  }
+  const { isPending, error, handleSubmit } = useFormAction(
+    (formData) => {
+      if (targetCorporationId) formData.append("targetCorporationId", targetCorporationId);
+      if (targetFacilityId) formData.append("targetFacilityId", targetFacilityId);
+      return createNotification(formData);
+    },
+    onClose,
+  );
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
@@ -66,7 +53,7 @@ export function QuickNotificationDialog({ targetName, targetCorporationId, targe
               宛先: <span className="text-slate-900">{targetName}</span>
             </p>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form action={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">タイトル</label>
               <Input name="title" placeholder="件名を入力..." className="rounded-xl border-slate-200 font-bold" required />

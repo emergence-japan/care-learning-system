@@ -6,45 +6,11 @@ import { SummaryReport } from "@/components/reports/summary-report";
 import { StaffReport } from "@/components/reports/staff-report";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { 
-  FileText, Download, User, 
-  Calendar, CheckCircle 
+import {
+  FileText, Download, User,
+  Calendar, CheckCircle
 } from "lucide-react";
-
-interface SummaryData {
-  facilityName: string;
-  fiscalYear: number;
-  generatedAt: string;
-  courses: Array<{
-    title: string;
-    targetCount: number;
-    completedCount: number;
-    completionRate: number;
-    plannedEndDate: string;
-    actualEndDate: string;
-    learningObjectives: string;
-    curriculum: string[];
-  }>;
-}
-
-interface StaffReportData {
-  staffName: string;
-  facilityName: string;
-  generatedAt: string;
-  fiscalYear: number;
-  enrollments: Array<{
-    courseTitle: string;
-    status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
-    completedAt: string | null;
-    actionPlan: string | null;
-  }>;
-}
-
-interface StaffMember {
-  id: string;
-  name: string;
-  reportData: StaffReportData;
-}
+import type { SummaryData, StaffMember } from "@/types";
 
 interface Props {
   facilityName: string;

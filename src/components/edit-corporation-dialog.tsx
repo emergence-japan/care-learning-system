@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateCorporation } from "@/lib/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, Edit, Loader2 } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   corporation: {
@@ -19,19 +19,10 @@ type Props = {
 };
 
 export function EditCorporationDialog({ corporation, onClose }: Props) {
-  const [isPending, setIsPending] = useState(false);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    try {
-      await updateCorporation(corporation.id, formData);
-      onClose();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, handleSubmit } = useFormAction(
+    (formData) => updateCorporation(corporation.id, formData),
+    onClose,
+  );
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">

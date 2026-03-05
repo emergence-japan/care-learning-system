@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { registerFonts } from "@/lib/pdf-fonts";
+import type { StaffReportData } from "@/types";
 
 registerFonts();
 
@@ -101,21 +102,6 @@ const styles = StyleSheet.create({
     color: "#94a3b8",
   },
 });
-
-interface StaffReportData {
-  staffName: string;
-  facilityName: string;
-  generatedAt: string;
-  fiscalYear: number;
-  enrollments: Array<{
-    courseTitle: string;
-    status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
-    completedAt: string | null;
-    actionPlan: string | null;
-    score?: number;
-    total?: number;
-  }>;
-}
 
 export function StaffReport({ data }: { data: StaffReportData }) {
   return (

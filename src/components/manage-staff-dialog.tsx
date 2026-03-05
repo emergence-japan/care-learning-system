@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { X, KeyRound, Loader2, CheckCircle2, ShieldCheck, Trash2, User } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Staff = {
   id: string;
@@ -34,50 +35,29 @@ type Props = {
 
 export function ManageStaffDialog({ staffMembers, trigger }: Props) {
   const [selectedStaffId, setSelectedStaffId] = useState<string>("");
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedStaff = staffMembers.find(s => s.id === selectedStaffId);
 
-  const handleUpdate = async (formData: FormData) => {
-    if (!selectedStaff) return;
-    setIsPending(true);
-    setError(null);
-    setSuccessMessage(null);
-    
-    try {
-      const result = await updateUser(selectedStaff.id, formData);
-      if (typeof result === "string") {
-        setError(result);
-      } else {
-        setSuccessMessage("情報を更新しました");
-        // 名前やログインIDが変わるため、少し待ってからリロード
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      }
-    } catch (err) {
-      setError("エラーが発生しました。");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending: isUpdating, error, handleSubmit: handleUpdate } = useFormAction(
+    (formData) =>
+      selectedStaff ? updateUser(selectedStaff.id, formData) : Promise.resolve(undefined),
+    () => { setSuccessMessage("情報を更新しました"); setTimeout(() => window.location.reload(), 1000); },
+  );
+
+  const isPending = isUpdating || isDeleting;
 
   const handleDelete = async () => {
     if (!selectedStaff) return;
     if (!confirm(`スタッフ「${selectedStaff.name}」を削除しますか？\nこの操作は取り消せません。`)) return;
-
-    setIsPending(true);
+    setIsDeleting(true);
     try {
       await deleteUser(selectedStaff.id);
-      setSuccessMessage("スタッフを削除しました");
-      setSelectedStaffId("");
       window.location.reload();
-    } catch (err) {
-      setError("削除に失敗しました。");
-      setIsPending(false);
+    } catch {
+      setIsDeleting(false);
     }
   };
 
@@ -105,7 +85,7 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
           
           <div className="space-y-3">
             <Label className="text-xs font-bold text-slate-500 uppercase tracking-widest">対象スタッフを選択</Label>
-            <Select value={selectedStaffId} onValueChange={(val) => { setSelectedStaffId(val); setSuccessMessage(null); setError(null); }}>
+            <Select value={selectedStaffId} onValueChange={(val) => { setSelectedStaffId(val); setSuccessMessage(null); }}>
               <SelectTrigger className="h-12 rounded-xl bg-slate-50 border-slate-200 font-bold focus:ring-slate-200">
                 <SelectValue placeholder="スタッフを選択してください" />
               </SelectTrigger>

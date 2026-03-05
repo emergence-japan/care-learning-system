@@ -12,7 +12,7 @@ import { PrintButton } from "@/components/print-button";
 import { SystemNotification } from "@/components/system-notification";
 import { FacilityMonitoringClient } from "./facility-monitoring-client";
 import { AddFacilityDialog } from "@/components/add-facility-dialog";
-import { AddAdminGlobalDialog } from "@/components/add-admin-global-dialog";
+import { AddAdminDialog } from "@/components/add-admin-dialog";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
@@ -240,7 +240,7 @@ export default async function HQDashboardPage() {
                   {!isSuspended && (
                     <>
                       <AddFacilityDialog disabled={currentFacilitiesCount >= corporation.maxFacilities} />
-                      <AddAdminGlobalDialog facilities={facilityStats.map(f => ({ id: f.id, name: f.name }))} />
+                      <AddAdminDialog facilities={facilityStats.map(f => ({ id: f.id, name: f.name }))} />
                     </>
                   )}
                 </div>

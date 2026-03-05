@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Edit2, Loader2, User } from "lucide-react";
+import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
   user: {
@@ -23,27 +24,11 @@ type Props = {
 };
 
 export function HQEditUserDialog({ user }: Props) {
-  const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (formData: FormData) => {
-    setIsPending(true);
-    setError(null);
-    try {
-      const result = await updateUser(user.id, formData);
-      if (typeof result === "string") {
-        setError(result);
-      } else {
-        setIsOpen(false);
-        window.location.reload();
-      }
-    } catch (error) {
-      setError("エラーが発生しました。");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const { isPending, error, handleSubmit } = useFormAction(
+    (formData) => updateUser(user.id, formData),
+    () => { setIsOpen(false); window.location.reload(); },
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
