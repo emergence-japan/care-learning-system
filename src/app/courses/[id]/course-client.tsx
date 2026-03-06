@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { SlidePlayer } from "@/components/slide-player";
 import { ComprehensionTest } from "@/components/comprehension-test";
 import { Button } from "@/components/ui/button";
-import { Award, ArrowRight, Lightbulb, Home } from "lucide-react";
+import { Award, ArrowRight, Lightbulb, Home, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Slide, Question } from "@/types";
 
@@ -105,6 +105,15 @@ export function CourseClient({
 
         {view === "test" && (
           <motion.div key="test" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="w-full h-full flex flex-col">
+            <div className="shrink-0 px-4 pt-2 pb-1">
+              <button
+                onClick={() => setView("learning")}
+                className="flex items-center gap-1.5 text-xs font-black text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                スライドに戻って復習する
+              </button>
+            </div>
             <div className="flex-1 overflow-y-auto custom-scrollbar p-4">
               <ComprehensionTest courseId={courseId} questions={questions} onSubmit={async (answers) => {
                 const result = await onSubmitTest(answers);
