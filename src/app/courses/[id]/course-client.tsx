@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { SlidePlayer } from "@/components/slide-player";
 import { ComprehensionTest } from "@/components/comprehension-test";
 import { Button } from "@/components/ui/button";
-import { Award, ArrowRight, Lightbulb, Target } from "lucide-react";
+import { Award, ArrowRight, Lightbulb, Home } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Slide, Question } from "@/types";
 
@@ -37,6 +38,7 @@ export function CourseClient({
   onSubmitTest,
   onSaveActionPlan,
 }: CourseClientProps) {
+  const router = useRouter();
   const [view, setView] = useState<"intro" | "objectives" | "learning" | "test" | "action_plan" | "completed">(
     isInitialCompleted ? "completed" : introduction ? "intro" : learningObjectives ? "objectives" : slides.length > 0 ? "learning" : questions.length > 0 ? "test" : "learning"
   );
@@ -151,9 +153,15 @@ export function CourseClient({
                 大変お疲れ様でした。学んだ知識を活かし、<br/>より良いケアを目指しましょう。
               </p>
             </div>
-            <Button variant="outline" className="rounded-full px-12 h-14 border-slate-200 text-slate-500 hover:text-slate-900 font-black text-xs uppercase tracking-[0.2em] shadow-sm hover:bg-slate-50 transition-all" onClick={() => setView("intro")}>
-              最初からもう一度見る
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button className="rounded-full px-12 h-14 bg-slate-900 hover:bg-black text-white font-black text-sm shadow-lg transition-all flex items-center gap-2" onClick={() => router.push("/")}>
+                <Home className="w-4 h-4" />
+                ダッシュボードへ戻る
+              </Button>
+              <Button variant="outline" className="rounded-full px-12 h-14 border-slate-200 text-slate-500 hover:text-slate-900 font-black text-xs uppercase tracking-[0.2em] shadow-sm hover:bg-slate-50 transition-all" onClick={() => setView("intro")}>
+                最初からもう一度見る
+              </Button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
