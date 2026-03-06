@@ -52,7 +52,7 @@ export async function seedRestraint(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/C33peFOou4M',
     badgeLabel: '拘束廃止',
     badgeIcon: 'UserMinus',
   }

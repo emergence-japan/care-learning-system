@@ -52,7 +52,7 @@ export async function seedAbuse(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: 'https://www.youtube.com/watch?v=JVLmK8A5k1U',
+    videoUrl: 'https://youtu.be/hw5jnzdIw1g',
     badgeLabel: '虐待防止',
     badgeIcon: 'ShieldAlert',
   }

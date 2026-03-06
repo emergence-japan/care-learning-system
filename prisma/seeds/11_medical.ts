@@ -52,6 +52,7 @@ export async function seedMedical(prisma: PrismaClient) {
           </div>
         </div>
       `,
+    videoUrl: 'https://youtu.be/cSlGv-B_FvM',
     badgeLabel: '医療連携',
     badgeIcon: 'Activity',
   }

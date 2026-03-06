@@ -52,7 +52,7 @@ export async function seedInfection(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/HYjbN1p6WAM',
     badgeLabel: '感染症',
     badgeIcon: 'HeartPulse',
   }

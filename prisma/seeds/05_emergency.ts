@@ -52,7 +52,7 @@ export async function seedEmergency(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/l7xup2ZYRmw',
     badgeLabel: '緊急対応',
     badgeIcon: 'Activity',
   }

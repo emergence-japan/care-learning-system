@@ -52,7 +52,7 @@ export async function seedPrivacy(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/h_dkaLWhPPc',
     badgeLabel: '個人情報',
     badgeIcon: 'Lock',
   }

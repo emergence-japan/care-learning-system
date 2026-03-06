@@ -52,7 +52,7 @@ export async function seedEtiquette(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/Wj73I39u0Rs',
     badgeLabel: '接遇向上',
     badgeIcon: 'Smile',
   }

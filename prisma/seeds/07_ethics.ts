@@ -52,7 +52,7 @@ export async function seedEthics(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/uDYZDrVjZNU',
     badgeLabel: '倫理遵守',
     badgeIcon: 'Gavel',
   }

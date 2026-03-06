@@ -52,6 +52,7 @@ export async function seedDementia(prisma: PrismaClient) {
           </div>
         </div>
       `,
+    videoUrl: 'https://youtu.be/2TBWwSFSZHI',
     badgeLabel: '認知症',
     badgeIcon: 'Zap',
   }

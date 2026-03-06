@@ -8,7 +8,6 @@ import { StaffTrainingPlan } from "@/components/staff-training-plan";
 import { ConfettiTrigger } from "@/components/confetti-trigger";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { ProgressHero } from "@/components/dashboard/progress-hero";
-import { BadgeCollection } from "@/components/dashboard/badge-collection";
 import { CourseList } from "@/components/dashboard/course-list";
 
 export default async function DashboardPage() {
@@ -105,13 +104,6 @@ export default async function DashboardPage() {
   const completedCourses = learningPlan.filter(c => c.status === "COMPLETED").length;
   const progressPercentage = totalCourses > 0 ? Math.round((completedCourses / totalCourses) * 100) : 0;
 
-  const badges = learningPlan.map(item => ({
-    id: item.courseId,
-    label: item.badgeLabel,
-    badgeIcon: item.badgeIcon,
-    unlocked: item.status === "COMPLETED",
-  }));
-
   return (
     <div className="min-h-screen bg-slate-50/50 pb-12 font-sans antialiased">
       <ConfettiTrigger isVisible={progressPercentage === 100} />
@@ -126,8 +118,7 @@ export default async function DashboardPage() {
           completedCourses={completedCourses}
           totalCourses={totalCourses}
         />
-        <BadgeCollection badges={badges} completedCount={completedCourses} />
-        <StaffTrainingPlan assignments={learningPlan} startMonth={fiscalYearStartMonth} />
+<StaffTrainingPlan assignments={learningPlan} startMonth={fiscalYearStartMonth} />
         <CourseList learningPlan={learningPlan} />
       </main>
     </div>

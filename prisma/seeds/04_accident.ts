@@ -52,6 +52,7 @@ export async function seedAccident(prisma: PrismaClient) {
           </div>
         </div>
       `,
+    videoUrl: 'https://youtu.be/Ph1d1oLGYhg',
     badgeLabel: '事故防止',
     badgeIcon: 'ShieldAlert',
   }
