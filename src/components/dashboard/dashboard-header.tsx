@@ -25,16 +25,16 @@ export function DashboardHeader({ corporationName, facilityName, userName }: Pro
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col items-end">
+        <div className="flex items-center gap-4 sm:gap-6">
+          <div className="hidden sm:flex flex-col items-end">
             <div className="flex items-center gap-2 text-slate-400">
               <span className="text-[9px] font-black uppercase tracking-widest">Care Learning System</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-black text-slate-900 tracking-tight">{userName} 様</span>
+              <span className="text-sm font-black text-slate-900 tracking-tight truncate max-w-[120px]">{userName} 様</span>
             </div>
           </div>
-          <div className="h-8 w-px bg-slate-200 mx-1" />
+          <div className="hidden sm:block h-8 w-px bg-slate-200 mx-1" />
           <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
             <button className="group flex flex-col items-center gap-1 text-slate-400 hover:text-rose-600 transition-all duration-300">
               <div className="p-2 rounded-xl group-hover:bg-rose-50 transition-colors">

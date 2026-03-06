@@ -129,7 +129,7 @@ export default async function CourseDetailPage({
           </p>
         </section>
 
-        <div className="bg-white rounded-[3.5rem] p-4 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-slate-100">
+        <div className="bg-white rounded-[1.5rem] sm:rounded-[3.5rem] p-4 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-slate-100">
           <CourseClient
             courseId={id}
             title={enrollment.course.title}

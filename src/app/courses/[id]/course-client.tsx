@@ -135,7 +135,7 @@ export function CourseClient({
                 <p className="text-slate-500 font-bold text-sm">学んだことを、現場でどう活かしますか？</p>
               </div>
               <textarea 
-                className="w-full h-40 p-8 rounded-[2rem] bg-slate-50 border-2 border-slate-100 text-slate-900 text-xl font-black focus:border-blue-500 focus:ring-0 transition-all resize-none placeholder:text-slate-300 shadow-inner"
+                className="w-full h-40 p-4 sm:p-8 rounded-[2rem] bg-slate-50 border-2 border-slate-100 text-slate-900 text-base sm:text-xl font-black focus:border-blue-500 focus:ring-0 transition-all resize-none placeholder:text-slate-300 shadow-inner"
                 placeholder="例：言葉遣いを丁寧にします。"
                 value={actionPlan} 
                 onChange={(e) => setActionPlan(e.target.value)} 

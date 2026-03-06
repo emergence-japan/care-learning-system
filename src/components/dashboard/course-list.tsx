@@ -103,18 +103,18 @@ function CourseListItem({ item }: { item: LearningPlanItem }) {
         </div>
         <div className="shrink-0">
           {isCompleted ? (
-            <div className="w-12 h-12 rounded-xl bg-emerald-100/50 flex items-center justify-center text-emerald-600 shadow-inner">
-              <CheckCircle2 className="w-6 h-6" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-100/50 flex items-center justify-center text-emerald-600 shadow-inner">
+              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           ) : item.isUpcoming ? (
-            <div className="w-16 h-16 rounded-xl border border-slate-300 bg-slate-300/30 flex flex-col items-center justify-center text-slate-400">
-              <Lock className="w-5 h-5 mb-1" />
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl border border-slate-300 bg-slate-300/30 flex flex-col items-center justify-center text-slate-400">
+              <Lock className="w-4 h-4 sm:w-5 sm:h-5 mb-1" />
               <span className="text-[7px] font-black uppercase tracking-widest">Locked</span>
             </div>
           ) : (
             <div className="relative">
               <div className="absolute -inset-2 bg-blue-500/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative w-16 h-16 bg-slate-900 rounded-xl flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:bg-blue-600 group-hover:scale-105 active:scale-95">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-slate-900 rounded-xl flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:bg-blue-600 group-hover:scale-105 active:scale-95">
                 <span className="text-[8px] font-black text-blue-400 uppercase tracking-tighter mb-0.5">Start</span>
                 <ArrowRight className="w-5 h-5 text-white" />
               </div>

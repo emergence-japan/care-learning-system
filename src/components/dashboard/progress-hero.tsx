@@ -38,7 +38,7 @@ export function ProgressHero({ progressPercentage, completedCourses, totalCourse
   return (
     <div className="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-2xl">
       <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-[100px] -mr-32 -mt-32" />
-      <div className="relative z-10 flex items-center justify-between">
+      <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold leading-tight tracking-tight">
             {progressPercentage === 100 ? "すべての研修を修了しました" :
