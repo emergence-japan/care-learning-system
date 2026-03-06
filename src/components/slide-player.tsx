@@ -140,11 +140,13 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
                     <div className="max-w-4xl mx-auto">
                       <div
                         className="prose prose-slate max-w-none
-                          prose-p:text-slate-700 prose-p:text-sm lg:prose-p:text-xl prose-p:leading-relaxed
+                          prose-p:text-slate-700 prose-p:text-sm lg:prose-p:text-xl prose-p:leading-relaxed prose-p:break-words
                           prose-strong:text-blue-600
                           prose-ul:space-y-2 lg:prose-ul:space-y-4 prose-li:text-slate-700 prose-li:text-xs lg:prose-li:text-lg prose-ul:inline-block prose-ul:text-left
-                          prose-h4:text-base lg:prose-h4:text-3xl prose-h4:font-black prose-h4:text-slate-900 prose-h4:mb-4"
-                        style={{ maxWidth: 'none' }}
+                          prose-h4:text-base lg:prose-h4:text-3xl prose-h4:font-black prose-h4:text-slate-900 prose-h4:mb-4
+                          prose-table:block prose-table:w-full prose-table:overflow-x-auto
+                          prose-img:max-w-full prose-img:h-auto"
+                        style={{ maxWidth: 'none', wordBreak: 'break-word', overflowWrap: 'break-word' }}
                         dangerouslySetInnerHTML={{ __html: currentSlide.content }}
                       />
                     </div>
