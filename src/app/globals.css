@@ -202,3 +202,17 @@
 .print-only {
   display: none;
 }
+
+/* スライドコンテンツ内の全要素を画面幅内に収める */
+.slide-content * {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+.slide-content table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.slide-content img {
+  height: auto;
+}

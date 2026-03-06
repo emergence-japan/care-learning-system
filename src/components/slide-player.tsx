@@ -139,7 +139,7 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
                   >
                     <div className="max-w-4xl mx-auto">
                       <div
-                        className="prose prose-slate max-w-none
+                        className="slide-content prose prose-slate max-w-none
                           prose-p:text-slate-700 prose-p:text-sm lg:prose-p:text-xl prose-p:leading-relaxed prose-p:break-words
                           prose-strong:text-blue-600
                           prose-ul:space-y-2 lg:prose-ul:space-y-4 prose-li:text-slate-700 prose-li:text-xs lg:prose-li:text-lg prose-ul:inline-block prose-ul:text-left
