@@ -29,10 +29,6 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
   const isLastSlide = currentSlideIndex === slides.length - 1;
   const progress = ((currentSlideIndex + 1) / slides.length) * 100;
 
-  // スクロールを無効にするスライドのインデックス (0始まり)
-  const nonScrollableIndices = [0, 3, 11, 15, 19, 20, 21];
-  const isScrollDisabled = nonScrollableIndices.includes(currentSlideIndex);
-
   const nextSlide = () => {
     if (!isLastSlide) {
       setDirection(1);
@@ -127,15 +123,12 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
         {activeTab === "slide" && (
           <>
             {/* Slide Container */}
-            <div className="flex-1 w-full h-full lg:max-w-5xl bg-white border border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] flex flex-col overflow-hidden shadow-2xl relative order-1 lg:order-2">
+            <div className="w-full lg:max-w-5xl aspect-video bg-white border border-slate-200 rounded-[2rem] lg:rounded-[2.5rem] flex flex-col overflow-hidden shadow-2xl relative order-1 lg:order-2">
               <div className="shrink-0 px-5 lg:px-6 py-2 lg:py-3 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
                 <h4 className="font-black text-slate-900 text-[10px] lg:text-xs uppercase tracking-widest truncate pr-4">{currentSlide.title}</h4>
                 <span className="text-[10px] font-mono text-slate-400 tracking-widest">{(currentSlideIndex + 1).toString().padStart(2, '0')} / {slides.length}</span>
               </div>
-              <div className={cn(
-                "flex-1 relative flex flex-col justify-center",
-                isScrollDisabled ? "overflow-hidden" : "overflow-y-auto custom-scrollbar"
-              )}>
+              <div className="flex-1 relative flex flex-col justify-center overflow-hidden">
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.div
                     key={currentSlide.id}
