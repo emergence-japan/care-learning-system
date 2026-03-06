@@ -111,15 +111,15 @@ export function SlidePlayer({ slides, courseVideoUrl, onComplete, showTest }: Sl
 
         {/* Video Tab */}
         {activeTab === "video" && courseVideoUrl && (
-          <div className="flex-1 w-full h-full lg:max-w-5xl bg-black rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden shadow-2xl">
-            <iframe
-              width="100%"
-              height="100%"
-              src={getYouTubeEmbedUrl(courseVideoUrl)}
-              frameBorder="0"
-              allowFullScreen
-              className="w-full h-full"
-            />
+          <div className="w-full lg:max-w-5xl">
+            <div className="relative w-full aspect-video bg-black rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden shadow-2xl">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={getYouTubeEmbedUrl(courseVideoUrl)}
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>
           </div>
         )}
 
