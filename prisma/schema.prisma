@@ -3,139 +3,121 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id            String   @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String
-  loginId       String   @unique  // ログイン用の独自ID
+  loginId       String       @unique
   password      String
-  role          Role     @default(STAFF)
+  role          Role         @default(STAFF)
   facilityId    String?
   corporationId String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  facility      Facility? @relation(fields: [facilityId], references: [id])
-  corporation   Corporation? @relation(fields: [corporationId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   enrollments   Enrollment[]
   inquiries     Inquiry[]
+  corporation   Corporation? @relation(fields: [corporationId], references: [id])
+  facility      Facility?    @relation(fields: [facilityId], references: [id])
 }
 
 model Inquiry {
-  id            String   @id @default(cuid())
-  subject       String
-  content       String
-  senderId      String
-  status        InquiryStatus @default(UNREAD)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  sender        User     @relation(fields: [senderId], references: [id])
-  replies       InquiryReply[]
+  id        String         @id @default(cuid())
+  subject   String
+  content   String
+  senderId  String
+  status    InquiryStatus  @default(UNREAD)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  sender    User           @relation(fields: [senderId], references: [id])
+  replies   InquiryReply[]
 }
 
 model InquiryReply {
-  id            String   @id @default(cuid())
-  inquiryId     String
-  content       String
-  senderId      String
-  createdAt     DateTime @default(now())
-  inquiry       Inquiry  @relation(fields: [inquiryId], references: [id])
-}
-
-enum InquiryStatus {
-  UNREAD
-  READ
-  REPLIED
-  CLOSED
+  id        String   @id @default(cuid())
+  inquiryId String
+  content   String
+  senderId  String
+  createdAt DateTime @default(now())
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id])
 }
 
 model Notification {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  severity    Severity @default(INFO)
-  targetRole  Role?    // nullなら全ロール対象
-  targetCorporationId String? // 特定の法人宛
-  targetFacilityId    String?    // 特定の施設宛
-  expiresAt   DateTime?          // 掲載終了日
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  authorId    String
-}
-
-enum Severity {
-  INFO
-  WARNING
-  CRITICAL
+  id                  String    @id @default(cuid())
+  title               String
+  content             String
+  severity            Severity  @default(INFO)
+  targetRole          Role?
+  targetCorporationId String?
+  targetFacilityId    String?
+  expiresAt           DateTime?
+  isPublished         Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  authorId            String
 }
 
 model Facility {
-  id            String   @id @default(cuid())
+  id            String             @id @default(cuid())
   name          String
-  type          String?  // 業態
+  type          String?
   corporationId String?
-  maxStaff      Int      @default(20)   // 施設ごとのスタッフ上限
-  isActive      Boolean  @default(true)  // ステータス管理
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  corporation   Corporation? @relation(fields: [corporationId], references: [id])
-  users         User[]
+  maxStaff      Int                @default(20)
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
   assignments   CourseAssignment[]
+  corporation   Corporation?       @relation(fields: [corporationId], references: [id])
+  users         User[]
+
   @@unique([corporationId, name])
 }
 
 model Corporation {
-  id         String   @id @default(cuid())
-  name       String   @unique
-  fiscalYearStartMonth Int @default(4) // 年度開始月 (1-12)
-  maxFacilities Int     @default(10)  // 最大施設数
-  maxStaff      Int     @default(100) // 最大スタッフ数
-  isActive      Boolean  @default(true)  // ステータス管理
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  facilities Facility[]
-  users      User[]
-}
-
-enum Role {
-  SUPER_ADMIN
-  HQ
-  ADMIN
-  STAFF
+  id                   String     @id @default(cuid())
+  name                 String     @unique
+  fiscalYearStartMonth Int        @default(4)
+  maxFacilities        Int        @default(10)
+  maxStaff             Int        @default(100)
+  isActive             Boolean    @default(true)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  facilities           Facility[]
+  users                User[]
 }
 
 model Course {
-  id          String   @id @default(cuid())
-  slug        String   @unique  // 管理用識別コード (abuse, dementia, etc.)
-  title       String
-  description String?
-  introduction String?   // 注意喚起（導入）
-  learningObjectives String? // 学習目標
-  videoUrl    String?
-  badgeLabel  String?   // バッジ用短縮名
-  badgeIcon   String?   // バッジ用アイコンID (Shield, Zap, etc.)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  enrollments Enrollment[]
-  questions   Question[]
-  slides      Slide[]
-  assignments CourseAssignment[]
+  id                 String             @id @default(cuid())
+  slug               String             @unique
+  title              String
+  description        String?
+  introduction       String?
+  learningObjectives String?
+  videoUrl           String?
+  badgeLabel         String?
+  badgeIcon          String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  assignments        CourseAssignment[]
+  enrollments        Enrollment[]
+  questions          Question[]
+  slides             Slide[]
 }
 
 model CourseAssignment {
-  id          String   @id @default(cuid())
-  facilityId  String
-  courseId    String
-  startDate   DateTime @default(now())
-  endDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  facility    Facility @relation(fields: [facilityId], references: [id])
-  course      Course   @relation(fields: [courseId], references: [id])
+  id         String   @id @default(cuid())
+  facilityId String
+  courseId   String
+  startDate  DateTime @default(now())
+  endDate    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  course     Course   @relation(fields: [courseId], references: [id])
+  facility   Facility @relation(fields: [facilityId], references: [id])
+
   @@unique([facilityId, courseId])
 }
 
@@ -143,8 +125,8 @@ model Slide {
   id        String   @id @default(cuid())
   courseId  String
   title     String
-  content   String   // HTMLコンテンツ
-  videoUrl  String?  // 補助動画URL
+  content   String
+  videoUrl  String?
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -152,15 +134,15 @@ model Slide {
 }
 
 model Question {
-  id        String   @id @default(cuid())
-  courseId  String
-  text      String
-  explanation String?  // 解説文
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  course    Course   @relation(fields: [courseId], references: [id])
-  choices   Choice[]
+  id          String   @id @default(cuid())
+  courseId    String
+  text        String
+  explanation String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  choices     Choice[]
+  course      Course   @relation(fields: [courseId], references: [id])
 }
 
 model Choice {
@@ -174,17 +156,38 @@ model Choice {
 }
 
 model Enrollment {
-  id        String    @id @default(cuid())
-  userId    String
-  courseId  String
-  status    Status    @default(NOT_STARTED)
-  actionPlan String?   // 行動宣言
+  id          String    @id @default(cuid())
+  userId      String
+  courseId    String
+  status      Status    @default(NOT_STARTED)
+  actionPlan  String?
   completedAt DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  course      Course    @relation(fields: [courseId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
   @@unique([userId, courseId])
+}
+
+enum InquiryStatus {
+  UNREAD
+  READ
+  REPLIED
+  CLOSED
+}
+
+enum Severity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum Role {
+  SUPER_ADMIN
+  HQ
+  ADMIN
+  STAFF
 }
 
 enum Status {

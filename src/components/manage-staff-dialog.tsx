@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { X, KeyRound, Loader2, CheckCircle2, ShieldCheck, Trash2, User } from "lucide-react";
+import { KeyRound, Loader2, CheckCircle2, ShieldCheck, Trash2, User } from "lucide-react";
 import { useFormAction } from "@/hooks/use-form-action";
 
 type Staff = {
@@ -36,16 +36,31 @@ type Props = {
 export function ManageStaffDialog({ staffMembers, trigger }: Props) {
   const [selectedStaffId, setSelectedStaffId] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [shownPassword, setShownPassword] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const enteredPasswordRef = useRef("");
 
   const selectedStaff = staffMembers.find(s => s.id === selectedStaffId);
 
-  const { isPending: isUpdating, error, handleSubmit: handleUpdate } = useFormAction(
+  const { isPending: isUpdating, error, handleSubmit: _handleUpdate } = useFormAction(
     (formData) =>
       selectedStaff ? updateUser(selectedStaff.id, formData) : Promise.resolve(undefined),
-    () => { setSuccessMessage("情報を更新しました"); setTimeout(() => window.location.reload(), 1000); },
+    () => {
+      if (enteredPasswordRef.current) {
+        setShownPassword(enteredPasswordRef.current);
+        enteredPasswordRef.current = "";
+      } else {
+        setSuccessMessage("情報を更新しました");
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    },
   );
+
+  const handleUpdate = (formData: FormData) => {
+    enteredPasswordRef.current = (formData.get("password") as string) || "";
+    return _handleUpdate(formData);
+  };
 
   const isPending = isUpdating || isDeleting;
 
@@ -155,6 +170,24 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
                 </Button>
               </form>
 
+              {shownPassword && (
+                <div className="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-3">
+                  <div className="flex items-center gap-2 text-emerald-600">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span className="text-xs font-bold">パスワードを更新しました</span>
+                  </div>
+                  <div className="bg-white border border-emerald-100 rounded-xl p-3 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">新しいパスワード</p>
+                      <p className="font-mono font-black text-slate-900 text-lg tracking-widest">{shownPassword}</p>
+                    </div>
+                    <KeyRound className="w-5 h-5 text-emerald-400 shrink-0" />
+                  </div>
+                  <p className="text-[10px] text-amber-600 font-bold leading-relaxed">
+                    ※ この画面を閉じると二度と確認できません。スタッフ本人に伝えてください。
+                  </p>
+                </div>
+              )}
               {successMessage && (
                 <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl flex items-center gap-2 text-xs font-bold justify-center">
                   <CheckCircle2 className="w-4 h-4" />

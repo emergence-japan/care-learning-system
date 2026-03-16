@@ -1,19 +1,20 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { authenticate } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { BookOpen, ShieldCheck, CheckCircle2, Loader2, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
+import { ShieldCheck, CheckCircle2, Loader2, Sparkles, Info } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoginPage() {
   const [errorMessage, dispatch, isPending] = useActionState(
     authenticate,
     undefined,
   );
+  const [showForgotMessage, setShowForgotMessage] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white font-sans overflow-x-hidden">
@@ -102,7 +103,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center ml-1">
                     <Label htmlFor="password" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Password</Label>
-                    <button type="button" className="text-[10px] font-bold text-blue-600 hover:underline">忘れた場合</button>
+                    <button type="button" onClick={() => setShowForgotMessage(v => !v)} className="text-[10px] font-bold text-blue-600 hover:underline">忘れた場合</button>
                   </div>
                   <Input
                     id="password"
@@ -111,6 +112,22 @@ export default function LoginPage() {
                     required
                     className="h-14 rounded-2xl border-2 border-slate-100 focus:border-blue-600 focus:ring-0 transition-all text-lg font-medium bg-white shadow-sm"
                   />
+                  <AnimatePresence>
+                    {showForgotMessage && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-100 rounded-xl"
+                      >
+                        <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
+                        <p className="text-[11px] text-blue-700 font-bold leading-relaxed">
+                          IDやパスワードをお忘れの場合は、施設管理者にお問合せください。
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {errorMessage && (

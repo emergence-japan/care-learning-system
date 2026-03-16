@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Edit2, Loader2, User } from "lucide-react";
+import { Edit2, Loader2, User, KeyRound, CheckCircle2 } from "lucide-react";
 import { useFormAction } from "@/hooks/use-form-action";
 
 type Props = {
@@ -25,10 +25,26 @@ type Props = {
 
 export function HQEditUserDialog({ user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const { isPending, error, handleSubmit } = useFormAction(
+  const [shownPassword, setShownPassword] = useState<string | null>(null);
+  const enteredPasswordRef = useRef("");
+
+  const { isPending, error, handleSubmit: _handleSubmit } = useFormAction(
     (formData) => updateUser(user.id, formData),
-    () => { setIsOpen(false); window.location.reload(); },
+    () => {
+      if (enteredPasswordRef.current) {
+        setShownPassword(enteredPasswordRef.current);
+        enteredPasswordRef.current = "";
+      } else {
+        setIsOpen(false);
+        window.location.reload();
+      }
+    },
   );
+
+  const handleSubmit = (formData: FormData) => {
+    enteredPasswordRef.current = (formData.get("password") as string) || "";
+    return _handleSubmit(formData);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -86,17 +102,38 @@ export function HQEditUserDialog({ user }: Props) {
 
           {error && <p className="text-xs font-bold text-red-500">{error}</p>}
 
+          {shownPassword && (
+            <div className="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-3">
+              <div className="flex items-center gap-2 text-emerald-600">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <span className="text-xs font-bold">パスワードを更新しました</span>
+              </div>
+              <div className="bg-white border border-emerald-100 rounded-xl p-3 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">新しいパスワード</p>
+                  <p className="font-mono font-black text-slate-900 text-lg tracking-widest">{shownPassword}</p>
+                </div>
+                <KeyRound className="w-5 h-5 text-emerald-400 shrink-0" />
+              </div>
+              <p className="text-[10px] text-amber-600 font-bold leading-relaxed">
+                ※ この画面を閉じると二度と確認できません。本人に伝えてください。
+              </p>
+            </div>
+          )}
+
           <div className="pt-4 flex gap-3">
-            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="flex-1 rounded-xl font-bold h-12">
-              キャンセル
+            <Button type="button" variant="ghost" onClick={() => { setIsOpen(false); if (shownPassword) window.location.reload(); }} className="flex-1 rounded-xl font-bold h-12">
+              {shownPassword ? "閉じる" : "キャンセル"}
             </Button>
-            <Button 
-              type="submit" 
-              disabled={isPending}
-              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold h-12 shadow-lg shadow-emerald-100"
-            >
-              {isPending ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "更新する"}
-            </Button>
+            {!shownPassword && (
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="flex-1 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold h-12 shadow-lg shadow-emerald-100"
+              >
+                {isPending ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "更新する"}
+              </Button>
+            )}
           </div>
         </form>
       </DialogContent>
