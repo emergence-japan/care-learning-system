@@ -5,6 +5,7 @@ import { EditAssignmentDialog } from "./edit-assignment-dialog";
 
 interface Assignment {
   id: string;
+  courseId: string;
   course: {
     title: string;
   };
@@ -29,6 +30,22 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
     }
     return list;
   }, [startMonth]);
+
+  // 同一コースが複数ある場合に「第N回」ラベルを付与
+  const courseCounts = assignments.reduce((acc, a) => {
+    acc[a.courseId] = (acc[a.courseId] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const courseCurrentIndex: Record<string, number> = {};
+  const labelMap = new Map<string, string>();
+  assignments.forEach(a => {
+    if (courseCounts[a.courseId] > 1) {
+      courseCurrentIndex[a.courseId] = (courseCurrentIndex[a.courseId] || 0) + 1;
+      labelMap.set(a.id, `${a.course.title}（第${courseCurrentIndex[a.courseId]}回）`);
+    } else {
+      labelMap.set(a.id, a.course.title);
+    }
+  });
 
   return (
     <>
@@ -74,7 +91,7 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
                         style={{ left: `${left}%`, width: `${width}%` }}
                       >
                         <span className="text-[10px] font-bold text-white truncate whitespace-nowrap">
-                          {assignment.course.title}
+                          {labelMap.get(assignment.id)}
                         </span>
                       </button>
                     </div>

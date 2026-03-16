@@ -69,7 +69,10 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
     }
   };
 
-  const assignedIds = currentAssignments.map(a => a.courseId);
+  const assignedCounts = currentAssignments.reduce((acc, a) => {
+    acc[a.courseId] = (acc[a.courseId] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   return (
     <>
@@ -126,16 +129,14 @@ export function CourseAssignmentDialog({ courses, currentAssignments }: Props) {
                     onChange={(e) => setSelectedCourseId(e.target.value)}
                   >
                     <option value="">研修を選択してください</option>
-                    {courses.map(course => (
-                      <option 
-                        key={course.id} 
-                        value={course.id}
-                        disabled={assignedIds.includes(course.id)}
-                        className={assignedIds.includes(course.id) ? "text-slate-400" : ""}
-                      >
-                        {course.title} {assignedIds.includes(course.id) ? " (設定済み)" : ""}
-                      </option>
-                    ))}
+                    {courses.map(course => {
+                      const count = assignedCounts[course.id] || 0;
+                      return (
+                        <option key={course.id} value={course.id}>
+                          {course.title}{count > 0 ? ` （${count}回割当済み）` : ""}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 

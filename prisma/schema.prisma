@@ -117,8 +117,6 @@ model CourseAssignment {
   updatedAt  DateTime @updatedAt
   course     Course   @relation(fields: [courseId], references: [id])
   facility   Facility @relation(fields: [facilityId], references: [id])
-
-  @@unique([facilityId, courseId])
 }
 
 model Slide {

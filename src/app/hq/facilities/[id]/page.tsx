@@ -68,6 +68,22 @@ export default async function HQFacilityDetailPage({
   const staffMembers = facility.users.filter(u => u.role === "STAFF");
   const assignments = facility.assignments;
 
+  // 同一コースに第N回ラベルを付与
+  const assignmentCourseCounts = assignments.reduce((acc, a) => {
+    acc[a.courseId] = (acc[a.courseId] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const assignmentCourseIdx: Record<string, number> = {};
+  const assignmentLabelMap = new Map<string, string>();
+  assignments.forEach(a => {
+    if (assignmentCourseCounts[a.courseId] > 1) {
+      assignmentCourseIdx[a.courseId] = (assignmentCourseIdx[a.courseId] || 0) + 1;
+      assignmentLabelMap.set(a.id, `${a.course.title}（第${assignmentCourseIdx[a.courseId]}回）`);
+    } else {
+      assignmentLabelMap.set(a.id, a.course.title);
+    }
+  });
+
   // 全体の進捗計算
   const totalAssignmentsCount = staffMembers.length * assignments.length;
   let completedCount = 0;
@@ -194,7 +210,7 @@ export default async function HQFacilityDetailPage({
                       </th>
                       {assignments.map(assign => (
                         <th key={assign.id} className="px-1 py-4 font-bold text-[10px] text-slate-400 uppercase tracking-wider w-[80px] border-r border-slate-100 text-center">
-                          <div className="truncate text-slate-700" title={assign.course.title}>{assign.course.title}</div>
+                          <div className="truncate text-slate-700" title={assignmentLabelMap.get(assign.id)}>{assignmentLabelMap.get(assign.id)}</div>
                           <div className="text-[9px] text-slate-400 mt-1 font-normal">
                             ~ {format(assign.endDate, 'MM/dd', { locale: ja })}
                           </div>

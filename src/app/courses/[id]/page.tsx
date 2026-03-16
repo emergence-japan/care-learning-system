@@ -52,17 +52,15 @@ export default async function CourseDetailPage({
   }
 
   // 開始日チェック（監査対応：計画期間外の受講を制限）
-  const assignment = await prisma.courseAssignment.findUnique({
-    where: {
-      facilityId_courseId: {
-        facilityId: session.user.facilityId!,
-        courseId: id,
-      },
-    },
-  });
-
+  // 複数アサインがある場合、開始済みのものが1つでもあればアクセスを許可する
   const now = new Date();
-  if (assignment && assignment.startDate > now && enrollment.status !== 'COMPLETED') {
+  const hasAnyAssignment = await prisma.courseAssignment.findFirst({
+    where: { facilityId: session.user.facilityId!, courseId: id },
+  });
+  const hasStartedAssignment = await prisma.courseAssignment.findFirst({
+    where: { facilityId: session.user.facilityId!, courseId: id, startDate: { lte: now } },
+  });
+  if (hasAnyAssignment && !hasStartedAssignment && enrollment.status !== 'COMPLETED') {
     redirect("/");
   }
 

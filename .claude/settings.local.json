@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx prisma:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npx tsx:*)",
+      "Bash(ls:*)",
+      "Bash(python3:*)",
+      "Bash(while read f)",
+      "Bash(do wc -l \"$f\")",
+      "Bash(sort -k2)",
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep -v \"//\")",
+      "Bash(done)",
+      "Bash(wc:*)",
+      "Bash(for f in src/lib/actions/enrollment.ts src/lib/actions/course.ts src/lib/actions/organization.ts src/lib/actions/inquiry.ts src/lib/actions/notification.ts)",
+      "Bash(do echo \"=== $f ===\")",
+      "Read(//c/Users/music/my-project/LMS/**)",
+      "Bash(for f in src/components/add-admin-dialog.tsx src/components/add-admin-global-dialog.tsx src/components/add-facility-dialog.tsx src/components/hq-edit-facility-dialog.tsx src/components/edit-facility-dialog.tsx src/components/reset-password-dialog.tsx src/components/hq-reset-password-dialog.tsx)",
+      "Bash(npx next:*)",
+      "WebSearch",
+      "WebFetch(domain:www.kaigo-wel.city.nagoya.jp)",
+      "WebFetch(domain:fukushishimbun.com)",
+      "Bash(curl:*)",
+      "Bash(npx vercel:*)",
+      "Bash(rm:*)",
+      "Bash(node:*)",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(cd:*)"
+    ]
+  }
+}

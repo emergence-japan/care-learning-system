@@ -70,7 +70,7 @@ export async function assignCourseToFacility(
   const facilityId = session.user.facilityId;
   if (!facilityId) throw new UnauthorizedError("施設が割り当てられていません。");
 
-  await courseRepository.upsertAssignment(facilityId, courseId, startDate, endDate);
+  await courseRepository.createAssignment(facilityId, courseId, startDate, endDate);
 
   const staffMembers = await userRepository.findStaffByFacility(facilityId);
   for (const staff of staffMembers) {

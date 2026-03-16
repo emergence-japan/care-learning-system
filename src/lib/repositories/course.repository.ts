@@ -41,16 +41,14 @@ export const courseRepository = {
     return prisma.course.delete({ where: { id } });
   },
 
-  async upsertAssignment(
+  async createAssignment(
     facilityId: string,
     courseId: string,
     startDate: Date,
     endDate: Date,
   ) {
-    return prisma.courseAssignment.upsert({
-      where: { facilityId_courseId: { facilityId, courseId } },
-      create: { facilityId, courseId, startDate, endDate },
-      update: { startDate, endDate },
+    return prisma.courseAssignment.create({
+      data: { facilityId, courseId, startDate, endDate },
     });
   },
 
