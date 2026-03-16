@@ -55,7 +55,26 @@ export default async function DashboardPage() {
 
   const today = new Date();
 
-  const learningPlan = assignments.map(assignment => {
+  // 同一コースが複数アサインされている場合、最も直近の締切を1件に絞る
+  const assignmentByCourse = new Map<string, typeof assignments[0]>();
+  assignments.forEach(assignment => {
+    const existing = assignmentByCourse.get(assignment.courseId);
+    if (!existing) {
+      assignmentByCourse.set(assignment.courseId, assignment);
+    } else {
+      const existingEnd = existing.endDate.getTime();
+      const newEnd = assignment.endDate.getTime();
+      const todayTime = today.getTime();
+      const existingIsFuture = existingEnd >= todayTime;
+      const newIsFuture = newEnd >= todayTime;
+      if (newIsFuture && (!existingIsFuture || newEnd < existingEnd)) {
+        assignmentByCourse.set(assignment.courseId, assignment);
+      }
+    }
+  });
+  const dedupedAssignments = Array.from(assignmentByCourse.values());
+
+  const learningPlan = dedupedAssignments.map(assignment => {
     const enrollment = enrollments.find(e => e.courseId === assignment.courseId);
     const diffDays = Math.ceil((assignment.endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     const title = assignment.course.title;
