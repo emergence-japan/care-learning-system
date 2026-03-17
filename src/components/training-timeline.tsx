@@ -55,7 +55,7 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
             {/* Header Months */}
             <div className="grid grid-cols-12 border-b border-slate-100 bg-slate-50/50">
               {months.map((m, i) => (
-                <div key={i} className="py-4 text-center border-r border-slate-100/50 last:border-0">
+                <div key={i} className="py-4 text-center border-r border-slate-200 last:border-0">
                   <span className="text-xs font-black text-slate-400 uppercase tracking-tighter">{m}月</span>
                 </div>
               ))}
@@ -80,7 +80,7 @@ export function TrainingTimeline({ startMonth, assignments }: Props) {
                       {/* Background Grid Lines */}
                       <div className="absolute inset-0 grid grid-cols-12 pointer-events-none">
                         {Array.from({ length: 12 }).map((_, i) => (
-                          <div key={i} className="border-r border-slate-100/30 last:border-0 h-full" />
+                          <div key={i} className="border-r border-slate-200 last:border-0 h-full" />
                         ))}
                       </div>
 
