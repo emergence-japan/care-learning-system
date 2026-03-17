@@ -7,6 +7,7 @@ import { Download } from "lucide-react";
 
 interface Props {
   staffName: string;
+  corporationName: string;
   facilityName: string;
   courseTitle: string;
   sessionLabel: string | null;
@@ -15,6 +16,7 @@ interface Props {
 
 export function CertificateDownloadButton({
   staffName,
+  corporationName,
   facilityName,
   courseTitle,
   sessionLabel,
@@ -28,7 +30,7 @@ export function CertificateDownloadButton({
   const issuedAt = new Date().toLocaleDateString("ja-JP");
   const fileName = `修了証_${courseTitle}${sessionLabel ? `_${sessionLabel}` : ""}.pdf`;
 
-  const data = { staffName, facilityName, courseTitle, sessionLabel, completedAt, issuedAt };
+  const data = { staffName, corporationName, facilityName, courseTitle, sessionLabel, completedAt, issuedAt };
 
   return (
     <PDFDownloadLink document={<Certificate data={data} />} fileName={fileName}>

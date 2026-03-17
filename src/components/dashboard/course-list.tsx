@@ -25,6 +25,7 @@ export type LearningPlanItem = {
 type Props = {
   learningPlan: LearningPlanItem[];
   staffName: string;
+  corporationName: string;
   facilityName: string;
 };
 
@@ -58,7 +59,7 @@ const getStatusInfo = (status: string, isOverdue: boolean, isUpcoming: boolean) 
   return { label: "未受講", color: "text-slate-400", dot: "bg-slate-300" };
 };
 
-function CourseListItem({ item, staffName, facilityName }: { item: LearningPlanItem; staffName: string; facilityName: string }) {
+function CourseListItem({ item, staffName, corporationName, facilityName }: { item: LearningPlanItem; staffName: string; corporationName: string; facilityName: string }) {
   const statusInfo = getStatusInfo(item.status, item.isOverdue, item.isUpcoming);
   const isCompleted = item.status === "COMPLETED";
   const icon = getIcon(item.badgeIcon);
@@ -126,6 +127,7 @@ function CourseListItem({ item, staffName, facilityName }: { item: LearningPlanI
               {item.completedAt && (
                 <CertificateDownloadButton
                   staffName={staffName}
+                  corporationName={corporationName}
                   facilityName={facilityName}
                   courseTitle={item.title}
                   sessionLabel={item.sessionLabel}
@@ -163,7 +165,7 @@ function CourseListItem({ item, staffName, facilityName }: { item: LearningPlanI
   );
 }
 
-export function CourseList({ learningPlan, staffName, facilityName }: Props) {
+export function CourseList({ learningPlan, staffName, corporationName, facilityName }: Props) {
   return (
     <section className="space-y-4">
       <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
@@ -171,7 +173,7 @@ export function CourseList({ learningPlan, staffName, facilityName }: Props) {
       </h3>
       <div className="space-y-2">
         {learningPlan.map((item) => (
-          <CourseListItem key={item.assignmentId} item={item} staffName={staffName} facilityName={facilityName} />
+          <CourseListItem key={item.assignmentId} item={item} staffName={staffName} corporationName={corporationName} facilityName={facilityName} />
         ))}
       </div>
     </section>

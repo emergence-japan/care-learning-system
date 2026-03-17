@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
 
 interface CertificateData {
   staffName: string;
+  corporationName: string;
   facilityName: string;
   courseTitle: string;
   sessionLabel: string | null;
@@ -155,7 +156,7 @@ export function Certificate({ data }: { data: CertificateData }) {
 
         <View style={styles.staffBlock}>
           <Text style={styles.staffName}>{data.staffName} 様</Text>
-          <Text style={styles.staffLabel}>{data.facilityName}</Text>
+          <Text style={styles.staffLabel}>{data.corporationName}　{data.facilityName}</Text>
         </View>
 
         <View style={styles.courseBlock}>
@@ -168,7 +169,7 @@ export function Certificate({ data }: { data: CertificateData }) {
         <View style={styles.footer}>
           <Text style={styles.completedDate}>修了日：{data.completedAt}</Text>
           <View style={styles.divider} />
-          <Text style={styles.issuedDate}>発行日：{data.issuedAt}　　Care Learning System</Text>
+          <Text style={styles.issuedDate}>発行日：{data.issuedAt}　　発行元：{data.corporationName}　{data.facilityName}</Text>
         </View>
       </Page>
     </Document>

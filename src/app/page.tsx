@@ -137,6 +137,7 @@ export default async function DashboardPage() {
         <CourseList
           learningPlan={learningPlan}
           staffName={user.name ?? ""}
+          corporationName={user.corporation?.name ?? ""}
           facilityName={user.facility?.name ?? ""}
         />
       </main>
