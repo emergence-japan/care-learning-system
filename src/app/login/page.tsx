@@ -65,11 +65,6 @@ export default function LoginPage() {
           </div>
         </motion.div>
 
-        {/* Brand Label (Desktop only) - flex末尾に配置して重なりを防止 */}
-        <div className="relative z-10 hidden lg:flex items-center gap-3 shrink-0">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center font-black text-slate-900 text-xs shrink-0">CL</div>
-          <span className="text-white/50 text-[10px] font-bold tracking-[0.2em] uppercase">Care Learning v1.0</span>
-        </div>
       </div>
 
       {/* Login Form Section */}
