@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { ShieldCheck, CheckCircle2, Loader2, Sparkles, Info } from "lucide-react";
+import { ShieldCheck, CheckCircle2, Loader2, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoginPage() {
@@ -35,16 +35,12 @@ export default function LoginPage() {
           className="relative z-10 max-w-lg space-y-8 lg:space-y-12 text-center lg:text-left flex-1 flex flex-col justify-center w-full"
         >
           <div className="space-y-4 lg:space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 backdrop-blur-md mx-auto lg:mx-0">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">Premium Education</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-[1.2] lg:leading-[1.1] tracking-tight">
               介護の未来を、<br />
               <span className="text-blue-400 italic font-serif">学び</span>から変えていく。
             </h2>
             <p className="text-slate-400 text-sm lg:text-lg leading-relaxed font-medium max-w-sm mx-auto lg:mx-0">
-              現場のスタッフが誇りを持って成長できる、<br />プロフェッショナルな学習プラットフォーム
+              現場のスタッフが誇りを持って成長できる<br />プロフェッショナルな学習プラットフォーム
             </p>
           </div>
 
