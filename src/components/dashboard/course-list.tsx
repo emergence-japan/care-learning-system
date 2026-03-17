@@ -5,6 +5,7 @@ import {
   ArrowRight, CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CertificateDownloadButton } from "@/components/certificate-download-button";
 
 export type LearningPlanItem = {
   assignmentId: string;
@@ -18,9 +19,14 @@ export type LearningPlanItem = {
   daysLeft: number;
   isOverdue: boolean;
   isUpcoming: boolean;
+  completedAt: string | null;
 };
 
-type Props = { learningPlan: LearningPlanItem[] };
+type Props = {
+  learningPlan: LearningPlanItem[];
+  staffName: string;
+  facilityName: string;
+};
 
 function getIcon(name: string | null) {
   switch (name) {
@@ -52,7 +58,7 @@ const getStatusInfo = (status: string, isOverdue: boolean, isUpcoming: boolean) 
   return { label: "未受講", color: "text-slate-400", dot: "bg-slate-300" };
 };
 
-function CourseListItem({ item }: { item: LearningPlanItem }) {
+function CourseListItem({ item, staffName, facilityName }: { item: LearningPlanItem; staffName: string; facilityName: string }) {
   const statusInfo = getStatusInfo(item.status, item.isOverdue, item.isUpcoming);
   const isCompleted = item.status === "COMPLETED";
   const icon = getIcon(item.badgeIcon);
@@ -113,8 +119,19 @@ function CourseListItem({ item }: { item: LearningPlanItem }) {
         </div>
         <div className="shrink-0">
           {isCompleted ? (
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-100/50 flex items-center justify-center text-emerald-600 shadow-inner">
-              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
+            <div className="flex flex-col items-end gap-1.5">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100/50 flex items-center justify-center text-emerald-600 shadow-inner">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              {item.completedAt && (
+                <CertificateDownloadButton
+                  staffName={staffName}
+                  facilityName={facilityName}
+                  courseTitle={item.title}
+                  sessionLabel={item.sessionLabel}
+                  completedAt={new Date(item.completedAt).toLocaleDateString("ja-JP")}
+                />
+              )}
             </div>
           ) : item.isUpcoming ? (
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl border border-slate-300 bg-slate-300/30 flex flex-col items-center justify-center text-slate-400">
@@ -146,7 +163,7 @@ function CourseListItem({ item }: { item: LearningPlanItem }) {
   );
 }
 
-export function CourseList({ learningPlan }: Props) {
+export function CourseList({ learningPlan, staffName, facilityName }: Props) {
   return (
     <section className="space-y-4">
       <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
@@ -154,7 +171,7 @@ export function CourseList({ learningPlan }: Props) {
       </h3>
       <div className="space-y-2">
         {learningPlan.map((item) => (
-          <CourseListItem key={item.assignmentId} item={item} />
+          <CourseListItem key={item.assignmentId} item={item} staffName={staffName} facilityName={facilityName} />
         ))}
       </div>
     </section>

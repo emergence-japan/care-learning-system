@@ -107,6 +107,7 @@ export default async function DashboardPage() {
       daysLeft: diffDays,
       isOverdue: diffDays < 0,
       isUpcoming,
+      completedAt: enrollment?.completedAt ? enrollment.completedAt.toISOString() : null,
     };
   }).sort((a, b) => {
     if (a.status === "COMPLETED" && b.status !== "COMPLETED") return 1;
@@ -133,7 +134,11 @@ export default async function DashboardPage() {
           totalCourses={totalCourses}
         />
         <StaffTrainingPlan assignments={learningPlan} startMonth={fiscalYearStartMonth} />
-        <CourseList learningPlan={learningPlan} />
+        <CourseList
+          learningPlan={learningPlan}
+          staffName={user.name ?? ""}
+          facilityName={user.facility?.name ?? ""}
+        />
       </main>
     </div>
   );
