@@ -114,6 +114,12 @@ export function StaffReport({ data }: { data: StaffReportData }) {
             <Text style={styles.label}>氏名：</Text>
             <Text style={{ fontWeight: "bold", fontSize: 12 }}>{data.staffName} 様</Text>
           </View>
+          {data.corporationName && (
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>法人名：</Text>
+              <Text>{data.corporationName}</Text>
+            </View>
+          )}
           <View style={styles.infoRow}>
             <Text style={styles.label}>所属施設：</Text>
             <Text>{data.facilityName}</Text>

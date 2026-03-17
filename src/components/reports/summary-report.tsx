@@ -129,6 +129,12 @@ export function SummaryReport({ data }: { data: SummaryData }) {
 
         <View style={styles.headerInfo}>
           <View>
+            {data.corporationName && (
+              <View style={{ flexDirection: "row", marginBottom: 4 }}>
+                <Text style={styles.label}>法人名：</Text>
+                <Text>{data.corporationName}</Text>
+              </View>
+            )}
             <View style={{ flexDirection: "row", marginBottom: 4 }}>
               <Text style={styles.label}>施設名：</Text>
               <Text>{data.facilityName}</Text>

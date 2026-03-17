@@ -69,6 +69,7 @@ export async function getSummaryReportData(facilityId: string, fiscalYear: numbe
   });
 
   return {
+    corporationName: facility.corporation?.name ?? "",
     facilityName: facility.name,
     fiscalYear,
     generatedAt: new Date().toLocaleDateString("ja-JP"),
@@ -83,7 +84,7 @@ export async function getStaffReportData(userId: string, fiscalYear: number, sta
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
-      facility: true,
+      facility: { include: { corporation: true } },
       enrollments: {
         include: { course: true },
         where: {
@@ -101,6 +102,7 @@ export async function getStaffReportData(userId: string, fiscalYear: number, sta
 
   return {
     staffName: user.name,
+    corporationName: user.facility.corporation?.name ?? "",
     facilityName: user.facility.name,
     generatedAt: new Date().toLocaleDateString("ja-JP"),
     fiscalYear,

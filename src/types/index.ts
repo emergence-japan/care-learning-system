@@ -106,6 +106,7 @@ export interface SummaryReportCourse {
 }
 
 export interface SummaryData {
+  corporationName: string;
   facilityName: string;
   fiscalYear: number;
   generatedAt: string;
@@ -123,6 +124,7 @@ export interface StaffReportEnrollment {
 
 export interface StaffReportData {
   staffName: string;
+  corporationName: string;
   facilityName: string;
   generatedAt: string;
   fiscalYear: number;
