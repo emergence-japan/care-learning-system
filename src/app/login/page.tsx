@@ -44,7 +44,7 @@ export default function LoginPage() {
               <span className="text-blue-400 italic font-serif">学び</span>から変えていく。
             </h2>
             <p className="text-slate-400 text-sm lg:text-lg leading-relaxed font-medium max-w-sm mx-auto lg:mx-0">
-              現場のスタッフが誇りを持って成長できる、プロフェッショナルな学習プラットフォーム。
+              現場のスタッフが誇りを持って成長できる、<br />プロフェッショナルな学習プラットフォーム
             </p>
           </div>
 
