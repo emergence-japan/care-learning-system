@@ -4,7 +4,7 @@ import type { EnrollmentStatus } from "@/types";
 export const enrollmentRepository = {
   async update(
     userId: string,
-    courseId: string,
+    assignmentId: string,
     data: {
       status?: EnrollmentStatus;
       completedAt?: Date | null;
@@ -12,31 +12,15 @@ export const enrollmentRepository = {
     },
   ) {
     return prisma.enrollment.update({
-      where: { userId_courseId: { userId, courseId } },
+      where: { userId_assignmentId: { userId, assignmentId } },
       data,
     });
   },
 
-  async createManyForUser(userId: string, courseIds: string[]) {
-    return prisma.enrollment.createMany({
-      data: courseIds.map((courseId) => ({
-        userId,
-        courseId,
-        status: "NOT_STARTED",
-      })),
-    });
-  },
-
-  async createForCourse(userId: string, courseId: string) {
-    return prisma.enrollment.create({
-      data: { userId, courseId, status: "NOT_STARTED" },
-    });
-  },
-
-  async upsertForStaff(userId: string, courseId: string) {
+  async upsertForAssignment(userId: string, courseId: string, assignmentId: string) {
     return prisma.enrollment.upsert({
-      where: { userId_courseId: { userId, courseId } },
-      create: { userId, courseId, status: "NOT_STARTED" },
+      where: { userId_assignmentId: { userId, assignmentId } },
+      create: { userId, courseId, assignmentId, status: "NOT_STARTED" },
       update: {},
     });
   },

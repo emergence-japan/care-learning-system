@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { UnauthorizedError, ForbiddenError } from "@/lib/errors";
-import { userRepository, courseRepository, enrollmentRepository } from "@/lib/repositories";
+import { courseRepository } from "@/lib/repositories";
 import type { ActionResult } from "@/types";
 
 export async function createCourse(formData: FormData) {
@@ -16,12 +16,7 @@ export async function createCourse(formData: FormData) {
   const videoUrl = formData.get("videoUrl") as string;
   const slug = title.toLowerCase().replace(/[^a-z0-9]/g, "-") || `course-${Date.now()}`;
 
-  const newCourse = await courseRepository.create({ slug, title, description, videoUrl });
-
-  const allStaff = await userRepository.findAllStaff();
-  for (const user of allStaff) {
-    await enrollmentRepository.createForCourse(user.id, newCourse.id);
-  }
+  await courseRepository.create({ slug, title, description, videoUrl });
 
   revalidatePath("/super-admin/courses");
   revalidatePath("/");
@@ -71,11 +66,6 @@ export async function assignCourseToFacility(
   if (!facilityId) throw new UnauthorizedError("施設が割り当てられていません。");
 
   await courseRepository.createAssignment(facilityId, courseId, startDate, endDate);
-
-  const staffMembers = await userRepository.findStaffByFacility(facilityId);
-  for (const staff of staffMembers) {
-    await enrollmentRepository.upsertForStaff(staff.id, courseId);
-  }
 
   revalidatePath("/admin");
   revalidatePath("/");

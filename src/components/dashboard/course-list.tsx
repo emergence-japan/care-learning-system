@@ -7,9 +7,11 @@ import {
 import { cn } from "@/lib/utils";
 
 export type LearningPlanItem = {
+  assignmentId: string;
   courseId: string;
   title: string;
   badgeIcon: string;
+  sessionLabel: string | null;
   status: string;
   startDate: Date;
   endDate: Date;
@@ -81,6 +83,14 @@ function CourseListItem({ item }: { item: LearningPlanItem }) {
                   {statusInfo.label}
                 </span>
               </div>
+              {item.sessionLabel && (
+                <>
+                  <div className="h-3 w-px bg-slate-200" />
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                    {item.sessionLabel}
+                  </span>
+                </>
+              )}
               <div className="h-3 w-px bg-slate-200" />
               {!isCompleted && (
                 <span className={cn("text-[10px] font-bold whitespace-nowrap",
@@ -126,7 +136,14 @@ function CourseListItem({ item }: { item: LearningPlanItem }) {
   );
 
   if (item.isUpcoming) return <div>{content}</div>;
-  return <Link href={`/courses/${item.courseId}`} className="block group">{content}</Link>;
+  return (
+    <Link
+      href={`/courses/${item.courseId}?assignment=${item.assignmentId}`}
+      className="block group"
+    >
+      {content}
+    </Link>
+  );
 }
 
 export function CourseList({ learningPlan }: Props) {
@@ -137,7 +154,7 @@ export function CourseList({ learningPlan }: Props) {
       </h3>
       <div className="space-y-2">
         {learningPlan.map((item) => (
-          <CourseListItem key={item.courseId} item={item} />
+          <CourseListItem key={item.assignmentId} item={item} />
         ))}
       </div>
     </section>

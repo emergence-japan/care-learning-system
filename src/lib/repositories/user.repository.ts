@@ -33,20 +33,6 @@ export const userRepository = {
     });
   },
 
-  async findAllStaff() {
-    return prisma.user.findMany({
-      where: { role: "STAFF" },
-      select: { id: true },
-    });
-  },
-
-  async findStaffByFacility(facilityId: string) {
-    return prisma.user.findMany({
-      where: { facilityId, role: "STAFF" },
-      select: { id: true },
-    });
-  },
-
   async create(data: {
     name: string;
     loginId: string;

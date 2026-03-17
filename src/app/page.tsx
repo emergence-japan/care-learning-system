@@ -49,33 +49,26 @@ export default async function DashboardPage() {
     prisma.courseAssignment.findMany({
       where: { facilityId: user.facilityId },
       include: { course: { select: { id: true, title: true, description: true, badgeLabel: true, badgeIcon: true } } },
+      orderBy: { endDate: 'asc' },
     }),
-    prisma.enrollment.findMany({ where: { userId: user.id }, include: { course: true } }),
+    prisma.enrollment.findMany({ where: { userId: user.id } }),
   ]);
 
   const today = new Date();
 
-  // 同一コースが複数アサインされている場合、最も直近の締切を1件に絞る
-  const assignmentByCourse = new Map<string, typeof assignments[0]>();
-  assignments.forEach(assignment => {
-    const existing = assignmentByCourse.get(assignment.courseId);
-    if (!existing) {
-      assignmentByCourse.set(assignment.courseId, assignment);
-    } else {
-      const existingEnd = existing.endDate.getTime();
-      const newEnd = assignment.endDate.getTime();
-      const todayTime = today.getTime();
-      const existingIsFuture = existingEnd >= todayTime;
-      const newIsFuture = newEnd >= todayTime;
-      if (newIsFuture && (!existingIsFuture || newEnd < existingEnd)) {
-        assignmentByCourse.set(assignment.courseId, assignment);
-      }
-    }
+  // 同一コースが複数ある場合、第N回ラベルを付与
+  const courseCounts: Record<string, number> = {};
+  const courseSessionIndex: Record<string, number> = {};
+  assignments.forEach(a => {
+    courseCounts[a.courseId] = (courseCounts[a.courseId] || 0) + 1;
   });
-  const dedupedAssignments = Array.from(assignmentByCourse.values());
 
-  const learningPlan = dedupedAssignments.map(assignment => {
-    const enrollment = enrollments.find(e => e.courseId === assignment.courseId);
+  const learningPlan = assignments.map(assignment => {
+    const isMultiSession = courseCounts[assignment.courseId] > 1;
+    courseSessionIndex[assignment.courseId] = (courseSessionIndex[assignment.courseId] || 0) + 1;
+    const sessionNumber = courseSessionIndex[assignment.courseId];
+
+    const enrollment = enrollments.find(e => e.assignmentId === assignment.id);
     const diffDays = Math.ceil((assignment.endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     const title = assignment.course.title;
     const keywordMatch = (k: string) => title.includes(k);
@@ -101,11 +94,13 @@ export default async function DashboardPage() {
     const isUpcoming = !isCompleted && assignment.startDate.getTime() > today.getTime();
 
     return {
+      assignmentId: assignment.id,
       courseId: assignment.courseId,
       title,
       description: assignment.course.description,
       badgeLabel: label,
       badgeIcon: iconName,
+      sessionLabel: isMultiSession ? `第${sessionNumber}回` : null,
       status: enrollment?.status || "NOT_STARTED",
       startDate: assignment.startDate,
       endDate: assignment.endDate,
@@ -137,7 +132,7 @@ export default async function DashboardPage() {
           completedCourses={completedCourses}
           totalCourses={totalCourses}
         />
-<StaffTrainingPlan assignments={learningPlan} startMonth={fiscalYearStartMonth} />
+        <StaffTrainingPlan assignments={learningPlan} startMonth={fiscalYearStartMonth} />
         <CourseList learningPlan={learningPlan} />
       </main>
     </div>

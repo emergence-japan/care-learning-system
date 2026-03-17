@@ -108,15 +108,16 @@ model Course {
 }
 
 model CourseAssignment {
-  id         String   @id @default(cuid())
-  facilityId String
-  courseId   String
-  startDate  DateTime @default(now())
-  endDate    DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  course     Course   @relation(fields: [courseId], references: [id])
-  facility   Facility @relation(fields: [facilityId], references: [id])
+  id          String       @id @default(cuid())
+  facilityId  String
+  courseId    String
+  startDate   DateTime     @default(now())
+  endDate     DateTime
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  course      Course       @relation(fields: [courseId], references: [id])
+  facility    Facility     @relation(fields: [facilityId], references: [id])
+  enrollments Enrollment[]
 }
 
 model Slide {
@@ -154,18 +155,20 @@ model Choice {
 }
 
 model Enrollment {
-  id          String    @id @default(cuid())
-  userId      String
-  courseId    String
-  status      Status    @default(NOT_STARTED)
-  actionPlan  String?
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  course      Course    @relation(fields: [courseId], references: [id])
-  user        User      @relation(fields: [userId], references: [id])
+  id           String           @id @default(cuid())
+  userId       String
+  courseId     String
+  assignmentId String?
+  status       Status           @default(NOT_STARTED)
+  actionPlan   String?
+  completedAt  DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  assignment   CourseAssignment? @relation(fields: [assignmentId], references: [id])
+  course       Course           @relation(fields: [courseId], references: [id])
+  user         User             @relation(fields: [userId], references: [id])
 
-  @@unique([userId, courseId])
+  @@unique([userId, assignmentId])
 }
 
 enum InquiryStatus {

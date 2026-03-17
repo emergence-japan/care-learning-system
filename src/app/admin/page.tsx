@@ -190,42 +190,43 @@ export default async function AdminDashboardPage() {
             </h3>
             <div className="grid grid-cols-1 gap-3">
               {assignments.length > 0 ? (() => {
-                // 同一コースに第N回ラベルを付与
-                const courseCounts = assignments.reduce((acc, a) => {
-                  acc[a.courseId] = (acc[a.courseId] || 0) + 1;
-                  return acc;
-                }, {} as Record<string, number>);
-                const courseIdx: Record<string, number> = {};
+                // コースIDでグループ化（1コース1行）
+                const courseGroups: Record<string, typeof assignments> = {};
+                assignments.forEach(a => {
+                  if (!courseGroups[a.courseId]) courseGroups[a.courseId] = [];
+                  courseGroups[a.courseId].push(a);
+                });
 
-                return assignments.map((assign) => {
+                return Object.entries(courseGroups).map(([courseId, sessions]) => {
+                  const sessionIds = sessions.map(s => s.id);
                   const completedCount = staffMembers.filter(user =>
-                    user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED')
+                    user.enrollments?.some(e => e.assignmentId != null && sessionIds.includes(e.assignmentId) && e.status === 'COMPLETED')
                   ).length;
                   const rate = totalStaff > 0 ? Math.round((completedCount / totalStaff) * 100) : 0;
-
-                  let sessionLabel = assign.course?.title;
-                  if (courseCounts[assign.courseId] > 1) {
-                    courseIdx[assign.courseId] = (courseIdx[assign.courseId] || 0) + 1;
-                    sessionLabel = `${assign.course?.title}（第${courseIdx[assign.courseId]}回）`;
-                  }
+                  const courseTitle = sessions[0].course?.title || '';
+                  const hasMultiple = sessions.length > 1;
 
                   return (
-                    <div key={assign.id} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
+                    <div key={courseId} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
-                        <GraduationCap className="w-5 h-5 text-blue-600" />
+                        <GraduationCap className="w-5 h-5 text-blue-600 shrink-0" />
                         <div className="flex-1">
-                          <h4 className="font-bold text-slate-900 text-sm">{sessionLabel}</h4>
-                          <div className="flex items-center gap-4 mt-1">
+                          <h4 className="font-bold text-slate-900 text-sm">{courseTitle}</h4>
+                          <div className="flex items-center gap-4 mt-1 flex-wrap">
                             <span className="text-[10px] font-bold text-slate-400">{rate}% 完了</span>
-                            <span className="text-[10px] text-slate-300">期限: {new Date(assign.endDate).toLocaleDateString()}</span>
+                            {sessions.map((s, idx) => (
+                              <span key={s.id} className="text-[10px] text-slate-500">
+                                {hasMultiple ? `第${idx + 1}回: ` : ''}期限 {new Date(s.endDate).toLocaleDateString()}
+                              </span>
+                            ))}
                           </div>
                         </div>
                       </div>
                       <div className="no-print">
                         <IncompleteUsersDialog
-                          courseTitle={sessionLabel || ""}
+                          courseTitle={courseTitle}
                           incompleteUsers={staffMembers
-                            .filter(user => !user.enrollments?.some(e => e.courseId === assign.courseId && e.status === 'COMPLETED'))
+                            .filter(user => !user.enrollments?.some(e => e.courseId === courseId && e.status === 'COMPLETED'))
                             .map(u => ({ id: u.id, name: u.name }))
                           }
                           totalCount={totalStaff}

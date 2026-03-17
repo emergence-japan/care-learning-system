@@ -6,11 +6,14 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { completeEnrollment, submitTestResults, saveActionPlan } from "@/lib/actions";
 import { CourseClient } from "./course-client";
+import { enrollmentRepository } from "@/lib/repositories";
 
 export default async function CourseDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ assignment?: string }>;
 }) {
   const session = await auth();
   if (!session?.user) {
@@ -18,71 +21,71 @@ export default async function CourseDetailPage({
   }
 
   const { id } = await params;
+  const { assignment: assignmentId } = await searchParams;
 
-  const enrollment = await prisma.enrollment.findUnique({
-    where: {
-      userId_courseId: {
-        userId: session.user.id!,
-        courseId: id,
-      },
-    },
-    include: {
-      course: {
-        include: {
-          slides: {
-            orderBy: {
-              order: 'asc',
-            },
-          },
-          questions: {
-            orderBy: {
-              order: 'asc',
-            },
-            include: {
-              choices: true,
-            },
-          },
-        },
-      },
-    },
+  if (!assignmentId) {
+    redirect("/");
+  }
+
+  // アサインが自施設のものか検証
+  const assignment = await prisma.courseAssignment.findFirst({
+    where: { id: assignmentId, facilityId: session.user.facilityId!, courseId: id },
   });
 
-  if (!enrollment) {
+  if (!assignment) {
     notFound();
   }
 
-  // 開始日チェック（監査対応：計画期間外の受講を制限）
-  // 複数アサインがある場合、開始済みのものが1つでもあればアクセスを許可する
+  // 開始日チェック（計画期間外の受講を制限）
   const now = new Date();
-  const hasAnyAssignment = await prisma.courseAssignment.findFirst({
-    where: { facilityId: session.user.facilityId!, courseId: id },
+  const isStarted = assignment.startDate <= now;
+
+  const course = await prisma.course.findUnique({
+    where: { id },
+    include: {
+      slides: { orderBy: { order: 'asc' } },
+      questions: {
+        orderBy: { order: 'asc' },
+        include: { choices: true },
+      },
+    },
   });
-  const hasStartedAssignment = await prisma.courseAssignment.findFirst({
-    where: { facilityId: session.user.facilityId!, courseId: id, startDate: { lte: now } },
-  });
-  if (hasAnyAssignment && !hasStartedAssignment && enrollment.status !== 'COMPLETED') {
+
+  if (!course) {
+    notFound();
+  }
+
+  // 受講記録をアサイン単位で upsert（初回アクセス時に作成）
+  const enrollment = await enrollmentRepository.upsertForAssignment(
+    session.user.id!,
+    id,
+    assignmentId,
+  );
+
+  // 開始前かつ未完了の場合はダッシュボードへリダイレクト
+  if (!isStarted && enrollment.status !== 'COMPLETED') {
     redirect("/");
   }
 
   const handleComplete = async () => {
     "use server";
-    await completeEnrollment(id);
+    await completeEnrollment(id, assignmentId);
   };
 
   const handleSubmitTest = async (answers: Record<string, string>) => {
     "use server";
-    return await submitTestResults(id, answers);
+    return await submitTestResults(id, assignmentId, answers);
   };
 
   const handleSaveActionPlan = async (actionPlan: string) => {
     "use server";
-    await saveActionPlan(id, actionPlan);
+    await saveActionPlan(id, assignmentId, actionPlan);
   };
 
   return (
-    <div 
-      className="min-h-screen !bg-slate-50 pb-16 relative overflow-hidden light" 
-      style={{ 
+    <div
+      className="min-h-screen !bg-slate-50 pb-16 relative overflow-hidden light"
+      style={{
         backgroundColor: '#f8fafc',
         ['--background' as any]: 'oklch(0.985 0 0)',
         ['--card' as any]: 'oklch(1 0 0)'
@@ -119,23 +122,23 @@ export default async function CourseDetailPage({
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">Legal Compliance 2024</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            {enrollment.course.title}
+            {course.title}
           </h2>
           <div className="h-1 w-24 bg-blue-600 mx-auto rounded-full mt-6 mb-4"></div>
           <p className="text-slate-500 font-bold text-base max-w-xl mx-auto leading-relaxed">
-            {enrollment.course.description}
+            {course.description}
           </p>
         </section>
 
         <div className="sm:bg-white sm:rounded-[3.5rem] sm:p-4 sm:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] sm:border sm:border-slate-100">
           <CourseClient
             courseId={id}
-            title={enrollment.course.title}
-            introduction={enrollment.course.introduction}
-            learningObjectives={enrollment.course.learningObjectives}
-            slides={enrollment.course.slides}
-            questions={enrollment.course.questions}
-            courseVideoUrl={enrollment.course.videoUrl}
+            title={course.title}
+            introduction={course.introduction}
+            learningObjectives={course.learningObjectives}
+            slides={course.slides}
+            questions={course.questions}
+            courseVideoUrl={course.videoUrl}
             isInitialCompleted={enrollment.status === "COMPLETED"}
             initialActionPlan={enrollment.actionPlan}
             onComplete={handleComplete}

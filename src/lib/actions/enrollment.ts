@@ -4,13 +4,13 @@ import { revalidatePath } from "next/cache";
 import { UnauthorizedError, NotFoundError } from "@/lib/errors";
 import { courseRepository, enrollmentRepository } from "@/lib/repositories";
 
-export async function completeEnrollment(courseId: string) {
+export async function completeEnrollment(courseId: string, assignmentId: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
   if (!session?.user?.id) throw new UnauthorizedError();
 
-  await enrollmentRepository.update(session.user.id, courseId, {
+  await enrollmentRepository.update(session.user.id, assignmentId, {
     status: "COMPLETED",
     completedAt: new Date(),
   });
@@ -21,6 +21,7 @@ export async function completeEnrollment(courseId: string) {
 
 export async function submitTestResults(
   courseId: string,
+  assignmentId: string,
   answers: Record<string, string>,
 ) {
   const { auth } = await import("@/auth");
@@ -43,7 +44,7 @@ export async function submitTestResults(
   const isPassed = correctCount === course.questions.length;
 
   if (isPassed) {
-    await enrollmentRepository.update(session.user.id, courseId, {
+    await enrollmentRepository.update(session.user.id, assignmentId, {
       status: "COMPLETED",
       completedAt: new Date(),
     });
@@ -55,13 +56,13 @@ export async function submitTestResults(
   return { isPassed, score: correctCount, total: course.questions.length };
 }
 
-export async function saveActionPlan(courseId: string, actionPlan: string) {
+export async function saveActionPlan(courseId: string, assignmentId: string, actionPlan: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
   if (!session?.user?.id) throw new UnauthorizedError();
 
-  await enrollmentRepository.update(session.user.id, courseId, {
+  await enrollmentRepository.update(session.user.id, assignmentId, {
     actionPlan,
     status: "COMPLETED",
     completedAt: new Date(),

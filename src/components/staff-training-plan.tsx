@@ -5,6 +5,7 @@ import { CheckCircle2, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Assignment {
+  assignmentId: string;
   courseId: string;
   title: string;
   startDate: Date;
@@ -62,7 +63,7 @@ export function StaffTrainingPlan({ assignments, startMonth }: Props) {
                   const isCompleted = assignment.status === 'COMPLETED';
 
                   return (
-                    <tr key={assignment.courseId} className="group hover:bg-slate-50/50 transition-colors h-10">
+                    <tr key={assignment.assignmentId} className="group hover:bg-slate-50/50 transition-colors h-10">
                       <td className="p-3 border-r border-slate-200 bg-white group-hover:bg-slate-50 transition-colors">
                         <div className="flex items-center gap-2">
                           {isCompleted ? (

@@ -5,8 +5,6 @@ import { UnauthorizedError, ForbiddenError, NotFoundError } from "@/lib/errors";
 import {
   userRepository,
   facilityRepository,
-  courseRepository,
-  enrollmentRepository,
 } from "@/lib/repositories";
 
 export async function registerStaff(formData: FormData) {
@@ -44,14 +42,6 @@ export async function registerStaff(formData: FormData) {
     facilityId,
     corporationId: facility.corporationId,
   });
-
-  const courses = await courseRepository.findAllIds();
-  if (courses.length > 0) {
-    await enrollmentRepository.createManyForUser(
-      newUser.id,
-      courses.map((c) => c.id),
-    );
-  }
 
   revalidatePath("/admin");
   revalidatePath("/");

@@ -15,6 +15,7 @@ vi.mock('@/lib/prisma', () => ({
   default: {
     enrollment: {
       update: vi.fn(),
+      upsert: vi.fn(),
     },
     course: {
       findUnique: vi.fn(),
@@ -31,16 +32,16 @@ describe('Enrollment Actions', () => {
     ;(auth as any).mockResolvedValue({
       user: { id: 'user1' }
     })
-    
+
     ;(prisma.course.findUnique as any).mockResolvedValue({
       id: 'course1',
       questions: [
         { id: 'q1', choices: [{ id: 'c1', isCorrect: true }] }
       ]
     })
-    
-    const result = await submitTestResults('course1', { 'q1': 'c1' })
-    
+
+    const result = await submitTestResults('course1', 'assignment1', { 'q1': 'c1' })
+
     expect(result.isPassed).toBe(true)
     expect(prisma.enrollment.update).toHaveBeenCalled()
   })
@@ -49,16 +50,16 @@ describe('Enrollment Actions', () => {
     ;(auth as any).mockResolvedValue({
       user: { id: 'user1' }
     })
-    
+
     ;(prisma.course.findUnique as any).mockResolvedValue({
       id: 'course1',
       questions: [
         { id: 'q1', choices: [{ id: 'c1', isCorrect: true }] }
       ]
     })
-    
-    const result = await submitTestResults('course1', { 'q1': 'wrong' })
-    
+
+    const result = await submitTestResults('course1', 'assignment1', { 'q1': 'wrong' })
+
     expect(result.isPassed).toBe(false)
     expect(prisma.enrollment.update).not.toHaveBeenCalled()
   })
@@ -67,14 +68,14 @@ describe('Enrollment Actions', () => {
     ;(auth as any).mockResolvedValue({
       user: { id: 'user1' }
     })
-    
-    await completeEnrollment('course1')
-    
+
+    await completeEnrollment('course1', 'assignment1')
+
     expect(prisma.enrollment.update).toHaveBeenCalledWith({
       where: {
-        userId_courseId: {
+        userId_assignmentId: {
           userId: 'user1',
-          courseId: 'course1',
+          assignmentId: 'assignment1',
         },
       },
       data: {
@@ -86,7 +87,7 @@ describe('Enrollment Actions', () => {
 
   it('未認証の場合はエラーを投げること', async () => {
     ;(auth as any).mockResolvedValue(null)
-    
-    await expect(completeEnrollment('course1')).rejects.toThrow(/Unauthorized/i)
+
+    await expect(completeEnrollment('course1', 'assignment1')).rejects.toThrow(/Unauthorized/i)
   })
 })
