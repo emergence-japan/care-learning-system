@@ -190,43 +190,51 @@ export default async function AdminDashboardPage() {
             </h3>
             <div className="grid grid-cols-1 gap-3">
               {assignments.length > 0 ? (() => {
-                // コースIDでグループ化（1コース1行）
-                const courseGroups: Record<string, typeof assignments> = {};
+                // 同一コースが複数あるか判定
+                const courseCounts: Record<string, number> = {};
+                const courseSessionIndex: Record<string, number> = {};
                 assignments.forEach(a => {
-                  if (!courseGroups[a.courseId]) courseGroups[a.courseId] = [];
-                  courseGroups[a.courseId].push(a);
+                  courseCounts[a.courseId] = (courseCounts[a.courseId] || 0) + 1;
                 });
 
-                return Object.entries(courseGroups).map(([courseId, sessions]) => {
-                  const sessionIds = sessions.map(s => s.id);
+                return assignments.map((session) => {
+                  const isMultiple = courseCounts[session.courseId] > 1;
+                  courseSessionIndex[session.courseId] = (courseSessionIndex[session.courseId] || 0) + 1;
+                  const sessionNumber = courseSessionIndex[session.courseId];
+
                   const completedCount = staffMembers.filter(user =>
-                    user.enrollments?.some(e => e.assignmentId != null && sessionIds.includes(e.assignmentId) && e.status === 'COMPLETED')
+                    user.enrollments?.some(e => e.assignmentId === session.id && e.status === 'COMPLETED')
                   ).length;
                   const rate = totalStaff > 0 ? Math.round((completedCount / totalStaff) * 100) : 0;
-                  const courseTitle = sessions[0].course?.title || '';
-                  const hasMultiple = sessions.length > 1;
+                  const courseTitle = session.course?.title || '';
+                  const sessionLabel = isMultiple ? `第${sessionNumber}回` : null;
 
                   return (
-                    <div key={courseId} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
+                    <div key={session.id} className="bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
                         <GraduationCap className="w-5 h-5 text-blue-600 shrink-0" />
                         <div className="flex-1">
-                          <h4 className="font-bold text-slate-900 text-sm">{courseTitle}</h4>
-                          <div className="flex items-center gap-4 mt-1 flex-wrap">
-                            <span className="text-[10px] font-bold text-slate-400">{rate}% 完了</span>
-                            {sessions.map((s, idx) => (
-                              <span key={s.id} className="text-[10px] text-slate-500">
-                                {hasMultiple ? `第${idx + 1}回: ` : ''}期限 {new Date(s.endDate).toLocaleDateString()}
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-bold text-slate-900 text-sm">{courseTitle}</h4>
+                            {sessionLabel && (
+                              <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
+                                {sessionLabel}
                               </span>
-                            ))}
+                            )}
+                          </div>
+                          <div className="flex items-center gap-4 mt-1">
+                            <span className="text-[10px] font-bold text-slate-400">{rate}% 完了</span>
+                            <span className="text-[10px] text-slate-500">
+                              期限 {new Date(session.endDate).toLocaleDateString()}
+                            </span>
                           </div>
                         </div>
                       </div>
                       <div className="no-print">
                         <IncompleteUsersDialog
-                          courseTitle={courseTitle}
+                          courseTitle={sessionLabel ? `${courseTitle}（${sessionLabel}）` : courseTitle}
                           incompleteUsers={staffMembers
-                            .filter(user => !user.enrollments?.some(e => e.courseId === courseId && e.status === 'COMPLETED'))
+                            .filter(user => !user.enrollments?.some(e => e.assignmentId === session.id && e.status === 'COMPLETED'))
                             .map(u => ({ id: u.id, name: u.name }))
                           }
                           totalCount={totalStaff}
