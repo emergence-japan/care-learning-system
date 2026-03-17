@@ -20,18 +20,19 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col lg:flex-row bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white font-sans overflow-x-hidden">
       
       {/* Visual Experience Section (Top on mobile, Side on desktop) */}
-      <div className="w-full lg:w-1/2 relative bg-slate-900 flex items-center justify-center p-8 lg:p-12 overflow-hidden min-h-[45vh] lg:min-h-screen">
+      <div className="w-full lg:w-1/2 relative bg-slate-900 flex flex-col items-center lg:items-start justify-between p-8 lg:p-12 overflow-hidden min-h-[45vh] lg:min-h-screen">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full opacity-40">
           <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-blue-600/30 blur-[120px] animate-pulse" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-emerald-600/20 blur-[120px]" />
         </div>
 
-        <motion.div 
+        {/* Main Content */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 max-w-lg space-y-8 lg:space-y-12 text-center lg:text-left"
+          className="relative z-10 max-w-lg space-y-8 lg:space-y-12 text-center lg:text-left flex-1 flex flex-col justify-center w-full"
         >
           <div className="space-y-4 lg:space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 backdrop-blur-md mx-auto lg:mx-0">
@@ -49,13 +50,13 @@ export default function LoginPage() {
 
           {/* Value Props - Hidden on smallest screens to focus on login */}
           <div className="hidden sm:flex flex-col lg:space-y-6 pt-8 border-t border-white/10 text-left max-w-md mx-auto lg:mx-0">
-            <FeatureItem 
+            <FeatureItem
               icon={<ShieldCheck className="w-5 h-5 text-blue-400" />}
               title="コンプライアンス遵守"
               desc="最新の制度改正に完全準拠したカリキュラム。"
             />
             <div className="lg:block hidden">
-              <FeatureItem 
+              <FeatureItem
                 icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />}
                 title="現場に寄り添うUX"
                 desc="スマートフォンで1分から学べる直感的な設計。"
@@ -64,10 +65,10 @@ export default function LoginPage() {
           </div>
         </motion.div>
 
-        {/* Brand Label (Desktop only) */}
-        <div className="absolute bottom-12 left-12 hidden lg:flex items-center gap-3">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center font-black text-slate-900 text-xs">CL</div>
-          <span className="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">Care Learning v1.0</span>
+        {/* Brand Label (Desktop only) - flex末尾に配置して重なりを防止 */}
+        <div className="relative z-10 hidden lg:flex items-center gap-3 shrink-0">
+          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center font-black text-slate-900 text-xs shrink-0">CL</div>
+          <span className="text-white/50 text-[10px] font-bold tracking-[0.2em] uppercase">Care Learning v1.0</span>
         </div>
       </div>
 
@@ -144,7 +145,7 @@ export default function LoginPage() {
                   {isPending ? (
                     <><Loader2 className="w-5 h-5 animate-spin" /> 認証中...</>
                   ) : (
-                    "システムにログインする"
+                    "ログイン"
                   )}
                 </Button>
               </form>
