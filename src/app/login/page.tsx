@@ -91,7 +91,7 @@ export default function LoginPage() {
 
               <form action={dispatch} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="loginId" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Login ID</Label>
+                  <Label htmlFor="loginId" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">ログインID</Label>
                   <Input
                     id="loginId"
                     name="loginId"
@@ -103,7 +103,7 @@ export default function LoginPage() {
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center ml-1">
-                    <Label htmlFor="password" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Password</Label>
+                    <Label htmlFor="password" className="text-[10px] font-black uppercase tracking-widest text-slate-400">パスワード</Label>
                     <button type="button" onClick={() => setShowForgotMessage(v => !v)} className="text-[10px] font-bold text-blue-600 hover:underline">忘れた場合</button>
                   </div>
                   <Input
