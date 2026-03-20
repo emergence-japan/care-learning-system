@@ -52,7 +52,7 @@ export async function seedMental(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/pfaZhLN0zk4',
     badgeLabel: '精神ケア',
     badgeIcon: 'Sparkles',
   }
