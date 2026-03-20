@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, XCircle, ChevronRight, AlertCircle, Sparkles, Trophy } from "lucide-react";
 import confetti from "canvas-confetti";
+import { useTranslations } from "next-intl";
 import type { Question } from "@/types";
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
+  const t = useTranslations('comprehensionTest');
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState<Record<string, string>>({});
   const [showExplanation, setShowExplanation] = useState(false);
@@ -59,7 +61,7 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
         }
       } catch (error) {
         console.error(error);
-        alert("送信中にエラーが発生しました。");
+        alert(t('submitError'));
       } finally {
         setIsSubmitting(false);
       }
@@ -85,16 +87,13 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-[0.3em]">
                   <Sparkles className="w-3 h-3" /> Excellent
                 </div>
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">おめでとうございます！</h3>
-                <p className="text-slate-500 font-medium leading-relaxed max-w-xs mx-auto text-sm">
-                  理解度テストに合格しました。<br/>この研修の内容がしっかりと身についています。
-                </p>
+                <h3 className="text-3xl font-black text-slate-900 tracking-tight">{t('passed')}</h3>
               </div>
               <Button 
                 onClick={() => window.location.reload()}
                 className="w-full h-16 text-lg font-black bg-slate-900 hover:bg-slate-800 text-white rounded-3xl shadow-2xl shadow-slate-200 transition-all active:scale-95 group"
               >
-                <span>学習を完了する</span>
+                <span>{t('completeLearning')}</span>
                 <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </>
@@ -103,10 +102,8 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
               <div className="flex justify-center">
                 <XCircle className="w-20 h-20 text-red-500" />
               </div>
-              <h3 className="text-2xl font-bold text-zinc-900">もう一度復習しましょう</h3>
-              <p className="text-zinc-600">
-                {score.total}問中{score.current}問の正解でした。全問正解で合格となります。解説を読み直して再挑戦しましょう。
-              </p>
+              <h3 className="text-2xl font-bold text-zinc-900">{t('failed')}</h3>
+              <p className="text-zinc-600">{t('score', { score: score.current, total: score.total })}</p>
               <Button 
                 onClick={() => {
                   setShowResult(false);
@@ -116,7 +113,7 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
                 }} 
                 className="w-full h-14 text-xl font-bold bg-zinc-900 hover:bg-zinc-800 text-white rounded-2xl"
               >
-                最初からやり直す
+                {t('retryFromStart')}
               </Button>
             </>
           )}
@@ -130,10 +127,10 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
       <div className="flex items-center justify-between px-2 shrink-0">
         <h3 className="font-black text-xl text-slate-900 flex items-center gap-2">
           <span className="w-2 h-6 bg-slate-900 rounded-full"></span>
-          理解度テスト
+          {t('title')}
         </h3>
         <span className="text-sm font-black text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full">
-          設問 {currentStep + 1} / {totalQuestions}
+          {t('questionCount', { current: currentStep + 1, total: totalQuestions })}
         </span>
       </div>
 
@@ -200,7 +197,7 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
                 onClick={handleCheckAnswer}
                 className="w-full h-14 lg:h-16 text-lg lg:text-xl font-black bg-slate-900 hover:bg-black text-white rounded-2xl lg:rounded-3xl shadow-2xl shadow-slate-200 disabled:opacity-20 disabled:scale-100 transition-all active:scale-95 group"
               >
-                <span>回答を確認する</span>
+                <span>{t('confirmAnswer')}</span>
                 <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             ) : (
@@ -208,7 +205,7 @@ export function ComprehensionTest({ courseId, questions, onSubmit }: Props) {
                 onClick={handleNext}
                 className="w-full h-14 lg:h-16 text-lg lg:text-xl font-black bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl lg:rounded-3xl shadow-2xl shadow-emerald-200 animate-in zoom-in duration-300 group"
               >
-                <span>{currentStep < totalQuestions - 1 ? "次の問題へ" : "結果を確認する"}</span>
+                <span>{currentStep < totalQuestions - 1 ? t('nextQuestion') : t('checkResults')}</span>
                 <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             )}

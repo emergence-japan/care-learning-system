@@ -14,6 +14,7 @@ model User {
   loginId       String       @unique
   password      String
   role          Role         @default(STAFF)
+  locale        String       @default("ja")
   facilityId    String?
   corporationId String?
   createdAt     DateTime     @default(now())
@@ -90,21 +91,25 @@ model Corporation {
 }
 
 model Course {
-  id                 String             @id @default(cuid())
-  slug               String             @unique
-  title              String
-  description        String?
-  introduction       String?
-  learningObjectives String?
-  videoUrl           String?
-  badgeLabel         String?
-  badgeIcon          String?
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-  assignments        CourseAssignment[]
-  enrollments        Enrollment[]
-  questions          Question[]
-  slides             Slide[]
+  id                   String             @id @default(cuid())
+  slug                 String             @unique
+  title                String
+  titleEn              String?
+  description          String?
+  descriptionEn        String?
+  introduction         String?
+  introductionEn       String?
+  learningObjectives   String?
+  learningObjectivesEn String?
+  videoUrl             String?
+  badgeLabel           String?
+  badgeIcon            String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  assignments          CourseAssignment[]
+  enrollments          Enrollment[]
+  questions            Question[]
+  slides               Slide[]
 }
 
 model CourseAssignment {
@@ -121,33 +126,38 @@ model CourseAssignment {
 }
 
 model Slide {
-  id        String   @id @default(cuid())
-  courseId  String
-  title     String
-  content   String
-  videoUrl  String?
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  course    Course   @relation(fields: [courseId], references: [id])
-}
-
-model Question {
   id          String   @id @default(cuid())
   courseId    String
-  text        String
-  explanation String?
+  title       String
+  titleEn     String?
+  content     String
+  contentEn   String?
+  videoUrl    String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  choices     Choice[]
   course      Course   @relation(fields: [courseId], references: [id])
+}
+
+model Question {
+  id            String   @id @default(cuid())
+  courseId      String
+  text          String
+  textEn        String?
+  explanation   String?
+  explanationEn String?
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  choices       Choice[]
+  course        Course   @relation(fields: [courseId], references: [id])
 }
 
 model Choice {
   id         String   @id @default(cuid())
   questionId String
   text       String
+  textEn     String?
   isCorrect  Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

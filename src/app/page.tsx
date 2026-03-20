@@ -9,10 +9,15 @@ import { ConfettiTrigger } from "@/components/confetti-trigger";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { ProgressHero } from "@/components/dashboard/progress-hero";
 import { CourseList } from "@/components/dashboard/course-list";
+import { getTranslations, getLocale } from "next-intl/server";
 
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user) redirect("/login");
+
+  const t = await getTranslations("dashboard");
+  const locale = await getLocale();
+  const isEn = locale === "en";
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
@@ -30,15 +35,16 @@ export default async function DashboardPage() {
   const fiscalYearStartMonth = user?.corporation?.fiscalYearStartMonth || 4;
 
   if (!user?.facilityId) {
+    const tCommon = await getTranslations("common");
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50/50">
         <Card className="max-w-md w-full p-10 text-center space-y-6 rounded-[2rem] border-none shadow-2xl bg-white/80 backdrop-blur-xl">
           <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto ring-1 ring-amber-100">
             <AlertCircle className="w-10 h-10 text-amber-500" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight">所属施設が未設定です</h2>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t("facilityNotSet")}</h2>
           <form action={async () => { "use server"; await signOut({ redirectTo: "/login" }); }}>
-            <Button variant="outline" type="submit" className="w-full h-14 rounded-xl border-slate-200">ログアウト</Button>
+            <Button variant="outline" type="submit" className="w-full h-14 rounded-xl border-slate-200">{tCommon("logout")}</Button>
           </form>
         </Card>
       </div>
@@ -48,7 +54,7 @@ export default async function DashboardPage() {
   const [assignments, enrollments] = await Promise.all([
     prisma.courseAssignment.findMany({
       where: { facilityId: user.facilityId },
-      include: { course: { select: { id: true, title: true, description: true, badgeLabel: true, badgeIcon: true } } },
+      include: { course: { select: { id: true, title: true, titleEn: true, description: true, descriptionEn: true, badgeLabel: true, badgeIcon: true } } },
       orderBy: { endDate: 'asc' },
     }),
     prisma.enrollment.findMany({ where: { userId: user.id } }),
@@ -70,8 +76,10 @@ export default async function DashboardPage() {
 
     const enrollment = enrollments.find(e => e.assignmentId === assignment.id);
     const diffDays = Math.ceil((assignment.endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    const title = assignment.course.title;
-    const keywordMatch = (k: string) => title.includes(k);
+    const jaTitle = assignment.course.title;
+    const title = isEn ? (assignment.course.titleEn ?? jaTitle) : jaTitle;
+    const description = isEn ? (assignment.course.descriptionEn ?? assignment.course.description) : assignment.course.description;
+    const keywordMatch = (k: string) => jaTitle.includes(k);
 
     let label = "";
     let iconName = "";
@@ -97,10 +105,10 @@ export default async function DashboardPage() {
       assignmentId: assignment.id,
       courseId: assignment.courseId,
       title,
-      description: assignment.course.description,
+      description,
       badgeLabel: label,
       badgeIcon: iconName,
-      sessionLabel: isMultiSession ? `第${sessionNumber}回` : null,
+      sessionLabel: isMultiSession ? t("sessionLabel", { number: sessionNumber }) : null,
       status: enrollment?.status || "NOT_STARTED",
       startDate: assignment.startDate,
       endDate: assignment.endDate,

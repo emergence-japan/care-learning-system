@@ -1,0 +1,76 @@
+{
+  "common": {
+    "logout": "Logout",
+    "backToDashboard": "Back to Dashboard",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "backToTop": "Back to top"
+  },
+  "dashboard": {
+    "systemName": "Care Training System",
+    "honorific": "",
+    "facilityNotSet": "Your facility has not been set",
+    "facilityNotSetDescription": "Please contact your administrator to assign you to a facility.",
+    "allCompleted": "You have completed all training courses",
+    "startLearning": "Let's start learning for this year",
+    "steadyProgress": "You are making steady progress",
+    "remainingCourses": "{count} more course(s) to",
+    "nextRank": "reach {rank} rank",
+    "trainingPrograms": "Training Programs",
+    "generating": "Generating...",
+    "certificate": "Certificate",
+    "statusCompleted": "Completed",
+    "statusNotStarted": "Not Started",
+    "statusOverdue": "Overdue",
+    "statusInProgress": "In Progress",
+    "statusUpcoming": "Upcoming",
+    "daysLeft": "{days} day(s) left",
+    "annualPlan": "Annual Training Plan",
+    "trainingSubject": "Training Subject",
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "sessionLabel": "Session {number}"
+  },
+  "course": {
+    "startTraining": "Start Training",
+    "proceedToLearning": "Proceed to Learning",
+    "reviewSlides": "Go back and review slides",
+    "actionPlanTitle": "Action Declaration",
+    "actionPlanDescription": "How will you apply what you learned in your daily work?",
+    "actionPlanPlaceholder": "Example: I will share changes in residents' conditions during morning meetings.",
+    "confirmAndComplete": "Confirm and Complete",
+    "submitting": "Submitting...",
+    "completedTitle": "Training Completed",
+    "replayFromStart": "Watch again from the beginning",
+    "slideTab": "Slides",
+    "videoTab": "Video",
+    "proceedToTest": "Proceed to Comprehension Test",
+    "slideCount": "{current} / {total}"
+  },
+  "comprehensionTest": {
+    "title": "Comprehension Test",
+    "questionCount": "Question {current} / {total}",
+    "confirmAnswer": "Confirm Answer",
+    "nextQuestion": "Next Question",
+    "checkResults": "Check Results",
+    "passed": "Congratulations!",
+    "failed": "Let's review again",
+    "retryFromStart": "Retry from the beginning",
+    "completeLearning": "Complete Learning",
+    "submitError": "An error occurred while submitting.",
+    "score": "{score} / {total} correct"
+  },
+  "certificate": {
+    "download": "Certificate",
+    "generating": "Generating..."
+  },
+  "error": {
+    "notFound": "Page Not Found",
+    "notFoundDescription": "The page you are looking for does not exist or may have been moved.",
+    "unexpectedError": "An unexpected error occurred",
+    "unexpectedErrorDescription": "Please wait a moment and try again.",
+    "retry": "Try again",
+    "backToTop": "Back to top"
+  }
+}

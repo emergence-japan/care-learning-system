@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { AlertTriangle, RotateCcw, Home } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Error({
   error,
@@ -11,6 +12,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("error");
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -25,9 +28,9 @@ export default function Error({
         </div>
         <div className="space-y-3">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Error</p>
-          <h1 className="text-3xl font-black text-slate-900">エラーが発生しました</h1>
+          <h1 className="text-3xl font-black text-slate-900">{t("unexpectedError")}</h1>
           <p className="text-slate-500 text-sm leading-relaxed">
-            予期しないエラーが発生しました。時間をおいて再度お試しください。
+            {t("unexpectedErrorDescription")}
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -36,14 +39,14 @@ export default function Error({
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-sm transition-colors shadow-lg"
           >
             <RotateCcw className="w-4 h-4" />
-            再試行する
+            {t("retry")}
           </button>
           <Link
             href="/"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-sm transition-colors shadow border border-slate-200"
           >
             <Home className="w-4 h-4" />
-            トップページへ
+            {t("backToTop")}
           </Link>
         </div>
       </div>

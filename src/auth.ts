@@ -10,6 +10,7 @@ declare module "next-auth" {
     user: {
       id: string
       role: string
+      locale?: string
       facilityId?: string | null
       corporationId?: string | null
       isSuspended?: boolean
@@ -18,6 +19,7 @@ declare module "next-auth" {
 
   interface User {
     role: string
+    locale?: string
     facilityId?: string | null
     corporationId?: string | null
     isSuspended?: boolean
@@ -25,6 +27,7 @@ declare module "next-auth" {
 
   interface JWT {
     role?: string
+    locale?: string
     facilityId?: string | null
     corporationId?: string | null
     isSuspended?: boolean
@@ -73,6 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           loginId: user.loginId,
           role: user.role,
+          locale: user.locale,
           facilityId: user.facilityId,
           corporationId: user.corporationId,
           isSuspended,
@@ -88,6 +92,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role as string
       }
+      if (token.locale !== undefined && session.user) {
+        session.user.locale = token.locale as string
+      }
       if (token.facilityId !== undefined && session.user) {
         session.user.facilityId = token.facilityId as any
       }
@@ -102,6 +109,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role
+        token.locale = user.locale
         token.facilityId = user.facilityId
         token.corporationId = user.corporationId
         token.isSuspended = user.isSuspended

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Certificate } from "@/components/reports/certificate";
 import { Download } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   staffName: string;
@@ -22,6 +23,7 @@ export function CertificateDownloadButton({
   sessionLabel,
   completedAt,
 }: Props) {
+  const t = useTranslations("certificate");
   const [isClient, setIsClient] = useState(false);
   useEffect(() => { setIsClient(true); }, []);
 
@@ -40,7 +42,7 @@ export function CertificateDownloadButton({
           disabled={loading}
         >
           <Download className="w-3 h-3" />
-          {loading ? "生成中..." : "修了証"}
+          {loading ? t("generating") : t("download")}
         </button>
       )}
     </PDFDownloadLink>

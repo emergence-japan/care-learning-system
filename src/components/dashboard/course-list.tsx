@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CertificateDownloadButton } from "@/components/certificate-download-button";
+import { getTranslations } from "next-intl/server";
 
 export type LearningPlanItem = {
   assignmentId: string;
@@ -20,6 +21,16 @@ export type LearningPlanItem = {
   isOverdue: boolean;
   isUpcoming: boolean;
   completedAt: string | null;
+};
+
+type StatusLabels = {
+  completed: string;
+  notStarted: string;
+  overdue: string;
+  inProgress: string;
+  upcoming: string;
+  daysLeft: (days: number) => string;
+  trainingPrograms: string;
 };
 
 type Props = {
@@ -51,16 +62,16 @@ function getIcon(name: string | null) {
   }
 }
 
-const getStatusInfo = (status: string, isOverdue: boolean, isUpcoming: boolean) => {
-  if (status === "COMPLETED") return { label: "受講完了", color: "text-emerald-600", dot: "bg-emerald-500" };
-  if (isUpcoming) return { label: "開始前", color: "text-slate-400", dot: "bg-slate-300" };
-  if (isOverdue) return { label: "期限超過", color: "text-rose-600", dot: "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]" };
-  if (status === "IN_PROGRESS") return { label: "受講中", color: "text-blue-600", dot: "bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]" };
-  return { label: "未受講", color: "text-slate-400", dot: "bg-slate-300" };
+const getStatusInfo = (status: string, isOverdue: boolean, isUpcoming: boolean, labels: StatusLabels) => {
+  if (status === "COMPLETED") return { label: labels.completed, color: "text-emerald-600", dot: "bg-emerald-500" };
+  if (isUpcoming) return { label: labels.notStarted, color: "text-slate-400", dot: "bg-slate-300" };
+  if (isOverdue) return { label: labels.overdue, color: "text-rose-600", dot: "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]" };
+  if (status === "IN_PROGRESS") return { label: labels.inProgress, color: "text-blue-600", dot: "bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]" };
+  return { label: labels.upcoming, color: "text-slate-400", dot: "bg-slate-300" };
 };
 
-function CourseListItem({ item, staffName, corporationName, facilityName }: { item: LearningPlanItem; staffName: string; corporationName: string; facilityName: string }) {
-  const statusInfo = getStatusInfo(item.status, item.isOverdue, item.isUpcoming);
+function CourseListItem({ item, staffName, corporationName, facilityName, labels }: { item: LearningPlanItem; staffName: string; corporationName: string; facilityName: string; labels: StatusLabels }) {
+  const statusInfo = getStatusInfo(item.status, item.isOverdue, item.isUpcoming, labels);
   const isCompleted = item.status === "COMPLETED";
   const icon = getIcon(item.badgeIcon);
 
@@ -105,7 +116,7 @@ function CourseListItem({ item, staffName, corporationName, facilityName }: { it
                   item.isOverdue ? "text-rose-500" : "text-slate-400"
                 )}>
                   {item.isUpcoming ? `${item.startDate.toLocaleDateString()} より開始` :
-                   item.isOverdue ? "期限超過" : `残り ${item.daysLeft} 日`}
+                   item.isOverdue ? labels.overdue : labels.daysLeft(item.daysLeft)}
                 </span>
               )}
             </div>
@@ -165,15 +176,27 @@ function CourseListItem({ item, staffName, corporationName, facilityName }: { it
   );
 }
 
-export function CourseList({ learningPlan, staffName, corporationName, facilityName }: Props) {
+export async function CourseList({ learningPlan, staffName, corporationName, facilityName }: Props) {
+  const t = await getTranslations('dashboard');
+
+  const labels: StatusLabels = {
+    completed: t('statusCompleted'),
+    notStarted: t('statusNotStarted'),
+    overdue: t('statusOverdue'),
+    inProgress: t('statusInProgress'),
+    upcoming: t('statusUpcoming'),
+    daysLeft: (days: number) => t('daysLeft', { days }),
+    trainingPrograms: t('trainingPrograms'),
+  };
+
   return (
     <section className="space-y-4">
       <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
-        <div className="w-1 h-3 bg-slate-900 rounded-full" /> 研修プログラム
+        <div className="w-1 h-3 bg-slate-900 rounded-full" /> {labels.trainingPrograms}
       </h3>
       <div className="space-y-2">
         {learningPlan.map((item) => (
-          <CourseListItem key={item.assignmentId} item={item} staffName={staffName} corporationName={corporationName} facilityName={facilityName} />
+          <CourseListItem key={item.assignmentId} item={item} staffName={staffName} corporationName={corporationName} facilityName={facilityName} labels={labels} />
         ))}
       </div>
     </section>

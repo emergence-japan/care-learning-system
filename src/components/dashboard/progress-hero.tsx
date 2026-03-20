@@ -1,5 +1,6 @@
 import { Trophy, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getTranslations } from "next-intl/server";
 
 type RankInfo = { title: string; color: string; bg: string; ring: string; glow: string };
 
@@ -31,9 +32,16 @@ type Props = {
   totalCourses: number;
 };
 
-export function ProgressHero({ progressPercentage, completedCourses, totalCourses }: Props) {
+export async function ProgressHero({ progressPercentage, completedCourses, totalCourses }: Props) {
+  const t = await getTranslations('dashboard');
   const rank = getRankInfo(progressPercentage);
   const nextRank = getNextRankInfo(completedCourses, totalCourses);
+
+  const headlineText = progressPercentage === 100
+    ? t('allCompleted')
+    : progressPercentage === 0
+    ? t('startLearning')
+    : t('steadyProgress');
 
   return (
     <div className="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-2xl">
@@ -41,9 +49,7 @@ export function ProgressHero({ progressPercentage, completedCourses, totalCourse
       <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold leading-tight tracking-tight">
-            {progressPercentage === 100 ? "すべての研修を修了しました" :
-             progressPercentage === 0 ? "本年度の学習を開始しましょう" :
-             "着実にステップアップしています"}
+            {headlineText}
           </h2>
         </div>
         <div className="text-right flex flex-col items-end gap-1">
@@ -64,7 +70,8 @@ export function ProgressHero({ progressPercentage, completedCourses, totalCourse
             </p>
             {nextRank && (
               <p className="text-[9px] font-bold text-slate-500 whitespace-nowrap">
-                あと <span className="text-white">{nextRank.remaining}</span> 科目で <span className="text-blue-400 font-black">{nextRank.name}</span>
+                {t('remainingCourses', { count: nextRank.remaining })}{' '}
+                <span className="text-blue-400 font-black">{nextRank.name}</span>
               </p>
             )}
           </div>
