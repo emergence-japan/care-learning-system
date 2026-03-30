@@ -54,6 +54,7 @@ export async function seedTerminal(prisma: PrismaClient) {
       `,
     badgeLabel: '看取り',
     badgeIcon: 'Heart',
+    videoUrl: 'https://youtu.be/hVPEhl03xsU',
   }
 
   const slidesData = [

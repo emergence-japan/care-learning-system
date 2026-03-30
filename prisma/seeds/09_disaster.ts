@@ -52,7 +52,7 @@ export async function seedDisaster(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: null,
+    videoUrl: 'https://youtu.be/qlyzzaqyyCk',
     badgeLabel: '災害対策',
     badgeIcon: 'Flame',
   }

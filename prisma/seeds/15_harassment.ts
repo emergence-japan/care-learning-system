@@ -54,6 +54,7 @@ export async function seedHarassment(prisma: PrismaClient) {
       `,
     badgeLabel: 'ハラスメント',
     badgeIcon: 'ShieldCheck',
+    videoUrl: 'https://youtu.be/nvTRIfIdz8M',
   }
 
   const slidesData = [
