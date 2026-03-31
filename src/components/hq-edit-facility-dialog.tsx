@@ -19,6 +19,7 @@ type Props = {
   facility: {
     id: string;
     name: string;
+    type?: string | null;
     maxStaff: number;
   };
 };
@@ -53,25 +54,51 @@ export function HQEditFacilityDialog({ facility }: Props) {
         <form action={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="hq-edit-fac-name" className="text-xs font-bold text-slate-500 uppercase tracking-widest">施設名</Label>
-            <Input 
-              id="hq-edit-fac-name" 
-              name="name" 
-              defaultValue={facility.name} 
+            <Input
+              id="hq-edit-fac-name"
+              name="name"
+              defaultValue={facility.name}
               className="h-12 rounded-xl bg-slate-50 border-slate-200 font-bold focus:ring-blue-500"
-              required 
+              required
             />
           </div>
-          
+
+          <div className="space-y-2">
+            <Label htmlFor="hq-edit-fac-type" className="text-xs font-bold text-slate-500 uppercase tracking-widest">業態</Label>
+            <select
+              id="hq-edit-fac-type"
+              name="type"
+              defaultValue={facility.type ?? ""}
+              className="w-full h-12 rounded-xl border border-slate-200 bg-slate-50 font-bold text-sm px-4"
+            >
+              <option value="">業態を選択してください</option>
+              <option value="訪問介護">訪問介護</option>
+              <option value="訪問入浴介護">訪問入浴介護</option>
+              <option value="訪問看護">訪問看護</option>
+              <option value="訪問リハビリ">訪問リハビリ</option>
+              <option value="通所介護">通所介護</option>
+              <option value="通所リハビリ">通所リハビリ</option>
+              <option value="居宅介護支援">居宅介護支援</option>
+              <option value="福祉用具貸与">福祉用具貸与</option>
+              <option value="小規模多機能型居宅介護">小規模多機能型居宅介護</option>
+              <option value="認知症対応型共同生活介護">認知症対応型共同生活介護</option>
+              <option value="特定施設入居者生活介護">特定施設入居者生活介護</option>
+              <option value="介護老人福祉施設">介護老人福祉施設</option>
+              <option value="介護老人保健施設">介護老人保健施設</option>
+              <option value="介護医療院">介護医療院</option>
+            </select>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="hq-edit-fac-max-staff" className="text-xs font-bold text-slate-500 uppercase tracking-widest">最大スタッフ数 (定員)</Label>
-            <Input 
-              id="hq-edit-fac-max-staff" 
-              name="maxStaff" 
-              type="number" 
-              defaultValue={facility.maxStaff} 
-              min={1} 
+            <Input
+              id="hq-edit-fac-max-staff"
+              name="maxStaff"
+              type="number"
+              defaultValue={facility.maxStaff}
+              min={1}
               className="h-12 rounded-xl bg-slate-50 border-slate-200 font-bold focus:ring-blue-500"
-              required 
+              required
             />
           </div>
 

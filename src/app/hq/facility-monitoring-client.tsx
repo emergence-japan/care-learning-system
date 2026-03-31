@@ -54,7 +54,7 @@ export function FacilityMonitoringClient({ facilities, isCorporationSuspended }:
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className={`font-bold text-sm truncate ${facility.isActive ? 'text-slate-900' : 'text-slate-500 line-through'}`} title={facility.name}>{facility.name}</h4>
                       {!facility.isActive && <span className="px-2 py-0.5 bg-slate-200 text-[8px] font-black text-slate-500 rounded-full uppercase">停止中</span>}
-                      {!isSuspended && <HQEditFacilityDialog facility={{ id: facility.id, name: facility.name, maxStaff: facility.maxStaff }} />}
+                      {!isSuspended && <HQEditFacilityDialog facility={{ id: facility.id, name: facility.name, type: facility.type, maxStaff: facility.maxStaff }} />}
                       {facility.type && (
                         <span className="px-2 py-0.5 bg-slate-100 text-[9px] font-bold text-slate-500 rounded-full whitespace-nowrap">
                           {facility.type}

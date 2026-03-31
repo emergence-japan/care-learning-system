@@ -90,9 +90,10 @@ export async function updateFacility(id: string, formData: FormData) {
   if (!session?.user || session.user.role !== "SUPER_ADMIN") throw new UnauthorizedError();
 
   const name = formData.get("name") as string;
+  const type = formData.get("type") as string;
   const maxStaff = parseInt(formData.get("maxStaff") as string);
 
-  await facilityRepository.update(id, { name, maxStaff });
+  await facilityRepository.update(id, { name, type: type || null, maxStaff });
 
   revalidatePath("/super-admin/organizations");
 }
@@ -165,12 +166,13 @@ export async function hqUpdateFacility(id: string, formData: FormData) {
   if (session.user.isSuspended) throw new ForbiddenError("利用停止中のため、この操作は許可されていません。");
 
   const name = formData.get("name") as string;
+  const type = formData.get("type") as string;
   const maxStaff = parseInt(formData.get("maxStaff") as string);
 
   const facility = await facilityRepository.findById(id);
   if (!facility || facility.corporationId !== session.user.corporationId) throw new ForbiddenError();
 
-  await facilityRepository.update(id, { name, maxStaff: isNaN(maxStaff) ? undefined : maxStaff });
+  await facilityRepository.update(id, { name, type: type || null, maxStaff: isNaN(maxStaff) ? undefined : maxStaff });
 
   revalidatePath("/hq");
   revalidatePath("/hq/facilities/[id]", "page");
