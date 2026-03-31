@@ -34,7 +34,7 @@ export const facilityRepository = {
     return prisma.facility.create({ data });
   },
 
-  async update(id: string, data: { name?: string; maxStaff?: number; isActive?: boolean }) {
+  async update(id: string, data: { name?: string; type?: string | null; maxStaff?: number; isActive?: boolean }) {
     return prisma.facility.update({ where: { id }, data });
   },
 
