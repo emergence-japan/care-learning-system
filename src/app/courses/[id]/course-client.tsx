@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { SlidePlayer } from "@/components/slide-player";
 import { ComprehensionTest } from "@/components/comprehension-test";
 import { Button } from "@/components/ui/button";
-import { Award, ArrowRight, Lightbulb, Home, ChevronLeft } from "lucide-react";
+import { Award, ArrowRight, Lightbulb, Home, ChevronLeft, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Slide, Question } from "@/types";
 
@@ -44,6 +44,7 @@ export function CourseClient({
   );
   const [actionPlan, setActionPlan] = useState(initialActionPlan || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleLearningComplete = () => {
     if (questions.length > 0) {
@@ -163,9 +164,17 @@ export function CourseClient({
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button className="rounded-full px-12 h-14 bg-slate-900 hover:bg-black text-white font-black text-sm shadow-lg transition-all flex items-center gap-2" onClick={() => router.push("/")}>
-                <Home className="w-4 h-4" />
-                ダッシュボードへ戻る
+              <Button
+                className="rounded-full px-12 h-14 bg-slate-900 hover:bg-black text-white font-black text-sm shadow-lg transition-all flex items-center gap-2 disabled:opacity-70"
+                disabled={isNavigating}
+                onClick={() => { setIsNavigating(true); router.push("/"); }}
+              >
+                {isNavigating ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Home className="w-4 h-4" />
+                )}
+                {isNavigating ? "移動中..." : "ダッシュボードへ戻る"}
               </Button>
               <Button variant="outline" className="rounded-full px-12 h-14 border-slate-200 text-slate-500 hover:text-slate-900 font-black text-xs uppercase tracking-[0.2em] shadow-sm hover:bg-slate-50 transition-all" onClick={() => setView("intro")}>
                 最初からもう一度見る
