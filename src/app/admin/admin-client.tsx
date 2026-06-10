@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { RegisterStaffForm } from "@/components/register-staff-form";
 import { StaffClient } from "./staff-client";
 import { ManageStaffDialog } from "@/components/manage-staff-dialog";
+import type { StaffWithEnrollments, FacilityAssignment } from "@/types";
 
 interface AdminClientProps {
-  staffMembers: any[];
-  currentAssignments: any[];
+  staffMembers: StaffWithEnrollments[];
+  currentAssignments: FacilityAssignment[];
   maxStaff: number;
   isSuspended?: boolean;
 }

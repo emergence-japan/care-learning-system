@@ -15,6 +15,7 @@ vi.mock('@/lib/prisma', () => ({
       create: vi.fn(),
       update: vi.fn(),
       findUnique: vi.fn(),
+      findFirst: vi.fn(), // 法人名の重複チェック
     },
     facility: {
       create: vi.fn(),
@@ -78,7 +79,7 @@ describe('Corporation Limits Actions', () => {
     })
   })
 
-  it('施設数が上限に達している場合、エラーを投げること', async () => {
+  it('施設数が上限に達している場合、エラーメッセージを返すこと', async () => {
     ;(prisma.corporation.findUnique as any).mockResolvedValue({
       id: 'corp-1',
       maxFacilities: 2,
@@ -89,7 +90,9 @@ describe('Corporation Limits Actions', () => {
     formData.append('name', 'New Facility')
     formData.append('corporationId', 'corp-1')
 
-    await expect(createFacility(formData)).rejects.toThrow(/施設登録枠の上限/i)
+    const result = await createFacility(formData)
+    expect(result).toMatch(/施設登録枠の上限/i)
+    expect(prisma.facility.create).not.toHaveBeenCalled()
   })
 
   it('スタッフ数が上限に達している場合、エラーメッセージを返すこと', async () => {

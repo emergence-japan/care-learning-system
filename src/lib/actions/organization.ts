@@ -14,9 +14,15 @@ export async function createCorporation(formData: FormData) {
 
   if (!session?.user || session.user.role !== "SUPER_ADMIN") throw new UnauthorizedError();
 
-  const name = formData.get("name") as string;
+  const name = (formData.get("name") as string)?.trim();
   const maxFacilities = parseInt(formData.get("maxFacilities") as string) || 10;
   const maxStaff = parseInt(formData.get("maxStaff") as string) || 100;
+
+  if (!name) return "法人名を入力してください。";
+  if (maxFacilities < 1 || maxStaff < 1) return "最大施設数・最大スタッフ数は1以上を指定してください。";
+
+  const duplicate = await corporationRepository.findNameConflict(name);
+  if (duplicate) return "同じ名前の法人が既に登録されています。";
 
   await corporationRepository.create({ name, maxFacilities, maxStaff });
 
@@ -29,11 +35,20 @@ export async function updateCorporation(id: string, formData: FormData) {
 
   if (!session?.user || session.user.role !== "SUPER_ADMIN") throw new UnauthorizedError();
 
-  const name = formData.get("name") as string;
+  const name = (formData.get("name") as string)?.trim();
   const maxFacilities = parseInt(formData.get("maxFacilities") as string);
   const maxStaff = parseInt(formData.get("maxStaff") as string);
 
-  await corporationRepository.update(id, { name, maxFacilities, maxStaff });
+  if (!name) return "法人名を入力してください。";
+
+  const duplicate = await corporationRepository.findNameConflict(name, id);
+  if (duplicate) return "同じ名前の法人が既に登録されています。";
+
+  await corporationRepository.update(id, {
+    name,
+    maxFacilities: isNaN(maxFacilities) ? undefined : maxFacilities,
+    maxStaff: isNaN(maxStaff) ? undefined : maxStaff,
+  });
 
   revalidatePath("/super-admin/organizations");
 }
@@ -67,16 +82,22 @@ export async function createFacility(formData: FormData) {
 
   if (!session?.user || session.user.role !== "SUPER_ADMIN") throw new UnauthorizedError();
 
-  const name = formData.get("name") as string;
+  const name = (formData.get("name") as string)?.trim();
   const type = formData.get("type") as string;
   const corporationId = formData.get("corporationId") as string;
   const maxStaff = parseInt(formData.get("maxStaff") as string) || 20;
 
+  if (!name) return "施設名を入力してください。";
+  if (!corporationId) return "所属法人を選択してください。";
+
   const corporation = await corporationRepository.findByIdWithFacilityCount(corporationId);
-  if (!corporation) throw new NotFoundError("法人が見つかりません。");
+  if (!corporation) return "法人が見つかりません。";
   if (corporation._count.facilities >= corporation.maxFacilities) {
-    throw new Error(`施設登録枠の上限（${corporation.maxFacilities}施設）に達しています。`);
+    return `施設登録枠の上限（${corporation.maxFacilities}施設）に達しています。`;
   }
+
+  const duplicate = await facilityRepository.findByCorpAndName(corporationId, name);
+  if (duplicate) return "同じ名前の施設が既に存在します。";
 
   await facilityRepository.create({ name, type, corporationId, maxStaff });
 
@@ -89,11 +110,17 @@ export async function updateFacility(id: string, formData: FormData) {
 
   if (!session?.user || session.user.role !== "SUPER_ADMIN") throw new UnauthorizedError();
 
-  const name = formData.get("name") as string;
+  const name = (formData.get("name") as string)?.trim();
   const type = formData.get("type") as string;
   const maxStaff = parseInt(formData.get("maxStaff") as string);
 
-  await facilityRepository.update(id, { name, type: type || null, maxStaff });
+  if (!name) return "施設名を入力してください。";
+
+  await facilityRepository.update(id, {
+    name,
+    type: type || null,
+    maxStaff: isNaN(maxStaff) ? undefined : maxStaff,
+  });
 
   revalidatePath("/super-admin/organizations");
 }
@@ -192,6 +219,7 @@ export async function hqCreateAdmin(formData: FormData) {
   const password = formData.get("password") as string;
 
   if (!name || !loginId || !password || !facilityId) return "全ての項目を入力してください。";
+  if (password.length < 8) return "パスワードは8文字以上で入力してください。";
 
   const existing = await userRepository.findByLoginId(loginId);
   if (existing) return "このログインIDは既に登録されています。";

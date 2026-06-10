@@ -91,6 +91,35 @@ export interface User {
 }
 
 // ============================================================
+// Admin Dashboard Types（Server → Client 受け渡し用シリアライズ済み形状）
+// ============================================================
+
+export interface StaffEnrollment {
+  id: string;
+  courseId: string;
+  assignmentId: string | null;
+  status: EnrollmentStatus;
+  actionPlan: string | null;
+  completedAt: string | null;
+  course: { id: string; title: string };
+}
+
+export interface StaffWithEnrollments {
+  id: string;
+  name: string;
+  loginId: string;
+  enrollments: StaffEnrollment[];
+}
+
+export interface FacilityAssignment {
+  id: string;
+  courseId: string;
+  startDate: string;
+  endDate: string;
+  course: { id: string; title: string };
+}
+
+// ============================================================
 // Report Types
 // ============================================================
 

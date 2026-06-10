@@ -1,8 +1,15 @@
 import NextAuth, { type DefaultSession } from "next-auth"
+import type { Adapter } from "next-auth/adapters"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
+import {
+  isLockedOut,
+  recordLoginFailure,
+  clearLoginFailures,
+  LOGIN_LOCKOUT_MESSAGE,
+} from "@/lib/login-rate-limit"
 
 // NextAuth の型拡張
 declare module "next-auth" {
@@ -35,7 +42,7 @@ declare module "next-auth" {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     Credentials({
       name: "Credentials",
@@ -46,15 +53,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.loginId || !credentials?.password) return null
 
+        const loginId = credentials.loginId as string
+
+        // 総当たり攻撃対策：連続失敗でロック
+        if (isLockedOut(loginId)) {
+          throw new Error(LOGIN_LOCKOUT_MESSAGE)
+        }
+
         const user = await prisma.user.findUnique({
-          where: { loginId: credentials.loginId as string },
+          where: { loginId },
           include: {
             corporation: { select: { isActive: true } },
             facility: { select: { isActive: true } },
           },
         })
 
-        if (!user) return null
+        if (!user) {
+          recordLoginFailure(loginId)
+          return null
+        }
 
         // 停止フラグの判定
         const isCorpSuspended = user.corporation ? !user.corporation.isActive : false
@@ -69,7 +86,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const isPasswordCorrect = await bcrypt.compare(credentials.password as string, user.password)
 
-        if (!isPasswordCorrect) return null
+        if (!isPasswordCorrect) {
+          recordLoginFailure(loginId)
+          return null
+        }
+
+        clearLoginFailures(loginId)
 
         return {
           id: user.id,
@@ -96,10 +118,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.locale = token.locale as string
       }
       if (token.facilityId !== undefined && session.user) {
-        session.user.facilityId = token.facilityId as any
+        session.user.facilityId = token.facilityId as string | null
       }
       if (token.corporationId !== undefined && session.user) {
-        session.user.corporationId = token.corporationId as any
+        session.user.corporationId = token.corporationId as string | null
       }
       if (token.isSuspended !== undefined && session.user) {
         session.user.isSuspended = token.isSuspended as boolean

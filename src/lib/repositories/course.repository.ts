@@ -33,12 +33,14 @@ export const courseRepository = {
   },
 
   async deleteWithRelations(id: string) {
-    await prisma.choice.deleteMany({ where: { question: { courseId: id } } });
-    await prisma.question.deleteMany({ where: { courseId: id } });
-    await prisma.slide.deleteMany({ where: { courseId: id } });
-    await prisma.enrollment.deleteMany({ where: { courseId: id } });
-    await prisma.courseAssignment.deleteMany({ where: { courseId: id } });
-    return prisma.course.delete({ where: { id } });
+    return prisma.$transaction([
+      prisma.choice.deleteMany({ where: { question: { courseId: id } } }),
+      prisma.question.deleteMany({ where: { courseId: id } }),
+      prisma.slide.deleteMany({ where: { courseId: id } }),
+      prisma.enrollment.deleteMany({ where: { courseId: id } }),
+      prisma.courseAssignment.deleteMany({ where: { courseId: id } }),
+      prisma.course.delete({ where: { id } }),
+    ]);
   },
 
   async createAssignment(

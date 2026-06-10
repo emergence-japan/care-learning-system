@@ -88,6 +88,6 @@ describe('Enrollment Actions', () => {
   it('未認証の場合はエラーを投げること', async () => {
     ;(auth as any).mockResolvedValue(null)
 
-    await expect(completeEnrollment('course1', 'assignment1')).rejects.toThrow(/Unauthorized/i)
+    await expect(completeEnrollment('course1', 'assignment1')).rejects.toThrow('認証が必要です。')
   })
 })

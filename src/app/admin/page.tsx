@@ -159,17 +159,23 @@ export default async function AdminDashboardPage() {
               </h3>
               <div className="flex items-center gap-2 no-print">
                 <FiscalYearSelector currentMonth={facility.corporation?.fiscalYearStartMonth || 4} />
-                <CourseAssignmentDialog 
-                  courses={allAvailableCourses as any} 
-                  currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))} 
+                <CourseAssignmentDialog
+                  courses={allAvailableCourses}
+                  currentAssignments={assignments.map(a => ({ courseId: a.courseId, endDate: new Date(a.endDate) }))}
                 />
               </div>
             </div>
             <Card className="border border-slate-200 bg-white rounded-[2rem] p-4 lg:p-10 shadow-sm min-h-[200px] flex items-center justify-center overflow-hidden">
               {assignments.length > 0 ? (
-                <TrainingTimeline 
-                    startMonth={facility.corporation?.fiscalYearStartMonth || 4} 
-                    assignments={assignments as any} 
+                <TrainingTimeline
+                    startMonth={facility.corporation?.fiscalYearStartMonth || 4}
+                    assignments={assignments.map(a => ({
+                      id: a.id,
+                      courseId: a.courseId,
+                      course: { title: a.course.title },
+                      startDate: new Date(a.startDate),
+                      endDate: new Date(a.endDate),
+                    }))}
                 />
               ) : (
                 <div className="text-center py-12">
@@ -253,8 +259,8 @@ export default async function AdminDashboardPage() {
 
           {/* 3. スタッフ管理 */}
           <AdminClient
-            staffMembers={staffMembers as any}
-            currentAssignments={assignments as any}
+            staffMembers={staffMembers}
+            currentAssignments={assignments}
             maxStaff={facility.maxStaff ?? 20}
             isSuspended={!facility.isActive || facility.corporation?.isActive === false}
           />

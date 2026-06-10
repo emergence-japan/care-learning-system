@@ -27,7 +27,7 @@ interface Assignment {
 interface Facility {
   id: string;
   name: string;
-  type?: string;
+  type?: string | null;
   isActive: boolean;
   staffCount: number;
   maxStaff: number;

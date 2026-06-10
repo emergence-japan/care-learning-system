@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import type { Role } from "@prisma/client";
 
 export const userRepository = {
   async findById(id: string) {
@@ -37,24 +38,24 @@ export const userRepository = {
     name: string;
     loginId: string;
     password: string;
-    role: string;
+    role: Role;
     facilityId?: string | null;
     corporationId?: string | null;
   }) {
-    return prisma.user.create({ data: data as any });
+    return prisma.user.create({ data });
   },
 
   async createWithHashedPassword(data: {
     name: string;
     loginId: string;
     password: string;
-    role: string;
+    role: Role;
     facilityId?: string | null;
     corporationId?: string | null;
   }) {
     return prisma.user.create({
       data: {
-        ...(data as any),
+        ...data,
         password: await bcrypt.hash(data.password, 12),
       },
     });
@@ -72,8 +73,14 @@ export const userRepository = {
   },
 
   async deleteWithEnrollments(id: string) {
-    await prisma.enrollment.deleteMany({ where: { userId: id } });
-    return prisma.user.delete({ where: { id } });
+    // Inquiry.senderId is a required FK (ON DELETE RESTRICT), so the user's
+    // inquiries (and their replies) must be removed before the user.
+    return prisma.$transaction([
+      prisma.enrollment.deleteMany({ where: { userId: id } }),
+      prisma.inquiryReply.deleteMany({ where: { inquiry: { senderId: id } } }),
+      prisma.inquiry.deleteMany({ where: { senderId: id } }),
+      prisma.user.delete({ where: { id } }),
+    ]);
   },
 
   async deleteManyByFacility(facilityId: string) {

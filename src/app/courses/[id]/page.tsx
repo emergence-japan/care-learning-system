@@ -87,9 +87,9 @@ export default async function CourseDetailPage({
       className="min-h-screen !bg-slate-50 pb-16 relative overflow-hidden light"
       style={{
         backgroundColor: '#f8fafc',
-        ['--background' as any]: 'oklch(0.985 0 0)',
-        ['--card' as any]: 'oklch(1 0 0)'
-      }}
+        '--background': 'oklch(0.985 0 0)',
+        '--card': 'oklch(1 0 0)',
+      } as React.CSSProperties}
     >
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl pointer-events-none">

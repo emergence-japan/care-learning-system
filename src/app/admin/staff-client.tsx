@@ -4,8 +4,9 @@ import { CheckCircle2, AlertCircle, CalendarClock } from "lucide-react";
 import { ActionPlanDialog } from "@/components/action-plan-dialog";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
+import type { StaffWithEnrollments, FacilityAssignment } from "@/types";
 
-export function StaffClient({ staffMembers = [], currentAssignments = [] }: { staffMembers: any[], currentAssignments: any[] }) {
+export function StaffClient({ staffMembers = [], currentAssignments = [] }: { staffMembers: StaffWithEnrollments[], currentAssignments: FacilityAssignment[] }) {
   
   const hasAssignments = currentAssignments.length > 0;
   const hasStaff = staffMembers.length > 0;
@@ -55,7 +56,7 @@ export function StaffClient({ staffMembers = [], currentAssignments = [] }: { st
           {hasStaff ? (
             staffMembers.map((staff) => {
               const enrollments = staff.enrollments || [];
-              const completedCount = enrollments.filter((e: any) => 
+              const completedCount = enrollments.filter((e) =>
                 e.status === 'COMPLETED' && currentAssignments.some(a => a.courseId === e.courseId)
               ).length;
               const totalCount = currentAssignments.length;
@@ -74,7 +75,7 @@ export function StaffClient({ staffMembers = [], currentAssignments = [] }: { st
                   </td>
                   {hasAssignments ? (
                     currentAssignments.map(assign => {
-                      const enrollment = enrollments.find((e: any) => e.courseId === assign.courseId);
+                      const enrollment = enrollments.find((e) => e.courseId === assign.courseId);
                       const isCompleted = enrollment?.status === "COMPLETED";
                       const assignEndDate = assign.endDate ? new Date(assign.endDate) : null;
                       const isOverdue = !isCompleted && assignEndDate && new Date() > assignEndDate;

@@ -58,7 +58,8 @@ export function HQResetPasswordDialog({ userId, userName }: { userId: string, us
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="4文字以上で入力"
+                  placeholder="8文字以上で入力"
+                  minLength={8}
                   required
                   className="h-12 bg-white/5 border-white/10 focus:border-blue-500 rounded-xl text-white"
                 />

@@ -16,7 +16,8 @@ interface ActionPlanDialogProps {
   staffName: string;
   courseTitle: string;
   content: string;
-  completedAt: Date | null;
+  // シリアライズ済みの ISO 文字列または Date を受け付ける（date-fns の format は両方扱える）
+  completedAt: string | Date | null;
   trigger: React.ReactNode;
 }
 

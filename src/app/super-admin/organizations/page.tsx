@@ -1,14 +1,11 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building, Home, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createCorporation, createFacility } from "@/lib/actions";
 import Link from "next/link";
 import { OrganizationClient } from "./organization-client";
+import { OrganizationCreateForms } from "./organization-create-forms";
 
 export default async function OrganizationManagementPage() {
   const session = await auth();
@@ -84,71 +81,7 @@ export default async function OrganizationManagementPage() {
 
       <main className="max-w-6xl mx-auto px-4 pt-8 space-y-10">
         {/* Create Organization Forms */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* New Corporation */}
-          <Card className="border-zinc-200 shadow-sm rounded-2xl">
-            <CardHeader className="bg-zinc-50/50">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Building className="w-5 h-5 text-red-600" />
-                新規法人登録
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <form action={createCorporation} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="corp-name">法人名</Label>
-                  <Input id="corp-name" name="name" placeholder="例: 社会福祉法人 ケア・ライフ" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="corp-max-facilities">最大施設数</Label>
-                  <Input id="corp-max-facilities" name="maxFacilities" type="number" defaultValue={10} min={1} required />
-                </div>
-                <Button type="submit" className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-11 font-bold">
-                  法人を登録
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* New Facility */}
-          <Card className="border-zinc-200 shadow-sm rounded-2xl">
-            <CardHeader className="bg-zinc-50/50">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Home className="w-5 h-5 text-red-600" />
-                新規施設登録
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <form action={createFacility} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fac-corp">所属法人</Label>
-                  <select 
-                    id="fac-corp" 
-                    name="corporationId" 
-                    className="w-full h-10 rounded-md border border-zinc-200 px-3 text-sm"
-                    required
-                  >
-                    <option value="">法人を選択してください</option>
-                    {corporations.map(c => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fac-name">施設名</Label>
-                  <Input id="fac-name" name="name" placeholder="例: ケア・ライフ あさがお" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fac-max-staff">最大スタッフ数</Label>
-                  <Input id="fac-max-staff" name="maxStaff" type="number" defaultValue={20} min={1} required />
-                </div>
-                <Button type="submit" className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl h-11 font-bold">
-                  施設を登録
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+        <OrganizationCreateForms corporations={corporations.map(c => ({ id: c.id, name: c.name }))} />
 
         {/* Existing Organizations List */}
         <section className="space-y-6">

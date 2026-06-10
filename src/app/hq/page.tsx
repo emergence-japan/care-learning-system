@@ -246,7 +246,7 @@ export default async function HQDashboardPage() {
                 </div>
               </div>
 
-              <FacilityMonitoringClient facilities={facilityStats as any} isCorporationSuspended={isSuspended} />
+              <FacilityMonitoringClient facilities={facilityStats} isCorporationSuspended={isSuspended} />
             </div>
 
           </div>

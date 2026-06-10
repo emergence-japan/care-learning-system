@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import CourseDetailPage from '@/app/courses/[id]/page'
 
@@ -18,6 +18,19 @@ vi.mock('@/lib/repositories', () => ({
   },
 }))
 
+const mockCourse = {
+  id: 'c1',
+  title: '虐待防止研修（令和6年度）',
+  description: '高齢者虐待防止の基本と対応について学習します。',
+  introduction: null,
+  learningObjectives: null,
+  videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  slides: [
+    { id: 's1', title: 'スライド1', content: '<p>内容1</p>', order: 1 },
+  ],
+  questions: [],
+}
+
 // Mock prisma
 vi.mock('@/lib/prisma', () => ({
   default: {
@@ -31,16 +44,7 @@ vi.mock('@/lib/prisma', () => ({
       }),
     },
     course: {
-      findUnique: vi.fn().mockResolvedValue({
-        id: 'c1',
-        title: '虐待防止研修（令和6年度）',
-        description: '高齢者高齢者虐待防止の基本と対応について学習します。',
-        introduction: null,
-        learningObjectives: null,
-        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        slides: [],
-        questions: [],
-      }),
+      findUnique: vi.fn(),
     },
   },
 }))
@@ -54,8 +58,10 @@ describe('Course Detail Page', () => {
   it('研修のタイトルと説明が表示されていること', async () => {
     const { auth } = await import('@/auth')
     ;(auth as any).mockResolvedValue({
-      user: { id: 'user1', name: 'Test User', facilityId: 'f1' }
+      user: { id: 'user1', name: 'Test User', facilityId: 'f1' },
     })
+    const { default: prisma } = await import('@/lib/prisma')
+    ;(prisma.course.findUnique as any).mockResolvedValue(mockCourse)
 
     const Result = await CourseDetailPage(makeProps())
     render(Result)
@@ -64,24 +70,31 @@ describe('Course Detail Page', () => {
     expect(screen.getByText(/高齢者虐待防止の基本/i)).toBeInTheDocument()
   })
 
-  it('YouTube動画プレイヤーが表示されていること', async () => {
+  it('動画タブに切り替えるとYouTube埋め込みプレイヤーが表示されること', async () => {
     const { auth } = await import('@/auth')
     ;(auth as any).mockResolvedValue({
-      user: { id: 'user1', name: 'Test User', facilityId: 'f1' }
+      user: { id: 'user1', name: 'Test User', facilityId: 'f1' },
     })
+    const { default: prisma } = await import('@/lib/prisma')
+    ;(prisma.course.findUnique as any).mockResolvedValue(mockCourse)
 
     const Result = await CourseDetailPage(makeProps())
-    render(Result)
+    const { container } = render(Result)
 
-    const iframe = screen.getByTitle(/YouTube video player/i)
-    expect(iframe).toBeInTheDocument()
-    expect(iframe).toHaveAttribute('src', expect.stringContaining('youtube.com/embed/dQw4w9WgXcQ'))
+    fireEvent.click(screen.getByRole('button', { name: /動画/i }))
+
+    const iframe = container.querySelector('iframe')
+    expect(iframe).not.toBeNull()
+    expect(iframe).toHaveAttribute(
+      'src',
+      expect.stringContaining('youtube.com/embed/dQw4w9WgXcQ'),
+    )
   })
 
-  it('受講完了済みの場合は「受講を完了しています」と表示されること', async () => {
+  it('受講完了済みの場合は修了画面が表示されること', async () => {
     const { auth } = await import('@/auth')
     ;(auth as any).mockResolvedValue({
-      user: { id: 'user1', name: 'Test User', facilityId: 'f1' }
+      user: { id: 'user1', name: 'Test User', facilityId: 'f1' },
     })
 
     const { enrollmentRepository } = await import('@/lib/repositories')
@@ -92,21 +105,12 @@ describe('Course Detail Page', () => {
     })
 
     const { default: prisma } = await import('@/lib/prisma')
-    ;(prisma.course.findUnique as any).mockResolvedValue({
-      id: 'c1',
-      title: '虐待防止研修（令和6年度）',
-      description: null,
-      introduction: null,
-      learningObjectives: null,
-      videoUrl: 'https://youtube.com/v=123',
-      slides: [],
-      questions: [],
-    })
+    ;(prisma.course.findUnique as any).mockResolvedValue(mockCourse)
 
     const Result = await CourseDetailPage(makeProps())
     render(Result)
 
-    expect(screen.getByText(/受講を完了しています/i)).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /受講を完了する/i })).not.toBeInTheDocument()
+    expect(screen.getByText(/研修課程を修了しました/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /ダッシュボードへ戻る/ })).toBeInTheDocument()
   })
 })

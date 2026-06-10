@@ -30,11 +30,12 @@ export async function registerStaff(formData: FormData) {
   if (!name || !loginId || !password) {
     return "全ての項目（氏名、ログインID、パスワード）を入力してください。";
   }
+  if (password.length < 8) return "パスワードは8文字以上で入力してください。";
 
   const existing = await userRepository.findByLoginId(loginId);
   if (existing) return "このログインIDは既に登録されています。別のIDを指定してください。";
 
-  const newUser = await userRepository.createWithHashedPassword({
+  await userRepository.createWithHashedPassword({
     name,
     loginId,
     password,
@@ -79,7 +80,8 @@ export async function updateUser(userId: string, formData: FormData) {
   const updateData: Record<string, unknown> = {};
   if (name) updateData.name = name;
   if (loginId) updateData.loginId = loginId;
-  if (password && password.length >= 4) {
+  if (password) {
+    if (password.length < 8) return "パスワードは8文字以上で入力してください。";
     const bcrypt = await import("bcryptjs");
     updateData.password = await bcrypt.hash(password, 12);
   }
@@ -99,7 +101,7 @@ export async function hqUpdateUserPassword(userId: string, formData: FormData) {
   if (!session?.user || session.user.role !== "HQ") throw new UnauthorizedError();
 
   const newPassword = formData.get("password") as string;
-  if (!newPassword || newPassword.length < 4) return "パスワードは4文字以上で入力してください。";
+  if (!newPassword || newPassword.length < 8) return "パスワードは8文字以上で入力してください。";
 
   const targetUser = await userRepository.findByIdForCorpCheck(userId);
   if (!targetUser || targetUser.corporationId !== session.user.corporationId) {
@@ -118,7 +120,7 @@ export async function updateStaffPassword(staffId: string, formData: FormData) {
   if (!session?.user || session.user.role !== "ADMIN") throw new UnauthorizedError();
 
   const newPassword = formData.get("password") as string;
-  if (!newPassword || newPassword.length < 4) return "パスワードは4文字以上で入力してください。";
+  if (!newPassword || newPassword.length < 8) return "パスワードは8文字以上で入力してください。";
 
   const staff = await userRepository.findByIdForFacilityCheck(staffId);
   if (!staff || staff.facilityId !== session.user.facilityId) throw new ForbiddenError();
@@ -144,6 +146,7 @@ export async function createOrgUser(formData: FormData) {
   if (!name || !loginId || !password) {
     return "全ての必須項目（氏名、ログインID、パスワード）を入力してください。";
   }
+  if (password.length < 8) return "パスワードは8文字以上で入力してください。";
 
   const existing = await userRepository.findByLoginId(loginId);
   if (existing) return "このログインIDは既に登録されています。";

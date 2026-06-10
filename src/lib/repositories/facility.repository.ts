@@ -39,9 +39,16 @@ export const facilityRepository = {
   },
 
   async deleteWithUsers(id: string) {
-    await prisma.enrollment.deleteMany({ where: { user: { facilityId: id } } });
-    await prisma.user.deleteMany({ where: { facilityId: id } });
-    return prisma.facility.delete({ where: { id } });
+    // Inquiry.senderId / CourseAssignment.facilityId are required FKs (ON DELETE RESTRICT),
+    // so all dependent rows must be removed before users / the facility.
+    return prisma.$transaction([
+      prisma.enrollment.deleteMany({ where: { user: { facilityId: id } } }),
+      prisma.inquiryReply.deleteMany({ where: { inquiry: { sender: { facilityId: id } } } }),
+      prisma.inquiry.deleteMany({ where: { sender: { facilityId: id } } }),
+      prisma.courseAssignment.deleteMany({ where: { facilityId: id } }),
+      prisma.user.deleteMany({ where: { facilityId: id } }),
+      prisma.facility.delete({ where: { id } }),
+    ]);
   },
 
   async deleteManyByCorporation(corporationId: string) {
