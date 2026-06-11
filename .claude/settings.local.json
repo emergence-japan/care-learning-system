@@ -30,7 +30,29 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "WebFetch(domain:www.mhlw.go.jp)",
+      "WebFetch(domain:elaws.e-gov.go.jp)",
+      "WebFetch(domain:laws.e-gov.go.jp)",
+      "WebFetch(domain:www.wam.go.jp)",
+      "WebFetch(domain:www.fukushihoken.metro.tokyo.lg.jp)",
+      "WebFetch(domain:www.fukushi.metro.tokyo.lg.jp)",
+      "WebFetch(domain:www.city.osaka.lg.jp)",
+      "WebFetch(domain:www.pref.osaka.lg.jp)",
+      "WebFetch(domain:www.pref.saitama.lg.jp)",
+      "WebFetch(domain:www.pref.kanagawa.jp)",
+      "WebFetch(domain:www.pref.aichi.jp)",
+      "WebFetch(domain:www.pref.niigata.lg.jp)",
+      "WebFetch(domain:www.pref.fukuoka.lg.jp)",
+      "WebFetch(domain:www.pref.hiroshima.lg.jp)",
+      "WebFetch(domain:www.roken.or.jp)",
+      "Bash(npm install:*)",
+      "Bash(npm list:*)",
+      "Bash(find src:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npx jest:*)",
+      "Bash(npm test:*)",
+      "Bash(node -e \":*)"
     ]
   }
 }
