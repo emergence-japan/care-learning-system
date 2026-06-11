@@ -29,11 +29,11 @@ export default async function OrganizationManagementPage() {
           maxStaff: true,
           isActive: true,
           users: {
-            where: { role: { in: ["ADMIN", "STAFF"] } },
-            select: { 
-              id: true, 
-              name: true, 
-              loginId: true, 
+            where: { role: { in: ["ADMIN", "STAFF"] }, deletedAt: null },
+            select: {
+              id: true,
+              name: true,
+              loginId: true,
               role: true,
               enrollments: {
                 select: { status: true, courseId: true }
@@ -48,8 +48,8 @@ export default async function OrganizationManagementPage() {
             }
           },
           _count: {
-            select: { 
-              users: { where: { role: "STAFF" } },
+            select: {
+              users: { where: { role: "STAFF", deletedAt: null } },
               assignments: true
             }
           }

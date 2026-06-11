@@ -12,14 +12,15 @@ export async function getSummaryReportData(facilityId: string, fiscalYear: numbe
   if (!facility) throw new Error("Facility not found");
 
   const staffCount = await prisma.user.count({
-    where: { facilityId, role: "STAFF" },
+    where: { facilityId, role: "STAFF", deletedAt: null },
   });
 
   const courses = await prisma.course.findMany({
     include: {
       enrollments: {
         where: {
-          user: { facilityId },
+          // 完了率の分子も在籍者のみ。退職者の完了は分母から外れるため分子からも除外する
+          user: { facilityId, deletedAt: null },
           status: "COMPLETED",
           completedAt: {
             gte: startDate,
@@ -77,6 +78,8 @@ export async function getSummaryReportData(facilityId: string, fiscalYear: numbe
   };
 }
 
+// 個人レポートは退職者(deletedAt!=null)でも出力可能。監査で退職者の過去実績を
+// 求められるため、ここでは deletedAt フィルタを掛けない。
 export async function getStaffReportData(userId: string, fiscalYear: number, startMonth: number = 4) {
   const startDate = new Date(fiscalYear, startMonth - 1, 1);
   const endDate = new Date(fiscalYear + 1, startMonth - 1, 0);

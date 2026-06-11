@@ -13,7 +13,8 @@ export const facilityRepository = {
       where: { id },
       include: {
         _count: {
-          select: { users: { where: { role: "STAFF" } } },
+          // 退職者(deletedAt!=null)は maxStaff 枠から除外する
+          select: { users: { where: { role: "STAFF", deletedAt: null } } },
         },
       },
     });

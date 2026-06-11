@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateUser, deleteUser } from "@/lib/actions";
+import { updateUser, retireUser } from "@/lib/actions";
 import {
   Dialog,
   DialogContent,
@@ -37,7 +37,7 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
   const [selectedStaffId, setSelectedStaffId] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [shownPassword, setShownPassword] = useState<string | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isRetiring, setIsRetiring] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const enteredPasswordRef = useRef("");
 
@@ -62,17 +62,17 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
     return _handleUpdate(formData);
   };
 
-  const isPending = isUpdating || isDeleting;
+  const isPending = isUpdating || isRetiring;
 
-  const handleDelete = async () => {
+  const handleRetire = async () => {
     if (!selectedStaff) return;
-    if (!confirm(`スタッフ「${selectedStaff.name}」を削除しますか？\nこの操作は取り消せません。`)) return;
-    setIsDeleting(true);
+    if (!confirm(`スタッフ「${selectedStaff.name}」を退職処理しますか？\nログインができなくなり、スタッフ一覧から外れます。\n受講記録は監査のため保持されます。`)) return;
+    setIsRetiring(true);
     try {
-      await deleteUser(selectedStaff.id);
+      await retireUser(selectedStaff.id);
       window.location.reload();
     } catch {
-      setIsDeleting(false);
+      setIsRetiring(false);
     }
   };
 
@@ -201,14 +201,14 @@ export function ManageStaffDialog({ staffMembers, trigger }: Props) {
               )}
 
               <div className="pt-6 border-t border-slate-100">
-                <Button 
-                  variant="ghost" 
-                  onClick={handleDelete} 
+                <Button
+                  variant="ghost"
+                  onClick={handleRetire}
                   disabled={isPending}
                   className="w-full text-red-500 hover:text-red-600 hover:bg-red-50 h-11 rounded-xl font-bold flex items-center gap-2 justify-center group"
                 >
-                  <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  このスタッフを削除する
+                  {isRetiring ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform" />}
+                  このスタッフを退職処理する
                 </Button>
               </div>
 

@@ -73,6 +73,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
+        // 退職済み（論理削除）ユーザーはログイン不可。
+        // loginId 列挙を防ぐため「存在しない」場合と同じ挙動にする。
+        if (user.deletedAt) {
+          recordLoginFailure(loginId)
+          return null
+        }
+
         // 停止フラグの判定
         const isCorpSuspended = user.corporation ? !user.corporation.isActive : false
         const isFacilitySuspended = user.facility ? !user.facility.isActive : false

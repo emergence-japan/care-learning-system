@@ -34,7 +34,7 @@ export default async function HQFacilityDetailPage({
     where: { id },
     include: {
       users: {
-        where: { role: { in: ["STAFF", "ADMIN"] } },
+        where: { role: { in: ["STAFF", "ADMIN"] }, deletedAt: null },
         include: {
           enrollments: {
             include: {

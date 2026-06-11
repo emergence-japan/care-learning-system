@@ -72,6 +72,16 @@ export const userRepository = {
     });
   },
 
+  // 退職処理（論理削除）: deletedAt をセットするだけ。受講記録(Enrollment)・
+  // 問い合わせ等は監査のため保持する。
+  async retire(id: string) {
+    return prisma.user.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  },
+
+  // 完全削除（物理削除）。退職後の保持期間が経過したスタッフを消す用途で使用予定。
   async deleteWithEnrollments(id: string) {
     // Inquiry.senderId is a required FK (ON DELETE RESTRICT), so the user's
     // inquiries (and their replies) must be removed before the user.

@@ -38,10 +38,10 @@ export default async function HQDashboardPage() {
       facilities: {
         include: {
           _count: {
-            select: { users: { where: { role: "STAFF" } } }
+            select: { users: { where: { role: "STAFF", deletedAt: null } } }
           },
           users: {
-            where: { role: { in: ["STAFF", "ADMIN"] } },
+            where: { role: { in: ["STAFF", "ADMIN"] }, deletedAt: null },
             include: { enrollments: true },
           },
           assignments: {

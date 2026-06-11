@@ -37,7 +37,7 @@ export default async function AdminDashboardPage() {
   // 1. 全てのデータを取得
   const [rawStaff, rawCourses, rawAssignments] = await Promise.all([
     prisma.user.findMany({
-      where: { facilityId: facilityId, role: "STAFF" },
+      where: { facilityId: facilityId, role: "STAFF", deletedAt: null },
       select: {
         id: true, name: true, loginId: true,
         createdAt: true, updatedAt: true,

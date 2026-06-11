@@ -17,6 +17,7 @@ model User {
   locale        String       @default("ja")
   facilityId    String?
   corporationId String?
+  deletedAt     DateTime?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   enrollments   Enrollment[]

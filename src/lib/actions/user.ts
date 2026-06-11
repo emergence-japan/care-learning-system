@@ -163,7 +163,8 @@ export async function createOrgUser(formData: FormData) {
   revalidatePath("/super-admin/organizations");
 }
 
-export async function deleteUser(id: string) {
+// 権限チェック: SUPER_ADMIN は全員、HQ は同一法人、ADMIN は同一施設の STAFF のみ操作可。
+async function authorizeUserMutation(id: string) {
   const { auth } = await import("@/auth");
   const session = await auth();
 
@@ -172,15 +173,45 @@ export async function deleteUser(id: string) {
     throw new UnauthorizedError();
   }
 
+  // 停止中の組織の管理者は変更操作不可（registerStaff/updateUser と同じ制約）
+  if (session.user.isSuspended && role !== "SUPER_ADMIN") {
+    throw new ForbiddenError("利用停止中のため、この操作は許可されていません。");
+  }
+
   if (role === "HQ") {
     const user = await userRepository.findByIdForCorpCheck(id);
     if (user?.corporationId !== session.user.corporationId) throw new ForbiddenError();
   }
 
   if (role === "ADMIN") {
-    const user = await userRepository.findByIdForFacilityCheck(id);
-    if (user?.facilityId !== session.user.facilityId) throw new ForbiddenError();
+    // ADMIN は同一施設の STAFF のみ操作可（他の管理者は操作できない）。updateUser と同条件。
+    const user = await userRepository.findById(id);
+    if (
+      user?.facilityId !== session.user.facilityId ||
+      user?.role !== "STAFF"
+    ) {
+      throw new ForbiddenError();
+    }
   }
+}
+
+// 退職処理（論理削除）。ログイン不可・一覧非表示・maxStaff枠から除外されるが、
+// 受講記録は監査のため保持される。
+export async function retireUser(id: string) {
+  await authorizeUserMutation(id);
+
+  await userRepository.retire(id);
+
+  revalidatePath("/admin");
+  revalidatePath("/hq");
+  revalidatePath("/super-admin/organizations");
+  revalidatePath("/");
+  return { success: true };
+}
+
+// 完全削除（物理削除）。受講記録ごと消える。保持期間経過後の利用を想定。
+export async function deleteUser(id: string) {
+  await authorizeUserMutation(id);
 
   await userRepository.deleteWithEnrollments(id);
 

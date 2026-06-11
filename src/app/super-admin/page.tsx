@@ -21,7 +21,7 @@ export default async function SuperAdminDashboard() {
   const [corpCount, facilityCount, staffCount, courseCount, unreadInquiryCount] = await Promise.all([
     prisma.corporation.count(),
     prisma.facility.count(),
-    prisma.user.count({ where: { role: 'STAFF' } }),
+    prisma.user.count({ where: { role: 'STAFF', deletedAt: null } }),
     prisma.course.count(),
     prisma.inquiry.count({ where: { status: 'UNREAD' } })
   ]);
