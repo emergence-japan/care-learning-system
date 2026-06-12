@@ -242,12 +242,21 @@ export async function getPurgeableStaff() {
     throw new UnauthorizedError();
   }
 
-  const scope =
-    role === "ADMIN"
-      ? { facilityId: session.user.facilityId ?? undefined }
-      : role === "HQ"
-        ? { corporationId: session.user.corporationId ?? undefined }
-        : {};
-
-  return userRepository.findPurgeable(retentionCutoff(), scope);
+  // スコープ用のフィールドが欠けている場合は「全件」にフォールスルーせず拒否する。
+  // （facilityId/corporationId が undefined のまま findPurgeable に渡すと
+  //  Prisma が条件を無視し、他施設・他法人の退職者まで見えてしまうため）
+  if (role === "ADMIN") {
+    if (!session.user.facilityId) throw new UnauthorizedError();
+    return userRepository.findPurgeable(retentionCutoff(), {
+      facilityId: session.user.facilityId,
+    });
+  }
+  if (role === "HQ") {
+    if (!session.user.corporationId) throw new UnauthorizedError();
+    return userRepository.findPurgeable(retentionCutoff(), {
+      corporationId: session.user.corporationId,
+    });
+  }
+  // SUPER_ADMIN のみ全件
+  return userRepository.findPurgeable(retentionCutoff(), {});
 }

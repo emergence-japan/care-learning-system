@@ -136,4 +136,23 @@ describe('getPurgeableStaff (保持期間経過者の一覧取得)', () => {
     await expect(getPurgeableStaff()).rejects.toThrow()
     expect(prisma.user.findMany).not.toHaveBeenCalled()
   })
+
+  it('施設未割当のADMINは全件取得にフォールスルーせず拒否されること', async () => {
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'admin1', role: 'ADMIN', facilityId: null },
+    })
+
+    await expect(getPurgeableStaff()).rejects.toThrow()
+    // スコープ無しで findMany が呼ばれてはならない（他施設の退職者が見える事故を防ぐ）
+    expect(prisma.user.findMany).not.toHaveBeenCalled()
+  })
+
+  it('法人未割当のHQは全件取得にフォールスルーせず拒否されること', async () => {
+    ;(auth as any).mockResolvedValue({
+      user: { id: 'hq1', role: 'HQ', corporationId: null },
+    })
+
+    await expect(getPurgeableStaff()).rejects.toThrow()
+    expect(prisma.user.findMany).not.toHaveBeenCalled()
+  })
 })
