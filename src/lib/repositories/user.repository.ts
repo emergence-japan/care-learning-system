@@ -34,6 +34,28 @@ export const userRepository = {
     });
   },
 
+  // 物理削除前の保持期間チェック用。deletedAt（退職日時）を取得する。
+  async findByIdForRetentionCheck(id: string) {
+    return prisma.user.findUnique({
+      where: { id },
+      select: { deletedAt: true },
+    });
+  },
+
+  // 保持期間（cutoff より前に退職した）を経過した退職者を施設/法人スコープで取得。
+  // scope が空なら全件（SUPER_ADMIN 用）。
+  async findPurgeable(cutoff: Date, scope: { facilityId?: string; corporationId?: string }) {
+    return prisma.user.findMany({
+      where: {
+        deletedAt: { not: null, lt: cutoff },
+        ...(scope.facilityId ? { facilityId: scope.facilityId } : {}),
+        ...(scope.corporationId ? { corporationId: scope.corporationId } : {}),
+      },
+      select: { id: true, name: true, loginId: true, deletedAt: true },
+      orderBy: { deletedAt: "asc" },
+    });
+  },
+
   async create(data: {
     name: string;
     loginId: string;

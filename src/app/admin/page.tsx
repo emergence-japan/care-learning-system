@@ -16,6 +16,7 @@ import { TrainingTimeline } from "@/components/training-timeline";
 import { IncompleteUsersDialog } from "@/components/incomplete-users-dialog";
 import { MobileNav } from "@/components/mobile-nav";
 import { SystemNotification } from "@/components/system-notification";
+import { getPurgeableStaff } from "@/lib/actions/user";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -35,7 +36,7 @@ export default async function AdminDashboardPage() {
   if (!facility) return <div className="p-20 text-center font-bold">施設情報が見つかりません</div>;
 
   // 1. 全てのデータを取得
-  const [rawStaff, rawCourses, rawAssignments] = await Promise.all([
+  const [rawStaff, rawCourses, rawAssignments, rawPurgeable] = await Promise.all([
     prisma.user.findMany({
       where: { facilityId: facilityId, role: "STAFF", deletedAt: null },
       select: {
@@ -50,7 +51,9 @@ export default async function AdminDashboardPage() {
       where: { facilityId },
       include: { course: true },
       orderBy: { endDate: 'asc' }
-    })
+    }),
+    // 退職して保持期間を経過したスタッフ（完全削除UI用）
+    getPurgeableStaff()
   ]);
 
   // 2. 重要：クライアントに渡すすべてのデータを安全に文字列化（ISO String）
@@ -89,6 +92,14 @@ export default async function AdminDashboardPage() {
       createdAt: a.course.createdAt.toISOString(),
       updatedAt: a.course.updatedAt.toISOString(),
     }
+  }));
+
+  // 保持期間経過スタッフ: deletedAt を retiredAt(ISO) に整形してクライアントへ渡す
+  const purgeableStaff = (rawPurgeable || []).map(s => ({
+    id: s.id,
+    name: s.name,
+    loginId: s.loginId,
+    retiredAt: (s.deletedAt as Date).toISOString(),
   }));
 
   const totalStaff = staffMembers.length;
@@ -263,6 +274,7 @@ export default async function AdminDashboardPage() {
             currentAssignments={assignments}
             maxStaff={facility.maxStaff ?? 20}
             isSuspended={!facility.isActive || facility.corporation?.isActive === false}
+            purgeableStaff={purgeableStaff}
           />
 
         </main>

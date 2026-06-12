@@ -1,20 +1,29 @@
 "use client";
 
-import { Users, ShieldCheck } from "lucide-react";
+import { Users, ShieldCheck, Archive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RegisterStaffForm } from "@/components/register-staff-form";
 import { StaffClient } from "./staff-client";
 import { ManageStaffDialog } from "@/components/manage-staff-dialog";
+import { PurgeStaffDialog } from "@/components/purge-staff-dialog";
 import type { StaffWithEnrollments, FacilityAssignment } from "@/types";
+
+type PurgeableStaff = {
+  id: string;
+  name: string;
+  loginId: string;
+  retiredAt: string;
+};
 
 interface AdminClientProps {
   staffMembers: StaffWithEnrollments[];
   currentAssignments: FacilityAssignment[];
   maxStaff: number;
   isSuspended?: boolean;
+  purgeableStaff?: PurgeableStaff[];
 }
 
-export function AdminClient({ staffMembers, currentAssignments, maxStaff, isSuspended }: AdminClientProps) {
+export function AdminClient({ staffMembers, currentAssignments, maxStaff, isSuspended, purgeableStaff = [] }: AdminClientProps) {
   const totalStaff = staffMembers.length;
 
   return (
@@ -44,6 +53,22 @@ export function AdminClient({ staffMembers, currentAssignments, maxStaff, isSusp
               </Button>
             }
           />
+
+          {/* 保持期間経過スタッフの完全削除 - 対象がいるときのみ表示 */}
+          {!isSuspended && purgeableStaff.length > 0 && (
+            <PurgeStaffDialog
+              staff={purgeableStaff}
+              trigger={
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full font-bold h-9 px-4 transition-all text-xs border-rose-200 text-rose-600 hover:bg-rose-50"
+                >
+                  <Archive className="w-3.5 h-3.5 mr-2" /> 保持期間経過 ({purgeableStaff.length})
+                </Button>
+              }
+            />
+          )}
 
           {/* スタッフを追加ボタン - 停止中は非表示 */}
           {!isSuspended && <RegisterStaffForm disabled={totalStaff >= maxStaff} />}

@@ -13,6 +13,11 @@ vi.mock('@/components/system-notification', () => ({
   SystemNotification: () => null,
 }))
 
+// 保持期間経過スタッフの取得はこのページテストの関心事ではないので空で返す
+vi.mock('@/lib/actions/user', () => ({
+  getPurgeableStaff: vi.fn().mockResolvedValue([]),
+}))
+
 const now = new Date('2026-01-01')
 
 const mockFacility = {

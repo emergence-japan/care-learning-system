@@ -6,6 +6,7 @@ import {
   userRepository,
   facilityRepository,
 } from "@/lib/repositories";
+import { RETENTION_YEARS, retentionCutoff, isPastRetention } from "@/lib/retention";
 
 export async function registerStaff(formData: FormData) {
   const { auth } = await import("@/auth");
@@ -209,9 +210,18 @@ export async function retireUser(id: string) {
   return { success: true };
 }
 
-// 完全削除（物理削除）。受講記録ごと消える。保持期間経過後の利用を想定。
+// 完全削除（物理削除）。受講記録ごと消える。
+// 退職済み かつ 保持期間（RETENTION_YEARS）を経過したスタッフのみ削除可能。
 export async function deleteUser(id: string) {
   await authorizeUserMutation(id);
+
+  const target = await userRepository.findByIdForRetentionCheck(id);
+  if (!target) throw new NotFoundError("ユーザーが見つかりません。");
+  if (!isPastRetention(target.deletedAt)) {
+    throw new ForbiddenError(
+      `退職から${RETENTION_YEARS}年が経過したスタッフのみ完全削除できます。`,
+    );
+  }
 
   await userRepository.deleteWithEnrollments(id);
 
@@ -219,4 +229,25 @@ export async function deleteUser(id: string) {
   revalidatePath("/hq");
   revalidatePath("/super-admin/organizations");
   return { success: true };
+}
+
+// 保持期間を経過した退職者の一覧を取得する（完全削除UI用）。
+// ADMIN は自施設、HQ は自法人、SUPER_ADMIN は全件を対象とする。
+export async function getPurgeableStaff() {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+
+  const role = session?.user?.role;
+  if (!session?.user || (role !== "SUPER_ADMIN" && role !== "HQ" && role !== "ADMIN")) {
+    throw new UnauthorizedError();
+  }
+
+  const scope =
+    role === "ADMIN"
+      ? { facilityId: session.user.facilityId ?? undefined }
+      : role === "HQ"
+        ? { corporationId: session.user.corporationId ?? undefined }
+        : {};
+
+  return userRepository.findPurgeable(retentionCutoff(), scope);
 }
