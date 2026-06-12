@@ -22,8 +22,8 @@ model User {
   updatedAt     DateTime     @updatedAt
   enrollments   Enrollment[]
   inquiries     Inquiry[]
-  corporation   Corporation? @relation(fields: [corporationId], references: [id])
-  facility      Facility?    @relation(fields: [facilityId], references: [id])
+  corporation   Corporation? @relation(fields: [corporationId], references: [id], onDelete: SetNull)
+  facility      Facility?    @relation(fields: [facilityId], references: [id], onDelete: SetNull)
 }
 
 model Inquiry {
@@ -34,7 +34,7 @@ model Inquiry {
   status    InquiryStatus  @default(UNREAD)
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-  sender    User           @relation(fields: [senderId], references: [id])
+  sender    User           @relation(fields: [senderId], references: [id], onDelete: Cascade)
   replies   InquiryReply[]
 }
 
@@ -44,7 +44,7 @@ model InquiryReply {
   content   String
   senderId  String
   createdAt DateTime @default(now())
-  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id])
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
@@ -72,7 +72,7 @@ model Facility {
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   assignments   CourseAssignment[]
-  corporation   Corporation?       @relation(fields: [corporationId], references: [id])
+  corporation   Corporation?       @relation(fields: [corporationId], references: [id], onDelete: SetNull)
   users         User[]
 
   @@unique([corporationId, name])
@@ -121,8 +121,8 @@ model CourseAssignment {
   endDate     DateTime
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  course      Course       @relation(fields: [courseId], references: [id])
-  facility    Facility     @relation(fields: [facilityId], references: [id])
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  facility    Facility     @relation(fields: [facilityId], references: [id], onDelete: Cascade)
   enrollments Enrollment[]
 }
 
@@ -137,7 +137,7 @@ model Slide {
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  course      Course   @relation(fields: [courseId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Question {
@@ -151,7 +151,7 @@ model Question {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   choices       Choice[]
-  course        Course   @relation(fields: [courseId], references: [id])
+  course        Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Choice {
@@ -162,7 +162,7 @@ model Choice {
   isCorrect  Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 model Enrollment {
@@ -175,9 +175,9 @@ model Enrollment {
   completedAt  DateTime?
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
-  assignment   CourseAssignment? @relation(fields: [assignmentId], references: [id])
-  course       Course           @relation(fields: [courseId], references: [id])
-  user         User             @relation(fields: [userId], references: [id])
+  assignment   CourseAssignment? @relation(fields: [assignmentId], references: [id], onDelete: SetNull)
+  course       Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, assignmentId])
 }
