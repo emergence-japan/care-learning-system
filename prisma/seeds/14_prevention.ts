@@ -52,7 +52,7 @@ export async function seedPrevention(prisma: PrismaClient) {
           </div>
         </div>
       `,
-    videoUrl: 'https://www.youtube.com/watch?v=JVLmK8A5k1U',
+    videoUrl: 'https://youtu.be/Uf-JE4M7mG8',
     badgeLabel: '介護予防',
     badgeIcon: 'Zap',
   }
