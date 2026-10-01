@@ -65,15 +65,15 @@ export default async function HQDashboardPage() {
     const totalStaff = staffMembers.length;
     
     // この施設に割り当てられている研修のみを対象に進捗を計算
-    const assignedCourseIds = facility.assignments.map(a => a.courseId);
+    const assignedIds = facility.assignments.map(a => a.id);
     
     const completedEnrollments = staffMembers.reduce((acc, user) => {
       return acc + user.enrollments.filter(e => 
-        e.status === 'COMPLETED' && assignedCourseIds.includes(e.courseId)
+        e.status === 'COMPLETED' && e.assignmentId !== null && assignedIds.includes(e.assignmentId)
       ).length;
     }, 0);
     
-    const totalAssignments = totalStaff * assignedCourseIds.length;
+    const totalAssignments = totalStaff * assignedIds.length;
     const progressRate = totalAssignments > 0 
       ? Math.round((completedEnrollments / totalAssignments) * 100) 
       : 0;
@@ -96,7 +96,7 @@ export default async function HQDashboardPage() {
         courseTitle: a.course.title,
         endDate: a.endDate,
         completedCount: staffMembers.filter(u => 
-          u.enrollments.some(e => e.courseId === a.courseId && e.status === 'COMPLETED')
+          u.enrollments.some(e => e.assignmentId === a.id && e.status === 'COMPLETED')
         ).length
       }))
     };
@@ -113,7 +113,7 @@ export default async function HQDashboardPage() {
       {/* TuneCore Style Top Header */}
       <header className="h-20 lg:h-24 bg-[#120a0a] px-4 lg:px-8 flex items-center justify-between shrink-0 z-50">
         <div className="flex items-center gap-4 lg:gap-12">
-          <MobileNav />
+          <MobileNav role="HQ" signOutAction={async () => { "use server"; await signOut({ redirectTo: "/login" }); }} />
           
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded flex items-center justify-center">

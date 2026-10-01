@@ -90,7 +90,7 @@ export default async function HQFacilityDetailPage({
   
   staffMembers.forEach(staff => {
     assignments.forEach(assign => {
-      const enrollment = staff.enrollments.find(e => e.courseId === assign.courseId);
+      const enrollment = staff.enrollments.find(e => e.assignmentId === assign.id);
       if (enrollment?.status === "COMPLETED") {
         completedCount++;
       }
@@ -230,7 +230,7 @@ export default async function HQFacilityDetailPage({
                               </div>
                             </td>
                             {assignments.map(assign => {
-                              const enrollment = staff.enrollments.find(e => e.courseId === assign.courseId);
+                              const enrollment = staff.enrollments.find(e => e.assignmentId === assign.id);
                               const isCompleted = enrollment?.status === "COMPLETED";
                               const isOverdue = !isCompleted && new Date() > new Date(assign.endDate);
                               const daysLeft = Math.ceil((new Date(assign.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));

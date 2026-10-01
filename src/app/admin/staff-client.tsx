@@ -57,7 +57,7 @@ export function StaffClient({ staffMembers = [], currentAssignments = [] }: { st
             staffMembers.map((staff) => {
               const enrollments = staff.enrollments || [];
               const completedCount = enrollments.filter((e) =>
-                e.status === 'COMPLETED' && currentAssignments.some(a => a.courseId === e.courseId)
+                e.status === 'COMPLETED' && currentAssignments.some(a => a.id === e.assignmentId)
               ).length;
               const totalCount = currentAssignments.length;
               const progress = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
@@ -75,7 +75,7 @@ export function StaffClient({ staffMembers = [], currentAssignments = [] }: { st
                   </td>
                   {hasAssignments ? (
                     currentAssignments.map(assign => {
-                      const enrollment = enrollments.find((e) => e.courseId === assign.courseId);
+                      const enrollment = enrollments.find((e) => e.assignmentId === assign.id);
                       const isCompleted = enrollment?.status === "COMPLETED";
                       const assignEndDate = assign.endDate ? new Date(assign.endDate) : null;
                       const isOverdue = !isCompleted && assignEndDate && new Date() > assignEndDate;
