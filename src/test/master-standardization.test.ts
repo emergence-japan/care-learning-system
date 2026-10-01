@@ -59,7 +59,7 @@ describe('Master Standardization Verification (Scrollless)', () => {
   validateSeed('07_ethics.ts', 24)
   validateSeed('08_etiquette.ts', 25)
   validateSeed('09_disaster.ts', 24)
-  validateSeed('10_prevention.ts', 24)
+  validateSeed('10_restraint.ts', 24)
   validateSeed('11_medical.ts', 21)
   validateSeed('12_terminal.ts', 19)
   validateSeed('13_mental.ts', 25)
